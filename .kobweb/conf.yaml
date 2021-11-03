@@ -1,0 +1,13 @@
+site:
+  title: "My Project"
+
+server:
+  files:
+    dev:
+      contentRoot: "build/processedResources/js/main/public"
+      script: "build/js/packages/myproject/kotlin/myproject.js"
+      api: "build/libs/myproject.jar"
+    prod:
+      siteRoot: ".kobweb/site"
+
+  port: 8080
