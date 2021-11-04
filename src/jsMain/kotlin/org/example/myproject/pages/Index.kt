@@ -32,7 +32,7 @@ fun HomePage() {
             Box (contentAlignment = Alignment.Center) {
                 Text(
                     text = "Modern framework for full stack web apps in Kotlin",
-                    modifier = Modifier.fontSize(64.px).fontWeight(FontWeight.Bold).color(Color("#111")).styleModifier {
+                    modifier = Modifier.fontSize(64.px).fontWeight(FontWeight.Bold).color(Color("#111111")).styleModifier {
                         textAlign(Center)
                     },
                 )

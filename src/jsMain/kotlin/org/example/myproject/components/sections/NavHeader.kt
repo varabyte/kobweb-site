@@ -17,8 +17,10 @@ import com.varabyte.kobweb.silk.theme.shapes.clip
 import org.jetbrains.compose.web.attributes.ATarget
 import org.jetbrains.compose.web.attributes.href
 import org.jetbrains.compose.web.attributes.target
+import org.jetbrains.compose.web.css.height
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.Img
 
@@ -59,7 +61,15 @@ fun NavHeader() {
                 Box(
                     Modifier.padding(4.px).height(36.px).width(84.px)
                 ) {
-                    Img("resources/assets/logo.png")
+                    Img(
+                        "https://cdn.pixabay.com/photo/2016/03/21/23/25/link-1271843_1280.png",
+                        attrs = {
+                            style {
+                                width(64.px)
+                                height(36.px)
+                            }
+                        }
+                    )
                 }
             }
             Spacer()
