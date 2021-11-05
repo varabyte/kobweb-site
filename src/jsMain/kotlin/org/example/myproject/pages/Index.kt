@@ -28,14 +28,14 @@
                     Box (contentAlignment = Alignment.Center) {
                         Text(
                             text = "Modern framework for full stack web apps in Kotlin",
-                            modifier = Modifier.fontSize(64.px).fontWeight(FontWeight.Bold).color(Color("#111111")).styleModifier {
+                            modifier = Modifier.fontSize(64.px).fontWeight(FontWeight.Bold).styleModifier {
                                 textAlign(Center)
                             },
                         )
                         P {
                             Text(
                                 text = "Create production ready full stack web apps in a modern, concise and type safe programming language Kotlin. Kobweb includes everything you need to build modern static websites, as well as web applications faster.",
-                                modifier = Modifier.color(Color("#666666")).styleModifier {
+                                modifier = Modifier.styleModifier {
                                     textAlign(Center)
                                 }
                             )
