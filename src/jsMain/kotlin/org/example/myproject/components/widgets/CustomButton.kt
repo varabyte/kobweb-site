@@ -35,7 +35,7 @@ fun CustomButtonComponent(
     text: String,
     shape: String       = "default",
     primary: Boolean    = false,
-    modifier: Modifier = Modifier,
+    modifier: Modifier  = Modifier,
     icon: @Composable () -> Unit
    ) {
     A(
@@ -45,7 +45,7 @@ fun CustomButtonComponent(
     )
     {
         Button(
-            onClick = {  },
+            onClick  = {  },
             modifier = getButtonModifier(shape, primary, modifier)
         ) {
             Row(
