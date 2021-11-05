@@ -31,7 +31,7 @@ private fun NavLink(path: String, text: String) {
         text,
         // Intentionally invert the header colors (here, "primary" instead of "onPrimary")
         NAV_ITEM_PADDING.color(SilkTheme.palette.primary),
-        UndecoratedLinkVariant,
+        UndecoratedLinkVariant
     )
 }
 
@@ -43,13 +43,13 @@ private fun HomeLogo() {
         }
     ) {
         Box(
-            Modifier.padding(4.px).height(36.px)
+            Modifier.padding(4.px)
         ) {
             Img(
                 "https://storage.googleapis.com/kobweb-example-cdn/Group%2043.png",
                 attrs = {
                     style {
-                        height(36.px)
+                        height(28.px)
                     }
                 }
             )
