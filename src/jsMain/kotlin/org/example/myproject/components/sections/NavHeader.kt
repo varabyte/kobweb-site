@@ -14,13 +14,11 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.silk.theme.shapes.Circle
 import com.varabyte.kobweb.silk.theme.shapes.clip
-import org.jetbrains.compose.web.attributes.ATarget
+import org.example.myproject.components.widgets.ButtonWithIcon
 import org.jetbrains.compose.web.attributes.href
-import org.jetbrains.compose.web.attributes.target
 import org.jetbrains.compose.web.css.height
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
-import org.jetbrains.compose.web.css.width
 import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.Img
 
@@ -38,8 +36,46 @@ private fun NavLink(path: String, text: String) {
 }
 
 @Composable
-fun NavHeader() {
+private fun HomeLogo() {
+    A(
+        attrs = {
+            href("/")
+        }
+    ) {
+        Box(
+            Modifier.padding(4.px).height(36.px).width(84.px)
+        ) {
+            Img(
+                "https://storage.googleapis.com/kobweb-example-cdn/Group%2043.png",
+                attrs = {
+                    style {
+                        height(36.px)
+                    }
+                }
+            )
+        }
+    }
+}
+
+@Composable
+private fun ThemeSwitch() {
     var colorMode by rememberColorMode()
+
+    Button(
+        onClick = { colorMode = colorMode.opposite() },
+        NAV_ITEM_PADDING.clip(Circle())
+    ) {
+        Box(Modifier.padding(8.px)) {
+            when (colorMode) {
+                ColorMode.LIGHT -> FaSun()
+                ColorMode.DARK -> FaMoon()
+            }
+        }
+    }
+}
+
+@Composable
+fun NavHeader() {
     val palette = SilkTheme.palette
     Box(
         contentAlignment = Alignment.Center,
@@ -53,72 +89,20 @@ fun NavHeader() {
             Modifier.fillMaxSize(80.percent),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            A(
-                attrs = {
-                    href("/")
-                }
-            ) {
-                Box(
-                    Modifier.padding(4.px).height(36.px).width(84.px)
-                ) {
-                    Img(
-                        "https://storage.googleapis.com/kobweb-example-cdn/Group%2043.png",
-                        attrs = {
-                            style {
-                                height(36.px)
-                            }
-                        }
-                    )
-                }
-            }
+            HomeLogo()
             Spacer()
             NavLink("/", "Home")
             NavLink("/docs", "Docs")
             NavLink("/examples", "Examples")
             NavLink("/blog", "Blog")
             Spacer()
-            A(
-                attrs = {
-                    href("https://discord.gg/5NZ2GKV5Cs")
-                    target(ATarget.Blank)
-                }
-            ) {
-                Button(
-                    onClick = {  },
-                    modifier = NAV_ITEM_PADDING.clip(Circle())
-                ) {
-                    Box(Modifier.padding(4.px)) {
-                        FaDiscord()
-                    }
-                }
+            ButtonWithIcon("https://discord.gg/5NZ2GKV5Cs", text="", shape = "circle") {
+                FaDiscord()
             }
-            A(
-                attrs = {
-                    href("https://github.com/varabyte/kobweb")
-                    target(ATarget.Blank)
-                }
-            ) {
-                Button(
-                onClick = {  },
-                modifier = NAV_ITEM_PADDING.clip(Circle())
-                ) {
-
-                    Box(Modifier.padding(4.px)) {
-                        FaGithub()
-                    }
-                }
+            ButtonWithIcon("https://github.com/varabyte/kobweb", text="", shape = "circle") {
+                FaGithub()
             }
-            Button(
-                onClick = { colorMode = colorMode.opposite() },
-                NAV_ITEM_PADDING.clip(Circle())
-            ) {
-                Box(Modifier.padding(4.px)) {
-                    when (colorMode) {
-                        ColorMode.LIGHT -> FaSun()
-                        ColorMode.DARK -> FaMoon()
-                    }
-                }
-            }
+            ThemeSwitch()
         }
     }
 }
