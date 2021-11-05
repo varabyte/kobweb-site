@@ -62,10 +62,9 @@ fun NavHeader() {
                     Modifier.padding(4.px).height(36.px).width(84.px)
                 ) {
                     Img(
-                        "https://cdn.pixabay.com/photo/2016/03/21/23/25/link-1271843_1280.png",
+                        "https://storage.googleapis.com/kobweb-example-cdn/Group%2043.png",
                         attrs = {
                             style {
-                                width(64.px)
                                 height(36.px)
                             }
                         }
