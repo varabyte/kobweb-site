@@ -14,7 +14,7 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.silk.theme.shapes.Circle
 import com.varabyte.kobweb.silk.theme.shapes.clip
-import org.example.myproject.components.widgets.ButtonWithIcon
+import org.example.myproject.components.widgets.CustomButtonComponent
 import org.jetbrains.compose.web.attributes.href
 import org.jetbrains.compose.web.css.height
 import org.jetbrains.compose.web.css.percent
@@ -43,7 +43,7 @@ private fun HomeLogo() {
         }
     ) {
         Box(
-            Modifier.padding(4.px).height(36.px).width(84.px)
+            Modifier.padding(4.px).height(36.px)
         ) {
             Img(
                 "https://storage.googleapis.com/kobweb-example-cdn/Group%2043.png",
@@ -86,7 +86,7 @@ fun NavHeader() {
             .background(palette.onPrimary),
     ) {
         Row(
-            Modifier.fillMaxSize(80.percent),
+            Modifier.fillMaxWidth(70.percent),
             verticalAlignment = Alignment.CenterVertically
         ) {
             HomeLogo()
@@ -96,10 +96,10 @@ fun NavHeader() {
             NavLink("/examples", "Examples")
             NavLink("/blog", "Blog")
             Spacer()
-            ButtonWithIcon("https://discord.gg/5NZ2GKV5Cs", text="", shape = "circle") {
+            CustomButtonComponent("https://discord.gg/5NZ2GKV5Cs", text="", shape = "circle") {
                 FaDiscord()
             }
-            ButtonWithIcon("https://github.com/varabyte/kobweb", text="", shape = "circle") {
+            CustomButtonComponent("https://github.com/varabyte/kobweb", text="", shape = "circle") {
                 FaGithub()
             }
             ThemeSwitch()

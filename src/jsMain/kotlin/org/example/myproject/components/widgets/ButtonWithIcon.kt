@@ -4,33 +4,49 @@ import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.background
 import com.varabyte.kobweb.compose.ui.padding
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.shapes.Circle
 import com.varabyte.kobweb.silk.theme.shapes.clip
 import org.jetbrains.compose.web.attributes.href
+import org.jetbrains.compose.web.css.Color
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.A
 
-private val NAV_ITEM_PADDING = Modifier.padding(0.px, 24.px)
+private const val PRIMARY_COLOR = "#2FCCB3"
+
+private fun getButtonModifier(shape: String, primary: Boolean, modifier: Modifier): Modifier {
+    return modifier.then(
+        if (shape == "circle") {
+            Modifier.padding(0.px, 24.px).clip(Circle(radius = 40))
+        } else {Modifier}
+    ).then(
+        if (primary) {
+            Modifier.background(Color (PRIMARY_COLOR))
+        } else {Modifier}
+    )
+}
 
 @Composable
-fun ButtonWithIcon(
+fun CustomButtonComponent(
     href: String,
     text: String,
-    shape: String = "default",
-    icon: @Composable () -> Unit) {
+    shape: String       = "default",
+    primary: Boolean    = false,
+    modifier: Modifier = Modifier,
+    icon: @Composable () -> Unit
+   ) {
     A(
         attrs = {
             href(href)
         }
-    ) {
+    )
+    {
         Button(
             onClick = {  },
-            modifier = if (shape == "circle") {
-                NAV_ITEM_PADDING.clip(Circle(radius = 40))
-            } else {Modifier}
+            modifier = getButtonModifier(shape, primary, modifier)
         ) {
             Row(
                 Modifier.padding(12.px),

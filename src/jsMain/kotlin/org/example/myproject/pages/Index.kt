@@ -11,7 +11,7 @@
     import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
     import com.varabyte.kobweb.silk.components.text.Text
     import org.example.myproject.components.layouts.PageLayout
-    import org.example.myproject.components.widgets.ButtonWithIcon
+    import org.example.myproject.components.widgets.CustomButtonComponent
     import org.jetbrains.compose.web.css.Color
     import org.jetbrains.compose.web.css.px
     import org.jetbrains.compose.web.dom.P
@@ -43,10 +43,10 @@
                     }
                 }
                 Row {
-                        ButtonWithIcon("/docs", "Start Learning") {}
-                        ButtonWithIcon("https://github.com/varabyte/kobweb", "Github") {
-                            FaGithub()
-                        }
+                    CustomButtonComponent("/docs", "Start Learning", primary = true, modifier = Modifier.width(150.px)) {}
+                    CustomButtonComponent("https://github.com/varabyte/kobweb", "Github", modifier = Modifier.padding(left = 12.px).width(150.px)) {
+                        FaGithub()
+                    }
                 }
             }
         }
