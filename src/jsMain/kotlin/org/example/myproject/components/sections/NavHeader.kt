@@ -49,7 +49,7 @@ private fun HomeLogo() {
                 "https://storage.googleapis.com/kobweb-example-cdn/Group%2043.png",
                 attrs = {
                     style {
-                        height(28.px)
+                        height(40.px)
                     }
                 }
             )
