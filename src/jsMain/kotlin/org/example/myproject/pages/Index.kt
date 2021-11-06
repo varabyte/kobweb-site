@@ -12,8 +12,7 @@
     import com.varabyte.kobweb.silk.components.text.Text
     import org.example.myproject.components.layouts.PageLayout
     import org.example.myproject.components.widgets.CustomButtonComponent
-    import org.jetbrains.compose.web.css.Color
-    import org.jetbrains.compose.web.css.px
+    import org.jetbrains.compose.web.css.*
     import org.jetbrains.compose.web.dom.P
 
     @Page
@@ -28,15 +27,16 @@
                     Box (contentAlignment = Alignment.Center) {
                         Text(
                             text = "Modern framework for full stack web apps in Kotlin",
-                            modifier = Modifier.fontSize(64.px).fontWeight(FontWeight.Bold).styleModifier {
+                            modifier = Modifier.color(Color.whitesmoke).fontSize(64.px).fontWeight(FontWeight.Bold).styleModifier {
                                 textAlign(Center)
                             },
                         )
                         P {
                             Text(
                                 text = "Create production ready full stack web apps in a modern, concise and type safe programming language Kotlin. Kobweb includes everything you need to build modern static websites, as well as web applications faster.",
-                                modifier = Modifier.styleModifier {
+                                modifier = Modifier.lineHeight(1.75).color(Color.whitesmoke).styleModifier {
                                     textAlign(Center)
+                                    opacity(60.percent)
                                 }
                             )
                         }

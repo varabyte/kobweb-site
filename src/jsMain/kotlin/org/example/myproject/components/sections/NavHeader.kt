@@ -22,7 +22,7 @@ import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.Img
 
-private val NAV_ITEM_PADDING = Modifier.padding(0.px, 24.px)
+val NAV_ITEM_PADDING = Modifier.padding(0.px, 12.px)
 
 @Composable
 private fun NavLink(path: String, text: String) {
@@ -49,7 +49,7 @@ private fun HomeLogo() {
                 "https://storage.googleapis.com/kobweb-example-cdn/Group%2043.png",
                 attrs = {
                     style {
-                        height(40.px)
+                        height(32.px)
                     }
                 }
             )
@@ -91,11 +91,11 @@ fun NavHeader() {
         ) {
             HomeLogo()
             Spacer()
-            NavLink("/", "Home")
-            NavLink("/docs", "Docs")
-            NavLink("/examples", "Examples")
-            NavLink("/blog", "Blog")
-            Spacer()
+            //NavLink("/", "Home")
+            //NavLink("/docs", "Docs")
+            //NavLink("/examples", "Examples")
+            //NavLink("/blog", "Blog")
+            //Spacer()
             CustomButtonComponent("https://discord.gg/5NZ2GKV5Cs", text="", shape = "circle") {
                 FaDiscord()
             }
