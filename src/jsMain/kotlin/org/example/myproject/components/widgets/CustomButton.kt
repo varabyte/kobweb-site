@@ -1,18 +1,22 @@
 package org.example.myproject.components.widgets
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.foundation.layout.Row
-import com.varabyte.kobweb.compose.ui.Alignment
-import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.background
-import com.varabyte.kobweb.compose.ui.padding
+import com.varabyte.kobweb.compose.ui.*
+import com.varabyte.kobweb.silk.components.ComponentKey
 import com.varabyte.kobweb.silk.components.forms.Button
+import com.varabyte.kobweb.silk.components.navigation.LinkKey
+import com.varabyte.kobweb.silk.components.navigation.LinkState
+import com.varabyte.kobweb.silk.components.navigation.LinkStyle
+import com.varabyte.kobweb.silk.components.navigation.UndecoratedLinkVariant
 import com.varabyte.kobweb.silk.components.text.Text
+import com.varabyte.kobweb.silk.components.toModifier
+import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.shapes.Circle
 import com.varabyte.kobweb.silk.theme.shapes.clip
 import org.example.myproject.components.sections.NAV_ITEM_PADDING
-import org.jetbrains.compose.web.attributes.href
 import org.jetbrains.compose.web.css.Color
+import org.jetbrains.compose.web.css.borderRadius
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.A
 private const val PRIMARY_COLOR = "#2FCCB3"
@@ -21,13 +25,18 @@ private fun getButtonModifier(shape: String, primary: Boolean, modifier: Modifie
     return modifier.then(
         if (shape == "circle") {
             NAV_ITEM_PADDING.clip(Circle(radius = 40))
-        } else {Modifier}
+        } else {
+            Modifier.styleModifier { borderRadius(8.px) }
+        }
     ).then(
         if (primary) {
             Modifier.background(Color (PRIMARY_COLOR))
-        } else {Modifier}
+        } else {
+            Modifier
+        }
     )
 }
+object LinkKey : ComponentKey<LinkStyle>
 
 @Composable
 fun CustomButtonComponent(
@@ -38,10 +47,11 @@ fun CustomButtonComponent(
     modifier: Modifier  = Modifier,
     icon: @Composable () -> Unit
    ) {
+    val state by remember { mutableStateOf(LinkState.DEFAULT) }
+
     A(
-        attrs = {
-            href(href)
-        }
+        href = href,
+        attrs = SilkTheme.componentStyles[LinkKey].toModifier(state, UndecoratedLinkVariant).asAttributeBuilder()
     )
     {
         Button(
@@ -54,7 +64,7 @@ fun CustomButtonComponent(
             ) {
                 icon()
                 when (shape) {
-                    "default" -> Text(text, modifier = Modifier.padding(left = 6.px))
+                    "default" -> Text(text)
                 }
             }
         }

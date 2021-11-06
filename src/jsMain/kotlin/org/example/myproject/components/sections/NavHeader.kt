@@ -16,9 +16,8 @@ import com.varabyte.kobweb.silk.theme.shapes.Circle
 import com.varabyte.kobweb.silk.theme.shapes.clip
 import org.example.myproject.components.widgets.CustomButtonComponent
 import org.jetbrains.compose.web.attributes.href
-import org.jetbrains.compose.web.css.height
-import org.jetbrains.compose.web.css.percent
-import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.css.selectors.attr
 import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.Img
 
@@ -81,28 +80,26 @@ fun NavHeader() {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.px)
-            // Intentionally invert the header colors (here, setting the background to "onPrimary" instead of "primary")
-            .background(palette.onPrimary),
+            .styleModifier {
+                position(Position.Sticky)
+                background("rgba(0,0,0,.55)")
+                top(0.percent)
+                attr("z-index", "1000")
+            }
     ) {
         Row(
-            Modifier.fillMaxWidth(70.percent),
+            Modifier.fillMaxWidth(70.percent).padding(1.em),
             verticalAlignment = Alignment.CenterVertically
         ) {
             HomeLogo()
             Spacer()
-            //NavLink("/", "Home")
-            //NavLink("/docs", "Docs")
-            //NavLink("/examples", "Examples")
-            //NavLink("/blog", "Blog")
-            //Spacer()
             CustomButtonComponent("https://discord.gg/5NZ2GKV5Cs", text="", shape = "circle") {
                 FaDiscord()
             }
             CustomButtonComponent("https://github.com/varabyte/kobweb", text="", shape = "circle") {
                 FaGithub()
             }
-            ThemeSwitch()
+            //ThemeSwitch()
         }
     }
 }
