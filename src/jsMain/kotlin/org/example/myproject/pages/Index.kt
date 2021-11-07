@@ -15,6 +15,7 @@
     import org.example.myproject.components.widgets.CustomButtonComponent
     import org.jetbrains.compose.web.css.*
     import org.jetbrains.compose.web.dom.Br
+    import org.jetbrains.compose.web.dom.Img
 
     @Composable
     private fun HeroSection() {
@@ -53,7 +54,7 @@
     @Composable
     private fun GridItem(heading: String, desc: String) {
         Box (
-            modifier = Modifier.width(260.px).height(260.px).padding(18.px).styleModifier {
+            modifier = Modifier.width(260.px).height(200.px).padding(18.px).styleModifier {
                 background("radial-gradient(circle at top, rgba(41,41,46,1) 0%, rgba(25,25,28,1) 100%)")
                 borderRadius(12.px)
                 padding(2.em)
@@ -86,7 +87,7 @@
                     )
                     Br {  }
                     Text(
-                        text = "Kobweb has all the tools you need to build full stack web apps",
+                        text = "Kobweb has all the tools you need to build production full stack web apps",
                         modifier = Modifier.lineHeight(1.5).fontSize(1.25.cssRem).color(Color.whitesmoke).styleModifier {
                             opacity(60.percent)
                             textAlign(Center)
@@ -113,6 +114,45 @@
             }
         }
     }
+    @Composable
+    private fun CliSection() {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.width(940.px).padding(top = 6.cssRem)
+        ) {
+            Row {
+                Box (contentAlignment = Alignment.Center) {
+                    Text(
+                        text = "Kobweb CLI",
+                        modifier = Modifier.color(Color.whitesmoke).fontSize(48.px).fontWeight(FontWeight.Bold).styleModifier {
+                            textAlign(Center)
+                        },
+                    )
+                    Br {  }
+                    Text(
+                        text = "Kobweb CLI provides commands to handle the parts of building a Web Compose app that are less glamorous including project setup and configuration",
+                        modifier = Modifier.lineHeight(1.5).fontSize(1.25.cssRem).color(Color.whitesmoke).styleModifier {
+                            opacity(60.percent)
+                            textAlign(Center)
+                        }
+                    )
+                }
+                Box (
+                    modifier = Modifier.padding(top = 2.cssRem)
+                ) {
+                    Img(
+                        "https://storage.googleapis.com/kobweb-example-cdn/kobweb-cli.gif",
+                        attrs = {
+                            style {
+                                height(432.px)
+                            }
+                        }
+                    )
+                }
+            }
+
+        }
+    }
 
     @Page
     @Composable
@@ -120,5 +160,7 @@
         PageLayout("") {
             HeroSection()
             FeaturesSection()
+            CliSection()
+
         }
     }

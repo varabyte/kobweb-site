@@ -82,7 +82,7 @@ fun NavHeader() {
             .fillMaxWidth()
             .styleModifier {
                 position(Position.Sticky)
-                background("rgba(0,0,0,.55)")
+                background("rgba(0,0,0,.65)")
                 top(0.percent)
                 attr("z-index", "1000")
             }
