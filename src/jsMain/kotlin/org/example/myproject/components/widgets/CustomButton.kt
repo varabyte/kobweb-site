@@ -17,7 +17,8 @@
     import org.jetbrains.compose.web.css.borderRadius
     import org.jetbrains.compose.web.css.px
     import org.jetbrains.compose.web.dom.A
-    private const val PRIMARY_COLOR = "#2FCCB3"
+
+    private const val PRIMARY_COLOR = "#0079f2"
 
     private fun getButtonModifier(shape: String, primary: Boolean, modifier: Modifier): Modifier {
         return modifier.then(
@@ -29,6 +30,16 @@
         ).then(
             if (primary) {
                 Modifier.background(Color (PRIMARY_COLOR))
+            } else {
+                Modifier
+            }
+        )
+    }
+
+    private fun getButtonTextModifier(primary: Boolean): Modifier {
+        return Modifier.then(
+            if (primary) {
+                Modifier.color(Color.white)
             } else {
                 Modifier
             }
@@ -61,7 +72,7 @@
                 ) {
                     icon()
                     when (shape) {
-                        "default" -> Text(text)
+                        "default" -> Text(text, modifier = getButtonTextModifier(primary))
                     }
                 }
             }

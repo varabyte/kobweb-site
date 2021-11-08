@@ -16,7 +16,7 @@ object CssGlobalsStyleSheet : StyleSheet() {
         "body" style {
             fontFamily("-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
                 "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif")
-            background("radial-gradient(circle at calc(60%),#2FCCB3 0,rgba(47, 204, 179,.5) 0,transparent 45%)")
+            background("radial-gradient(circle at calc(60%),#0079f2 0,rgba(0, 121, 242,.5) 0,transparent 45%)")
             backgroundColor(Color.black)
         }
     }
@@ -30,7 +30,7 @@ fun MyApp(content: @Composable () -> Unit) {
         SilkTheme {
             Surface(
                 Modifier.width(100.vw).height(100.vh).styleModifier {
-                    background("radial-gradient(circle at calc(60%),#2FCCB3 0,rgba(47, 204, 179,.5) 0,transparent 45%)")
+                    background("radial-gradient(circle at calc(60%),#0079f2 0,rgba(0, 121, 242,.5) 0,transparent 45%)")
                     backgroundColor(Color.black)
                     color(Color.antiquewhite)
                 }

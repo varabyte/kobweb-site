@@ -39,7 +39,7 @@ fun FeaturesSection() {
         Row {
             Box (contentAlignment = Alignment.Center) {
                 Text(
-                    text = "Why Kobweb",
+                    text = "Why Kobweb?",
                     modifier = Modifier.color(Color.whitesmoke).fontSize(48.px).fontWeight(FontWeight.Bold).styleModifier {
                         textAlign(TextAlign.Center)
                     },
@@ -48,7 +48,7 @@ fun FeaturesSection() {
                 Text(
                     text = "Kobweb has all the tools you need to build production full stack web apps",
                     modifier = Modifier.lineHeight(1.5).fontSize(1.25.cssRem).color(Color.whitesmoke).styleModifier {
-                        opacity(60.percent)
+                        opacity(80.percent)
                         textAlign(TextAlign.Center)
                     }
                 )

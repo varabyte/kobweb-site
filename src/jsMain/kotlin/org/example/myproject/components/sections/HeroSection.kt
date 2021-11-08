@@ -2,7 +2,6 @@ import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.textAlign
-import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
@@ -30,7 +29,7 @@ fun HeroSection() {
                 Text(
                     text = "Create full stack web apps in a modern, concise and type safe programming language Kotlin. Kobweb is an opinionated Kotlin framework built on top of Web Compose and includes everything you need to build modern static websites, as well as web applications faster.",
                     modifier = Modifier.lineHeight(1.5).fontSize(1.25.cssRem).color(Color.whitesmoke).styleModifier {
-                        opacity(60.percent)
+                        opacity(80.percent)
                         textAlign(TextAlign.Center)
                     }
                 )
