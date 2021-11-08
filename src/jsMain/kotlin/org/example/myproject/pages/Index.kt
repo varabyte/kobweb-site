@@ -4,6 +4,7 @@
     import com.varabyte.kobweb.compose.css.FontWeight
     import com.varabyte.kobweb.compose.css.TextAlign.Companion.Center
     import com.varabyte.kobweb.compose.css.textAlign
+    import com.varabyte.kobweb.compose.foundation.layout.Arrangement
     import com.varabyte.kobweb.compose.foundation.layout.Box
     import com.varabyte.kobweb.compose.foundation.layout.Column
     import com.varabyte.kobweb.compose.foundation.layout.Row
@@ -120,7 +121,9 @@
             contentAlignment = Alignment.Center,
             modifier = Modifier.width(940.px).padding(top = 6.cssRem)
         ) {
-            Row {
+            Row (
+                horizontalArrangement = Arrangement.Center
+            ) {
                 Box (contentAlignment = Alignment.Center) {
                     Text(
                         text = "Kobweb CLI",
@@ -138,6 +141,7 @@
                     )
                 }
                 Box (
+                    contentAlignment = Alignment.Center,
                     modifier = Modifier.padding(top = 2.cssRem)
                 ) {
                     Img(
