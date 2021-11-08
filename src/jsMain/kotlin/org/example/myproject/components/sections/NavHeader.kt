@@ -14,7 +14,7 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.silk.theme.shapes.Circle
 import com.varabyte.kobweb.silk.theme.shapes.clip
-import org.example.myproject.components.widgets.CustomButtonComponent
+import org.example.myproject.components.widgets.CustomButton
 import org.jetbrains.compose.web.attributes.href
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.css.selectors.attr
@@ -80,9 +80,9 @@ fun NavHeader() {
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxWidth()
+            .background(rgba(0,0,0,.65))
             .styleModifier {
                 position(Position.Sticky)
-                background("rgba(0,0,0,.65)")
                 top(0.percent)
                 attr("z-index", "1000")
             }
@@ -93,10 +93,10 @@ fun NavHeader() {
         ) {
             HomeLogo()
             Spacer()
-            CustomButtonComponent("https://discord.gg/5NZ2GKV5Cs", text="", shape = "circle") {
+            CustomButton("https://discord.gg/5NZ2GKV5Cs", text="", shape = "circle") {
                 FaDiscord()
             }
-            CustomButtonComponent("https://github.com/varabyte/kobweb", text="", shape = "circle") {
+            CustomButton("https://github.com/varabyte/kobweb", text="", shape = "circle") {
                 FaGithub()
             }
             //ThemeSwitch()

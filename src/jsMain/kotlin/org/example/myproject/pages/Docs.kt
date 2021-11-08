@@ -6,12 +6,10 @@ import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.textAlign
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.core.Page
-import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.text.Text
 import org.example.myproject.components.layouts.PageLayout
 import org.jetbrains.compose.web.css.Color
 import org.jetbrains.compose.web.css.px
-import org.jetbrains.compose.web.dom.P
 
 @Page
 @Composable
