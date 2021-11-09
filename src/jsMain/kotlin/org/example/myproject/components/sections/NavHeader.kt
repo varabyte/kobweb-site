@@ -45,7 +45,7 @@ private fun HomeLogo() {
             Modifier.padding(4.px)
         ) {
             Img(
-                "https://storage.googleapis.com/kobweb-example-cdn/Group%2043.png",
+                "https://storage.googleapis.com/kobweb-example-cdn/logo.png",
                 attrs = {
                     style {
                         height(32.px)
