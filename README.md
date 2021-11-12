@@ -1,4 +1,4 @@
-This is a [Kobweb](https://github.com/varabyte/kobweb) project bootstrapped with the `site` template.
+# kobweb-landing-site
 
 ## Getting Started
 
@@ -33,13 +33,6 @@ This simple project has a couple of example files you can learn from.
 * `.../pages/Index.kt`: The top level page, which will get rendered if the user visits `(yoursite.com)/` (the name
   `index` means it will be a special page that gets visited by default when no explicit page is specified). Note that
   the method is annotated with `@Page` which is how `Kobweb` is aware of it.
-* `.../pages/About.kt`: An additional page, which will get rendered if the user visits `(yoursite.com)/about`. This page
-  doesn't do much but exists as a way to demonstrate a multi-page layout.
-* `.../resources/markdown/Markdown.md`: A markdown file which generates a reactive page for you automatically at compile
-  time. This page will get rendered if the user visits `(yoursite.com)/markdown` If you are writing a blog, it can be
-  very convenient to write many of your posts using markdown instead of Kotlin code. You can call out to components
-  within your markdown using the `${...}` syntax, e.g. `${.components.widget.VisitorCounter}`
-  (_Note: `${}` not yet implemented, but coming soon_)
 
 ### jvmMain
 
@@ -67,3 +60,4 @@ kobweb run --env prod
 
 You should be able to run this command in the Cloud provider of your choice, at which point, once your Cloud environment
 is configured, it will serve your site.
+
