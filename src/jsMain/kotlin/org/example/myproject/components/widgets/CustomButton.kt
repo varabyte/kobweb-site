@@ -3,7 +3,7 @@
     import androidx.compose.runtime.*
     import com.varabyte.kobweb.compose.foundation.layout.Row
     import com.varabyte.kobweb.compose.ui.*
-    import com.varabyte.kobweb.navigation.Router
+    import com.varabyte.kobweb.core.rememberPageContext
     import com.varabyte.kobweb.silk.components.forms.Button
     import com.varabyte.kobweb.silk.components.text.Text
     import com.varabyte.kobweb.silk.theme.shapes.Circle
@@ -50,8 +50,10 @@
         modifier: Modifier  = Modifier,
         icon: @Composable () -> Unit
     ) {
+        val ctx = rememberPageContext()
+
         Button(
-            onClick  = { Router.navigateTo(path) },
+            onClick  = { ctx.router.navigateTo(path) },
             modifier = getButtonModifier(shape, primary, modifier)
         ) {
             Row(

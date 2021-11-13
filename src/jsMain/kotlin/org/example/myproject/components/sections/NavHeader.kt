@@ -28,8 +28,8 @@ private fun NavLink(path: String, text: String) {
     Link(
         path,
         text,
-        // Intentionally invert the header colors (here, "primary" instead of "onPrimary")
-        NAV_ITEM_PADDING.color(SilkTheme.palette.primary),
+        // Intentionally invert the header colors
+        NAV_ITEM_PADDING.color(SilkTheme.palette.background),
         UndecoratedLinkVariant
     )
 }
@@ -75,7 +75,6 @@ private fun ThemeSwitch() {
 
 @Composable
 fun NavHeader() {
-    val palette = SilkTheme.palette
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier

@@ -8,7 +8,6 @@ import com.varabyte.kobweb.compose.ui.width
 import com.varabyte.kobweb.core.App
 import com.varabyte.kobweb.silk.SilkApp
 import com.varabyte.kobweb.silk.components.layout.Surface
-import com.varabyte.kobweb.silk.theme.SilkTheme
 import org.jetbrains.compose.web.css.*
 
 object CssGlobalsStyleSheet : StyleSheet() {
@@ -27,16 +26,14 @@ object CssGlobalsStyleSheet : StyleSheet() {
 fun MyApp(content: @Composable () -> Unit) {
     Style(CssGlobalsStyleSheet)
     SilkApp {
-        SilkTheme {
-            Surface(
-                Modifier.width(100.vw).height(100.vh).styleModifier {
-                    background("radial-gradient(circle at calc(60%),#0079f2 0,rgba(0, 121, 242,.5) 0,transparent 45%)")
-                    backgroundColor(Color.black)
-                    color(Color.antiquewhite)
-                }
-            ) {
-                content()
+        Surface(
+            Modifier.width(100.vw).height(100.vh).styleModifier {
+                background("radial-gradient(circle at calc(60%),#0079f2 0,rgba(0, 121, 242,.5) 0,transparent 45%)")
+                backgroundColor(Color.black)
+                color(Color.antiquewhite)
             }
+        ) {
+            content()
         }
     }
 }
