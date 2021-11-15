@@ -5,6 +5,8 @@ import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.foundation.layout.Spacer
 import com.varabyte.kobweb.compose.ui.*
+import com.varabyte.kobweb.compose.ui.graphics.Color
+import com.varabyte.kobweb.compose.ui.graphics.toCssColor
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.icons.fa.*
 import com.varabyte.kobweb.silk.components.navigation.Link
@@ -17,6 +19,7 @@ import com.varabyte.kobweb.silk.theme.shapes.clip
 import org.example.myproject.components.widgets.CustomButton
 import org.jetbrains.compose.web.attributes.href
 import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.css.Color.black
 import org.jetbrains.compose.web.css.selectors.attr
 import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.Img
@@ -57,7 +60,7 @@ private fun HomeLogo() {
 }
 
 @Composable
-private fun ThemeSwitch() {
+private fun ThemeSwitch(color: Color) {
     var colorMode by rememberColorMode()
 
     Button(
@@ -66,8 +69,8 @@ private fun ThemeSwitch() {
     ) {
         Box(Modifier.padding(8.px)) {
             when (colorMode) {
-                ColorMode.LIGHT -> FaSun()
-                ColorMode.DARK -> FaMoon()
+                ColorMode.LIGHT -> FaMoon(color = color)
+                ColorMode.DARK -> FaSun(color = color)
             }
         }
     }
@@ -75,6 +78,8 @@ private fun ThemeSwitch() {
 
 @Composable
 fun NavHeader() {
+    val buttonIconColor = SilkTheme.palette.color.inverted()
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -93,12 +98,12 @@ fun NavHeader() {
             HomeLogo()
             Spacer()
             CustomButton("https://discord.gg/5NZ2GKV5Cs", text="", shape = "circle") {
-                FaDiscord()
+                FaDiscord(color = buttonIconColor)
             }
             CustomButton("https://github.com/varabyte/kobweb", text="", shape = "circle") {
-                FaGithub()
+                FaGithub(color = buttonIconColor)
             }
-            //ThemeSwitch()
+            ThemeSwitch(buttonIconColor)
         }
     }
 }

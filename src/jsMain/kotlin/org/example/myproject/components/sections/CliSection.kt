@@ -23,14 +23,14 @@ fun CliSection() {
             Box (contentAlignment = Alignment.Center) {
                 Text(
                     text = "Kobweb CLI",
-                    modifier = Modifier.color(Color.whitesmoke).fontSize(48.px).fontWeight(FontWeight.Bold).styleModifier {
+                    modifier = Modifier.fontSize(48.px).fontWeight(FontWeight.Bold).styleModifier {
                         textAlign(TextAlign.Center)
                     },
                 )
                 Br {  }
                 Text(
                     text = "Kobweb CLI provides commands to handle the parts of building a Web Compose app that are less glamorous including project setup and configuration",
-                    modifier = Modifier.lineHeight(1.5).fontSize(1.25.cssRem).color(Color.whitesmoke).styleModifier {
+                    modifier = Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
                         opacity(80.percent)
                         textAlign(TextAlign.Center)
                     }

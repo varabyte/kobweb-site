@@ -20,9 +20,9 @@ private fun GridItem(heading: String, desc: String) {
         }
     ) {
         Column {
-            Text(heading, Modifier.color(Color.whitesmoke).fontWeight(FontWeight.Bold))
+            Text(heading, Modifier.fontWeight(FontWeight.Bold))
             Br {}
-            Text(desc, Modifier.lineHeight(1.5).color(Color.whitesmoke).styleModifier {
+            Text(desc, Modifier.lineHeight(1.5).styleModifier {
                 opacity(70.percent)
             })
         }
@@ -40,14 +40,14 @@ fun FeaturesSection() {
             Box (contentAlignment = Alignment.Center) {
                 Text(
                     text = "Why Kobweb?",
-                    modifier = Modifier.color(Color.whitesmoke).fontSize(48.px).fontWeight(FontWeight.Bold).styleModifier {
+                    modifier = Modifier.fontSize(48.px).fontWeight(FontWeight.Bold).styleModifier {
                         textAlign(TextAlign.Center)
                     },
                 )
                 Br {  }
                 Text(
                     text = "Kobweb has all the tools you need to build production full stack web apps",
-                    modifier = Modifier.lineHeight(1.5).fontSize(1.25.cssRem).color(Color.whitesmoke).styleModifier {
+                    modifier = Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
                         opacity(80.percent)
                         textAlign(TextAlign.Center)
                     }

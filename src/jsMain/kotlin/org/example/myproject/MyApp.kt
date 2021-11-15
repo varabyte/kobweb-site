@@ -2,35 +2,85 @@ package org.example.myproject
 
 import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.height
 import com.varabyte.kobweb.compose.ui.styleModifier
 import com.varabyte.kobweb.compose.ui.width
 import com.varabyte.kobweb.core.App
-import com.varabyte.kobweb.silk.SilkApp
+import com.varabyte.kobweb.silk.*
 import com.varabyte.kobweb.silk.components.layout.Surface
+import com.varabyte.kobweb.silk.theme.SilkConfig
+import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import com.varabyte.kobweb.silk.theme.colors.ColorSchemes
+import com.varabyte.kobweb.silk.theme.colors.SilkPalette
+import com.varabyte.kobweb.silk.theme.colors.SilkPalettes
 import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.css.Color.black
 
 object CssGlobalsStyleSheet : StyleSheet() {
     init {
         "body" style {
             fontFamily("-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
                 "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif")
-            background("radial-gradient(circle at calc(60%),#0079f2 0,rgba(0, 121, 242,.5) 0,transparent 45%)")
-            backgroundColor(Color.black)
         }
     }
+}
+
+val DarkSilkPalette = run {
+    val buttonBase = ColorSchemes.White._900
+    SilkPalette(
+        ColorMode.DARK,
+        background = Color.White,
+        color = Color(245, 245, 245, 1),
+        link = SilkPalette.Link(
+            default = Color.Blue,
+            visited = Color.Purple,
+        ),
+        button = SilkPalette.Button(
+            default = buttonBase,
+            hover = buttonBase.darkened(),
+            pressed = buttonBase.darkened().darkened()
+        )
+    )
+}
+
+val LightSilkPalette = run {
+    val buttonBase = ColorSchemes.Black._900
+    SilkPalette(
+        ColorMode.LIGHT,
+        background = Color.Black,
+        color = Color.Black,
+        link = SilkPalette.Link(
+            default = Color.Blue.lightened(),
+            visited = Color.Purple.lightened(),
+        ),
+        button = SilkPalette.Button(
+            default = buttonBase,
+            hover = buttonBase.lightened(),
+            pressed = buttonBase.lightened().lightened()
+        )
+    )
+}
+
+@InitSilk
+fun updateTheme(context: InitSilkContext) {
+    context.theme.palettes = SilkPalettes(
+        light = LightSilkPalette,
+        dark = DarkSilkPalette
+    )
 }
 
 @App
 @Composable
 fun MyApp(content: @Composable () -> Unit) {
+    SilkConfig.initialColorMode = ColorMode.DARK
     Style(CssGlobalsStyleSheet)
+
     SilkApp {
         Surface(
-            Modifier.width(100.vw).height(100.vh).styleModifier {
+            Modifier.width(100.vw).styleModifier {
                 background("radial-gradient(circle at calc(60%),#0079f2 0,rgba(0, 121, 242,.5) 0,transparent 45%)")
-                backgroundColor(Color.black)
-                color(Color.antiquewhite)
+                backgroundColor(black)
             }
         ) {
             content()

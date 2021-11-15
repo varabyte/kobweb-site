@@ -3,17 +3,18 @@
     import androidx.compose.runtime.*
     import com.varabyte.kobweb.compose.foundation.layout.Row
     import com.varabyte.kobweb.compose.ui.*
+    import com.varabyte.kobweb.compose.ui.graphics.Color
     import com.varabyte.kobweb.core.rememberPageContext
     import com.varabyte.kobweb.silk.components.forms.Button
     import com.varabyte.kobweb.silk.components.text.Text
+    import com.varabyte.kobweb.silk.theme.SilkTheme
     import com.varabyte.kobweb.silk.theme.shapes.Circle
     import com.varabyte.kobweb.silk.theme.shapes.clip
     import org.example.myproject.components.sections.NAV_ITEM_PADDING
-    import org.jetbrains.compose.web.css.Color
     import org.jetbrains.compose.web.css.borderRadius
     import org.jetbrains.compose.web.css.px
 
-    private const val PRIMARY_COLOR = "#0079f2"
+    private val PRIMARY_COLOR_RGB = Color(0,121,242)
 
     private fun getButtonModifier(shape: String, primary: Boolean, modifier: Modifier): Modifier {
         return modifier.then(
@@ -24,19 +25,19 @@
             }
         ).then(
             if (primary) {
-                Modifier.background(Color (PRIMARY_COLOR))
+                Modifier.background(PRIMARY_COLOR_RGB)
             } else {
                 Modifier
             }
         )
     }
 
-    private fun getButtonTextModifier(primary: Boolean): Modifier {
+    private fun getButtonTextModifier(primary: Boolean, color: Color): Modifier {
         return Modifier.then(
             if (primary) {
-                Modifier.color(Color.white)
+                Modifier.color(Color.White)
             } else {
-                Modifier
+                Modifier.color(color)
             }
         )
     }
@@ -51,6 +52,7 @@
         icon: @Composable () -> Unit
     ) {
         val ctx = rememberPageContext()
+        val invertedColor = SilkTheme.palette.color.inverted()
 
         Button(
             onClick  = { ctx.router.navigateTo(path) },
@@ -62,7 +64,7 @@
             ) {
                 icon()
                 when (shape) {
-                    "default" -> Text(text, modifier = getButtonTextModifier(primary))
+                    "default" -> Text(text, modifier = getButtonTextModifier(primary, invertedColor))
                 }
             }
         }
