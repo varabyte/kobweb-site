@@ -10,7 +10,9 @@
     import com.varabyte.kobweb.compose.ui.Alignment
     import com.varabyte.kobweb.compose.ui.Modifier
     import com.varabyte.kobweb.compose.ui.padding
+    import com.varabyte.kobweb.compose.ui.width
     import org.jetbrains.compose.web.css.cssRem
+    import org.jetbrains.compose.web.css.percent
 
     @Page
     @Composable
@@ -18,7 +20,7 @@
         PageLayout("") {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.padding(top = 4.cssRem, bottom = 4.cssRem)
+                modifier = Modifier.padding(top = 4.cssRem, bottom = 4.cssRem).width(100.percent)
             ){
                 HeroSection()
                 FeaturesSection()

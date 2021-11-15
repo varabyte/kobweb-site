@@ -6,7 +6,6 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.foundation.layout.Spacer
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.graphics.Color
-import com.varabyte.kobweb.compose.ui.graphics.toCssColor
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.icons.fa.*
 import com.varabyte.kobweb.silk.components.navigation.Link
@@ -19,7 +18,6 @@ import com.varabyte.kobweb.silk.theme.shapes.clip
 import org.example.myproject.components.widgets.CustomButton
 import org.jetbrains.compose.web.attributes.href
 import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.css.Color.black
 import org.jetbrains.compose.web.css.selectors.attr
 import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.Img

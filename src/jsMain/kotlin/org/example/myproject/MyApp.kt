@@ -3,6 +3,7 @@ package org.example.myproject
 import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Color
+import com.varabyte.kobweb.compose.ui.graphics.toCssColor
 import com.varabyte.kobweb.compose.ui.height
 import com.varabyte.kobweb.compose.ui.styleModifier
 import com.varabyte.kobweb.compose.ui.width
@@ -10,6 +11,7 @@ import com.varabyte.kobweb.core.App
 import com.varabyte.kobweb.silk.*
 import com.varabyte.kobweb.silk.components.layout.Surface
 import com.varabyte.kobweb.silk.theme.SilkConfig
+import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.ColorSchemes
 import com.varabyte.kobweb.silk.theme.colors.SilkPalette
@@ -77,10 +79,11 @@ fun MyApp(content: @Composable () -> Unit) {
     Style(CssGlobalsStyleSheet)
 
     SilkApp {
+        val backgroundColor = SilkTheme.palette.background.inverted()
         Surface(
             Modifier.width(100.vw).styleModifier {
                 background("radial-gradient(circle at calc(60%),#0079f2 0,rgba(0, 121, 242,.5) 0,transparent 45%)")
-                backgroundColor(black)
+                backgroundColor(backgroundColor.toCssColor())
             }
         ) {
             content()
