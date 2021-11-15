@@ -1,4 +1,4 @@
-package org.example.myproject
+package com.varabyte.kobweb.site
 
 import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.ui.Modifier

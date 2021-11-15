@@ -5,8 +5,8 @@ server:
   files:
     dev:
       contentRoot: "build/processedResources/js/main/public"
-      script: "build/js/packages/myproject/kotlin/myproject.js"
-      api: "build/libs/myproject.jar"
+      script: "build/js/packages/kobweb-site/kotlin/kobweb-site.js"
+      api: "build/libs/kobweb-site.jar"
     prod:
       siteRoot: ".kobweb/site"
 

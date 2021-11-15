@@ -7,5 +7,4 @@ pluginManagement {
 }
 enableFeaturePreview("VERSION_CATALOGS")
 
-rootProject.name = "myproject"
-
+rootProject.name = "kobweb-site"

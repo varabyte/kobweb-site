@@ -12,20 +12,21 @@ repositories {
     maven("https://us-central1-maven.pkg.dev/varabyte-repos/public")
 }
 
-group = "org.example.myproject"
+group = "com.varabyte.kobweb.site"
 version = "1.0-SNAPSHOT"
 
 kotlin {
-    jvm {
-        tasks.named("jvmJar", Jar::class.java).configure {
-            archiveFileName.set("myproject.jar")
-        }
-    }
+// Consider re-enabling JVM support if we add API routes
+//    jvm {
+//        tasks.named("jvmJar", Jar::class.java).configure {
+//            archiveFileName.set("kobweb-site.jar")
+//        }
+//    }
     js(IR) {
-        moduleName = "myproject"
+        moduleName = "kobweb-site"
         browser {
             commonWebpackConfig {
-                outputFileName = "myproject.js"
+                outputFileName = "kobweb-site.js"
             }
         }
         binaries.executable()
@@ -45,10 +46,11 @@ kotlin {
              }
         }
 
-        val jvmMain by getting {
-            dependencies {
-                implementation(libs.kobweb.api)
-             }
-        }
+// Consider re-enabling JVM support if we add API routes
+//        val jvmMain by getting {
+//            dependencies {
+//                implementation(libs.kobweb.api)
+//             }
+//        }
     }
 }

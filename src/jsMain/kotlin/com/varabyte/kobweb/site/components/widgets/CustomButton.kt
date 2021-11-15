@@ -1,4 +1,4 @@
-    package org.example.myproject.components.widgets
+    package com.varabyte.kobweb.site.components.widgets
 
     import androidx.compose.runtime.*
     import com.varabyte.kobweb.compose.foundation.layout.Row
@@ -10,7 +10,7 @@
     import com.varabyte.kobweb.silk.theme.SilkTheme
     import com.varabyte.kobweb.silk.theme.shapes.Circle
     import com.varabyte.kobweb.silk.theme.shapes.clip
-    import org.example.myproject.components.sections.NAV_ITEM_PADDING
+    import com.varabyte.kobweb.site.components.sections.NAV_ITEM_PADDING
     import org.jetbrains.compose.web.css.borderRadius
     import org.jetbrains.compose.web.css.px
 
@@ -69,4 +69,3 @@
             }
         }
     }
-

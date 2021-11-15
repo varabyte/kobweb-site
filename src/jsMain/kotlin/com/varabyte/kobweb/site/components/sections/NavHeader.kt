@@ -1,4 +1,4 @@
-package org.example.myproject.components.sections
+package com.varabyte.kobweb.site.components.sections
 
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -16,7 +16,7 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.silk.theme.shapes.Circle
 import com.varabyte.kobweb.silk.theme.shapes.clip
-import org.example.myproject.components.widgets.CustomButton
+import com.varabyte.kobweb.site.components.widgets.CustomButton
 import org.jetbrains.compose.web.attributes.href
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.css.selectors.attr
