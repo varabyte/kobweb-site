@@ -8,7 +8,6 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.graphics.Color.Companion.White
 import com.varabyte.kobweb.silk.components.text.Text
-import com.varabyte.kobweb.silk.theme.SilkTheme
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 

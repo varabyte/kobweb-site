@@ -26,17 +26,6 @@ import org.jetbrains.compose.web.dom.Img
 val NAV_ITEM_PADDING = Modifier.padding(0.px, 12.px)
 
 @Composable
-private fun NavLink(path: String, text: String) {
-    Link(
-        path,
-        text,
-        // Intentionally invert the header colors
-        NAV_ITEM_PADDING.color(SilkTheme.palette.background),
-        UndecoratedLinkVariant
-    )
-}
-
-@Composable
 private fun HomeLogo() {
     A(
         attrs = {
