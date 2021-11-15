@@ -65,16 +65,17 @@ private fun ThemeSwitch(color: Color) {
 }
 
 fun getNavBoxShadow(colorMode: ColorMode): String {
-    return when (colorMode) {
-        ColorMode.LIGHT -> "0 0 0 0.1px #111111"
-        ColorMode.DARK -> "0 0 0 0.1px #eee"
+    val colorStr = when (colorMode) {
+        ColorMode.LIGHT -> "#111111"
+        ColorMode.DARK -> "#eee"
     }
+    return "0 0 0 0.1px $colorStr"
 }
 
 fun getNavBackgroundColor(colorMode: ColorMode): CSSColorValue {
     return when (colorMode) {
-        ColorMode.LIGHT -> (rgba(255,255,255,.65))
-        ColorMode.DARK -> (rgba(1,1,1,.65))
+        ColorMode.LIGHT -> rgba(255, 255, 255, .65)
+        ColorMode.DARK -> rgba(1, 1, 1, .65)
     }
 }
 
