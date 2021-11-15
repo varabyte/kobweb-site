@@ -20,12 +20,14 @@ fun HeroSection() {
 
     Box (
         contentAlignment = Alignment.Center,
-        modifier = Modifier.padding(left = 12.em, right = 12.em).styleModifier {
+        modifier = Modifier.padding(left = 8.em, right = 8.em).styleModifier {
             background("radial-gradient(circle at calc(60%),#0079f2 0,rgba(0, 121, 242,.5) 0,transparent 45%)")
             backgroundColor(backgroundColor.toCssColor())
         }
     ) {
-        Box(contentAlignment = Alignment.Center){
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.padding(left = 8.em, right = 8.em)){
             Row {
                 Box (contentAlignment = Alignment.Center) {
                     Text(
@@ -54,14 +56,25 @@ fun HeroSection() {
         }
         Box (contentAlignment = Alignment.Center,
             modifier = Modifier.padding(top = 32.px)) {
-            Img(
-                "https://storage.googleapis.com/kobweb-example-cdn/hero-code.png",
-                attrs = {
-                    style {
-                        height(582.px)
+            Row {
+                Img(
+                    "https://storage.googleapis.com/kobweb-example-cdn/hero-ide.png",
+                    attrs = {
+                        style {
+                            height(475.px)
+                        }
                     }
-                }
-            )
+                )
+                Img(
+                    "https://storage.googleapis.com/kobweb-example-cdn/hero-browser.png",
+                    attrs = {
+                        style {
+                            height(475.px)
+                        }
+                    }
+                )
+            }
+
         }
     }
 }

@@ -20,7 +20,7 @@
         PageLayout("") {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.padding(top = 4.cssRem, bottom = 4.cssRem).width(100.percent)
+                modifier = Modifier.padding(top = 1.cssRem, bottom = 2.cssRem).width(100.percent)
             ){
                 HeroSection()
                 FeaturesSection()
