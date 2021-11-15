@@ -6,12 +6,16 @@ import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
+import com.varabyte.kobweb.compose.ui.graphics.Color.Companion.White
 import com.varabyte.kobweb.silk.components.text.Text
+import com.varabyte.kobweb.silk.theme.SilkTheme
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 
 @Composable
 private fun GridItem(heading: String, desc: String) {
+    val textColor = White
+
     Box (
         modifier = Modifier.width(260.px).height(200.px).padding(18.px).styleModifier {
             background("radial-gradient(circle at top, rgba(41,41,46,1) 0%, rgba(25,25,28,1) 100%)")
@@ -20,9 +24,9 @@ private fun GridItem(heading: String, desc: String) {
         }
     ) {
         Column {
-            Text(heading, Modifier.fontWeight(FontWeight.Bold))
+            Text(heading, Modifier.fontWeight(FontWeight.Bold).color(textColor))
             Br {}
-            Text(desc, Modifier.lineHeight(1.5).styleModifier {
+            Text(desc, Modifier.lineHeight(1.5).color(textColor).styleModifier {
                 opacity(70.percent)
             })
         }

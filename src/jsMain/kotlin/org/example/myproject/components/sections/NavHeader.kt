@@ -10,6 +10,7 @@ import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.icons.fa.*
 import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.navigation.UndecoratedLinkVariant
+import com.varabyte.kobweb.silk.theme.SilkConfig
 import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
@@ -74,19 +75,34 @@ private fun ThemeSwitch(color: Color) {
     }
 }
 
+fun getNavBoxShadow(colorMode: ColorMode): String {
+    return when (colorMode) {
+        ColorMode.LIGHT -> "0 0 0 0.1px #111111"
+        ColorMode.DARK -> "0 0 0 0.1px #eee"
+    }
+}
+
+fun getNavBackgroundColor(colorMode: ColorMode): CSSColorValue {
+    return when (colorMode) {
+        ColorMode.LIGHT -> (rgba(255,255,255,.65))
+        ColorMode.DARK -> (rgba(1,1,1,.65))
+    }
+}
+
 @Composable
 fun NavHeader() {
     val buttonIconColor = SilkTheme.palette.color.inverted()
-
+    val colorMode by rememberColorMode()
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .fillMaxWidth()
-            .background(rgba(0,0,0,.65))
+            .background(getNavBackgroundColor(colorMode))
             .styleModifier {
                 position(Position.Sticky)
                 top(0.percent)
-                attr("z-index", "1000")
+                property("backdrop-filter", "saturate(180%) blur(5px)")
+                property("box-shadow", getNavBoxShadow(colorMode))
             }
     ) {
         Row(
