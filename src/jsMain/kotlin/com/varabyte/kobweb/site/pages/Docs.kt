@@ -14,7 +14,7 @@ import org.jetbrains.compose.web.css.px
 @Page
 @Composable
 fun DocsPage() {
-    PageLayout("") {
+    PageLayout("Docs") {
         Text(
             "Getting Started",
             modifier = Modifier.color(Color.whitesmoke).fontSize(36.px).fontWeight(FontWeight.Bold).styleModifier {

@@ -14,7 +14,7 @@ import com.varabyte.kobweb.site.components.sections.NavHeader
 @Composable
 fun PageLayout(title: String, content: @Composable () -> Unit) {
     LaunchedEffect(title) {
-        document.title = title
+        document.title = "Kobweb - $title"
     }
 
     Column(
@@ -22,7 +22,6 @@ fun PageLayout(title: String, content: @Composable () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         NavHeader()
-        H1 { Text(title) }
         content()
     }
 }
