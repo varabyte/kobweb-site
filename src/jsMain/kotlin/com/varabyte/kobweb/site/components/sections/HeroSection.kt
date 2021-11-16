@@ -9,7 +9,7 @@ import com.varabyte.kobweb.compose.ui.graphics.toCssColor
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.SilkTheme
-import com.varabyte.kobweb.site.components.widgets.CustomButton
+import com.varabyte.kobweb.site.components.widgets.LinkButton
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 import org.jetbrains.compose.web.dom.Img
@@ -48,8 +48,8 @@ fun HeroSection() {
             }
 
             Row (modifier = Modifier.padding(top = 32.px)) {
-                CustomButton("/docs", "Start Learning", primary = true, modifier = Modifier.width(150.px)) {}
-                CustomButton("https://github.com/varabyte/kobweb", "Github", modifier = Modifier.padding(left = 12.px).width(150.px)) {
+                LinkButton("/docs", "Start Learning", primary = true, modifier = Modifier.width(150.px)) {}
+                LinkButton("https://github.com/varabyte/kobweb", "Github", modifier = Modifier.padding(left = 12.px).width(150.px)) {
                     FaGithub(modifier = Modifier.padding(right = 8.px))
                 }
             }

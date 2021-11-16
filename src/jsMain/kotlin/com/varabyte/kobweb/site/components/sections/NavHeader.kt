@@ -11,7 +11,7 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.silk.theme.shapes.Circle
 import com.varabyte.kobweb.silk.theme.shapes.clip
-import com.varabyte.kobweb.site.components.widgets.CustomButton
+import com.varabyte.kobweb.site.components.widgets.LinkButton
 import org.jetbrains.compose.web.attributes.href
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.A
@@ -95,10 +95,10 @@ fun NavHeader() {
         ) {
             HomeLogo()
             Spacer()
-            CustomButton("https://discord.gg/5NZ2GKV5Cs", text="", shape = "circle") {
+            LinkButton("https://discord.gg/5NZ2GKV5Cs", text="", shape = "circle") {
                 FaDiscord(color = buttonIconColor)
             }
-            CustomButton("https://github.com/varabyte/kobweb", text="", shape = "circle") {
+            LinkButton("https://github.com/varabyte/kobweb", text="", shape = "circle") {
                 FaGithub(color = buttonIconColor)
             }
             ThemeSwitch(buttonIconColor)
