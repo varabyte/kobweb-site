@@ -48,7 +48,7 @@ fun HeroSection() {
             }
 
             Row (modifier = Modifier.padding(top = 32.px)) {
-                LinkButton("/docs", "Start Learning", primary = true, modifier = Modifier.width(150.px)) {}
+                LinkButton("/docs", "Start Learning", primary = true, modifier = Modifier.width(150.px))
                 LinkButton("https://github.com/varabyte/kobweb", "Github", modifier = Modifier.padding(left = 12.px).width(150.px)) {
                     FaGithub(modifier = Modifier.padding(right = 8.px))
                 }

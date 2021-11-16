@@ -47,6 +47,14 @@ fun initButtonStyle(ctx: InitSilkContext) {
     ctx.theme.registerComponentVariants(PrimaryButtonVariant, PrimaryButtonTextVariant, NormalButtonTextVariant)
 }
 
+/**
+ * Create a [Button] which acts likes a link, navigating to some target URL when clicked on.
+ *
+ * @param primary If true, use styles that call this button out as one associated with a major action
+ * @param content If set, renders custom content on the button. If both this and [text] is specified, then this
+ *   content will be rendered to the left of the text with a bit of padding. This is particularly useful for rendering
+ *   logos.
+ */
 @Composable
 fun LinkButton(
     path: String,
@@ -54,7 +62,7 @@ fun LinkButton(
     shape: LinkButtonShape = LinkButtonShape.RECTANGLE,
     primary: Boolean = false,
     modifier: Modifier = Modifier,
-    icon: @Composable () -> Unit
+    content: @Composable () -> Unit = {}
 ) {
     val ctx = rememberPageContext()
 
@@ -67,7 +75,7 @@ fun LinkButton(
             Modifier.padding(12.px),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            icon()
+            content()
             if (text != null && text.isNotEmpty()) {
                 Text(text, variant = if (primary) PrimaryButtonTextVariant else NormalButtonTextVariant)
             }
