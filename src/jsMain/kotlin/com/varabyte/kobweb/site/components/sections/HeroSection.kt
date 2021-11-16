@@ -36,7 +36,7 @@ fun HeroSection() {
                             textAlign(TextAlign.Center)
                         },
                     )
-                    Br {  }
+                    Br()
                     Text(
                         text = "Create full stack web apps in a modern, concise and type safe programming language Kotlin. Kobweb is an opinionated Kotlin framework built on top of Web Compose and includes everything you need to build modern static websites, as well as web applications faster.",
                         modifier = Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
