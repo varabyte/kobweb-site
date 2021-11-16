@@ -1,23 +1,16 @@
 package com.varabyte.kobweb.site
 
 import androidx.compose.runtime.Composable
-import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.toCssColor
-import com.varabyte.kobweb.compose.ui.height
-import com.varabyte.kobweb.compose.ui.styleModifier
-import com.varabyte.kobweb.compose.ui.width
 import com.varabyte.kobweb.core.App
 import com.varabyte.kobweb.silk.*
 import com.varabyte.kobweb.silk.components.layout.Surface
 import com.varabyte.kobweb.silk.theme.SilkConfig
 import com.varabyte.kobweb.silk.theme.SilkTheme
-import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.ColorSchemes
-import com.varabyte.kobweb.silk.theme.colors.SilkPalette
-import com.varabyte.kobweb.silk.theme.colors.SilkPalettes
+import com.varabyte.kobweb.silk.theme.colors.*
 import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.css.Color.black
 
 object CssGlobalsStyleSheet : StyleSheet() {
     init {
@@ -65,10 +58,8 @@ val LightSilkPalette = run {
 }
 
 @InitSilk
-fun updateTheme(context: InitSilkContext) {
-    // Note: This will become `context.config.initialColorMode` after we upgrade to a newer version of Kobweb
-    // so the above greyed out `context` warning will go away.
-    SilkConfig.initialColorMode = ColorMode.DARK
+fun updateTheme(ctx: InitSilkContext) {
+    ctx.config.initialColorMode = ColorMode.DARK
 }
 
 @App
