@@ -38,16 +38,16 @@ private fun getButtonTextModifier(primary: Boolean, color: Color): Modifier {
 fun CustomButton(
     path: String,
     text: String,
-    shape: String       = "default",
-    primary: Boolean    = false,
-    modifier: Modifier  = Modifier,
+    shape: String = "default",
+    primary: Boolean = false,
+    modifier: Modifier = Modifier,
     icon: @Composable () -> Unit
 ) {
     val ctx = rememberPageContext()
     val color = SilkTheme.palette.color
 
     Button(
-        onClick  = { ctx.router.navigateTo(path) },
+        onClick = { ctx.router.navigateTo(path) },
         modifier = modifier.then(getButtonModifier(shape, primary))
     ) {
         Row(
