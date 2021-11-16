@@ -16,30 +16,22 @@ import org.jetbrains.compose.web.css.px
 
 private val PRIMARY_COLOR_RGB = Color(0,121,242)
 
-private fun getButtonModifier(shape: String, primary: Boolean, modifier: Modifier): Modifier {
-    return modifier.then(
-        if (shape == "circle") {
-            NAV_ITEM_PADDING.clip(Circle(radius = 40))
-        } else {
-            Modifier.styleModifier { borderRadius(8.px) }
-        }
-    ).then(
-        if (primary) {
-            Modifier.background(PRIMARY_COLOR_RGB)
-        } else {
-            Modifier
-        }
+private fun getButtonModifier(shape: String, primary: Boolean): Modifier {
+    return if (shape == "circle") {
+        NAV_ITEM_PADDING.clip(Circle(radius = 40))
+    } else {
+        Modifier.styleModifier { borderRadius(8.px) }
+    }.then(
+        if (primary) Modifier.background(PRIMARY_COLOR_RGB) else Modifier
     )
 }
 
 private fun getButtonTextModifier(primary: Boolean, color: Color): Modifier {
-    return Modifier.then(
-        if (primary) {
-            Modifier.color(Color.White)
-        } else {
-            Modifier.color(color)
-        }
-    )
+    return if (primary) {
+        Modifier.color(Color.White)
+    } else {
+        Modifier.color(color.darkened())
+    }
 }
 
 @Composable
@@ -52,11 +44,11 @@ fun CustomButton(
     icon: @Composable () -> Unit
 ) {
     val ctx = rememberPageContext()
-    val invertedColor = SilkTheme.palette.color.inverted()
+    val color = SilkTheme.palette.color
 
     Button(
         onClick  = { ctx.router.navigateTo(path) },
-        modifier = getButtonModifier(shape, primary, modifier)
+        modifier = modifier.then(getButtonModifier(shape, primary))
     ) {
         Row(
             Modifier.padding(12.px),
@@ -64,7 +56,7 @@ fun CustomButton(
         ) {
             icon()
             when (shape) {
-                "default" -> Text(text, modifier = getButtonTextModifier(primary, invertedColor))
+                "default" -> Text(text, modifier = getButtonTextModifier(primary, color))
             }
         }
     }

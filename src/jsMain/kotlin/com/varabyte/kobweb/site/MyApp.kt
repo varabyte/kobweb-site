@@ -66,20 +66,18 @@ val LightSilkPalette = run {
 
 @InitSilk
 fun updateTheme(context: InitSilkContext) {
-    context.theme.palettes = SilkPalettes(
-        light = LightSilkPalette,
-        dark = DarkSilkPalette
-    )
+    // Note: This will become `context.config.initialColorMode` after we upgrade to a newer version of Kobweb
+    // so the above greyed out `context` warning will go away.
+    SilkConfig.initialColorMode = ColorMode.DARK
 }
 
 @App
 @Composable
 fun MyApp(content: @Composable () -> Unit) {
-    SilkConfig.initialColorMode = ColorMode.DARK
     Style(CssGlobalsStyleSheet)
 
     SilkApp {
-        val backgroundColor = SilkTheme.palette.background.inverted()
+        val backgroundColor = SilkTheme.palette.background
         Surface(
             Modifier.width(100.vw).styleModifier {
                 background("radial-gradient(circle at calc(60%),#0079f2 0,rgba(0, 121, 242,.5) 0,transparent 45%)")
