@@ -17,8 +17,13 @@ import org.jetbrains.compose.web.css.px
 import com.varabyte.kobweb.silk.components.forms.ButtonStyle
 import com.varabyte.kobweb.silk.components.text.TextStyle
 
-private fun getButtonModifier(shape: String): Modifier {
-    return if (shape == "circle") {
+enum class LinkButtonShape {
+    RECTANGLE,
+    CIRCLE
+}
+
+private fun getButtonModifier(shape: LinkButtonShape): Modifier {
+    return if (shape == LinkButtonShape.CIRCLE) {
         Modifier.clip(Circle(radius = 40))
     } else {
         Modifier.styleModifier { borderRadius(8.px) }
@@ -45,8 +50,8 @@ fun initButtonStyle(ctx: InitSilkContext) {
 @Composable
 fun LinkButton(
     path: String,
-    text: String,
-    shape: String = "default",
+    text: String? = null,
+    shape: LinkButtonShape = LinkButtonShape.RECTANGLE,
     primary: Boolean = false,
     modifier: Modifier = Modifier,
     icon: @Composable () -> Unit
@@ -63,7 +68,7 @@ fun LinkButton(
             verticalAlignment = Alignment.CenterVertically
         ) {
             icon()
-            if (text.isNotEmpty()) {
+            if (text != null && text.isNotEmpty()) {
                 Text(text, variant = if (primary) PrimaryButtonTextVariant else NormalButtonTextVariant)
             }
         }
