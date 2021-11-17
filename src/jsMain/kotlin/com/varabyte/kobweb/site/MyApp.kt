@@ -2,10 +2,10 @@ package com.varabyte.kobweb.site
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.width
+import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.core.App
 import com.varabyte.kobweb.silk.*
+import com.varabyte.kobweb.silk.components.layout.Surface
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.getColorMode
 import com.varabyte.kobweb.site.components.widgets.GradientBox
@@ -38,8 +38,10 @@ fun MyApp(content: @Composable () -> Unit) {
             localStorage.setItem(COLOR_MODE_KEY, colorMode.name)
         }
 
-        GradientBox(Modifier.width(100.vw)) {
-            content()
+        Surface {
+            GradientBox(Modifier.fillMaxSize()) {
+                content()
+            }
         }
     }
 }
