@@ -1,12 +1,15 @@
 package com.varabyte.kobweb.site
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.width
 import com.varabyte.kobweb.core.App
 import com.varabyte.kobweb.silk.*
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import com.varabyte.kobweb.silk.theme.colors.getColorMode
 import com.varabyte.kobweb.site.components.widgets.GradientBox
+import kotlinx.browser.localStorage
 import org.jetbrains.compose.web.css.*
 
 object CssGlobalsStyleSheet : StyleSheet() {
@@ -18,17 +21,23 @@ object CssGlobalsStyleSheet : StyleSheet() {
     }
 }
 
+private const val COLOR_MODE_KEY = "kobweb-site-color-mode"
+
 @InitSilk
 fun updateTheme(ctx: InitSilkContext) {
-    ctx.config.initialColorMode = ColorMode.DARK
+    ctx.config.initialColorMode = localStorage.getItem(COLOR_MODE_KEY)?.let { ColorMode.valueOf(it) } ?: ColorMode.DARK
 }
 
 @App
 @Composable
 fun MyApp(content: @Composable () -> Unit) {
     Style(CssGlobalsStyleSheet)
-
     SilkApp {
+        val colorMode = getColorMode()
+        LaunchedEffect(colorMode) {
+            localStorage.setItem(COLOR_MODE_KEY, colorMode.name)
+        }
+
         GradientBox(Modifier.width(100.vw)) {
             content()
         }
