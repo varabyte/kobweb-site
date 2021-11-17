@@ -17,21 +17,24 @@ ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
 RUN export JAVA_HOME
 RUN java -version
 
+# Install utils- wget and unzip
 RUN  apt-get update \
   && apt-get install -y wget unzip \
   && rm -rf /var/lib/apt/lists/* \
 
 WORKDIR /app
+
+# Copy the project code to app dir
 COPY . /app
 USER root
 RUN pwd && ls
 
+# Install kobweb
 RUN wget https://github.com/varabyte/kobweb/releases/download/v0.6.3/kobweb-0.6.3.zip \
     && unzip kobweb-0.6.3.zip \
     && rm -r kobweb-0.6.3.zip
 
-RUN cd /app && ls \
-&& ./gradlew --stop
+RUN cd /app && ./gradlew --stop
 
 WORKDIR /app
 CMD [ "../kobweb-0.6.3/bin/kobweb", "run"]
