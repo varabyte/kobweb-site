@@ -43,7 +43,7 @@ private fun HomeLogo() {
 }
 
 @Composable
-private fun ThemeSwitch(color: Color) {
+private fun ThemeSwitch() {
     var colorMode by rememberColorMode()
 
     Button(
@@ -52,8 +52,8 @@ private fun ThemeSwitch(color: Color) {
     ) {
         Box(Modifier.padding(8.px)) {
             when (colorMode) {
-                ColorMode.DARK -> FaMoon(color = color)
-                ColorMode.LIGHT -> FaSun(color = color)
+                ColorMode.DARK -> FaMoon()
+                ColorMode.LIGHT -> FaSun()
             }
         }
     }
@@ -76,7 +76,6 @@ private fun getNavBackgroundColor(colorMode: ColorMode): CSSColorValue {
 
 @Composable
 fun NavHeader() {
-    val buttonIconColor = SilkTheme.palette.color
     val colorMode by rememberColorMode()
     Box(
         Modifier
@@ -97,12 +96,12 @@ fun NavHeader() {
             HomeLogo()
             Spacer()
             LinkButton("https://discord.gg/5NZ2GKV5Cs", shape = LinkButtonShape.CIRCLE) {
-                FaDiscord(color = buttonIconColor)
+                FaDiscord()
             }
             LinkButton("https://github.com/varabyte/kobweb", shape = LinkButtonShape.CIRCLE) {
-                FaGithub(color = buttonIconColor)
+                FaGithub()
             }
-            ThemeSwitch(buttonIconColor)
+            ThemeSwitch()
         }
     }
 }

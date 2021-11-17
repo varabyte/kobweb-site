@@ -31,7 +31,7 @@ private fun getButtonModifier(shape: LinkButtonShape): Modifier {
 }
 
 val PrimaryButtonVariant = ButtonStyle.addVariant("primary") {
-    base = Modifier.background(Color(0,121,242))
+    base = Modifier.background(Color.rgb(0, 121, 242))
 }
 
 val NormalButtonVariant = ButtonStyle.addVariant("normal") { colorMode ->
