@@ -67,10 +67,10 @@ fun initButtonStyle(ctx: InitSilkContext) {
 @Composable
 fun LinkButton(
     path: String,
+    modifier: Modifier = Modifier,
     text: String? = null,
     shape: LinkButtonShape = LinkButtonShape.RECTANGLE,
     primary: Boolean = false,
-    modifier: Modifier = Modifier,
     content: @Composable () -> Unit = {}
 ) {
     val ctx = rememberPageContext()
