@@ -19,7 +19,7 @@ import org.jetbrains.compose.web.css.percent
 fun HomePage() {
     PageLayout("Home") {
         Box(
-            Modifier.padding(top = 1.cssRem, bottom = 2.cssRem).width(100.percent),
+            Modifier.padding(bottom = 2.cssRem).width(100.percent),
             contentAlignment = Alignment.Center,
         ){
             HeroSection()

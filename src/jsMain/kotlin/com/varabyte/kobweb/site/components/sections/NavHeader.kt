@@ -61,8 +61,8 @@ private fun ThemeSwitch(color: Color) {
 
 private fun getNavBoxShadow(colorMode: ColorMode): String {
     val colorStr = when (colorMode) {
-        ColorMode.DARK -> "#111111"
-        ColorMode.LIGHT -> "#eee"
+        ColorMode.DARK -> "#eee"
+        ColorMode.LIGHT -> "#111111"
     }
     return "0 0 0 0.1px $colorStr"
 }

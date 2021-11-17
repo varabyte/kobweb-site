@@ -2,6 +2,7 @@ import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.textAlign
+import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
@@ -17,9 +18,9 @@ import org.jetbrains.compose.web.dom.Img
 
 @Composable
 fun HeroSection() {
-    GradientBox(Modifier.padding(left = 8.em, right = 8.em), Alignment.Center) {
+    GradientBox(contentAlignment = Alignment.Center) {
         Box(
-            Modifier.padding(left = 8.em, right = 8.em),
+            Modifier.padding(left = 12.em, right = 12.em, top = 6.em),
             contentAlignment = Alignment.Center
         ) {
             Row {
@@ -52,13 +53,14 @@ fun HeroSection() {
                 }
             }
         }
-        Box (Modifier.padding(top = 32.px), contentAlignment = Alignment.Center) {
-            Row {
+        Box (Modifier.padding(top = 32.px, bottom = 32.px), contentAlignment = Alignment.Center) {
+            Row (horizontalArrangement = Arrangement.Center) {
                 Img(
                     "https://storage.googleapis.com/kobweb-example-cdn/hero-ide.png",
                     attrs = {
                         style {
                             height(475.px)
+                            margin(8.px)
                         }
                     }
                 )
@@ -67,6 +69,7 @@ fun HeroSection() {
                     attrs = {
                         style {
                             height(475.px)
+                            margin(8.px)
                         }
                     }
                 )
