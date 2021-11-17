@@ -14,31 +14,31 @@ import org.jetbrains.compose.web.dom.Img
 @Composable
 fun CliSection() {
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.width(940.px).padding(top = 6.cssRem)
+        Modifier.width(940.px).padding(top = 6.cssRem),
+        contentAlignment = Alignment.Center
     ) {
         Row (
             horizontalArrangement = Arrangement.Center
         ) {
             Box (contentAlignment = Alignment.Center) {
                 Text(
-                    text = "Kobweb CLI",
-                    modifier = Modifier.fontSize(48.px).fontWeight(FontWeight.Bold).styleModifier {
+                    "Kobweb CLI",
+                    Modifier.fontSize(48.px).fontWeight(FontWeight.Bold).styleModifier {
                         textAlign(TextAlign.Center)
                     },
                 )
                 Br {  }
                 Text(
-                    text = "Kobweb CLI provides commands to handle the parts of building a Web Compose app that are less glamorous including project setup and configuration",
-                    modifier = Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
+                    "Kobweb CLI provides commands to handle the parts of building a Web Compose app that are less glamorous including project setup and configuration",
+                    Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
                         opacity(80.percent)
                         textAlign(TextAlign.Center)
                     }
                 )
             }
             Box (
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.padding(top = 2.cssRem)
+                Modifier.padding(top = 2.cssRem),
+                contentAlignment = Alignment.Center
             ) {
                 Img(
                     "https://storage.googleapis.com/kobweb-example-cdn/kobweb-cli.gif",

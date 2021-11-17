@@ -17,11 +17,11 @@ fun DocsPage() {
     PageLayout("Docs") {
         Text(
             "Getting Started",
-            modifier = Modifier.color(Color.whitesmoke).fontSize(36.px).fontWeight(FontWeight.Bold).styleModifier {
+            Modifier.color(Color.whitesmoke).fontSize(36.px).fontWeight(FontWeight.Bold).styleModifier {
                 textAlign(TextAlign.Center)
             })
         Text("Coming soon!",
-            modifier = Modifier.color(Color.whitesmoke).fontSize(24.px).styleModifier {
+            Modifier.color(Color.whitesmoke).fontSize(24.px).styleModifier {
                 textAlign(TextAlign.Center)
             })
 

@@ -79,8 +79,7 @@ fun NavHeader() {
     val buttonIconColor = SilkTheme.palette.color
     val colorMode by rememberColorMode()
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
+        Modifier
             .fillMaxWidth()
             .background(getNavBackgroundColor(colorMode))
             .styleModifier {
@@ -88,7 +87,8 @@ fun NavHeader() {
                 top(0.percent)
                 property("backdrop-filter", "saturate(180%) blur(5px)")
                 property("box-shadow", getNavBoxShadow(colorMode))
-            }
+            },
+        contentAlignment = Alignment.Center,
     ) {
         Row(
             Modifier.fillMaxWidth(70.percent).padding(1.em),
