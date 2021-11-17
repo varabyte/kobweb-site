@@ -9,6 +9,7 @@ import com.varabyte.kobweb.compose.ui.graphics.toCssColor
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.SilkTheme
+import com.varabyte.kobweb.site.components.widgets.GradientBox
 import com.varabyte.kobweb.site.components.widgets.LinkButton
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
@@ -16,15 +17,7 @@ import org.jetbrains.compose.web.dom.Img
 
 @Composable
 fun HeroSection() {
-    val backgroundColor = SilkTheme.palette.background
-
-    Box (
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.padding(left = 8.em, right = 8.em).styleModifier {
-            background("radial-gradient(circle at calc(60%),#0079f2 0,rgba(0, 121, 242,.5) 0,transparent 45%)")
-            backgroundColor(backgroundColor.toCssColor())
-        }
-    ) {
+    GradientBox(Modifier.padding(left = 8.em, right = 8.em), Alignment.Center) {
         Box(
             Modifier.padding(left = 8.em, right = 8.em),
             contentAlignment = Alignment.Center
