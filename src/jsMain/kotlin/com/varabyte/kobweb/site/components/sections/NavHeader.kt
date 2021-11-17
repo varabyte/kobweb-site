@@ -69,8 +69,8 @@ private fun getNavBoxShadow(colorMode: ColorMode): String {
 
 private fun getNavBackgroundColor(colorMode: ColorMode): CSSColorValue {
     return when (colorMode) {
-        ColorMode.DARK -> rgba(255, 255, 255, .65)
-        ColorMode.LIGHT -> rgba(1, 1, 1, .65)
+        ColorMode.DARK -> rgba(0.0, 0.0, 0.0, 0.65)
+        ColorMode.LIGHT -> rgba(255, 255, 255, 0.65)
     }
 }
 
