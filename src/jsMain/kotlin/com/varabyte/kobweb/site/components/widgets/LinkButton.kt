@@ -34,17 +34,26 @@ val PrimaryButtonVariant = ButtonStyle.addVariant("primary") {
     base = Modifier.background(Color(0,121,242))
 }
 
+val NormalButtonVariant = ButtonStyle.addVariant("normal") { colorMode ->
+    base = Modifier.background(SilkTheme.palettes[colorMode.opposite()].background)
+}
+
 val PrimaryButtonTextVariant = TextStyle.addVariant("button-primary") {
     base = Modifier.color(Color.White)
 }
 
 val NormalButtonTextVariant = TextStyle.addVariant("button-normal") { colorMode ->
-    base = Modifier.color(SilkTheme.palettes[colorMode].color.darkened())
+    base = Modifier.color(SilkTheme.palettes[colorMode.opposite()].color.darkened())
 }
 
 @InitSilk
 fun initButtonStyle(ctx: InitSilkContext) {
-    ctx.theme.registerComponentVariants(PrimaryButtonVariant, PrimaryButtonTextVariant, NormalButtonTextVariant)
+    ctx.theme.registerComponentVariants(
+        PrimaryButtonVariant,
+        NormalButtonVariant,
+        PrimaryButtonTextVariant,
+        NormalButtonTextVariant
+    )
 }
 
 /**
@@ -69,7 +78,7 @@ fun LinkButton(
     Button(
         onClick = { ctx.router.navigateTo(path) },
         modifier = modifier.then(getButtonModifier(shape)),
-        variant = PrimaryButtonVariant.takeIf { primary }
+        variant = if (primary) PrimaryButtonVariant else NormalButtonVariant
     ) {
         Row(
             Modifier.padding(12.px),
