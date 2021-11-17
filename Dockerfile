@@ -37,4 +37,7 @@ RUN wget https://github.com/varabyte/kobweb/releases/download/v0.6.3/kobweb-0.6.
 RUN cd /app && ./gradlew --stop
 
 WORKDIR /app
+
+ENV PORT=8080
+EXPOSE $PORT
 CMD [ "../kobweb-0.6.3/bin/kobweb", "run"]

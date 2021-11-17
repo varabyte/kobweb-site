@@ -10,5 +10,5 @@ Following commands will set up all the necessary dependencies needed for this we
 
 `docker build --no-cache --progress=plain -t kobweb-site:v1 .
 `
-`docker run -it kobweb-site:v1
+`docker run -p 8080:8080 -it kobweb-site:v1
 `
