@@ -20,7 +20,7 @@ import org.jetbrains.compose.web.css.*
 
 val GradientBoxStyle = ComponentStyle("kobweb-gradient") { colorMode ->
    base =  Modifier.styleModifier {
-       background("radial-gradient(circle at calc(60%), #0079f2 0, rgba(0, 121, 242, .5) 0, transparent 65%)")
+       background("radial-gradient(circle at calc(60%), #0079f2 0, rgba(0, 121, 242, .5) 0, transparent 45%)")
        backgroundColor(SilkTheme.palettes[colorMode].background.toCssColor())
    }
 }

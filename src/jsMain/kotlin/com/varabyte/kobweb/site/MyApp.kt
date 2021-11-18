@@ -2,6 +2,7 @@ package com.varabyte.kobweb.site
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.core.App
 import com.varabyte.kobweb.silk.*
@@ -39,7 +40,7 @@ fun MyApp(content: @Composable () -> Unit) {
         }
 
         Surface {
-            GradientBox(Modifier.fillMaxSize()) {
+            Box(Modifier.fillMaxSize()) {
                 content()
             }
         }

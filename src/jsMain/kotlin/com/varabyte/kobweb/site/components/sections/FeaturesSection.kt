@@ -8,6 +8,7 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.silk.components.text.Text
+import com.varabyte.kobweb.site.components.widgets.GradientBox
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 
@@ -35,7 +36,7 @@ private fun GridItem(heading: String, desc: String) {
 
 @Composable
 fun FeaturesSection() {
-    Box (
+    GradientBox (
         Modifier.width(940.px).padding(top = 6.cssRem),
         contentAlignment = Alignment.Center,
     ) {
