@@ -3,12 +3,9 @@ package com.varabyte.kobweb.site.components.sections
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
-import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.icons.fa.*
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
-import com.varabyte.kobweb.silk.theme.shapes.Circle
-import com.varabyte.kobweb.silk.theme.shapes.clip
 import com.varabyte.kobweb.site.components.widgets.*
 import org.jetbrains.compose.web.attributes.href
 import org.jetbrains.compose.web.css.*
@@ -37,21 +34,6 @@ private fun HomeLogo() {
     }
 }
 
-@Composable
-private fun ThemeSwitch() {
-    var colorMode by rememberColorMode()
-
-    ThemedButton(
-        onClick = { colorMode = colorMode.opposite() },
-        shape = ButtonShape.CIRCLE
-    ) {
-        when (colorMode) {
-            ColorMode.DARK -> FaMoon()
-            ColorMode.LIGHT -> FaSun()
-        }
-    }
-}
-
 private fun getNavBoxShadow(colorMode: ColorMode): String {
     val colorStr = when (colorMode) {
         ColorMode.DARK -> "#eee"
@@ -67,9 +49,11 @@ private fun getNavBackgroundColor(colorMode: ColorMode): CSSColorValue {
     }
 }
 
+private val BUTTON_PADDING = Modifier.padding(0.px, 10.px)
+
 @Composable
 fun NavHeader() {
-    val colorMode by rememberColorMode()
+    var colorMode by rememberColorMode()
     Box(
         Modifier
             .fillMaxWidth()
@@ -89,13 +73,22 @@ fun NavHeader() {
             HomeLogo()
             Spacer()
             Row(Modifier.padding(0.px, 12.px)) {
-                LinkButton("https://discord.gg/5NZ2GKV5Cs", shape = ButtonShape.CIRCLE) {
+                LinkButton("https://discord.gg/5NZ2GKV5Cs", BUTTON_PADDING, shape = ButtonShape.CIRCLE) {
                     FaDiscord()
                 }
-                LinkButton("https://github.com/varabyte/kobweb", shape = ButtonShape.CIRCLE) {
+                LinkButton("https://github.com/varabyte/kobweb", BUTTON_PADDING, shape = ButtonShape.CIRCLE) {
                     FaGithub()
                 }
-                ThemeSwitch()
+                ThemedButton(
+                    onClick = { colorMode = colorMode.opposite() },
+                    BUTTON_PADDING,
+                    shape = ButtonShape.CIRCLE
+                ) {
+                    when (colorMode) {
+                        ColorMode.DARK -> FaMoon()
+                        ColorMode.LIGHT -> FaSun()
+                    }
+                }
             }
         }
     }
