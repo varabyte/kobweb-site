@@ -31,7 +31,7 @@ fun CliSection() {
                 Text(
                     "Kobweb CLI provides commands to handle the parts of building a Web Compose app that are less glamorous including project setup and configuration",
                     Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
-                        opacity(80.percent)
+                        opacity(70.percent)
                         textAlign(TextAlign.Center)
                     }
                 )

@@ -52,7 +52,7 @@ fun FeaturesSection() {
                 Text(
                     "Kobweb has all the tools you need to build production full stack web apps",
                     Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
-                        opacity(80.percent)
+                        opacity(70.percent)
                         textAlign(TextAlign.Center)
                     }
                 )
