@@ -33,7 +33,7 @@ private fun HomeLogo() {
     }
 }
 
-private fun getNavBoxShadow(colorMode: ColorMode): String {
+fun getNavBoxShadow(colorMode: ColorMode): String {
     val colorStr = when (colorMode) {
         ColorMode.DARK -> "#eee"
         ColorMode.LIGHT -> "#111111"

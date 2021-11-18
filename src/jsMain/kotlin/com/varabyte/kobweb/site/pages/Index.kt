@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.site.components.layouts.PageLayout
 import CliSection
+import CtaSection
 import FeaturesSection
 import HeroSection
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -25,6 +26,7 @@ fun HomePage() {
             HeroSection()
             FeaturesSection()
             CliSection()
+            CtaSection()
         }
     }
 }

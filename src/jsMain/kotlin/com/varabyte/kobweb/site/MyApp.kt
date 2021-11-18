@@ -9,7 +9,6 @@ import com.varabyte.kobweb.silk.*
 import com.varabyte.kobweb.silk.components.layout.Surface
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.getColorMode
-import com.varabyte.kobweb.site.components.widgets.GradientBox
 import kotlinx.browser.localStorage
 import org.jetbrains.compose.web.css.*
 
