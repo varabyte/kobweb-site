@@ -7,6 +7,7 @@ import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.navigation.Link
 import com.varabyte.kobweb.silk.components.text.Text
+import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Img
 
@@ -32,8 +33,11 @@ private fun Logo() {
 
 @Composable
 fun Footer() {
+    val colorMode by rememberColorMode()
     Box(
-        Modifier.fillMaxWidth().minHeight(200.px),
+        Modifier.fillMaxWidth().minHeight(200.px).styleModifier {
+            property("box-shadow", getNavBoxShadow(colorMode))
+        },
         contentAlignment = Alignment.Center
     ) {
         Column(
