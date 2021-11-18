@@ -6,10 +6,9 @@ import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.fillMaxSize
-import com.varabyte.kobweb.silk.components.text.Text
 import kotlinx.browser.document
-import org.jetbrains.compose.web.dom.H1
 import com.varabyte.kobweb.site.components.sections.NavHeader
+import com.varabyte.kobweb.site.components.sections.Footer
 
 @Composable
 fun PageLayout(title: String, content: @Composable () -> Unit) {
@@ -23,5 +22,6 @@ fun PageLayout(title: String, content: @Composable () -> Unit) {
     ) {
         NavHeader()
         content()
+        Footer()
     }
 }
