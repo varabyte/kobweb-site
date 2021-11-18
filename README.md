@@ -12,7 +12,3 @@ Following commands will set up all the necessary dependencies needed for this we
 `
 `docker run -p 8080:8080 -it kobweb-site:v1
 `
-
-## Deploy to Google Cloud Run
-
-[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
