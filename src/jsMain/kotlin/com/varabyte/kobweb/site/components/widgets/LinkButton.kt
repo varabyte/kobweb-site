@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.graphics.Color
+import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.InitSilk
 import com.varabyte.kobweb.silk.InitSilkContext
@@ -39,7 +40,7 @@ val NormalButtonVariant = ButtonStyle.addVariant("normal") { colorMode ->
 }
 
 val PrimaryButtonTextVariant = TextStyle.addVariant("button-primary") {
-    base = Modifier.color(Color.White)
+    base = Modifier.color(Colors.White)
 }
 
 val NormalButtonTextVariant = TextStyle.addVariant("button-normal") { colorMode ->

@@ -6,14 +6,14 @@ import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
-import com.varabyte.kobweb.compose.ui.graphics.Color.Companion.White
+import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.silk.components.text.Text
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 
 @Composable
 private fun GridItem(heading: String, desc: String) {
-    val textColor = White
+    val textColor = Colors.White
 
     Box (
         Modifier.width(260.px).height(200.px).padding(18.px).styleModifier {
