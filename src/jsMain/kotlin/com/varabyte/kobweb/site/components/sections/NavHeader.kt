@@ -3,22 +3,17 @@ package com.varabyte.kobweb.site.components.sections
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
-import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.icons.fa.*
-import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.silk.theme.shapes.Circle
 import com.varabyte.kobweb.silk.theme.shapes.clip
-import com.varabyte.kobweb.site.components.widgets.LinkButton
-import com.varabyte.kobweb.site.components.widgets.LinkButtonShape
+import com.varabyte.kobweb.site.components.widgets.*
 import org.jetbrains.compose.web.attributes.href
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.Img
-
-val NAV_ITEM_PADDING = Modifier.padding(0.px, 12.px)
 
 @Composable
 private fun HomeLogo() {
@@ -46,15 +41,13 @@ private fun HomeLogo() {
 private fun ThemeSwitch() {
     var colorMode by rememberColorMode()
 
-    Button(
+    ThemedButton(
         onClick = { colorMode = colorMode.opposite() },
-        NAV_ITEM_PADDING.clip(Circle())
+        shape = ButtonShape.CIRCLE
     ) {
-        Box(Modifier.padding(8.px)) {
-            when (colorMode) {
-                ColorMode.DARK -> FaMoon()
-                ColorMode.LIGHT -> FaSun()
-            }
+        when (colorMode) {
+            ColorMode.DARK -> FaMoon()
+            ColorMode.LIGHT -> FaSun()
         }
     }
 }
@@ -95,13 +88,15 @@ fun NavHeader() {
         ) {
             HomeLogo()
             Spacer()
-            LinkButton("https://discord.gg/5NZ2GKV5Cs", shape = LinkButtonShape.CIRCLE) {
-                FaDiscord()
+            Row(Modifier.padding(0.px, 12.px)) {
+                LinkButton("https://discord.gg/5NZ2GKV5Cs", shape = ButtonShape.CIRCLE) {
+                    FaDiscord()
+                }
+                LinkButton("https://github.com/varabyte/kobweb", shape = ButtonShape.CIRCLE) {
+                    FaGithub()
+                }
+                ThemeSwitch()
             }
-            LinkButton("https://github.com/varabyte/kobweb", shape = LinkButtonShape.CIRCLE) {
-                FaGithub()
-            }
-            ThemeSwitch()
         }
     }
 }

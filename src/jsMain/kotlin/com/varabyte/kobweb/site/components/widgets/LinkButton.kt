@@ -3,8 +3,7 @@ package com.varabyte.kobweb.site.components.widgets
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
-import com.varabyte.kobweb.compose.ui.graphics.Color
-import com.varabyte.kobweb.compose.ui.graphics.Colors
+import com.varabyte.kobweb.compose.ui.graphics.*
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.InitSilk
 import com.varabyte.kobweb.silk.InitSilkContext
@@ -16,15 +15,15 @@ import com.varabyte.kobweb.silk.theme.shapes.clip
 import org.jetbrains.compose.web.css.borderRadius
 import org.jetbrains.compose.web.css.px
 import com.varabyte.kobweb.silk.components.forms.ButtonStyle
-import com.varabyte.kobweb.silk.components.text.TextStyle
+import com.varabyte.kobweb.silk.theme.colors.shifted
 
-enum class LinkButtonShape {
+enum class ButtonShape {
     RECTANGLE,
     CIRCLE
 }
 
-private fun getButtonModifier(shape: LinkButtonShape): Modifier {
-    return if (shape == LinkButtonShape.CIRCLE) {
+private fun getButtonModifier(shape: ButtonShape): Modifier {
+    return if (shape == ButtonShape.CIRCLE) {
         Modifier.clip(Circle(radius = 40))
     } else {
         Modifier.styleModifier { borderRadius(8.px) }
@@ -32,54 +31,49 @@ private fun getButtonModifier(shape: LinkButtonShape): Modifier {
 }
 
 val PrimaryButtonVariant = ButtonStyle.addVariant("primary") {
-    base = Modifier.background(Color.rgb(0, 121, 242))
+    val backgroundColor = Color.rgb(0, 121, 242)
+    base = Modifier
+        .background(backgroundColor)
+        .color(Colors.White)
+    hover = Modifier.background(backgroundColor.lightened())
 }
 
 val NormalButtonVariant = ButtonStyle.addVariant("normal") { colorMode ->
-    base = Modifier.background(SilkTheme.palettes[colorMode.opposite()].background)
-}
-
-val PrimaryButtonTextVariant = TextStyle.addVariant("button-primary") {
-    base = Modifier.color(Colors.White)
-}
-
-val NormalButtonTextVariant = TextStyle.addVariant("button-normal") { colorMode ->
-    base = Modifier.color(SilkTheme.palettes[colorMode.opposite()].color.darkened())
+    val colorMode = colorMode.opposite() // Buttons should be inverted from the rest of the site
+    base = Modifier
+        .background(SilkTheme.palettes[colorMode].background)
+        .color(SilkTheme.palettes[colorMode].color)
+    hover = Modifier
+        .background(SilkTheme.palettes[colorMode].background.shifted(colorMode))
 }
 
 @InitSilk
 fun initButtonStyle(ctx: InitSilkContext) {
-    ctx.theme.registerComponentVariants(
-        PrimaryButtonVariant,
-        NormalButtonVariant,
-        PrimaryButtonTextVariant,
-        NormalButtonTextVariant
-    )
+    ctx.theme.registerComponentVariants(PrimaryButtonVariant, NormalButtonVariant)
 }
 
 /**
- * Create a [Button] which acts likes a link, navigating to some target URL when clicked on.
+ * Create a [Button] which is styled with primary or secondary colors.
  *
- * @param primary If true, use styles that call this button out as one associated with a major action
+ * @param primary If true, use styles that call this button out as one associated with a major action you want to draw
+ *   attention to.
  * @param content If set, renders custom content on the button. If both this and [text] is specified, then this
  *   content will be rendered to the left of the text with a bit of padding. This is particularly useful for rendering
  *   logos.
  */
 @Composable
-fun LinkButton(
-    path: String,
+fun ThemedButton(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     text: String? = null,
-    shape: LinkButtonShape = LinkButtonShape.RECTANGLE,
+    shape: ButtonShape = ButtonShape.RECTANGLE,
     primary: Boolean = false,
     content: @Composable () -> Unit = {}
 ) {
-    val ctx = rememberPageContext()
-
     Button(
-        onClick = { ctx.router.navigateTo(path) },
-        modifier = modifier.then(getButtonModifier(shape)),
-        variant = if (primary) PrimaryButtonVariant else NormalButtonVariant
+        onClick,
+        modifier.then(getButtonModifier(shape)),
+        if (primary) PrimaryButtonVariant else NormalButtonVariant
     ) {
         Row(
             Modifier.padding(12.px),
@@ -87,8 +81,24 @@ fun LinkButton(
         ) {
             content()
             if (text != null && text.isNotEmpty()) {
-                Text(text, variant = if (primary) PrimaryButtonTextVariant else NormalButtonTextVariant)
+                Text(text)
             }
         }
     }
+}
+
+/**
+ * Create a [ThemedButton] which acts likes a link, navigating to some target URL when clicked on.
+ */
+@Composable
+fun LinkButton(
+    path: String,
+    modifier: Modifier = Modifier,
+    text: String? = null,
+    shape: ButtonShape = ButtonShape.RECTANGLE,
+    primary: Boolean = false,
+    content: @Composable () -> Unit = {}
+) {
+    val ctx = rememberPageContext()
+    ThemedButton(onClick = { ctx.router.navigateTo(path) }, modifier, text, shape, primary, content)
 }
