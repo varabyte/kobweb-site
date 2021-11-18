@@ -3,6 +3,7 @@ package com.varabyte.kobweb.site.components.sections
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
+import com.varabyte.kobweb.navigation.Link
 import com.varabyte.kobweb.silk.components.icons.fa.*
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
@@ -14,10 +15,8 @@ import org.jetbrains.compose.web.dom.Img
 
 @Composable
 private fun HomeLogo() {
-    A(
-        attrs = {
-            href("/")
-        }
+    Link(
+        href = "/",
     ) {
         Box(
             Modifier.padding(4.px)
