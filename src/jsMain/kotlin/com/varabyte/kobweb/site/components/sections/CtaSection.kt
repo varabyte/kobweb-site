@@ -13,7 +13,7 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaStar
 import com.varabyte.kobweb.navigation.Link
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
-import com.varabyte.kobweb.site.components.sections.getNavBoxShadow
+import com.varabyte.kobweb.site.components.sections.getBoxShadow
 import org.jetbrains.compose.web.css.*
 
 @Composable
@@ -29,7 +29,7 @@ private fun CtaGridItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.width(33.33.percent).height(300.px).styleModifier {
             padding(4.em)
-            property("box-shadow", getNavBoxShadow(colorMode))
+            property("box-shadow", getBoxShadow(colorMode))
         }
     ) {
         content()

@@ -36,7 +36,7 @@ fun Footer() {
     val colorMode by rememberColorMode()
     Box(
         Modifier.fillMaxWidth().minHeight(200.px).styleModifier {
-            property("box-shadow", getNavBoxShadow(colorMode))
+            property("box-shadow", getBoxShadow(colorMode))
         },
         contentAlignment = Alignment.Center
     ) {

@@ -1,4 +1,6 @@
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.textAlign
@@ -7,26 +9,30 @@ import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.graphics.Colors
+import com.varabyte.kobweb.compose.ui.graphics.lightened
 import com.varabyte.kobweb.silk.components.text.Text
+import com.varabyte.kobweb.silk.theme.SilkTheme
+import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
+import com.varabyte.kobweb.site.components.sections.getBoxShadow
 import com.varabyte.kobweb.site.components.widgets.GradientBox
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 
 @Composable
 private fun GridItem(heading: String, desc: String) {
-    val textColor = Colors.White
+    val colorMode by rememberColorMode()
 
     Box (
-        Modifier.width(260.px).height(200.px).padding(18.px).styleModifier {
-            background("radial-gradient(circle at top, rgba(41,41,46,1) 0%, rgba(25,25,28,1) 100%)")
+        Modifier.width(260.px).height(200.px).padding(18.px).background(SilkTheme.palettes[colorMode].background).styleModifier {
             borderRadius(12.px)
             padding(2.em)
+            property("box-shadow", getBoxShadow(colorMode))
         }
     ) {
         Column {
-            Text(heading, Modifier.fontWeight(FontWeight.Bold).color(textColor))
+            Text(heading, Modifier.fontWeight(FontWeight.Bold))
             Br {}
-            Text(desc, Modifier.lineHeight(1.5).color(textColor).styleModifier {
+            Text(desc, Modifier.lineHeight(1.5).styleModifier {
                 opacity(70.percent)
             })
         }

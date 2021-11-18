@@ -8,9 +8,7 @@ import com.varabyte.kobweb.silk.components.icons.fa.*
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.site.components.widgets.*
-import org.jetbrains.compose.web.attributes.href
 import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.A
 import org.jetbrains.compose.web.dom.Img
 
 @Composable
@@ -33,7 +31,7 @@ private fun HomeLogo() {
     }
 }
 
- fun getNavBoxShadow(colorMode: ColorMode): String {
+ fun getBoxShadow(colorMode: ColorMode): String {
     val colorStr = when (colorMode) {
         ColorMode.DARK -> "#eee"
         ColorMode.LIGHT -> "#111111"
@@ -61,7 +59,7 @@ fun NavHeader() {
                 position(Position.Sticky)
                 top(0.percent)
                 property("backdrop-filter", "saturate(180%) blur(5px)")
-                property("box-shadow", getNavBoxShadow(colorMode))
+                property("box-shadow", getBoxShadow(colorMode))
             },
         contentAlignment = Alignment.Center,
     ) {
