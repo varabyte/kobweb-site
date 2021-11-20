@@ -21,7 +21,7 @@ object CssGlobalsStyleSheet : StyleSheet() {
     }
 }
 
-private const val COLOR_MODE_KEY = "kobweb-site-color-mode"
+private const val COLOR_MODE_KEY = "app:colorMode"
 
 @InitSilk
 fun updateTheme(ctx: InitSilkContext) {

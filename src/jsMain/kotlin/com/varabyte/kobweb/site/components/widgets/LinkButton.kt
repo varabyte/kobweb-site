@@ -39,7 +39,8 @@ val PrimaryButtonVariant = ButtonStyle.addVariant("primary") {
 }
 
 val NormalButtonVariant = ButtonStyle.addVariant("normal") { colorMode ->
-    val colorMode = colorMode.opposite() // Buttons should be inverted from the rest of the site
+    @Suppress("NAME_SHADOWING") // Buttons should be inverted from the rest of the site
+    val colorMode = colorMode.opposite()
     base = Modifier
         .background(SilkTheme.palettes[colorMode].background)
         .color(SilkTheme.palettes[colorMode].color)
