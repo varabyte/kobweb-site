@@ -30,9 +30,9 @@ USER root
 RUN pwd && ls
 
 # Install kobweb
-RUN wget https://github.com/varabyte/kobweb/releases/download/v0.6.3/kobweb-0.6.3.zip \
-    && unzip kobweb-0.6.3.zip \
-    && rm -r kobweb-0.6.3.zip
+RUN wget https://github.com/varabyte/kobweb/releases/download/v0.6.4/kobweb-0.6.4.zip \
+    && unzip kobweb-0.6.4.zip \
+    && rm -r kobweb-0.6.4.zip
 
 RUN cd /app && ./gradlew --stop
 
@@ -40,4 +40,4 @@ WORKDIR /app
 
 ENV PORT=8080
 EXPOSE $PORT
-CMD [ "../kobweb-0.6.3/bin/kobweb", "run"]
+CMD [ "../kobweb-0.6.4/bin/kobweb", "run"]
