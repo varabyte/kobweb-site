@@ -10,21 +10,31 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.graphics.lightened
+import com.varabyte.kobweb.compose.ui.graphics.toCssColor
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.SilkTheme
+import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.site.components.sections.getBoxShadow
 import com.varabyte.kobweb.site.components.widgets.GradientBox
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 
+private fun getBackgroundColor(colorMode: ColorMode): String {
+    return when (colorMode) {
+        ColorMode.DARK -> "radial-gradient(circle at top, rgba(41,41,46,1) 0%, rgba(25,25,28,1) 100%)"
+        ColorMode.LIGHT -> "#ffffff"
+    }
+}
+
 @Composable
 private fun GridItem(heading: String, desc: String) {
     val colorMode by rememberColorMode()
 
     Box (
-        Modifier.width(260.px).height(200.px).padding(18.px).background(SilkTheme.palettes[colorMode].background).styleModifier {
+        Modifier.width(260.px).height(200.px).padding(18.px).styleModifier {
             borderRadius(12.px)
+            background(getBackgroundColor(colorMode))
             padding(2.em)
             property("box-shadow", getBoxShadow(colorMode))
         }
