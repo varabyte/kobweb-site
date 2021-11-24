@@ -99,8 +99,6 @@ metadata:
     operation: Update
   name: kobweb-site
   namespace: default
-  resourceVersion: "34243"
-  uid: 61fa0c0a-adb0-447f-b0da-e0b0a73f869a
 spec:
   progressDeadlineSeconds: 600
   replicas: 1

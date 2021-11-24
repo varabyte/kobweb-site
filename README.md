@@ -15,10 +15,10 @@ about it.
   ```docker build -t kobweb-site .```
 
 - Incase you first want to make sure the website runs locally<br />
-  docker run -p 8080:8080 -it kobweb-site```
+  ```docker run -p 8080:8080 -it kobweb-site```
 
 - Gcloud config to push the image to google cloud registry<br />
-  ```gcloud auth login```
+  ```gcloud auth login``` <br />
   ```gcloud auth configure-docker```
 
 - Tag the image- kobweb-example-website-1 here is the GCP project id<br />
