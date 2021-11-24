@@ -27,8 +27,8 @@ about it.
 - Push the image<br />
   ```docker push gcr.io/kobweb-example-website-1/kobweb-website``` <br /><br />
 
-## **Deploy the docker container on Google Kubernetes Engine**
-
+# Deploy the docker container on Google Kubernetes Engine
+## Deploy for the first time
 - Go to the project kobweb-example-website and open cloud shell OR
   set up gcloud locally. If you’re setting up locally on your computer, make sure <br />
   ```gcloud auth list``` shows the correct active account
@@ -48,8 +48,14 @@ about it.
 - Verfiy pod created<br />
   ```kubectl get pods```
 
+- create a static IP address named kobweb-site-ip<br />
+    ```gcloud compute addresses create kobweb-site-ip --region us-west1 --project kobweb-example-website-1```
+
+- To find the static IP address you created, run the following command, Copy the 'address' to use as load-balancer-ip in the next command:<br />
+  ```gcloud compute addresses describe kobweb-site-ip --region us-west1 --project kobweb-example-website-1```
+
 - Copy pod name from previous command and create/expose the service on port 80, this will generate an external IP where we can access the website<br />
-  ```kubectl expose pod <POD_NAME> --port=80 --target-port 8080 --name=kobweb-site-service --type=LoadBalancer```
+  ```kubectl expose pod <POD_NAME> --port=80 --target-port 8080 --name=kobweb-site-service --type=LoadBalancer --load-balancer-ip=<STATIC_IP>```
 
 - Verfiy service created and copy the external IP. It can take a few seconds for this IP to show up<br />
   ```kubectl get services```
