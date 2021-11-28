@@ -5,6 +5,7 @@ import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.textAlign
 import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
+import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.navigation.Link
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode

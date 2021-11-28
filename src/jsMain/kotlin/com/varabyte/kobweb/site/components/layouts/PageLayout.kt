@@ -5,7 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.fillMaxSize
+import com.varabyte.kobweb.compose.ui.modifiers.*
 import kotlinx.browser.document
 import com.varabyte.kobweb.site.components.sections.NavHeader
 import com.varabyte.kobweb.site.components.sections.Footer

@@ -10,7 +10,7 @@ import HeroSection
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.width
+import com.varabyte.kobweb.compose.ui.modifiers.*
 import org.jetbrains.compose.web.css.percent
 
 @Page

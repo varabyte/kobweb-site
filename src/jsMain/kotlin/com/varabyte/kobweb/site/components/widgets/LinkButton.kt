@@ -4,9 +4,8 @@ import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.graphics.*
+import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.core.rememberPageContext
-import com.varabyte.kobweb.silk.InitSilk
-import com.varabyte.kobweb.silk.InitSilkContext
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.SilkTheme
@@ -15,6 +14,7 @@ import com.varabyte.kobweb.silk.theme.shapes.clip
 import org.jetbrains.compose.web.css.borderRadius
 import org.jetbrains.compose.web.css.px
 import com.varabyte.kobweb.silk.components.forms.ButtonStyle
+import com.varabyte.kobweb.silk.components.style.hover
 import com.varabyte.kobweb.silk.theme.colors.shifted
 
 enum class ButtonShape {
@@ -46,11 +46,6 @@ val NormalButtonVariant = ButtonStyle.addVariant("normal") { colorMode ->
         .color(SilkTheme.palettes[colorMode].color)
     hover = Modifier
         .background(SilkTheme.palettes[colorMode].background.shifted(colorMode))
-}
-
-@InitSilk
-fun initButtonStyle(ctx: InitSilkContext) {
-    ctx.theme.registerComponentVariants(PrimaryButtonVariant, NormalButtonVariant)
 }
 
 /**
