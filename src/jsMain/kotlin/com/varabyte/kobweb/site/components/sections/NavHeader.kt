@@ -23,11 +23,7 @@ private fun HomeLogo() {
         ) {
             Img(
                 "https://storage.googleapis.com/kobweb-example-cdn/logo.png",
-                attrs = {
-                    style {
-                        height(32.px)
-                    }
-                }
+                attrs = Modifier.height(32.px).asAttributeBuilder()
             )
         }
     }
