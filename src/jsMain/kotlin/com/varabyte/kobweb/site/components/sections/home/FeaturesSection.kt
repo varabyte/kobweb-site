@@ -32,8 +32,7 @@ private fun getBackgroundColor(colorMode: ColorMode): String {
 private class Feature(val heading: String, val desc: String)
 
 val FeatureItemStyle = ComponentStyle("feature-item") {
-    base = Modifier.fillMaxWidth().padding(18.px)
-    lg = Modifier.width(260.px).height(200.px)
+    base = Modifier.width(260.px).height(200.px).padding(18.px)
 }
 
 @Composable
@@ -63,15 +62,18 @@ private fun FeatureItem(feature: Feature) {
 fun FeaturesSection() {
     val features = remember {
         listOf(
-            Feature("API Routes", "Define and annotate methods which will generate server endpoints you can interact with"),
-            Feature("File-system Routing", "Every @Composable inside pages directory with @Page becomes a route"),
-            Feature("Component library", "Silk is a UI layer included with Kobweb and built upon Web Compose"),
+            Feature("Page Routing", "Every @Composable inside pages directory with @Page becomes a route"),
+            Feature("Server API Routes", "Define and annotate methods which will generate server endpoints you can interact with"),
             Feature("Live Reloading", "An environment built from the ground up around live reloading"),
-            Feature("Shared Types", "Shared, rich types between client and server"),
+            Feature("Light and Dark UI", "Built-in support for multiple color modes"),
+            Feature("Component library", "Silk is a UI layer included with Kobweb and built upon Web Compose"),
+            Feature("Component styling", "Customize any part of our components to match your design needs"),
+            Feature("Shared Types", "Share rich Kotlin class types between client and server"),
             Feature("Markdown support", "Out-of-the-box Markdown support"),
-            Feature("Themeable", "Customize any part of our components to match your design needs"),
-            Feature("Light and Dark UI", "Optimized for multiple color modes"),
-            Feature("Optimized for SEO", "static site exports for improved SEO"),
+            Feature("SEO-friendly", "Supports static site exports for improved SEO"),
+            Feature("Font Awesome", "Silk includes support for Font Awesome icons"),
+            Feature("Web Compose extensions", "Adds familiar Modifier, Box, Row, and Columns classes to Web Compose"),
+            Feature("Build flow", "Your site in dev mode will show a build indicator and auto-reload when ready"),
         )
     }
 
@@ -98,7 +100,7 @@ fun FeaturesSection() {
             }
         }
 
-        SimpleGrid(numColumns(1, lg = 3)) {
+        SimpleGrid(numColumns(2, lg = 3)) {
             features.forEach { feature -> Cell { FeatureItem(feature) } }
         }
     }
