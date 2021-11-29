@@ -8,6 +8,7 @@ import com.varabyte.kobweb.navigation.Link
 import com.varabyte.kobweb.silk.components.icons.fa.*
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
+import com.varabyte.kobweb.site.components.style.boxShadow
 import com.varabyte.kobweb.site.components.widgets.*
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Img
@@ -32,14 +33,6 @@ private fun HomeLogo() {
     }
 }
 
- fun getBoxShadow(colorMode: ColorMode): String {
-    val colorStr = when (colorMode) {
-        ColorMode.DARK -> "#eee"
-        ColorMode.LIGHT -> "#111111"
-    }
-    return "0 0 0 0.1px $colorStr"
-}
-
 private fun getNavBackgroundColor(colorMode: ColorMode): CSSColorValue {
     return when (colorMode) {
         ColorMode.DARK -> rgba(0.0, 0.0, 0.0, 0.65)
@@ -60,7 +53,7 @@ fun NavHeader() {
                 position(Position.Sticky)
                 top(0.percent)
                 property("backdrop-filter", "saturate(180%) blur(5px)")
-                property("box-shadow", getBoxShadow(colorMode))
+                boxShadow(colorMode)
             },
         contentAlignment = Alignment.Center,
     ) {

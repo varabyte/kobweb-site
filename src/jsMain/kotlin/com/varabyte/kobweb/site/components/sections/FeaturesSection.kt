@@ -17,6 +17,7 @@ import com.varabyte.kobweb.silk.components.style.toModifier
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
+import com.varabyte.kobweb.site.components.style.boxShadow
 import com.varabyte.kobweb.site.components.widgets.GradientBox
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
@@ -44,7 +45,7 @@ private fun FeatureItem(feature: Feature) {
             borderRadius(12.px)
             background(getBackgroundColor(colorMode))
             padding(2.em)
-            property("box-shadow", getBoxShadow(colorMode))
+            boxShadow(colorMode)
         })
     ) {
         Column {
