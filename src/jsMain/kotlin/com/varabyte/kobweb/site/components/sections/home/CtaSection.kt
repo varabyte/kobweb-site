@@ -1,4 +1,4 @@
-package com.varabyte.kobweb.site.components.sections
+package com.varabyte.kobweb.site.components.sections.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
