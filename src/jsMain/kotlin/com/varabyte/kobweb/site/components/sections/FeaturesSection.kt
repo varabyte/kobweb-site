@@ -1,3 +1,5 @@
+package com.varabyte.kobweb.site.components.sections
+
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
@@ -10,7 +12,6 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
-import com.varabyte.kobweb.site.components.sections.getBoxShadow
 import com.varabyte.kobweb.site.components.widgets.GradientBox
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br

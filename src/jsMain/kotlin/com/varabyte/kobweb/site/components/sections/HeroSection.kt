@@ -1,3 +1,5 @@
+package com.varabyte.kobweb.site.components.sections
+
 import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.foundation.layout.*

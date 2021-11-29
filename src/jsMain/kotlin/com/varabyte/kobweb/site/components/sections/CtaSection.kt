@@ -1,3 +1,5 @@
+package com.varabyte.kobweb.site.components.sections
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import com.varabyte.kobweb.compose.css.TextAlign
@@ -14,7 +16,6 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaStar
 import com.varabyte.kobweb.navigation.Link
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
-import com.varabyte.kobweb.site.components.sections.getBoxShadow
 import org.jetbrains.compose.web.css.*
 
 @Composable
