@@ -13,6 +13,9 @@ import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 import org.jetbrains.compose.web.dom.Img
 
+/**
+ * A section which demonstrates a concise "hero" example of Kobweb code and the result it produces.
+ */
 @Composable
 fun HeroSection() {
     GradientBox(contentAlignment = Alignment.Center) {

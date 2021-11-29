@@ -14,6 +14,9 @@ import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 import org.jetbrains.compose.web.dom.Img
 
+/**
+ * A section that demonstrates what the Kobweb CLI behavior looks like.
+ */
 @Composable
 fun CliSection() {
     Box(

@@ -54,6 +54,10 @@ private fun CtaGridItem(
     }
 }
 
+/**
+ * A "call-to-action" section which includes buttons that direct the user to take actions that will help them learn
+ * and support Kobweb.
+ */
 @Composable
 fun CtaSection() {
     Box(
