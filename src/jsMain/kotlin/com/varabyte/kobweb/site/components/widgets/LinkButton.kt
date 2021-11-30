@@ -38,8 +38,8 @@ val PrimaryButtonVariant = ButtonStyle.addVariant("primary") {
     hover = Modifier.background(backgroundColor.lightened())
 }
 
-val NormalButtonVariant = ButtonStyle.addVariant("normal") { colorMode ->
-    @Suppress("NAME_SHADOWING") // Buttons should be inverted from the rest of the site
+val NormalButtonVariant = ButtonStyle.addVariant("normal") {
+    @Suppress("NAME_SHADOWING") // Button colors should be inverted from the rest of the site
     val colorMode = colorMode.opposite()
     base = Modifier
         .background(SilkTheme.palettes[colorMode].background)
