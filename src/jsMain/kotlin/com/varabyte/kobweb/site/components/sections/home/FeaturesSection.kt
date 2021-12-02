@@ -74,7 +74,7 @@ fun FeaturesSection() {
             Feature("SEO-friendly", "Supports static site exports for improved SEO"),
             Feature("Font Awesome", "Silk includes support for Font Awesome icons"),
             Feature("Web Compose extensions", "Adds familiar Modifier, Box, Row, and Columns classes to Web Compose"),
-            Feature("Build flow", "Your site in dev mode will show a build indicator and auto-reload when ready"),
+            Feature("Open source", "An open source project built with a friendly license and a welcoming community"),
         )
     }
 
