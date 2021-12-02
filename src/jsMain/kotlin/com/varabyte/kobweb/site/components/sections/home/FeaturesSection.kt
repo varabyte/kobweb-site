@@ -12,7 +12,6 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.style.ComponentStyle
-import com.varabyte.kobweb.silk.components.style.lg
 import com.varabyte.kobweb.silk.components.style.toModifier
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
@@ -32,7 +31,9 @@ private fun getBackgroundColor(colorMode: ColorMode): String {
 private class Feature(val heading: String, val desc: String)
 
 val FeatureItemStyle = ComponentStyle("feature-item") {
-    base = Modifier.width(260.px).height(200.px).padding(18.px)
+    base {
+        Modifier.width(260.px).height(200.px).padding(18.px)
+    }
 }
 
 @Composable

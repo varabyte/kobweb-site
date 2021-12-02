@@ -32,20 +32,28 @@ private fun getButtonModifier(shape: ButtonShape): Modifier {
 
 val PrimaryButtonVariant = ButtonStyle.addVariant("primary") {
     val backgroundColor = Color.rgb(0, 121, 242)
-    base = Modifier
-        .background(backgroundColor)
-        .color(Colors.White)
-    hover = Modifier.background(backgroundColor.lightened())
+    base {
+        Modifier
+            .background(backgroundColor)
+            .color(Colors.White)
+    }
+
+    hover {
+        Modifier.background(backgroundColor.lightened())
+    }
 }
 
 val NormalButtonVariant = ButtonStyle.addVariant("normal") {
     @Suppress("NAME_SHADOWING") // Button colors should be inverted from the rest of the site
     val colorMode = colorMode.opposite()
-    base = Modifier
-        .background(SilkTheme.palettes[colorMode].background)
-        .color(SilkTheme.palettes[colorMode].color)
-    hover = Modifier
-        .background(SilkTheme.palettes[colorMode].background.shifted(colorMode))
+    base {
+        Modifier
+            .background(SilkTheme.palettes[colorMode].background)
+            .color(SilkTheme.palettes[colorMode].color)
+    }
+    hover {
+        Modifier.background(SilkTheme.palettes[colorMode].background.shifted(colorMode))
+    }
 }
 
 /**
