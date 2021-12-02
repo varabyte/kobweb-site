@@ -18,9 +18,7 @@ private fun Logo() {
     Link(
         href = "/",
     ) {
-        Box(
-            Modifier.padding(4.px)
-        ) {
+        Box(Modifier.margin(4.px)) {
             Img(
                 "images/logo.png",
                 attrs = {
@@ -41,7 +39,7 @@ fun Footer() {
         contentAlignment = Alignment.Center
     ) {
         Column(
-            Modifier.fillMaxWidth(70.percent).padding(1.em),
+            Modifier.fillMaxWidth(70.percent).margin(1.em),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Logo()

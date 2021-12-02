@@ -62,7 +62,7 @@ val NormalButtonVariant = ButtonStyle.addVariant("normal") {
  * @param primary If true, use styles that call this button out as one associated with a major action you want to draw
  *   attention to.
  * @param content If set, renders custom content on the button. If both this and [text] is specified, then this
- *   content will be rendered to the left of the text with a bit of padding. This is particularly useful for rendering
+ *   content will be rendered to the left of the text with a bit of margin. This is particularly useful for rendering
  *   logos.
  */
 @Composable
@@ -80,7 +80,7 @@ fun ThemedButton(
         if (primary) PrimaryButtonVariant else NormalButtonVariant
     ) {
         Row(
-            Modifier.padding(12.px),
+            Modifier.margin(12.px),
             verticalAlignment = Alignment.CenterVertically
         ) {
             content()

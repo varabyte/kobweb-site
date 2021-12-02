@@ -18,9 +18,7 @@ private fun HomeLogo() {
     Link(
         href = "/",
     ) {
-        Box(
-            Modifier.padding(4.px)
-        ) {
+        Box(Modifier.margin(4.px)) {
             Img(
                 "images/logo.png",
                 attrs = Modifier.height(32.px).asAttributeBuilder()
@@ -36,7 +34,7 @@ private fun getNavBackgroundColor(colorMode: ColorMode): CSSColorValue {
     }
 }
 
-private val BUTTON_PADDING = Modifier.padding(0.px, 10.px)
+private val BUTTON_MARGIN = Modifier.margin(0.px, 10.px)
 
 @Composable
 fun NavHeader() {
@@ -54,21 +52,21 @@ fun NavHeader() {
         contentAlignment = Alignment.Center,
     ) {
         Row(
-            Modifier.fillMaxWidth(70.percent).padding(1.em),
+            Modifier.fillMaxWidth(70.percent).margin(1.em),
             verticalAlignment = Alignment.CenterVertically
         ) {
             HomeLogo()
             Spacer()
-            Row(Modifier.padding(0.px, 12.px)) {
-                LinkButton("https://discord.gg/5NZ2GKV5Cs", BUTTON_PADDING, shape = ButtonShape.CIRCLE) {
+            Row(Modifier.margin(0.px, 12.px)) {
+                LinkButton("https://discord.gg/5NZ2GKV5Cs", BUTTON_MARGIN, shape = ButtonShape.CIRCLE) {
                     FaDiscord()
                 }
-                LinkButton("https://github.com/varabyte/kobweb", BUTTON_PADDING, shape = ButtonShape.CIRCLE) {
+                LinkButton("https://github.com/varabyte/kobweb", BUTTON_MARGIN, shape = ButtonShape.CIRCLE) {
                     FaGithub()
                 }
                 ThemedButton(
                     onClick = { colorMode = colorMode.opposite() },
-                    BUTTON_PADDING,
+                    BUTTON_MARGIN,
                     shape = ButtonShape.CIRCLE
                 ) {
                     when (colorMode) {

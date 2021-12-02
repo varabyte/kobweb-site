@@ -48,7 +48,8 @@ private fun CtaGridItem(
         }
         Text(
             subText,
-            Modifier.lineHeight(1.5).padding(top= 1.cssRem, bottom = 1.cssRem).styleModifier { opacity(70.percent)
+            Modifier.lineHeight(1.5).margin(top= 1.cssRem, bottom = 1.cssRem).styleModifier {
+                opacity(70.percent)
                 textAlign(TextAlign.Center)
             }
         )
@@ -62,22 +63,20 @@ private fun CtaGridItem(
 @Composable
 fun CtaSection() {
     Box(
+        Modifier.margin(top = 6.em),
         contentAlignment = Alignment.Center,
-        modifier = Modifier.padding(top = 6.em)
     ) {
-        Row (
-            modifier = Modifier.styleModifier {
-                flexWrap(FlexWrap.Nowrap)
-            }
-        ) {
+        Row (Modifier.styleModifier {
+            flexWrap(FlexWrap.Nowrap)
+        }) {
             CtaGridItem("Get started", "Create a Web Compose website from scratch with Markdown support and live reloading, in under 10 seconds.", "/docs") {
-                FaArrowRight(modifier = Modifier.fontSize(32.px).padding(12.px))
+                FaArrowRight(Modifier.fontSize(32.px).margin(12.px))
             }
             CtaGridItem("Star & Contribute", "Kobweb is fully open source and community driven. We invite you to help make Kobweb the best web development framework!", "https://github.com/varabyte/kobweb") {
-                FaStar(modifier = Modifier.fontSize(32.px).padding(12.px))
+                FaStar(Modifier.fontSize(32.px).margin(12.px))
             }
             CtaGridItem("Join the Community", "Join our community for instant support and great conversations about the future of the Kobweb.", "https://discord.gg/5NZ2GKV5Cs") {
-                FaDiscord(modifier = Modifier.fontSize(32.px).padding(10.px))
+                FaDiscord(Modifier.fontSize(32.px).margin(12.px))
             }
         }
     }

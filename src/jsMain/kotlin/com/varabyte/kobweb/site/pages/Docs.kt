@@ -18,7 +18,7 @@ import org.jetbrains.compose.web.css.vh
 @Composable
 fun DocsPage() {
     PageLayout("Docs") {
-        Column (modifier = Modifier.minHeight(100.vh).padding(4.em), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column (modifier = Modifier.minHeight(100.vh).margin(4.em), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 "Getting Started",
                 Modifier.fontSize(36.px).fontWeight(FontWeight.Bolder).styleModifier {
