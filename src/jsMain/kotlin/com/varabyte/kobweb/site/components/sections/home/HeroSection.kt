@@ -20,7 +20,7 @@ import org.jetbrains.compose.web.dom.Img
 fun HeroSection() {
     GradientBox(contentAlignment = Alignment.Center) {
         Box(
-            Modifier.padding(left = 12.em, right = 12.em, top = 6.em),
+            Modifier.margin(left = 12.em, right = 12.em, top = 6.em),
             contentAlignment = Alignment.Center
         ) {
             Row {
@@ -42,18 +42,18 @@ fun HeroSection() {
                 }
             }
 
-            Row(Modifier.padding(top = 32.px)) {
+            Row(Modifier.margin(top = 32.px)) {
                 LinkButton("/docs", Modifier.width(150.px), "Start Learning", primary = true)
                 LinkButton(
                     "https://github.com/varabyte/kobweb",
-                    Modifier.padding(left = 12.px).width(150.px),
+                    Modifier.margin(left = 12.px).width(150.px),
                     "Github"
                 ) {
-                    FaGithub(Modifier.padding(right = 8.px))
+                    FaGithub(Modifier.margin(right = 8.px))
                 }
             }
         }
-        Box (Modifier.padding(top = 32.px, bottom = 32.px), contentAlignment = Alignment.Center) {
+        Box (Modifier.margin(top = 32.px, bottom = 32.px), contentAlignment = Alignment.Center) {
             Row (horizontalArrangement = Arrangement.Center) {
                 Img(
                     "images/hero-ide.png",

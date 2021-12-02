@@ -20,7 +20,7 @@ import org.jetbrains.compose.web.dom.Img
 @Composable
 fun CliSection() {
     Box(
-        Modifier.width(940.px).padding(top = 6.cssRem),
+        Modifier.width(940.px).margin(top = 6.cssRem),
         contentAlignment = Alignment.Center
     ) {
         Row (

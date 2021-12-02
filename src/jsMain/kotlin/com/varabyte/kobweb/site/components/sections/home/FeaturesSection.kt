@@ -32,7 +32,7 @@ private class Feature(val heading: String, val desc: String)
 
 val FeatureItemStyle = ComponentStyle("feature-item") {
     base {
-        Modifier.width(260.px).height(200.px).padding(18.px)
+        Modifier.width(260.px).height(200.px).margin(18.px)
     }
 }
 
@@ -79,7 +79,7 @@ fun FeaturesSection() {
     }
 
     GradientBox (
-        Modifier.width(940.px).padding(top = 6.cssRem),
+        Modifier.width(940.px).margin(top = 6.cssRem),
         contentAlignment = Alignment.Center,
     ) {
         Row {
