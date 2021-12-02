@@ -47,7 +47,7 @@ fun CliSection() {
                 contentAlignment = Alignment.Center
             ) {
                 Img(
-                    "https://storage.googleapis.com/kobweb-example-cdn/kobweb-cli.gif",
+                    "images/kobweb-cli.gif",
                     attrs = {
                         style {
                             height(432.px)

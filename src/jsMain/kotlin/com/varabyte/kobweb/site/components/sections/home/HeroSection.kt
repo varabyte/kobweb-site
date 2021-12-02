@@ -56,7 +56,7 @@ fun HeroSection() {
         Box (Modifier.padding(top = 32.px, bottom = 32.px), contentAlignment = Alignment.Center) {
             Row (horizontalArrangement = Arrangement.Center) {
                 Img(
-                    "https://storage.googleapis.com/kobweb-example-cdn/hero-ide.png",
+                    "images/hero-ide.png",
                     attrs = {
                         style {
                             height(475.px)
@@ -65,7 +65,7 @@ fun HeroSection() {
                     }
                 )
                 Img(
-                    "https://storage.googleapis.com/kobweb-example-cdn/hero-browser.png",
+                    "images/hero-browser.png",
                     attrs = {
                         style {
                             height(475.px)

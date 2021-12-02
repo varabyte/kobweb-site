@@ -22,7 +22,7 @@ private fun HomeLogo() {
             Modifier.padding(4.px)
         ) {
             Img(
-                "https://storage.googleapis.com/kobweb-example-cdn/logo.png",
+                "images/logo.png",
                 attrs = Modifier.height(32.px).asAttributeBuilder()
             )
         }

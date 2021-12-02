@@ -22,7 +22,7 @@ private fun Logo() {
             Modifier.padding(4.px)
         ) {
             Img(
-                "https://storage.googleapis.com/kobweb-example-cdn/logo.png",
+                "images/logo.png",
                 attrs = {
                     style {
                         height(18.px)
