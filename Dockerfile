@@ -40,4 +40,4 @@ WORKDIR /app
 
 ENV PORT=8080
 EXPOSE $PORT
-CMD [ "../kobweb-0.7.2/bin/kobweb", "run", "--headless", "--env", "prod"]
+CMD [ "../kobweb-0.7.2/bin/kobweb", "run", "--env", "prod"]
