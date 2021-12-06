@@ -21,11 +21,11 @@ about it.
   ```gcloud auth login``` <br />
   ```gcloud auth configure-docker```
 
-- Tag the image- kobweb-example-website-1 here is the GCP project id<br />
-  ```docker tag kobweb-site gcr.io/kobweb-example-website-1/kobweb-website```
+- Tag the image- kobweb-example-website-1 here is the GCP project id. Increment the tag number when you push an update<br />
+  ```docker tag kobweb-site gcr.io/kobweb-example-website-1/kobweb-website:1```
 
-- Push the image<br />
-  ```docker push gcr.io/kobweb-example-website-1/kobweb-website``` <br /><br />
+- Push the image to the GCP Container Registry<br />
+  ```docker push gcr.io/kobweb-example-website-1/kobweb-website:1``` <br /><br />
 
 # Deploy the docker container on Google Kubernetes Engine
 ## Deploy for the first time
@@ -66,3 +66,12 @@ about it.
 - Go to the web browser and open the external IP, it should show the website. It can take a few seconds to show up though because it's finishing up running ```kobweb run``` internally at this point. You can go to the GCP console to see the deployment logs.<br />
   Kubernetes Engine->Workloads->kobweb-site->Logs
 
+## Deploy an update to the site
+
+- Apply a rolling update to the existing kobweb-site Deployment with an image update using<br />
+  ``` kubectl set image deployment/kobweb-site kobweb-website=gcr.io/kobweb-example-website-1/kobweb-website:2```
+
+- Watch the running Pods running the tag:1 image stop, and new Pods running the tag:2 image start.<br />
+  ```kubectl get pods```
+
+- Go to the GCP Console->Workloads->kobweb-site. Select kobweb-website in Pod Specification, and you should see it pointing to tag:2 (updated) image

@@ -118,7 +118,7 @@ spec:
         app: kobweb-site
     spec:
       containers:
-      - image: gcr.io/kobweb-example-website-1/kobweb-website:latest
+      - image: gcr.io/kobweb-example-website-1/kobweb-website:1
         imagePullPolicy: IfNotPresent
         name: kobweb-website
         ports:
