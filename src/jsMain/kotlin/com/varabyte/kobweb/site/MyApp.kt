@@ -4,10 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.*
+import com.varabyte.kobweb.compose.ui.graphics.toCssColor
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.core.App
 import com.varabyte.kobweb.silk.*
 import com.varabyte.kobweb.silk.components.layout.Surface
+import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.getColorMode
 import kotlinx.browser.localStorage
@@ -40,7 +42,8 @@ fun MyApp(content: @Composable () -> Unit) {
         }
 
         Surface {
-            Box(Modifier.fillMaxSize()) {
+            Box(Modifier.fillMaxSize().background(SilkTheme.palettes[colorMode].background.toCssColor())
+            ) {
                 content()
             }
         }
