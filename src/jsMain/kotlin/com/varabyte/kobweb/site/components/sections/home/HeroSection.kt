@@ -9,6 +9,7 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.site.components.widgets.GradientBox
 import com.varabyte.kobweb.site.components.widgets.LinkButton
+import com.varabyte.kobweb.site.components.widgets.SectionBox
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 import org.jetbrains.compose.web.dom.Img
@@ -19,11 +20,8 @@ import org.jetbrains.compose.web.dom.Img
 @Composable
 fun HeroSection() {
     GradientBox(contentAlignment = Alignment.Center) {
-        Box(
-            Modifier.margin(left = 12.em, right = 12.em, top = 6.em),
-            contentAlignment = Alignment.Center
-        ) {
-            Row {
+        SectionBox {
+            Row (modifier = Modifier.margin(left = 3.em, right = 3.em, top = 3.em)) {
                 Box(contentAlignment = Alignment.Center) {
                     Text(
                         "Modern framework for full stack web apps in Kotlin",

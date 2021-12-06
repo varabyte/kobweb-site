@@ -10,6 +10,7 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.text.Text
+import com.varabyte.kobweb.site.components.widgets.SectionBox
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 import org.jetbrains.compose.web.dom.Img
@@ -19,10 +20,7 @@ import org.jetbrains.compose.web.dom.Img
  */
 @Composable
 fun CliSection() {
-    Box(
-        Modifier.width(940.px).margin(top = 6.cssRem),
-        contentAlignment = Alignment.Center
-    ) {
+    SectionBox {
         Row (
             horizontalArrangement = Arrangement.Center
         ) {
