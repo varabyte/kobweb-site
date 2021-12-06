@@ -52,7 +52,7 @@ fun NavHeader() {
         contentAlignment = Alignment.Center,
     ) {
         Row(
-            Modifier.fillMaxWidth(70.percent).margin(1.em),
+            Modifier.fillMaxWidth(90.percent).margin(1.em),
             verticalAlignment = Alignment.CenterVertically
         ) {
             HomeLogo()
