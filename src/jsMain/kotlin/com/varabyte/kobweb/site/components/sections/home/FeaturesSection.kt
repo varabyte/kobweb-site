@@ -17,7 +17,7 @@ import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
-import com.varabyte.kobweb.site.components.widgets.GradientBox
+import com.varabyte.kobweb.site.components.widgets.SectionBox
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 
@@ -32,7 +32,7 @@ private class Feature(val heading: String, val desc: String)
 
 val FeatureItemStyle = ComponentStyle("feature-item") {
     base {
-        Modifier.width(260.px).height(200.px).margin(18.px)
+        Modifier.margin(18.px)
     }
 }
 
@@ -78,10 +78,7 @@ fun FeaturesSection() {
         )
     }
 
-    GradientBox (
-        Modifier.width(940.px).margin(top = 6.cssRem),
-        contentAlignment = Alignment.Center,
-    ) {
+    SectionBox {
         Row {
             Box (contentAlignment = Alignment.Center) {
                 Text(
