@@ -7,10 +7,10 @@ import org.jetbrains.compose.web.css.StyleBuilder
 
 private fun getBoxShadow(colorMode: ColorMode): String {
     val colorStr = when (colorMode) {
-        ColorMode.DARK -> "#eee"
-        ColorMode.LIGHT -> "#111111"
+        ColorMode.DARK -> "rgb(238, 238, 238, 0.2)"
+        ColorMode.LIGHT -> "rgb(17, 17, 17, 0.2)"
     }
-    return "0 0 0 0.1px $colorStr"
+    return "0 0 0 1px $colorStr"
 }
 
 fun StyleBuilder.boxShadow(colorMode: ColorMode) {
