@@ -4,10 +4,12 @@ import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
+import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.site.components.widgets.GradientBox
+import com.varabyte.kobweb.site.components.widgets.KotlinCode
 import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.SectionBox
 import org.jetbrains.compose.web.css.*
@@ -51,17 +53,47 @@ fun HeroSection() {
                 }
             }
         }
-        Box (Modifier.margin(top = 32.px, bottom = 32.px), contentAlignment = Alignment.Center) {
-            Row (horizontalArrangement = Arrangement.Center) {
-                Img(
-                    "images/hero-ide.png",
-                    attrs = {
-                        style {
-                            height(475.px)
-                            margin(8.px)
+        Box (
+            Modifier.margin(top = 32.px, bottom = 32.px),
+            contentAlignment = Alignment.Center
+        ) {
+            Row (horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+                KotlinCode(
+                    // Set the color explicitly to opt-out of color mode for this section, which will always be on a grey
+                    // background
+                    modifier = Modifier.padding(12.px).color(Colors.White).styleModifier {
+                        background("radial-gradient(circle at left, rgb(25,25,25) 0%, rgb(45,45,45) 100%)")
+                        borderRadius(12.px)
+                    },
+                    code = """
+                        fun HomePage() {
+                          Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                            Row(Modifier.align(Alignment.End)) {
+                              var colorMode by rememberColorMode()
+                              Button(
+                                onClick = { colorMode = colorMode.opposite() },
+                                Modifier.clip(Circle())
+                              ) {
+                                Box(Modifier.margin(4.px)) {
+                                  // Includes support for Font Awesome icons
+                                  if (colorMode.isLight()) FaSun() else FaMoon()
+                                }
+                              }
+                            }
+                            H1 {
+                              Text("Welcome to Kobweb!")
+                            }
+                            Row {
+                              Text("Create rich, dynamic web apps with ease, leveraging ")
+                              Link("https://kotlinlang.org/", "Kotlin")
+                              Text(" and ")
+                              Link("https://compose-web.ui.pages.jetbrains.team/", "Web Compose")
+                            }
+                          }
                         }
-                    }
+                    """.trimIndent()
                 )
+
                 Img(
                     "images/hero-browser.png",
                     attrs = {
