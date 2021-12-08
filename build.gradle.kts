@@ -1,3 +1,7 @@
+import kotlinx.html.link
+import kotlinx.html.script
+import kotlinx.html.unsafe
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.jetbrains.compose)
@@ -14,6 +18,25 @@ repositories {
 
 group = "com.varabyte.kobweb.site"
 version = "1.0-SNAPSHOT"
+
+kobweb {
+    index {
+        head.add {
+            link {
+                rel = "stylesheet"
+                href = "/highlight.js/styles/dracula.css"
+            }
+            script {
+                src = "/highlight.js/highlight.min.js"
+            }
+            script {
+                unsafe {
+                    raw("hljs.highlightAll()")
+                }
+            }
+        }
+    }
+}
 
 kotlin {
 // Consider re-enabling JVM support if we add API routes
