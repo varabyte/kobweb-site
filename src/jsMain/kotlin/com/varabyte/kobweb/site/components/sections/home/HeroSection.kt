@@ -61,7 +61,7 @@ fun HeroSection() {
                 KotlinCode(
                     // Set the color explicitly to opt-out of color mode for this section, which will always be on a grey
                     // background
-                    modifier = Modifier.padding(12.px).color(Colors.White).styleModifier {
+                    modifier = Modifier.padding(12.px).color(Colors.White).fontSize(12.px).lineHeight(18.px).styleModifier {
                         background("radial-gradient(circle at left, rgb(25,25,25) 0%, rgb(45,45,45) 100%)")
                         borderRadius(12.px)
                     },
