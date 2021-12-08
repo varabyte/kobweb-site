@@ -7,11 +7,25 @@ import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.navigation.Link
+import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Img
+
+@Composable
+private fun OSSLabel() {
+    Row(Modifier.margin(bottom = 32.px)) {
+        FaGithub(Modifier.margin(right = 8.px))
+        Text ("This site is ")
+        Link (
+            href = "https://github.com/varabyte/kobweb-site"
+        ) {
+            Text("open source")
+        }
+    }
+}
 
 @Composable
 private fun Logo() {
@@ -42,6 +56,7 @@ fun Footer() {
             Modifier.fillMaxWidth(70.percent).margin(1.em),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            OSSLabel()
             Logo()
             Text("Copyright © 2021 Varabyte. All rights reserved.", modifier = Modifier.fontSize(0.75.em).styleModifier { opacity(70.percent)
                 textAlign(TextAlign.Center)
