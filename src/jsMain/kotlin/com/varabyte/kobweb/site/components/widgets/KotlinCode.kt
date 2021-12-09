@@ -4,7 +4,10 @@ import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.fontFamily
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.asAttributeBuilder
+import com.varabyte.kobweb.compose.ui.styleModifier
+import org.jetbrains.compose.web.css.borderRadius
 import org.jetbrains.compose.web.css.fontSize
+import org.jetbrains.compose.web.css.padding
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Code
 import org.jetbrains.compose.web.dom.Pre
@@ -17,8 +20,8 @@ import org.jetbrains.compose.web.dom.Text
 // block in our build.gradle.kts file to see how this was done.
 @Composable
 fun KotlinCode(code: String, modifier: Modifier = Modifier) {
-    Pre(attrs = modifier.asAttributeBuilder()) {
-        Code(attrs = {
+    Pre {
+        Code(attrs = modifier.asAttributeBuilder {
             classes("language-kotlin").also {
                 style {
                     fontFamily("Menlo, monospace")
