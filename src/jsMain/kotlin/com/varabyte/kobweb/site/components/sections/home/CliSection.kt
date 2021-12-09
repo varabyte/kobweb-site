@@ -14,6 +14,8 @@ import com.varabyte.kobweb.site.components.widgets.Section
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 import org.jetbrains.compose.web.dom.Img
+import org.jetbrains.compose.web.dom.Source
+import org.jetbrains.compose.web.dom.Video
 
 /**
  * A section that demonstrates what the Kobweb CLI behavior looks like.
@@ -44,14 +46,16 @@ fun CliSection() {
                 Modifier.padding(top = 2.cssRem),
                 contentAlignment = Alignment.Center
             ) {
-                Img(
-                    "images/kobweb-cli.gif",
-                    attrs = {
-                        style {
-                            height(432.px)
-                        }
-                    }
-                )
+                Video(attrs = {
+                    attr("width", 900.px.toString())
+                    attr("height", 432.px.toString())
+                    attr("controls", "")
+                }) {
+                    Source(attrs = {
+                        attr("src", "images/kobweb-cli.mp4")
+                        attr("type", "video/mp4")
+                    })
+                }
             }
         }
     }
