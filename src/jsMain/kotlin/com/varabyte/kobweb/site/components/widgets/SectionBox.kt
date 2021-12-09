@@ -16,10 +16,10 @@ val SectionBoxStyle = ComponentStyle("kobweb-section") {
 }
 
 /**
- * Create a [Box] with a fancy, color aware gradient behind it.
+ * Demarcate a new section of content, useful for pages that are a vertical list of sections.
  */
 @Composable
-fun SectionBox(
+fun Section(
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.Center,
     variant: ComponentVariant? = null,

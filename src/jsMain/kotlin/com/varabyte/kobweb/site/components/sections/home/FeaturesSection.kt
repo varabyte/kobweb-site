@@ -17,7 +17,7 @@ import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
-import com.varabyte.kobweb.site.components.widgets.SectionBox
+import com.varabyte.kobweb.site.components.widgets.Section
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 
@@ -78,7 +78,7 @@ fun FeaturesSection() {
         )
     }
 
-    SectionBox {
+    Section {
         Row {
             Box (contentAlignment = Alignment.Center) {
                 Text(

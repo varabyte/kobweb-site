@@ -11,7 +11,7 @@ import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.site.components.widgets.GradientBox
 import com.varabyte.kobweb.site.components.widgets.KotlinCode
 import com.varabyte.kobweb.site.components.widgets.LinkButton
-import com.varabyte.kobweb.site.components.widgets.SectionBox
+import com.varabyte.kobweb.site.components.widgets.Section
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
 import org.jetbrains.compose.web.dom.Img
@@ -22,7 +22,7 @@ import org.jetbrains.compose.web.dom.Img
 @Composable
 fun HeroSection() {
     GradientBox(contentAlignment = Alignment.Center) {
-        SectionBox {
+        Section {
             Row (modifier = Modifier.margin(left = 3.em, right = 3.em, top = 3.em)) {
                 Box(contentAlignment = Alignment.Center) {
                     Text(
