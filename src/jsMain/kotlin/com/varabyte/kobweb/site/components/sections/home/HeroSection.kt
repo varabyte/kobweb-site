@@ -6,6 +6,7 @@ import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
+import com.varabyte.kobweb.compose.ui.graphics.lightened
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
@@ -107,7 +108,14 @@ fun HeroSection() {
                     // Set the color explicitly to opt-out of color mode for this section, which will always be on a grey
                     // background
                     modifier = Modifier
-                        .color(Colors.White).fontSize(12.px).lineHeight(18.px).padding(12.px).styleModifier {
+                        // Choose a background color that's dark-ish but not as dark as the hero example itself, so it
+                        // stands out
+                        .background(DARK_BACKGROUND.lightened())
+                        .color(Colors.White)
+                        .fontSize(12.px)
+                        .lineHeight(18.px)
+                        .padding(12.px)
+                        .styleModifier {
                             borderRadius(12.px)
                         },
                     code = """
