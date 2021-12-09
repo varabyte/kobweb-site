@@ -4,7 +4,10 @@ import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.fontFamily
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.asAttributeBuilder
+import com.varabyte.kobweb.compose.ui.graphics.Colors
+import com.varabyte.kobweb.compose.ui.graphics.toCssColor
 import com.varabyte.kobweb.compose.ui.styleModifier
+import org.jetbrains.compose.web.css.background
 import org.jetbrains.compose.web.css.borderRadius
 import org.jetbrains.compose.web.css.fontSize
 import org.jetbrains.compose.web.css.padding
@@ -20,11 +23,13 @@ import org.jetbrains.compose.web.dom.Text
 // block in our build.gradle.kts file to see how this was done.
 @Composable
 fun KotlinCode(code: String, modifier: Modifier = Modifier) {
-    Pre {
-        Code(attrs = modifier.asAttributeBuilder {
+    Pre(attrs = modifier.asAttributeBuilder()) {
+        Code(attrs = {
             classes("language-kotlin").also {
                 style {
                     fontFamily("Menlo, monospace")
+                    // Clear the background - otherwise, we might override the color set in the parent modifier
+                    background("transparent")
                 }
             }
         }) {
