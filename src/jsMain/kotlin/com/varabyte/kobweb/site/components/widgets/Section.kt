@@ -7,7 +7,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.style.*
 import org.jetbrains.compose.web.css.*
 
-val SectionBoxStyle = ComponentStyle("kobweb-section") {
+val SectionStyle = ComponentStyle("kobweb-section") {
    base {
        Modifier.width(100.percent)
            .maxWidth(1024.px)
@@ -25,5 +25,5 @@ fun Section(
     variant: ComponentVariant? = null,
     content: @Composable BoxScope.() -> Unit = {}
 ) {
-    Box(SectionBoxStyle.toModifier(variant).then(modifier), contentAlignment, content)
+    Box(SectionStyle.toModifier(variant).then(modifier), contentAlignment, content)
 }
