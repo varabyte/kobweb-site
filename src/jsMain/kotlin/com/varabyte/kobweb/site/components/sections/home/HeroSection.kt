@@ -79,7 +79,7 @@ fun HeroSection() {
                     )
                     Br()
                     Text(
-                        "Create full stack web apps in a modern, concise and type safe programming language Kotlin. Kobweb is an opinionated Kotlin framework built on top of Web Compose and includes everything you need to build modern static websites, as well as web applications faster.",
+                        "Create full stack web apps in Kotlin, a modern, concise, and typesafe programming language. Kobweb is an opinionated framework built on top of Web Compose and includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
                         Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
                             opacity(70.percent)
                             textAlign(TextAlign.Center)
