@@ -48,6 +48,7 @@ fun NavHeader() {
                 top(0.percent)
                 property("backdrop-filter", "saturate(180%) blur(5px)")
                 boxShadow(colorMode)
+                property("z-index", 1)
             },
         contentAlignment = Alignment.Center,
     ) {
