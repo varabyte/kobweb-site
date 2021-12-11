@@ -8,12 +8,10 @@ import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.components.style.*
 import org.jetbrains.compose.web.css.*
 
-val GradientBoxStyle = ComponentStyle("kobweb-gradient") {
-   base {
-       Modifier.styleModifier {
-           background("radial-gradient(circle at calc(60%), #0079f2 0, rgba(0, 121, 242, .5) 0, transparent 45%)")
-           backgroundColor(SilkTheme.palettes[colorMode].background.toCssColor())
-       }
+val GradientBoxStyle = ComponentStyle.base("kobweb-gradient") {
+   Modifier.styleModifier {
+       background("radial-gradient(circle at calc(60%), #0079f2 0, rgba(0, 121, 242, .5) 0, transparent 45%)")
+       backgroundColor(SilkTheme.palettes[colorMode].background.toCssColor())
    }
 }
 
