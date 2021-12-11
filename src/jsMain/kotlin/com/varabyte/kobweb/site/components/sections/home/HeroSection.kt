@@ -110,12 +110,12 @@ fun HeroSection() {
                     modifier = Modifier
                         // Choose a background color that's dark-ish but not as dark as the hero example itself, so it
                         // stands out
-                        .background(DARK_BACKGROUND.lightened())
                         .color(Colors.White)
                         .fontSize(12.px)
                         .lineHeight(18.px)
                         .padding(12.px)
                         .styleModifier {
+                            background("radial-gradient(circle at top, rgba(41,41,46,1) 0%, rgba(25,25,28,1) 100%)")
                             borderRadius(12.px)
                         },
                     code = """
