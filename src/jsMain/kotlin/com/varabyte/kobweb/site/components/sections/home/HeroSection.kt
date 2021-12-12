@@ -40,11 +40,7 @@ private fun HeroExample(modifier: Modifier) {
     }
 
     Column(
-        modifier.background(background).color(foreground).padding(12.px).styleModifier {
-            // Toggling color mode looks much more engaging if it animates instead of being instant
-            transitionProperty("background-color", "color")
-            transitionDuration(400.ms)
-        },
+        modifier.background(background).color(foreground).padding(12.px),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(Modifier.align(Alignment.End)) {
