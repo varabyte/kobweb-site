@@ -63,7 +63,7 @@ fun FeaturesSection() {
     val features = remember {
         listOf(
             Feature("Page Routing", "Annotate a composable method with @Page to make it a route"),
-            Feature("Server API Routes", "Annotate methods to generate server API endpoints"),
+            Feature("Server API Routes", "Annotate methods with @Api to generate server API endpoints"),
             Feature("Live Reloading", "An environment built from the ground up around live reloading"),
             Feature("Light and Dark UI", "Built-in support for multiple color modes"),
             Feature("Component library", "Silk is a UI layer included with Kobweb and built upon Web Compose"),
