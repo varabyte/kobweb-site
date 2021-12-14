@@ -26,7 +26,7 @@ private fun getButtonModifier(shape: ButtonShape): Modifier {
     return if (shape == ButtonShape.CIRCLE) {
         Modifier.clip(Circle(radius = 40))
     } else {
-        Modifier.styleModifier { borderRadius(8.px) }
+        Modifier.borderRadius(8.px)
     }
 }
 
@@ -34,12 +34,12 @@ val PrimaryButtonVariant = ButtonStyle.addVariant("primary") {
     val backgroundColor = Color.rgb(0, 121, 242)
     base {
         Modifier
-            .background(backgroundColor)
+            .backgroundColor(backgroundColor)
             .color(Colors.White)
     }
 
     hover {
-        Modifier.background(backgroundColor.lightened())
+        Modifier.backgroundColor(backgroundColor.lightened())
     }
 }
 
@@ -48,11 +48,11 @@ val NormalButtonVariant = ButtonStyle.addVariant("normal") {
     val colorMode = colorMode.opposite()
     base {
         Modifier
-            .background(SilkTheme.palettes[colorMode].background)
+            .backgroundColor(SilkTheme.palettes[colorMode].background)
             .color(SilkTheme.palettes[colorMode].color)
     }
     hover {
-        Modifier.background(SilkTheme.palettes[colorMode].background.shifted(colorMode))
+        Modifier.backgroundColor(SilkTheme.palettes[colorMode].background.shifted(colorMode))
     }
 }
 

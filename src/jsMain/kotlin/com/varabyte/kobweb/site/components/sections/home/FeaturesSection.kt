@@ -40,22 +40,19 @@ private fun FeatureItem(feature: Feature) {
     val colorMode by rememberColorMode()
 
     Box (
-        FeatureItemStyle.toModifier().then(Modifier.styleModifier {
-            borderRadius(12.px)
-            background(getBackgroundColor(colorMode))
-            padding(2.em)
-            boxShadow(colorMode)
-        })
+        FeatureItemStyle.toModifier().then(Modifier
+            .borderRadius(12.px)
+            .background(getBackgroundColor(colorMode))
+            .padding(2.em)
+            .boxShadow(colorMode)
+        )
     ) {
         Column {
             Text(feature.heading, Modifier.fontWeight(FontWeight.Bold))
             Br()
-            Text(feature.desc, Modifier.lineHeight(1.5).styleModifier {
-                opacity(70.percent)
-            })
+            Text(feature.desc, Modifier.lineHeight(1.5).opacity(70.percent))
         }
     }
-
 }
 
 @Composable
@@ -82,17 +79,16 @@ fun FeaturesSection() {
             Box (contentAlignment = Alignment.Center) {
                 Text(
                     "Why Kobweb?",
-                    Modifier.fontSize(48.px).fontWeight(FontWeight.Bold).styleModifier {
-                        textAlign(TextAlign.Center)
-                    },
+                    Modifier.fontSize(48.px).fontWeight(FontWeight.Bold).textAlign(TextAlign.Center)
                 )
                 Br()
                 Text(
                     "Kobweb has all the tools you need to build production full stack web apps",
-                    Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
-                        opacity(70.percent)
-                        textAlign(TextAlign.Center)
-                    }
+                    Modifier
+                        .lineHeight(1.5)
+                        .fontSize(1.25.cssRem)
+                        .opacity(70.percent)
+                        .textAlign(TextAlign.Center)
                 )
             }
         }

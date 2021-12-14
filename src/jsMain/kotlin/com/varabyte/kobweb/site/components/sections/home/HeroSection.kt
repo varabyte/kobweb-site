@@ -6,7 +6,6 @@ import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
-import com.varabyte.kobweb.compose.ui.graphics.lightened
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
@@ -40,7 +39,7 @@ private fun HeroExample(modifier: Modifier) {
     }
 
     Column(
-        modifier.background(background).color(foreground).padding(12.px),
+        modifier.backgroundColor(background).color(foreground).padding(12.px),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(Modifier.align(Alignment.End)) {
@@ -69,17 +68,12 @@ fun HeroSection() {
                 Box(contentAlignment = Alignment.Center) {
                     Text(
                         "Modern framework for full stack web apps in Kotlin",
-                        Modifier.fontSize(64.px).fontWeight(FontWeight.Bold).styleModifier {
-                            textAlign(TextAlign.Center)
-                        },
+                        Modifier.fontSize(64.px).fontWeight(FontWeight.Bold).textAlign(TextAlign.Center)
                     )
                     Br()
                     Text(
                         "Create full stack web apps in Kotlin, a modern, concise, and typesafe programming language. Kobweb is an opinionated framework built on top of Web Compose and includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
-                        Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
-                            opacity(70.percent)
-                            textAlign(TextAlign.Center)
-                        }
+                        Modifier.lineHeight(1.5).fontSize(1.25.cssRem).opacity(70.percent).textAlign(TextAlign.Center)
                     )
                 }
             }
@@ -110,10 +104,8 @@ fun HeroSection() {
                         .fontSize(12.px)
                         .lineHeight(18.px)
                         .padding(12.px)
-                        .styleModifier {
-                            background("radial-gradient(circle at top, rgba(41,41,46,1) 0%, rgba(25,25,28,1) 100%)")
-                            borderRadius(12.px)
-                        },
+                        .background("radial-gradient(circle at top, rgba(41,41,46,1) 0%, rgba(25,25,28,1) 100%)")
+                        .borderRadius(12.px),
                     code = """
                         @Page
                         @Composable
@@ -145,9 +137,7 @@ fun HeroSection() {
                     """.trimIndent()
                 )
 
-                HeroExample(Modifier.fillMaxWidth().styleModifier {
-                    borderRadius(12.px)
-                })
+                HeroExample(Modifier.fillMaxWidth().borderRadius(12.px))
             }
         }
     }

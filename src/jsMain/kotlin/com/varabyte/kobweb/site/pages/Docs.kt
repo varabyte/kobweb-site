@@ -21,13 +21,11 @@ fun DocsPage() {
         Column (modifier = Modifier.minHeight(100.vh).margin(4.em), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 "Getting Started",
-                Modifier.fontSize(36.px).fontWeight(FontWeight.Bolder).styleModifier {
-                    textAlign(TextAlign.Center)
-                })
+                Modifier.fontSize(36.px).fontWeight(FontWeight.Bolder).textAlign(TextAlign.Center)
+            )
             Text("Coming soon!",
-                Modifier.fontSize(24.px).styleModifier {
-                    textAlign(TextAlign.Center)
-                })
+                Modifier.fontSize(24.px).textAlign(TextAlign.Center)
+            )
 
         }
     }

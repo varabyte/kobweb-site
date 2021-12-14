@@ -10,7 +10,6 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.asAttributeBuilder
 import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.compose.ui.styleModifier
 import com.varabyte.kobweb.navigation.Link
 import com.varabyte.kobweb.silk.components.icons.fa.FaArrowRight
 import com.varabyte.kobweb.silk.components.icons.fa.FaDiscord
@@ -27,11 +26,11 @@ import org.jetbrains.compose.web.css.*
 
 val CtaGridItemStyle = ComponentStyle("cta-grid-item") {
     base {
-        Modifier.color(SilkTheme.palettes[colorMode].color).styleModifier {
-            textDecorationLine(TextDecorationLine.None)
-            transitionProperty("color")
-            transitionDuration(50.ms)
-        }
+        Modifier
+            .color(SilkTheme.palettes[colorMode].color)
+            .textDecorationLine(TextDecorationLine.None)
+            .transitionProperty("color")
+            .transitionDuration(50.ms)
     }
 
     val linkColorModifier = Modifier.color(SilkTheme.palettes[colorMode].link.default)
@@ -50,26 +49,22 @@ private fun CtaGridItem(
     Column (
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.width(33.33.percent).height(300.px).styleModifier {
-            padding(4.em)
-            boxShadow(colorMode)
-        }
+        modifier = Modifier.width(33.33.percent).height(300.px).padding(4.em).boxShadow(colorMode)
     ) {
         Link(href, attrs = CtaGridItemStyle.toModifier().asAttributeBuilder()) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 content()
                 Text(
                     text,
-                    Modifier.fontSize(1.25.em).styleModifier {
-                        textAlign(TextAlign.Center)
-                    }
+                    Modifier.fontSize(1.25.em).textAlign(TextAlign.Center)
                 )
                 Text(
                     subText,
-                    Modifier.lineHeight(1.5).margin(top = 1.cssRem, bottom = 1.cssRem).styleModifier {
-                        opacity(70.percent)
-                        textAlign(TextAlign.Center)
-                    }
+                    Modifier
+                        .lineHeight(1.5)
+                        .margin(top = 1.cssRem, bottom = 1.cssRem)
+                        .opacity(70.percent)
+                        .textAlign(TextAlign.Center)
                 )
             }
         }
@@ -86,9 +81,7 @@ fun CtaSection() {
         Modifier.margin(top = 6.em),
         contentAlignment = Alignment.Center,
     ) {
-        Row (Modifier.styleModifier {
-            flexWrap(FlexWrap.Nowrap)
-        }) {
+        Row (Modifier.flexWrap(FlexWrap.Nowrap)) {
             CtaGridItem("Get started", "Create a Web Compose website from scratch with Markdown support and live reloading, in under 10 seconds.", "/docs") {
                 FaArrowRight(Modifier.fontSize(32.px).margin(12.px))
             }
