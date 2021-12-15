@@ -1,0 +1,10 @@
+{
+  "name": "kobweb-site-service",
+  "options": {
+    "allow-unauthenticated": true,
+    "memory": "1024Mi",
+    "cpu": "1",
+    "port": 8080,
+    "http2": false
+  }
+}
