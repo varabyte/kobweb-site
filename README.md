@@ -23,51 +23,7 @@ about it.
 - Push the image to the GCP Container Registry<br />
   ```docker push gcr.io/kobweb-example-website-1/kobweb-website:1``` <br /><br />
 
-# Deploy the docker container on Google Kubernetes Engine
-## Deploy for the first time
-- Go to the project kobweb-example-website and open cloud shell OR
-  set up gcloud locally. If you’re setting up locally on your computer, make sure <br />
-  ```gcloud auth list``` shows the correct active account
-
-- Create GKE cluster in the specified zone and GCP project<br />
-  ```gcloud container clusters create kobweb-site-cluster --zone=us-west1-a --project=kobweb-example-website-1```
-
-- Fetch cluster endpoint and auth config<br />
-  ```gcloud container clusters get-credentials kobweb-site-cluster --zone us-west1-a --project=kobweb-example-website-1```
-
-- Create a new deployment<br />
-  ```kubectl apply -f  gcp-deployment-config.yaml```
-
-- Verify deployment created<br />
-  ```kubectl get deployment```
-
-- Verfiy pod created<br />
-  ```kubectl get pods```
-
-- create a static IP address named kobweb-site-ip<br />
-    ```gcloud compute addresses create kobweb-site-ip --region us-west1 --project kobweb-example-website-1```
-
-- To find the static IP address you created, run the following command, Copy the 'address' to use as load-balancer-ip in the next command:<br />
-  ```gcloud compute addresses describe kobweb-site-ip --region us-west1 --project kobweb-example-website-1```
-
-- Copy pod name from previous command and create/expose the service on port 80, this will generate an external IP where we can access the website<br />
-  ```kubectl expose pod <POD_NAME> --port=80 --target-port 8080 --name=kobweb-site-service --type=LoadBalancer --load-balancer-ip=<STATIC_IP>```
-
-- Verfiy service created and copy the external IP. It can take a few seconds for this IP to show up<br />
-  ```kubectl get services```
-
-- Set horizontal autoscaling on the deployment, set the maximum number of replicas to 10 and the minimum to 2, with a CPU utilization target of 50% utilization<br />
-  ```kubectl autoscale deployment kobweb-site --max 10 --min 2 --cpu-percent 50```
-
-- Go to the web browser and open the external IP, it should show the website. It can take a few seconds to show up though because it's finishing up running ```kobweb run``` internally at this point. You can go to the GCP console to see the deployment logs.<br />
-  Kubernetes Engine->Workloads->kobweb-site->Logs
-
-## Deploy an update to the site
-
-- Apply a rolling update to the existing kobweb-site Deployment with an image update using<br />
-  ``` kubectl set image deployment/kobweb-site kobweb-website=gcr.io/kobweb-example-website-1/kobweb-website:2```
-
-- Watch the running Pods running the tag:1 image stop, and new Pods running the tag:2 image start.<br />
-  ```kubectl get pods```
-
-- Go to the GCP Console->Workloads->kobweb-site. Select kobweb-website in Pod Specification, and you should see it pointing to tag:2 (updated) image
+# Deploy the docker container using Cloud Run
+- Run the following command to deploy your app:<br />
+  ```gcloud run deploy kobweb-site-service --image=gcr.io/kobweb-example-website-1/kobweb-website:1 --platform managed --region us-central1 --memory 1024Mi --allow-unauthenticated --project kobweb-example-website-1``` <br /><br />
+  **kobweb-example-website-1** is the GCP project name and <br /> **gcr.io/kobweb-example-website-1/kobweb-website:1** is the GCR image you want to deploy
