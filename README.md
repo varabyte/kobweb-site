@@ -5,10 +5,16 @@ This is a [Kobweb](https://github.com/varabyte/kobweb) project for generating th
 The goal of this site will be to highlight the features provided by the framework and the place to read documentation
 about it.
 
+# Deploy Site
+
+### Google cloud shell
+Make sure to include the app.json at the root of your repository
+
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
 
-# or using CLI<br />
-## **Build Docker image and push to GCR**
+### or run the following commands locally<br />
+
+#### **Build Docker image and push to GCR**
 
 - Build docker image<br />
   ```docker build -t kobweb-site .```
@@ -20,13 +26,23 @@ about it.
   ```gcloud auth login``` <br />
   ```gcloud auth configure-docker```
 
-- Tag the image- kobweb-example-website-1 here is the GCP project id. Increment the tag number when you push an update<br />
+- Tag the image<br />
   ```docker tag kobweb-site gcr.io/kobweb-example-website-1/kobweb-site-service:1```
 
 - Push the image to the GCP Container Registry<br />
   ```docker push gcr.io/kobweb-example-website-1/kobweb-site-service:1``` <br /><br />
 
-# Deploy the docker container using Cloud Run
-- Run the following command to deploy your app:<br />
-  ```gcloud run deploy kobweb-site-service --image=gcr.io/kobweb-example-website-1/kobweb-site-service:1 --platform managed --region us-central1 --memory 1024Mi --allow-unauthenticated --project kobweb-example-website-1``` <br /><br />
-  **kobweb-example-website-1** is the GCP project name and <br /> **gcr.io/kobweb-example-website-1/kobweb-site-service:1** is the GCR image you want to deploy
+#### Deploy the docker container using Cloud Run
+Run the following command to deploy your app:
+```
+gcloud run deploy kobweb-site-service\
+  --project=kobweb-example-website-1\
+  --platform=managed\
+  --region=us-central1\
+  --image=gcr.io/kobweb-example-website-1/kobweb-site-service:1\
+  --port=8080\
+  --allow-unauthenticated\
+  --memory=1024Mi\
+  --cpu=1\
+  --no-use-http2
+  ```
