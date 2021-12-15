@@ -58,9 +58,10 @@ fun Footer() {
         ) {
             OSSLabel()
             Logo()
-            Text("Copyright © 2021 Varabyte. All rights reserved.", modifier = Modifier.fontSize(0.75.em).styleModifier { opacity(70.percent)
-                textAlign(TextAlign.Center)
-            })
+            Text(
+                "Copyright © 2021 Varabyte. All rights reserved.",
+                Modifier.fontSize(0.75.em).opacity(70.percent).textAlign(TextAlign.Center)
+            )
         }
     }
 }

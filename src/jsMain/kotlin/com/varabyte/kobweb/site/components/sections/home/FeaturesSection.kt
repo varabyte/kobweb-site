@@ -40,39 +40,36 @@ private fun FeatureItem(feature: Feature) {
     val colorMode by rememberColorMode()
 
     Box (
-        FeatureItemStyle.toModifier().then(Modifier.styleModifier {
-            borderRadius(12.px)
-            background(getBackgroundColor(colorMode))
-            padding(2.em)
-            boxShadow(colorMode)
-        })
+        FeatureItemStyle.toModifier().then(Modifier
+            .borderRadius(12.px)
+            .background(getBackgroundColor(colorMode))
+            .padding(2.em)
+            .boxShadow(colorMode)
+        )
     ) {
         Column {
             Text(feature.heading, Modifier.fontWeight(FontWeight.Bold))
             Br()
-            Text(feature.desc, Modifier.lineHeight(1.5).styleModifier {
-                opacity(70.percent)
-            })
+            Text(feature.desc, Modifier.lineHeight(1.5).opacity(70.percent))
         }
     }
-
 }
 
 @Composable
 fun FeaturesSection() {
     val features = remember {
         listOf(
-            Feature("Page Routing", "Every @Composable inside pages directory with @Page becomes a route"),
-            Feature("Server API Routes", "Define and annotate methods which will generate server endpoints you can interact with"),
+            Feature("Page Routing", "Annotate a composable method with @Page to make it a route"),
+            Feature("Server API Routes", "Annotate methods with @Api to generate server API endpoints"),
             Feature("Live Reloading", "An environment built from the ground up around live reloading"),
             Feature("Light and Dark UI", "Built-in support for multiple color modes"),
             Feature("Component library", "Silk is a UI layer included with Kobweb and built upon Web Compose"),
-            Feature("Component styling", "Customize any part of our components to match your design needs"),
+            Feature("Component styling", "Powerful and simple API for defining and overriding styles"),
             Feature("Shared Types", "Share rich Kotlin class types between client and server"),
             Feature("Markdown support", "Out-of-the-box Markdown support"),
             Feature("SEO-friendly", "Supports static site exports for improved SEO"),
             Feature("Font Awesome", "Silk includes support for Font Awesome icons"),
-            Feature("Web Compose extensions", "Adds familiar Modifier, Box, Row, and Columns classes to Web Compose"),
+            Feature("Web Compose extensions", "Adds familiar Modifier, Box, Row, and Columns concepts to Web Compose"),
             Feature("Open source", "An open source project built with a friendly license and a welcoming community"),
         )
     }
@@ -82,17 +79,16 @@ fun FeaturesSection() {
             Box (contentAlignment = Alignment.Center) {
                 Text(
                     "Why Kobweb?",
-                    Modifier.fontSize(48.px).fontWeight(FontWeight.Bold).styleModifier {
-                        textAlign(TextAlign.Center)
-                    },
+                    Modifier.fontSize(48.px).fontWeight(FontWeight.Bold).textAlign(TextAlign.Center)
                 )
                 Br()
                 Text(
                     "Kobweb has all the tools you need to build production full stack web apps",
-                    Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
-                        opacity(70.percent)
-                        textAlign(TextAlign.Center)
-                    }
+                    Modifier
+                        .lineHeight(1.5)
+                        .fontSize(1.25.cssRem)
+                        .opacity(70.percent)
+                        .textAlign(TextAlign.Center)
                 )
             }
         }

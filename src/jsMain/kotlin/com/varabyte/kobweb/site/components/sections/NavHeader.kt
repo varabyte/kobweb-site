@@ -41,15 +41,14 @@ fun NavHeader() {
     var colorMode by rememberColorMode()
     Box(
         Modifier
+            .zIndex(1)
             .fillMaxWidth()
-            .background(getNavBackgroundColor(colorMode))
-            .styleModifier {
-                position(Position.Sticky)
-                top(0.percent)
-                property("backdrop-filter", "saturate(180%) blur(5px)")
-                boxShadow(colorMode)
-                property("z-index", 1)
-            },
+            .backgroundColor(getNavBackgroundColor(colorMode))
+            .position(Position.Sticky)
+            .top(0.percent)
+            .backdropFilter("saturate(180%) blur(5px)")
+            .boxShadow(colorMode),
+
         contentAlignment = Alignment.Center,
     ) {
         Row(

@@ -3,7 +3,6 @@ package com.varabyte.kobweb.site.components.sections.home
 import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
-import com.varabyte.kobweb.compose.css.textAlign
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Row
@@ -13,7 +12,6 @@ import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.site.components.widgets.Section
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
-import org.jetbrains.compose.web.dom.Img
 import org.jetbrains.compose.web.dom.Source
 import org.jetbrains.compose.web.dom.Video
 
@@ -29,17 +27,12 @@ fun CliSection() {
             Box (contentAlignment = Alignment.Center) {
                 Text(
                     "Kobweb CLI",
-                    Modifier.fontSize(48.px).fontWeight(FontWeight.Bold).styleModifier {
-                        textAlign(TextAlign.Center)
-                    },
+                    Modifier.fontSize(48.px).fontWeight(FontWeight.Bold).textAlign(TextAlign.Center)
                 )
                 Br {  }
                 Text(
                     "Kobweb CLI provides commands to handle the parts of building a Web Compose app that are less glamorous including project setup and configuration",
-                    Modifier.lineHeight(1.5).fontSize(1.25.cssRem).styleModifier {
-                        opacity(70.percent)
-                        textAlign(TextAlign.Center)
-                    }
+                    Modifier.lineHeight(1.5).fontSize(1.25.cssRem).opacity(70.percent).textAlign(TextAlign.Center)
                 )
             }
             Box (
