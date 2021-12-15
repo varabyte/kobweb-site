@@ -7,15 +7,11 @@ about it.
 
 ## **Build Docker image and push to GCR**
 
-- Make sure the Dockerfile is downloading the latest kobweb binary and do a export.
-  For some reason export didn’t work inside docker container, so we do it here before building docker image<br />
-  ```kobweb export```
-
 - Build docker image<br />
   ```docker build -t kobweb-site .```
 
 - Incase you first want to make sure the website runs locally<br />
-  ```docker run -p 8080:8080 -it kobweb-site```
+  ```docker run -p 8080:8080 kobweb-site```
 
 - Gcloud config to push the image to google cloud registry<br />
   ```gcloud auth login``` <br />
