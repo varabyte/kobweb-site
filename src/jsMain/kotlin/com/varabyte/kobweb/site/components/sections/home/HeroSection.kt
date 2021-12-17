@@ -94,6 +94,7 @@ fun HeroSection() {
             contentAlignment = Alignment.Center
         ) {
             Column {
+                HeroExample(Modifier.fillMaxWidth().borderRadius(12.px))
                 KotlinCode(
                     // Set the color explicitly to opt-out of color mode for this section, which will always be on a grey
                     // background
@@ -136,8 +137,6 @@ fun HeroSection() {
                         }
                     """.trimIndent()
                 )
-
-                HeroExample(Modifier.fillMaxWidth().borderRadius(12.px))
             }
         }
     }
