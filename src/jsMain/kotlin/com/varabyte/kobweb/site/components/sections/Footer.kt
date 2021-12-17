@@ -2,7 +2,6 @@ package com.varabyte.kobweb.site.components.sections
 
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.TextAlign
-import com.varabyte.kobweb.compose.css.textAlign
 import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.modifiers.*
@@ -13,17 +12,14 @@ import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Img
+import com.varabyte.kobweb.silk.components.navigation.Link as SilkLink
 
 @Composable
 private fun OSSLabel() {
     Row(Modifier.margin(bottom = 32.px)) {
         FaGithub(Modifier.margin(right = 8.px))
         Text ("This site is ")
-        Link (
-            href = "https://github.com/varabyte/kobweb-site"
-        ) {
-            Text("open source")
-        }
+        SilkLink ("https://github.com/varabyte/kobweb-site", "open source")
     }
 }
 
