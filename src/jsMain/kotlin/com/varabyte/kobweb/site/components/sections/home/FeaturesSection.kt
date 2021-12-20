@@ -21,6 +21,7 @@ import com.varabyte.kobweb.site.components.style.boxShadow
 import com.varabyte.kobweb.site.components.widgets.Section
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Br
+import org.jetbrains.compose.web.dom.H2
 
 private fun getBackgroundColor(colorMode: ColorMode): String {
     return when (colorMode) {
@@ -48,8 +49,7 @@ private fun FeatureItem(feature: Feature) {
         )
     ) {
         Column {
-            Text(feature.heading, Modifier.fontWeight(FontWeight.Bold))
-            Br()
+            Text(feature.heading, Modifier.fontWeight(FontWeight.Bold).margin(bottom = 0.75.cssRem))
             Text(feature.desc, Modifier.lineHeight(1.5).opacity(70.percent))
         }
     }
@@ -77,13 +77,14 @@ fun FeaturesSection() {
     Section {
         Row {
             Box (contentAlignment = Alignment.Center) {
+                H2 {
+                    Text(
+                        "Why Kobweb?",
+                        Modifier.textAlign(TextAlign.Center)
+                    )
+                }
                 Text(
-                    "Why Kobweb?",
-                    Modifier.fontSize(48.px).fontWeight(FontWeight.Bold).textAlign(TextAlign.Center)
-                )
-                Br()
-                Text(
-                    "Kobweb has all the tools you need to build production full stack web apps",
+                    "Build your Web Compose apps quicker and easier",
                     Modifier
                         .lineHeight(1.5)
                         .fontSize(1.25.cssRem)
@@ -93,7 +94,7 @@ fun FeaturesSection() {
             }
         }
 
-        SimpleGrid(numColumns(2, lg = 3)) {
+        SimpleGrid(numColumns(1, md = 3)) {
             features.forEach { feature -> Cell { FeatureItem(feature) } }
         }
     }

@@ -10,7 +10,13 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
+import com.varabyte.kobweb.silk.components.layout.SimpleGrid
+import com.varabyte.kobweb.silk.components.layout.breakpoint.displayIf
+import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
+import com.varabyte.kobweb.silk.components.style.ComponentStyle
+import com.varabyte.kobweb.silk.components.style.breakpoint.Breakpoint
+import com.varabyte.kobweb.silk.components.style.toModifier
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.widgets.GradientBox
@@ -19,8 +25,8 @@ import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.Section
 import kotlinx.browser.window
 import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.Br
 import org.jetbrains.compose.web.dom.H1
+import org.jetbrains.compose.web.dom.H3
 
 private val DARK_BACKGROUND = Color.rgb(25, 25, 25)
 private val LIGHT_BACKGROUND = DARK_BACKGROUND.inverted()
@@ -45,7 +51,9 @@ private fun HeroExample(modifier: Modifier) {
         Row(Modifier.align(Alignment.End)) {
             if (localColorMode.isLight()) FaSun() else FaMoon()
         }
-        H1 {
+        // We have to slightly tweak header settings here from the actual code sample above since
+        // the overall site overloads H1 values from the default
+        H3(attrs = Modifier.margin(bottom = 1.cssRem).asAttributeBuilder()) {
             Text("Welcome to Kobweb!")
         }
         Row {
@@ -54,6 +62,16 @@ private fun HeroExample(modifier: Modifier) {
             Text(" and ")
             Link("https://compose-web.ui.pages.jetbrains.team/", "Web Compose")
         }
+    }
+}
+
+val HeroButton = ComponentStyle("hero-button") {
+    base {
+        Modifier.width(300.px)
+    }
+
+    Breakpoint.MD {
+        Modifier.width(150.px)
     }
 }
 
@@ -66,31 +84,37 @@ fun HeroSection() {
         Section {
             Row (modifier = Modifier.margin(left = 3.em, right = 3.em, top = 3.em)) {
                 Box(contentAlignment = Alignment.Center) {
+                    H1 {
+                        Text(
+                            "Create web apps in Kotlin",
+                            Modifier.textAlign(TextAlign.Center)
+                        )
+                    }
                     Text(
-                        "Modern framework for full stack web apps in Kotlin",
-                        Modifier.fontSize(64.px).fontWeight(FontWeight.Bold).textAlign(TextAlign.Center)
-                    )
-                    Br()
-                    Text(
-                        "Create full stack web apps in Kotlin, a modern, concise, and typesafe programming language. Kobweb is an opinionated framework built on top of Web Compose and includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
+                        "Kobweb is an opinionated framework built on top of Web Compose. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
                         Modifier.lineHeight(1.5).fontSize(1.25.cssRem).opacity(70.percent).textAlign(TextAlign.Center)
                     )
                 }
             }
 
-            Row(Modifier.margin(top = 32.px)) {
-                LinkButton("/docs", Modifier.width(150.px), "Start Learning", primary = true)
-                LinkButton(
-                    "https://github.com/varabyte/kobweb",
-                    Modifier.margin(left = 12.px).width(150.px),
-                    "Github"
-                ) {
-                    FaGithub(Modifier.margin(right = 8.px))
+            SimpleGrid(
+                numColumns(1, md = 2),
+                Modifier.margin(top = 32.px).rowGap(1.cssRem).columnGap(16.px),
+            ) {
+                Cell {
+                    LinkButton("/docs", HeroButton.toModifier(), "Start Learning", primary = true)
+                }
+
+                Cell {
+                    LinkButton("https://github.com/varabyte/kobweb", HeroButton.toModifier(), "Github") {
+                        FaGithub(Modifier.margin(right = 8.px))
+                    }
                 }
             }
         }
+
         Box (
-            Modifier.margin(top = 32.px, bottom = 32.px),
+            Modifier.margin(top = 32.px, bottom = 32.px).displayIf(Breakpoint.MD),
             contentAlignment = Alignment.Center
         ) {
             Column {
@@ -102,9 +126,8 @@ fun HeroSection() {
                         // Choose a background color that's dark-ish but not as dark as the hero example itself, so it
                         // stands out
                         .color(Colors.White)
-                        .fontSize(12.px)
-                        .lineHeight(18.px)
-                        .padding(12.px)
+                        .lineHeight(1.5.cssRem)
+                        .padding(0.75.cssRem)
                         .background("radial-gradient(circle at top, rgba(41,41,46,1) 0%, rgba(25,25,28,1) 100%)")
                         .borderRadius(12.px),
                     code = """
