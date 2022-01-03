@@ -95,7 +95,7 @@ fun FeaturesSection() {
         }
 
         SimpleGrid(numColumns(1, md = 3)) {
-            features.forEach { feature -> Cell { FeatureItem(feature) } }
+            features.forEach { feature -> FeatureItem(feature) }
         }
     }
 }

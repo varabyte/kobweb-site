@@ -90,32 +90,28 @@ fun CtaSection() {
      */
     SimpleGrid(numColumns(1, md = 3), Modifier.margin(top = 6.cssRem).fillMaxWidth()) {
         val iconModifier = Modifier.fontSize(2.cssRem).margin(0.75.cssRem)
-        Cell {
-            CtaGridItem(
-                "Get started",
-                "Visit our docs, with tutorials and API examples to get you up and running with your own site in no time.",
-                "/docs"
-            ) {
-                FaArrowRight(iconModifier)
-            }
+        CtaGridItem(
+            "Get started",
+            "Visit our docs, with tutorials and API examples to get you up and running with your own site in no time.",
+            "/docs"
+        ) {
+            FaArrowRight(iconModifier)
         }
-        Cell {
-            CtaGridItem(
-                "Star & Contribute",
-                "Kobweb is fully open source and community driven. We invite you to help make Kobweb the best web development framework!",
-                "https://github.com/varabyte/kobweb"
-            ) {
-                FaStar(iconModifier)
-            }
+        
+        CtaGridItem(
+            "Star & Contribute",
+            "Kobweb is fully open source and community driven. We invite you to help make Kobweb the best web development framework!",
+            "https://github.com/varabyte/kobweb"
+        ) {
+            FaStar(iconModifier)
         }
-        Cell {
-            CtaGridItem(
-                "Join the Community",
-                "Join our community for instant support and great conversations about the future of the Kobweb and web development using Kotlin.",
-                "https://discord.gg/5NZ2GKV5Cs"
-            ) {
-                FaDiscord(iconModifier)
-            }
+
+        CtaGridItem(
+            "Join the Community",
+            "Join our community for instant support and great conversations about the future of the Kobweb and web development using Kotlin.",
+            "https://discord.gg/5NZ2GKV5Cs"
+        ) {
+            FaDiscord(iconModifier)
         }
     }
 }

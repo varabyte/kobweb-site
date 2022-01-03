@@ -101,14 +101,9 @@ fun HeroSection() {
                 numColumns(1, md = 2),
                 Modifier.margin(top = 32.px).rowGap(1.cssRem).columnGap(16.px),
             ) {
-                Cell {
-                    LinkButton("/docs", HeroButton.toModifier(), "Start Learning", primary = true)
-                }
-
-                Cell {
-                    LinkButton("https://github.com/varabyte/kobweb", HeroButton.toModifier(), "Github") {
-                        FaGithub(Modifier.margin(right = 8.px))
-                    }
+                LinkButton("/docs", HeroButton.toModifier(), "Start Learning", primary = true)
+                LinkButton("https://github.com/varabyte/kobweb", HeroButton.toModifier(), "Github") {
+                    FaGithub(Modifier.margin(right = 8.px))
                 }
             }
         }
