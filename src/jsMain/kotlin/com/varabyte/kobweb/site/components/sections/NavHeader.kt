@@ -70,8 +70,8 @@ fun NavHeader() {
                     shape = ButtonShape.CIRCLE
                 ) {
                     when (colorMode) {
-                        ColorMode.DARK -> FaMoon()
-                        ColorMode.LIGHT -> FaSun()
+                        ColorMode.DARK -> FaSun()
+                        ColorMode.LIGHT -> FaMoon()
                     }
                 }
             }

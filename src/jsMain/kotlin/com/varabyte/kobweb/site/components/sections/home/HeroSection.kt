@@ -49,7 +49,7 @@ private fun HeroExample(modifier: Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(Modifier.align(Alignment.End)) {
-            if (localColorMode.isLight()) FaSun() else FaMoon()
+            if (localColorMode.isLight()) FaMoon() else FaSun()
         }
         // We have to slightly tweak header settings here from the actual code sample above since
         // the overall site overloads H1 values from the default
@@ -138,7 +138,7 @@ fun HeroSection() {
                               ) {
                                 Box(Modifier.margin(4.px)) {
                                   // Includes support for Font Awesome icons
-                                  if (colorMode.isLight()) FaSun() else FaMoon()
+                                  if (colorMode.isLight()) FaMoon() else FaSun()
                                 }
                               }
                             }
