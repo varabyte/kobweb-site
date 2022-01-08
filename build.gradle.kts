@@ -66,6 +66,7 @@ kotlin {
                 implementation(libs.kobweb.core)
                 implementation(libs.kobweb.silk.core)
                 implementation(libs.kobweb.silk.icons.fa)
+                implementation(libs.kobwebx.markdown)
              }
         }
 
