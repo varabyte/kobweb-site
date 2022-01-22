@@ -60,7 +60,7 @@ private fun HeroExample(modifier: Modifier) {
             Text("Create rich, dynamic web apps with ease, leveraging ")
             Link("https://kotlinlang.org/", "Kotlin")
             Text(" and ")
-            Link("https://compose-web.ui.pages.jetbrains.team/", "Web Compose")
+            Link("https://compose-web.ui.pages.jetbrains.team/", "Compose for Web")
         }
     }
 }
@@ -91,7 +91,7 @@ fun HeroSection() {
                         )
                     }
                     Text(
-                        "Kobweb is an opinionated framework built on top of Web Compose. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
+                        "Kobweb is an opinionated framework built on top of Compose for Web. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
                         Modifier.lineHeight(1.5).fontSize(1.25.cssRem).opacity(70.percent).textAlign(TextAlign.Center)
                     )
                 }
@@ -149,7 +149,7 @@ fun HeroSection() {
                               Text("Create rich, dynamic web apps with ease, leveraging ")
                               Link("https://kotlinlang.org/", "Kotlin")
                               Text(" and ")
-                              Link("https://compose-web.ui.pages.jetbrains.team/", "Web Compose")
+                              Link("https://compose-web.ui.pages.jetbrains.team/", "Compose for Web")
                             }
                           }
                         }
