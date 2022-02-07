@@ -8,7 +8,7 @@ import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.asAttributeBuilder
+import com.varabyte.kobweb.compose.ui.asAttributesBuilder
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.navigation.Link
 import com.varabyte.kobweb.silk.components.icons.fa.FaArrowRight
@@ -53,7 +53,7 @@ private fun CtaGridItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(topBottom = 0.px, leftRight = 3.cssRem).boxShadow(colorMode)
     ) {
-        Link(href, attrs = CtaGridItemStyle.toModifier().asAttributeBuilder()) {
+        Link(href, attrs = CtaGridItemStyle.toModifier().asAttributesBuilder()) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 content()
                 Text(

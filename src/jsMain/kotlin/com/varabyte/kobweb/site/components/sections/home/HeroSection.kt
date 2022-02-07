@@ -53,7 +53,7 @@ private fun HeroExample(modifier: Modifier) {
         }
         // We have to slightly tweak header settings here from the actual code sample above since
         // the overall site overloads H1 values from the default
-        H3(attrs = Modifier.margin(bottom = 1.cssRem).asAttributeBuilder()) {
+        H3(attrs = Modifier.margin(bottom = 1.cssRem).asAttributesBuilder()) {
             Text("Welcome to Kobweb!")
         }
         Row {
