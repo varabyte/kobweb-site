@@ -4,6 +4,9 @@ build
 out
 kotlin-js-store
 
+# Firebase
+.firebase
+
 # IntelliJ ignores
 *.iml
 /*.ipr
