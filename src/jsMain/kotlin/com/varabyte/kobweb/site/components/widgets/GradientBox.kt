@@ -21,5 +21,5 @@ fun GradientBox(
     variant: ComponentVariant? = null,
     content: @Composable BoxScope.() -> Unit = {}
 ) {
-    Box(GradientBoxStyle.toModifier(variant).then(modifier), contentAlignment, content)
+    Box(GradientBoxStyle.toModifier(variant).then(modifier), contentAlignment, content = content)
 }

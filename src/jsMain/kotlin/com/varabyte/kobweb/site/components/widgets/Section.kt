@@ -23,5 +23,5 @@ fun Section(
     variant: ComponentVariant? = null,
     content: @Composable BoxScope.() -> Unit = {}
 ) {
-    Box(SectionStyle.toModifier(variant).then(modifier), contentAlignment, content)
+    Box(SectionStyle.toModifier(variant).then(modifier), contentAlignment, content = content)
 }
