@@ -1,8 +1,10 @@
 package com.varabyte.kobweb.site.components.widgets
 
 import androidx.compose.runtime.*
-import com.varabyte.kobweb.compose.foundation.layout.*
-import com.varabyte.kobweb.compose.ui.*
+import com.varabyte.kobweb.compose.foundation.layout.Column
+import com.varabyte.kobweb.compose.foundation.layout.ColumnScope
+import com.varabyte.kobweb.compose.ui.Alignment
+import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.style.*
 import org.jetbrains.compose.web.css.*
@@ -19,9 +21,9 @@ val SectionStyle = ComponentStyle.base("kobweb-section") {
 @Composable
 fun Section(
     modifier: Modifier = Modifier,
-    contentAlignment: Alignment = Alignment.Center,
+    horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
     variant: ComponentVariant? = null,
-    content: @Composable BoxScope.() -> Unit = {}
+    content: @Composable ColumnScope.() -> Unit = {}
 ) {
-    Box(SectionStyle.toModifier(variant).then(modifier), contentAlignment, content = content)
+    Column(SectionStyle.toModifier(variant).then(modifier), horizontalAlignment = horizontalAlignment, content = content)
 }

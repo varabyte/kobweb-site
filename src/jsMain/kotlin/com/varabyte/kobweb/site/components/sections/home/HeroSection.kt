@@ -1,9 +1,12 @@
 package com.varabyte.kobweb.site.components.sections.home
 
 import androidx.compose.runtime.*
-import com.varabyte.kobweb.compose.css.*
-import com.varabyte.kobweb.compose.foundation.layout.*
-import com.varabyte.kobweb.compose.ui.*
+import com.varabyte.kobweb.compose.css.TextAlign
+import com.varabyte.kobweb.compose.foundation.layout.Column
+import com.varabyte.kobweb.compose.foundation.layout.Row
+import com.varabyte.kobweb.compose.ui.Alignment
+import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.asAttributesBuilder
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
@@ -14,9 +17,8 @@ import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.breakpoint.displayIf
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
-import com.varabyte.kobweb.silk.components.style.ComponentStyle
+import com.varabyte.kobweb.silk.components.style.*
 import com.varabyte.kobweb.silk.components.style.breakpoint.Breakpoint
-import com.varabyte.kobweb.silk.components.style.toModifier
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.widgets.GradientBox
@@ -25,8 +27,7 @@ import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.Section
 import kotlinx.browser.window
 import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.H1
-import org.jetbrains.compose.web.dom.H3
+import org.jetbrains.compose.web.dom.*
 
 private val DARK_BACKGROUND = Color.rgb(25, 25, 25)
 private val LIGHT_BACKGROUND = DARK_BACKGROUND.inverted()
@@ -82,19 +83,21 @@ val HeroButton = ComponentStyle("hero-button") {
 fun HeroSection() {
     GradientBox(contentAlignment = Alignment.Center) {
         Section {
-            Row (modifier = Modifier.margin(left = 3.em, right = 3.em, top = 3.em)) {
-                Box(contentAlignment = Alignment.Center) {
-                    H1 {
-                        Text(
-                            "Create web apps in Kotlin",
-                            Modifier.textAlign(TextAlign.Center)
-                        )
-                    }
+            Column(
+                Modifier.margin(left = 3.em, right = 3.em, top = 3.em),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                H1 {
                     Text(
-                        "Kobweb is an opinionated framework built on top of Compose for Web. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
-                        Modifier.lineHeight(1.5).fontSize(1.25.cssRem).opacity(70.percent).textAlign(TextAlign.Center)
+                        "Create web apps in Kotlin",
+                        Modifier.textAlign(TextAlign.Center)
                     )
                 }
+                Text(
+                    "Kobweb is an opinionated framework built on top of Compose for Web. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
+                    Modifier.lineHeight(1.5).fontSize(1.25.cssRem).opacity(70.percent)
+                        .textAlign(TextAlign.Center)
+                )
             }
 
             SimpleGrid(
@@ -106,13 +109,8 @@ fun HeroSection() {
                     FaGithub(Modifier.margin(right = 8.px))
                 }
             }
-        }
 
-        Box (
-            Modifier.margin(top = 32.px, bottom = 32.px).displayIf(Breakpoint.MD),
-            contentAlignment = Alignment.Center
-        ) {
-            Column {
+            Column(Modifier.margin(top = 32.px, bottom = 32.px).displayIf(Breakpoint.MD), horizontalAlignment = Alignment.CenterHorizontally) {
                 HeroExample(Modifier.fillMaxWidth().borderRadius(12.px))
                 KotlinCode(
                     // Set the color explicitly to opt-out of color mode for this section, which will always be on a grey

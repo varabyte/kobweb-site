@@ -1,11 +1,10 @@
 package com.varabyte.kobweb.site.components.sections.home
 
 import androidx.compose.runtime.*
-import com.varabyte.kobweb.compose.css.*
+import com.varabyte.kobweb.compose.css.TextAlign
+import com.varabyte.kobweb.compose.css.TextDecorationLine
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
-import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
-import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.asAttributesBuilder
@@ -16,10 +15,7 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaDiscord
 import com.varabyte.kobweb.silk.components.icons.fa.FaStar
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
-import com.varabyte.kobweb.silk.components.style.ComponentStyle
-import com.varabyte.kobweb.silk.components.style.focus
-import com.varabyte.kobweb.silk.components.style.hover
-import com.varabyte.kobweb.silk.components.style.toModifier
+import com.varabyte.kobweb.silk.components.style.*
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
@@ -79,15 +75,6 @@ private fun CtaGridItem(
  */
 @Composable
 fun CtaSection() {
-    /*
-
-    }
-    Box(
-        Modifier.margin(top = 6.em),
-        contentAlignment = Alignment.Center,
-    ) {
-
-     */
     SimpleGrid(numColumns(1, md = 3), Modifier.margin(top = 6.cssRem).fillMaxWidth()) {
         val iconModifier = Modifier.fontSize(2.cssRem).margin(0.75.cssRem)
         CtaGridItem(

@@ -3,25 +3,20 @@ package com.varabyte.kobweb.site.components.sections.home
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
-import com.varabyte.kobweb.compose.css.textAlign
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
-import com.varabyte.kobweb.compose.foundation.layout.Row
-import com.varabyte.kobweb.compose.ui.*
+import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
-import com.varabyte.kobweb.silk.components.style.ComponentStyle
-import com.varabyte.kobweb.silk.components.style.base
-import com.varabyte.kobweb.silk.components.style.toModifier
+import com.varabyte.kobweb.silk.components.style.*
 import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
 import com.varabyte.kobweb.site.components.widgets.Section
 import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.Br
-import org.jetbrains.compose.web.dom.H2
+import org.jetbrains.compose.web.dom.*
 
 private fun getBackgroundColor(colorMode: ColorMode): String {
     return when (colorMode) {
@@ -75,24 +70,20 @@ fun FeaturesSection() {
     }
 
     Section {
-        Row {
-            Box (contentAlignment = Alignment.Center) {
-                H2 {
-                    Text(
-                        "Why Kobweb?",
-                        Modifier.textAlign(TextAlign.Center)
-                    )
-                }
-                Text(
-                    "Build your Compose for Web apps quicker and easier",
-                    Modifier
-                        .lineHeight(1.5)
-                        .fontSize(1.25.cssRem)
-                        .opacity(70.percent)
-                        .textAlign(TextAlign.Center)
-                )
-            }
+        H2 {
+            Text(
+                "Why Kobweb?",
+                Modifier.textAlign(TextAlign.Center)
+            )
         }
+        Text(
+            "Build your Compose for Web apps quicker and easier",
+            Modifier
+                .lineHeight(1.5)
+                .fontSize(1.25.cssRem)
+                .opacity(70.percent)
+                .textAlign(TextAlign.Center)
+        )
 
         SimpleGrid(numColumns(1, md = 3)) {
             features.forEach { feature -> FeatureItem(feature) }
