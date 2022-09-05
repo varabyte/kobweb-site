@@ -7,7 +7,7 @@ import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.navigation.Link
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
-import com.varabyte.kobweb.silk.components.text.Text
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
 import org.jetbrains.compose.web.css.*
@@ -18,7 +18,7 @@ import com.varabyte.kobweb.silk.components.navigation.Link as SilkLink
 private fun OSSLabel() {
     Row(Modifier.margin(bottom = 32.px)) {
         FaGithub(Modifier.margin(right = 8.px))
-        Text ("This site is ")
+        SpanText("This site is ")
         SilkLink ("https://github.com/varabyte/kobweb-site", "open source")
     }
 }
@@ -54,7 +54,7 @@ fun Footer() {
         ) {
             OSSLabel()
             Logo()
-            Text(
+            SpanText(
                 "Copyright © 2021 Varabyte. All rights reserved.",
                 Modifier.fontSize(0.75.em).opacity(70.percent).textAlign(TextAlign.Center)
             )

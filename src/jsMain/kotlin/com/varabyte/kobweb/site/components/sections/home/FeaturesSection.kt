@@ -10,7 +10,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.style.*
-import com.varabyte.kobweb.silk.components.text.Text
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
@@ -44,8 +44,8 @@ private fun FeatureItem(feature: Feature) {
         )
     ) {
         Column {
-            Text(feature.heading, Modifier.fontWeight(FontWeight.Bold).margin(bottom = 0.75.cssRem))
-            Text(feature.desc, Modifier.lineHeight(1.5).opacity(70.percent))
+            SpanText(feature.heading, Modifier.fontWeight(FontWeight.Bold).margin(bottom = 0.75.cssRem))
+            SpanText(feature.desc, Modifier.lineHeight(1.5).opacity(70.percent))
         }
     }
 }
@@ -71,12 +71,12 @@ fun FeaturesSection() {
 
     Section {
         H2 {
-            Text(
+            SpanText(
                 "Why Kobweb?",
                 Modifier.textAlign(TextAlign.Center)
             )
         }
-        Text(
+        SpanText(
             "Build your Compose for Web apps quicker and easier",
             Modifier
                 .lineHeight(1.5)

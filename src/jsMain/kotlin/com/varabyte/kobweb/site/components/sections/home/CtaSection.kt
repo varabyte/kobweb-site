@@ -16,7 +16,7 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaStar
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.style.*
-import com.varabyte.kobweb.silk.components.text.Text
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
@@ -52,11 +52,11 @@ private fun CtaGridItem(
         Link(href, attrs = CtaGridItemStyle.toModifier().asAttributesBuilder()) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 content()
-                Text(
+                SpanText(
                     text,
                     Modifier.fontSize(1.25.cssRem).textAlign(TextAlign.Center)
                 )
-                Text(
+                SpanText(
                     subText,
                     Modifier
                         .lineHeight(1.5)

@@ -7,14 +7,13 @@ import com.varabyte.kobweb.compose.ui.graphics.*
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.forms.Button
-import com.varabyte.kobweb.silk.components.text.Text
 import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.shapes.Circle
 import com.varabyte.kobweb.silk.theme.shapes.clip
-import org.jetbrains.compose.web.css.borderRadius
 import org.jetbrains.compose.web.css.px
 import com.varabyte.kobweb.silk.components.forms.ButtonStyle
 import com.varabyte.kobweb.silk.components.style.hover
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.shifted
 
 enum class ButtonShape {
@@ -44,7 +43,6 @@ val PrimaryButtonVariant = ButtonStyle.addVariant("primary") {
 }
 
 val NormalButtonVariant = ButtonStyle.addVariant("normal") {
-    @Suppress("NAME_SHADOWING") // Button colors should be inverted from the rest of the site
     val colorMode = colorMode.opposite()
     base {
         Modifier
@@ -85,7 +83,7 @@ fun ThemedButton(
         ) {
             content()
             if (text != null && text.isNotEmpty()) {
-                Text(text)
+                SpanText(text)
             }
         }
     }

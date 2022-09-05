@@ -19,7 +19,7 @@ import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.style.*
 import com.varabyte.kobweb.silk.components.style.breakpoint.Breakpoint
-import com.varabyte.kobweb.silk.components.text.Text
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.widgets.GradientBox
 import com.varabyte.kobweb.site.components.widgets.KotlinCode
@@ -88,12 +88,12 @@ fun HeroSection() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 H1 {
-                    Text(
+                    SpanText(
                         "Create web apps in Kotlin",
                         Modifier.textAlign(TextAlign.Center)
                     )
                 }
-                Text(
+                SpanText(
                     "Kobweb is an opinionated framework built on top of Compose for Web. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
                     Modifier.lineHeight(1.5).fontSize(1.25.cssRem).opacity(70.percent)
                         .textAlign(TextAlign.Center)
