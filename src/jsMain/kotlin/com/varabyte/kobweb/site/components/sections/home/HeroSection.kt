@@ -58,9 +58,9 @@ private fun HeroExample(modifier: Modifier) {
             Text("Welcome to Kobweb!")
         }
         Row {
-            Text("Create rich, dynamic web apps with ease, leveraging ")
+            SpanText("Create rich, dynamic web apps with ease, leveraging ")
             Link("https://kotlinlang.org/", "Kotlin")
-            Text(" and ")
+            SpanText(" and ")
             Link("https://compose-web.ui.pages.jetbrains.team/", "Compose for Web")
         }
     }
