@@ -20,18 +20,20 @@ group = "com.varabyte.kobweb.site"
 version = "1.0-SNAPSHOT"
 
 kobweb {
-    index {
-        head.add {
-            link {
-                rel = "stylesheet"
-                href = "/highlight.js/styles/dracula.css"
-            }
-            script {
-                src = "/highlight.js/highlight.min.js"
-            }
-            script {
-                unsafe {
-                    raw("hljs.highlightAll()")
+    app {
+        index {
+            head.add {
+                link {
+                    rel = "stylesheet"
+                    href = "/highlight.js/styles/dracula.css"
+                }
+                script {
+                    src = "/highlight.js/highlight.min.js"
+                }
+                script {
+                    unsafe {
+                        raw("hljs.highlightAll()")
+                    }
                 }
             }
         }

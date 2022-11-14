@@ -9,7 +9,7 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.asAttributesBuilder
 import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.navigation.Link
+import com.varabyte.kobweb.navigation.Anchor
 import com.varabyte.kobweb.silk.components.icons.fa.FaArrowRight
 import com.varabyte.kobweb.silk.components.icons.fa.FaDiscord
 import com.varabyte.kobweb.silk.components.icons.fa.FaStar
@@ -49,7 +49,7 @@ private fun CtaGridItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(topBottom = 0.px, leftRight = 3.cssRem).boxShadow(colorMode)
     ) {
-        Link(href, attrs = CtaGridItemStyle.toModifier().asAttributesBuilder()) {
+        Anchor(href, attrs = CtaGridItemStyle.toModifier().asAttributesBuilder(), content = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 content()
                 SpanText(
@@ -65,7 +65,7 @@ private fun CtaGridItem(
                         .textAlign(TextAlign.Center)
                 )
             }
-        }
+        })
     }
 }
 

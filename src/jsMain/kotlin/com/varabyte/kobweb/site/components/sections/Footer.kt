@@ -2,16 +2,19 @@ package com.varabyte.kobweb.site.components.sections
 
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.TextAlign
-import com.varabyte.kobweb.compose.foundation.layout.*
-import com.varabyte.kobweb.compose.ui.*
+import com.varabyte.kobweb.compose.foundation.layout.Box
+import com.varabyte.kobweb.compose.foundation.layout.Column
+import com.varabyte.kobweb.compose.foundation.layout.Row
+import com.varabyte.kobweb.compose.ui.Alignment
+import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.navigation.Link
+import com.varabyte.kobweb.navigation.Anchor
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
 import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.Img
+import org.jetbrains.compose.web.dom.*
 import com.varabyte.kobweb.silk.components.navigation.Link as SilkLink
 
 @Composable
@@ -25,7 +28,7 @@ private fun OSSLabel() {
 
 @Composable
 private fun Logo() {
-    Link(
+    Anchor(
         href = "/",
     ) {
         Box(Modifier.margin(4.px)) {
