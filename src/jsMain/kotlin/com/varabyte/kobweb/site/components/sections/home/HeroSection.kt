@@ -6,10 +6,10 @@ import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.asAttributesBuilder
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
@@ -54,7 +54,7 @@ private fun HeroExample(modifier: Modifier) {
         }
         // We have to slightly tweak header settings here from the actual code sample above since
         // the overall site overloads H1 values from the default
-        H3(attrs = Modifier.margin(bottom = 1.cssRem).asAttributesBuilder()) {
+        H3(attrs = Modifier.margin(bottom = 1.cssRem).toAttrs()) {
             Text("Welcome to Kobweb!")
         }
         Row {

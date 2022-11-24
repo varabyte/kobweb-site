@@ -1,15 +1,17 @@
 package com.varabyte.kobweb.site
 
 import androidx.compose.runtime.*
-import com.varabyte.kobweb.compose.css.*
+import com.varabyte.kobweb.compose.css.FontWeight
+import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.foundation.layout.Box
-import com.varabyte.kobweb.compose.ui.*
-import com.varabyte.kobweb.compose.ui.graphics.toCssColor
+import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.core.App
-import com.varabyte.kobweb.silk.*
+import com.varabyte.kobweb.silk.InitSilk
+import com.varabyte.kobweb.silk.InitSilkContext
+import com.varabyte.kobweb.silk.SilkApp
+import com.varabyte.kobweb.silk.components.layout.AnimatedColorSurfaceVariant
 import com.varabyte.kobweb.silk.components.layout.Surface
-import com.varabyte.kobweb.silk.components.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.getColorMode
@@ -53,9 +55,9 @@ fun MyApp(content: @Composable () -> Unit) {
             localStorage.setItem(COLOR_MODE_KEY, colorMode.name)
         }
 
-        Surface {
+        Surface(variant = AnimatedColorSurfaceVariant) {
             Box(
-                Modifier.fillMaxSize().backgroundColor(SilkTheme.palettes[colorMode].background.toCssColor())
+                Modifier.fillMaxSize().backgroundColor(SilkTheme.palettes[colorMode].background)
             ) {
                 content()
             }

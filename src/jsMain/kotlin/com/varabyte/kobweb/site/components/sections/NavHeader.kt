@@ -21,7 +21,7 @@ private fun HomeLogo() {
         Box(Modifier.margin(4.px)) {
             Img(
                 "images/logo.png",
-                attrs = Modifier.height(32.px).asAttributesBuilder()
+                attrs = Modifier.height(32.px).toAttrs()
             )
         }
     }
