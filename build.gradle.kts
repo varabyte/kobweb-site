@@ -1,3 +1,4 @@
+import com.varabyte.kobweb.gradle.application.util.configAsKobwebApplication
 import kotlinx.html.link
 import kotlinx.html.script
 import kotlinx.html.unsafe
@@ -41,21 +42,8 @@ kobweb {
 }
 
 kotlin {
-// Consider re-enabling JVM support if we add API routes
-//    jvm {
-//        tasks.named("jvmJar", Jar::class.java).configure {
-//            archiveFileName.set("kobweb-site.jar")
-//        }
-//    }
-    js(IR) {
-        moduleName = "kobweb-site"
-        browser {
-            commonWebpackConfig {
-                outputFileName = "kobweb-site.js"
-            }
-        }
-        binaries.executable()
-    }
+    configAsKobwebApplication("kobweb-site")
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -71,12 +59,5 @@ kotlin {
                 implementation(libs.kobwebx.markdown)
              }
         }
-
-// Consider re-enabling JVM support if we add API routes
-//        val jvmMain by getting {
-//            dependencies {
-//                implementation(libs.kobweb.api)
-//             }
-//        }
     }
 }
