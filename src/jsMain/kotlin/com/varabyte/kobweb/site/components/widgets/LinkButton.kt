@@ -22,11 +22,11 @@ enum class ButtonShape {
 }
 
 private fun getButtonModifier(shape: ButtonShape): Modifier {
-    return if (shape == ButtonShape.CIRCLE) {
+    return Modifier.padding(0.px).then(if (shape == ButtonShape.CIRCLE) {
         Modifier.clip(Circle(radius = 40))
     } else {
-        Modifier.borderRadius(8.px)
-    }
+        Modifier.fontWeight(600).borderRadius(8.px)
+    })
 }
 
 val PrimaryButtonVariant = ButtonStyle.addVariant("primary") {

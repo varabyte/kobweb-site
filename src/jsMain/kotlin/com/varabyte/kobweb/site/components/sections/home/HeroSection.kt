@@ -132,7 +132,7 @@ fun HeroSection() {
                               var colorMode by rememberColorMode()
                               Button(
                                 onClick = { colorMode = colorMode.opposite() },
-                                Modifier.clip(Circle())
+                                Modifier.padding(0.px).clip(Circle())
                               ) {
                                 Box(Modifier.margin(4.px)) {
                                   // Includes support for Font Awesome icons
