@@ -19,7 +19,7 @@ import com.varabyte.kobweb.silk.components.navigation.Link as SilkLink
 
 @Composable
 private fun OSSLabel() {
-    Row(Modifier.margin(bottom = 32.px)) {
+    Row(Modifier.margin(bottom = 32.px).flexWrap(FlexWrap.Wrap)) {
         FaGithub(Modifier.margin(right = 8.px))
         SpanText("This site is ")
         SilkLink ("https://github.com/varabyte/kobweb-site", "open source")
@@ -58,7 +58,7 @@ fun Footer() {
             OSSLabel()
             Logo()
             SpanText(
-                "Copyright © 2021 Varabyte. All rights reserved.",
+                "Copyright © 2023 Varabyte. All rights reserved.",
                 Modifier.fontSize(0.75.em).opacity(70.percent).textAlign(TextAlign.Center)
             )
         }
