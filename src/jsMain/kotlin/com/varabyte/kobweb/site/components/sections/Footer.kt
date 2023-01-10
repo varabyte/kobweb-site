@@ -19,7 +19,7 @@ import com.varabyte.kobweb.silk.components.navigation.Link as SilkLink
 
 @Composable
 private fun OSSLabel() {
-    Row(Modifier.margin(bottom = 32.px).flexWrap(FlexWrap.Wrap)) {
+    Row(Modifier.margin(bottom = 32.px).flexWrap(FlexWrap.Wrap), verticalAlignment = Alignment.CenterVertically) {
         FaGithub(Modifier.margin(right = 8.px))
         SpanText("This site is ")
         SilkLink ("https://github.com/varabyte/kobweb-site", "open source")
