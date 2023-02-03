@@ -17,8 +17,9 @@ import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.breakpoint.displayIf
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
-import com.varabyte.kobweb.silk.components.style.*
+import com.varabyte.kobweb.silk.components.style.ComponentStyle
 import com.varabyte.kobweb.silk.components.style.breakpoint.Breakpoint
+import com.varabyte.kobweb.silk.components.style.toModifier
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.widgets.GradientBox
@@ -26,8 +27,13 @@ import com.varabyte.kobweb.site.components.widgets.KotlinCode
 import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.Section
 import kotlinx.browser.window
-import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.*
+import org.jetbrains.compose.web.css.cssRem
+import org.jetbrains.compose.web.css.em
+import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.dom.H1
+import org.jetbrains.compose.web.dom.H3
+import org.jetbrains.compose.web.dom.Text
 
 private val DARK_BACKGROUND = Color.rgb(25, 25, 25)
 private val LIGHT_BACKGROUND = DARK_BACKGROUND.inverted()
@@ -66,7 +72,7 @@ private fun HeroExample(modifier: Modifier) {
     }
 }
 
-val HeroButton = ComponentStyle("hero-button") {
+val HeroButton by ComponentStyle {
     base {
         Modifier.width(300.px)
     }

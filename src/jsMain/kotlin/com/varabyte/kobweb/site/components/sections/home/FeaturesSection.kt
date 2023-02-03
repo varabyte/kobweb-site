@@ -27,7 +27,7 @@ private fun getBackgroundColor(colorMode: ColorMode): String {
 
 private class Feature(val heading: String, val desc: String)
 
-val FeatureItemStyle = ComponentStyle.base("feature-item") {
+val FeatureItemStyle by ComponentStyle.base {
     Modifier.margin(18.px)
 }
 

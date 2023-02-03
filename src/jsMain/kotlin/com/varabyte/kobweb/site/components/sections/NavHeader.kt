@@ -1,6 +1,8 @@
 package com.varabyte.kobweb.site.components.sections
 
 import androidx.compose.runtime.*
+import com.varabyte.kobweb.compose.css.functions.blur
+import com.varabyte.kobweb.compose.css.functions.saturate
 import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.modifiers.*
@@ -46,7 +48,7 @@ fun NavHeader() {
             .backgroundColor(getNavBackgroundColor(colorMode))
             .position(Position.Sticky)
             .top(0.percent)
-            .backdropFilter("saturate(180%) blur(5px)")
+            .backdropFilter(saturate(180.percent), blur(5.px))
             .boxShadow(colorMode),
 
         contentAlignment = Alignment.Center,

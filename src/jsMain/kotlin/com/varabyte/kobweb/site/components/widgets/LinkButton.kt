@@ -1,20 +1,24 @@
 package com.varabyte.kobweb.site.components.widgets
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.foundation.layout.Row
-import com.varabyte.kobweb.compose.ui.*
-import com.varabyte.kobweb.compose.ui.graphics.*
+import com.varabyte.kobweb.compose.ui.Alignment
+import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.graphics.Color
+import com.varabyte.kobweb.compose.ui.graphics.Colors
+import com.varabyte.kobweb.compose.ui.graphics.lightened
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.forms.Button
+import com.varabyte.kobweb.silk.components.forms.ButtonStyle
+import com.varabyte.kobweb.silk.components.style.addVariant
+import com.varabyte.kobweb.silk.components.style.hover
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.SilkTheme
+import com.varabyte.kobweb.silk.theme.colors.shifted
 import com.varabyte.kobweb.silk.theme.shapes.Circle
 import com.varabyte.kobweb.silk.theme.shapes.clip
 import org.jetbrains.compose.web.css.px
-import com.varabyte.kobweb.silk.components.forms.ButtonStyle
-import com.varabyte.kobweb.silk.components.style.hover
-import com.varabyte.kobweb.silk.components.text.SpanText
-import com.varabyte.kobweb.silk.theme.colors.shifted
 
 enum class ButtonShape {
     RECTANGLE,
@@ -29,7 +33,7 @@ private fun getButtonModifier(shape: ButtonShape): Modifier {
     })
 }
 
-val PrimaryButtonVariant = ButtonStyle.addVariant("primary") {
+val PrimaryButtonVariant by ButtonStyle.addVariant {
     val backgroundColor = Color.rgb(0, 121, 242)
     base {
         Modifier
@@ -42,7 +46,7 @@ val PrimaryButtonVariant = ButtonStyle.addVariant("primary") {
     }
 }
 
-val NormalButtonVariant = ButtonStyle.addVariant("normal") {
+val NormalButtonVariant by ButtonStyle.addVariant {
     val colorMode = colorMode.opposite()
     base {
         Modifier
@@ -73,7 +77,7 @@ fun ThemedButton(
     content: @Composable () -> Unit = {}
 ) {
     Button(
-        onClick,
+        onClick = { onClick() },
         modifier.then(getButtonModifier(shape)),
         if (primary) PrimaryButtonVariant else NormalButtonVariant
     ) {
@@ -82,7 +86,7 @@ fun ThemedButton(
             verticalAlignment = Alignment.CenterVertically
         ) {
             content()
-            if (text != null && text.isNotEmpty()) {
+            if (!text.isNullOrEmpty()) {
                 SpanText(text)
             }
         }
