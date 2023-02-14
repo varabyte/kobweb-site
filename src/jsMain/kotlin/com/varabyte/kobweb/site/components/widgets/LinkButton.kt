@@ -16,8 +16,7 @@ import com.varabyte.kobweb.silk.components.style.hover
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.shifted
-import com.varabyte.kobweb.silk.theme.shapes.Circle
-import com.varabyte.kobweb.silk.theme.shapes.clip
+import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 
 enum class ButtonShape {
@@ -27,9 +26,9 @@ enum class ButtonShape {
 
 private fun getButtonModifier(shape: ButtonShape): Modifier {
     return Modifier.padding(0.px).then(if (shape == ButtonShape.CIRCLE) {
-        Modifier.clip(Circle(radius = 40))
+        Modifier.size(32.px).borderRadius(50.percent)
     } else {
-        Modifier.fontWeight(600).borderRadius(8.px)
+        Modifier.padding(12.px).fontWeight(600).borderRadius(8.px)
     })
 }
 
@@ -81,10 +80,7 @@ fun ThemedButton(
         modifier.then(getButtonModifier(shape)),
         if (primary) PrimaryButtonVariant else NormalButtonVariant
     ) {
-        Row(
-            Modifier.margin(12.px),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             content()
             if (!text.isNullOrEmpty()) {
                 SpanText(text)
