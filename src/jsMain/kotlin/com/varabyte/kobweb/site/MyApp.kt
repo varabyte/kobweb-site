@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
-import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.core.App
@@ -14,11 +13,11 @@ import com.varabyte.kobweb.silk.components.layout.Surface
 import com.varabyte.kobweb.silk.init.InitSilk
 import com.varabyte.kobweb.silk.init.InitSilkContext
 import com.varabyte.kobweb.silk.init.registerBaseStyle
-import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.getColorMode
 import kotlinx.browser.localStorage
 import org.jetbrains.compose.web.css.cssRem
+import org.jetbrains.compose.web.css.vh
 
 private const val COLOR_MODE_KEY = "app:colorMode"
 
@@ -58,12 +57,8 @@ fun MyApp(content: @Composable () -> Unit) {
             localStorage.setItem(COLOR_MODE_KEY, colorMode.name)
         }
 
-        Surface(variant = AnimatedColorSurfaceVariant) {
-            Box(
-                Modifier.fillMaxSize().backgroundColor(SilkTheme.palettes[colorMode].background)
-            ) {
-                content()
-            }
+        Surface(Modifier.fillMaxWidth().minHeight(100.vh), variant = AnimatedColorSurfaceVariant) {
+            content()
         }
     }
 }

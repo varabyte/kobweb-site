@@ -45,10 +45,10 @@ private fun Logo() {
 }
 
 @Composable
-fun Footer() {
+fun Footer(modifier: Modifier = Modifier) {
     val colorMode by rememberColorMode()
     Box(
-        Modifier.fillMaxWidth().minHeight(200.px).boxShadow(colorMode),
+        Modifier.fillMaxWidth().minHeight(200.px).boxShadow(colorMode).then(modifier),
         contentAlignment = Alignment.Center
     ) {
         Column(

@@ -20,7 +20,7 @@ import org.jetbrains.compose.web.dom.*
 fun DocsPage() {
     PageLayout("Docs") {
         Column(
-            modifier = Modifier.minHeight(100.vh).margin(4.em),
+            modifier = Modifier.fillMaxSize().margin(4.em),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             SpanText(
