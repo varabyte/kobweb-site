@@ -31,11 +31,6 @@ kobweb {
                 script {
                     src = "/highlight.js/highlight.min.js"
                 }
-                script {
-                    unsafe {
-                        raw("hljs.highlightAll()")
-                    }
-                }
             }
         }
     }

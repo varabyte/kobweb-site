@@ -6,21 +6,24 @@ import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.graphics.Colors
-import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.compose.ui.styleModifier
-import com.varabyte.kobweb.silk.components.style.toModifier
-import com.varabyte.kobweb.silk.components.text.SpanText
-import kotlinx.browser.document
-import com.varabyte.kobweb.site.components.sections.NavHeader
+import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
+import com.varabyte.kobweb.compose.ui.modifiers.gridRowEnd
+import com.varabyte.kobweb.compose.ui.modifiers.gridRowStart
+import com.varabyte.kobweb.compose.ui.modifiers.gridTemplateRows
 import com.varabyte.kobweb.site.components.sections.Footer
-import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.H1
+import com.varabyte.kobweb.site.components.sections.NavHeader
+import kotlinx.browser.document
+import kotlinx.browser.window
 
 @Composable
 fun PageLayout(title: String, content: @Composable () -> Unit) {
     LaunchedEffect(title) {
         document.title = "Kobweb - $title"
+    }
+
+    LaunchedEffect(window.location.href) {
+        // See kobweb config in build.gradle.kts which sets up highlight.js
+        js("hljs.highlightAll()")
     }
 
     // Create a box with two rows: the main content (fills as much space as it can) and the footer (which reserves
