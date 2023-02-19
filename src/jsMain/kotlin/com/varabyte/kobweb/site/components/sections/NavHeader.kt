@@ -3,11 +3,13 @@ package com.varabyte.kobweb.site.components.sections
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.functions.blur
 import com.varabyte.kobweb.compose.css.functions.saturate
+import com.varabyte.kobweb.compose.dom.ElementTarget
 import com.varabyte.kobweb.compose.foundation.layout.*
 import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.navigation.Anchor
 import com.varabyte.kobweb.silk.components.icons.fa.*
+import com.varabyte.kobweb.silk.components.overlay.Tooltip
 import com.varabyte.kobweb.silk.components.style.ComponentStyle
 import com.varabyte.kobweb.silk.components.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
@@ -20,7 +22,6 @@ import org.jetbrains.compose.web.dom.Img
 val NavHeaderStyle by ComponentStyle {
     base {
         Modifier
-            .zIndex(1)
             .fillMaxWidth()
             .backgroundColor(getNavBackgroundColor(colorMode))
             .position(Position.Sticky)
@@ -67,9 +68,13 @@ fun NavHeader() {
                 LinkButton("https://github.com/varabyte/kobweb", BUTTON_MARGIN, shape = ButtonShape.CIRCLE) {
                     FaGithub()
                 }
+                Tooltip(ElementTarget.PreviousSibling, "GitHub")
+
                 LinkButton("https://discord.gg/5NZ2GKV5Cs", BUTTON_MARGIN, shape = ButtonShape.CIRCLE) {
                     FaDiscord()
                 }
+                Tooltip(ElementTarget.PreviousSibling, "Discord")
+
                 ThemedButton(
                     onClick = { colorMode = colorMode.opposite() },
                     BUTTON_MARGIN,
@@ -80,6 +85,7 @@ fun NavHeader() {
                         ColorMode.LIGHT -> FaMoon()
                     }
                 }
+                Tooltip(ElementTarget.PreviousSibling, "Toggle color mode")
             }
         }
     }
