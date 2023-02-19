@@ -68,12 +68,12 @@ fun NavHeader() {
                 LinkButton("https://github.com/varabyte/kobweb", BUTTON_MARGIN, shape = ButtonShape.CIRCLE) {
                     FaGithub()
                 }
-                Tooltip(ElementTarget.PreviousSibling, "GitHub")
+                Tooltip(ElementTarget.PreviousSibling, "Kobweb source on GitHub")
 
                 LinkButton("https://discord.gg/5NZ2GKV5Cs", BUTTON_MARGIN, shape = ButtonShape.CIRCLE) {
                     FaDiscord()
                 }
-                Tooltip(ElementTarget.PreviousSibling, "Discord")
+                Tooltip(ElementTarget.PreviousSibling, "Chat with us on Discord")
 
                 ThemedButton(
                     onClick = { colorMode = colorMode.opposite() },
