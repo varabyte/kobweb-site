@@ -108,7 +108,7 @@ fun HeroSection() {
 
             SimpleGrid(
                 numColumns(1, md = 2),
-                Modifier.margin(top = 32.px).rowGap(1.cssRem).columnGap(16.px),
+                Modifier.margin(topBottom = 32.px).rowGap(1.cssRem).columnGap(16.px),
             ) {
                 LinkButton("/docs", HeroButton.toModifier(), "Start Learning", primary = true)
                 LinkButton("https://github.com/varabyte/kobweb", HeroButton.toModifier(), "Github") {
