@@ -18,7 +18,9 @@ import com.varabyte.kobweb.silk.style.*
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
+import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.boxShadow
+import com.varabyte.kobweb.site.components.style.siteText
 import com.varabyte.kobweb.site.components.widgets.Section
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
@@ -42,17 +44,18 @@ val FeatureItemStyle = CssStyle.base {
 private fun FeatureItem(feature: Feature) {
     val colorMode by ColorMode.currentState
 
-    Box (
-        FeatureItemStyle.toModifier().then(Modifier
-            .borderRadius(12.px)
-            .background(colorMode)
-            .padding(2.em)
-            .boxShadow(colorMode)
+    Box(
+        FeatureItemStyle.toModifier().then(
+            Modifier
+                .borderRadius(12.px)
+                .background(colorMode)
+                .padding(2.em)
+                .boxShadow(colorMode)
         )
     ) {
         Column {
             SpanText(feature.heading, Modifier.fontWeight(FontWeight.Bold).margin(bottom = 0.75.cssRem))
-            SpanText(feature.desc, Modifier.lineHeight(1.5), MutedSpanTextVariant)
+            SpanText(feature.desc, Modifier.siteText(SiteTextSize.SMALL), MutedSpanTextVariant)
         }
     }
 }
@@ -67,11 +70,16 @@ fun FeaturesSection() {
             Feature("Component library", "Silk is a UI layer included with Kobweb and built upon Compose HTML"),
             Feature("Component styling", "Powerful and simple API for defining and overriding styles"),
             Feature("SEO-friendly", "Supports static site exports for improved SEO"),
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/FeaturesSection.kt
             Feature("Server API Routes", "Annotate methods with @Api to generate server API endpoints"),
             Feature("Markdown support", "Out-of-the-box Markdown support"),
             Feature("Font Awesome / Material Design Icons", "Easily include Font Awesome and/or Material Design icons"),
             Feature("Compose extensions", "Adds familiar Modifier, Box, Row, and Columns concepts to Compose HTML"),
             Feature("JavaScript Ecosystem", "Compose HTML means you can leverage a massive ecosystem of NPM packages and JS libraries"),
+=======
+            Feature("Font Awesome", "Silk includes support for Font Awesome icons"),
+            Feature("Compose extensions", "Adds familiar Modifier, Box, Row, and Columns concepts to Compose HTML"),
+>>>>>>> c7678b3 (Update stale name references to Compose HTML):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/FeaturesSection.kt
             Feature("Open source", "An open source project built with a friendly license and a welcoming community"),
         )
     }
@@ -84,11 +92,20 @@ fun FeaturesSection() {
             )
         }
         SpanText(
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/FeaturesSection.kt
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/FeaturesSection.kt
             "Build your Compose HTML apps quicker and easier",
             Modifier
                 .lineHeight(1.5)
                 .fontSize(1.25.cssRem)
                 .textAlign(TextAlign.Center),
+=======
+            "Build your Compose for Web apps quicker and easier",
+=======
+            "Build your Compose HTML apps quicker and easier",
+>>>>>>> c7678b3 (Update stale name references to Compose HTML):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/FeaturesSection.kt
+            Modifier.siteText(SiteTextSize.NORMAL).textAlign(TextAlign.Center),
+>>>>>>> 3f2898e (Making progress on showing a sidebar):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/FeaturesSection.kt
             MutedSpanTextVariant
         )
 

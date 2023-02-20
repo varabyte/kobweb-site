@@ -3,9 +3,15 @@ package com.varabyte.kobweb.site.components.sections
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/NavHeader.kt
 import com.varabyte.kobweb.browser.dom.ElementTarget
 import com.varabyte.kobweb.compose.css.functions.blur
 import com.varabyte.kobweb.compose.css.functions.saturate
+=======
+import com.varabyte.kobweb.compose.css.functions.blur
+import com.varabyte.kobweb.compose.css.functions.saturate
+import com.varabyte.kobweb.compose.dom.ElementTarget
+>>>>>>> 21acbec (Update Kobweb to v0.13.10):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/NavHeader.kt
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.foundation.layout.Spacer
@@ -19,8 +25,14 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.overlay.Tooltip
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/NavHeader.kt
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.toModifier
+=======
+import com.varabyte.kobweb.silk.components.style.ComponentStyle
+import com.varabyte.kobweb.silk.components.style.common.SmoothColorStyle
+import com.varabyte.kobweb.silk.components.style.toModifier
+>>>>>>> 222da11 (Nit: Update site in response to upstream 0.11.11 changes):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/NavHeader.kt
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
 import com.varabyte.kobweb.site.components.widgets.ButtonShape
@@ -29,7 +41,11 @@ import com.varabyte.kobweb.site.components.widgets.ThemedButton
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Img
 
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/NavHeader.kt
 val NavHeaderStyle = CssStyle {
+=======
+val NavHeaderStyle by ComponentStyle(extraModifiers = { SmoothColorStyle.toModifier() }) {
+>>>>>>> 222da11 (Nit: Update site in response to upstream 0.11.11 changes):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/NavHeader.kt
     base {
         Modifier
             .fillMaxWidth()
@@ -48,7 +64,7 @@ private fun HomeLogo() {
     ) {
         Box(Modifier.margin(4.px)) {
             Img(
-                "images/logo.png",
+                "/images/logo.png",
                 attrs = Modifier.height(32.px).toAttrs()
             )
         }
@@ -69,7 +85,7 @@ fun NavHeader() {
     var colorMode by ColorMode.currentState
     Box(NavHeaderStyle.toModifier(), contentAlignment = Alignment.Center) {
         Row(
-            Modifier.fillMaxWidth(90.percent).margin(1.em),
+            Modifier.fillMaxWidth(90.percent).margin(topBottom = 1.em),
             verticalAlignment = Alignment.CenterVertically
         ) {
             HomeLogo()

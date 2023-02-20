@@ -1,7 +1,22 @@
 [versions]
+<<<<<<< HEAD
+<<<<<<< HEAD
 jetbrains-compose = "1.6.2"
 kobweb = "0.18.3-SNAPSHOT"
 kotlin = "1.9.23"
+=======
+jetbrains-compose = "1.4.0"
+kobweb = "0.13.6-SNAPSHOT"
+=======
+jetbrains-compose = "1.4.1"
+<<<<<<< HEAD
+kobweb = "0.13.10"
+>>>>>>> 21acbec (Update Kobweb to v0.13.10)
+=======
+kobweb = "0.13.12-SNAPSHOT"
+>>>>>>> a9500b7 (Update Kobweb to v0.13.12)
+kotlin = "1.8.20"
+>>>>>>> 487ee04 (Update kobweb to v0.13.6)
 
 [libraries]
 kobweb-core = { module = "com.varabyte.kobweb:kobweb-core ", version.ref = "kobweb" }

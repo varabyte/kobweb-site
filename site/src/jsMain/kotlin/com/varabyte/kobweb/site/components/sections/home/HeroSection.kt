@@ -2,6 +2,7 @@ package com.varabyte.kobweb.site.components.sections.home
 
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.TextAlign
+import com.varabyte.kobweb.compose.dom.ElementTarget
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
@@ -14,19 +15,32 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
 import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
+=======
+import com.varabyte.kobweb.silk.components.layout.breakpoint.displayIfAtLeast
+>>>>>>> 487ee04 (Update kobweb to v0.13.6):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
+=======
+import com.varabyte.kobweb.silk.components.overlay.Tooltip
+import com.varabyte.kobweb.silk.components.style.ComponentStyle
+import com.varabyte.kobweb.silk.components.style.breakpoint.Breakpoint
+import com.varabyte.kobweb.silk.components.style.toModifier
+>>>>>>> 5279e6d (Add tooltip for "Github" button):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
+import com.varabyte.kobweb.site.components.style.SiteTextSize
+import com.varabyte.kobweb.site.components.style.siteText
 import com.varabyte.kobweb.site.components.widgets.GradientBox
-import com.varabyte.kobweb.site.components.widgets.KotlinCode
 import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.Section
+import com.varabyte.kobweb.site.components.widgets.code.CodeBlock
 import kotlinx.browser.window
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.em
@@ -100,9 +114,18 @@ fun HeroSection() {
                     )
                 }
                 SpanText(
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
                     "Kobweb is an opinionated framework built on top of Compose HTML. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
                     Modifier.lineHeight(1.5).fontSize(1.25.cssRem)
                         .textAlign(TextAlign.Center),
+=======
+                    "Kobweb is an opinionated framework built on top of Compose for Web. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
+=======
+                    "Kobweb is an opinionated framework built on top of Compose HTML. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
+>>>>>>> c7678b3 (Update stale name references to Compose HTML):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
+                    Modifier.siteText(SiteTextSize.NORMAL).textAlign(TextAlign.Center),
+>>>>>>> 3f2898e (Making progress on showing a sidebar):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
                     MutedSpanTextVariant
                 )
             }
@@ -115,24 +138,25 @@ fun HeroSection() {
                 LinkButton("https://github.com/varabyte/kobweb", HeroButton.toModifier(), "Github") {
                     FaGithub(Modifier.margin(right = 8.px))
                 }
+                Tooltip(ElementTarget.PreviousSibling, "Kobweb source on GitHub")
             }
 
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
+=======
+>>>>>>> b65edcd (Fix warnings around displayIf):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
             Column(
                 Modifier.margin(top = 32.px, bottom = 32.px).displayIfAtLeast(Breakpoint.MD),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+<<<<<<< HEAD:site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
+=======
+            Column(Modifier.margin(top = 32.px, bottom = 32.px).displayIfAtLeast(Breakpoint.MD), horizontalAlignment = Alignment.CenterHorizontally) {
+>>>>>>> 487ee04 (Update kobweb to v0.13.6):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
+=======
+>>>>>>> b65edcd (Fix warnings around displayIf):src/jsMain/kotlin/com/varabyte/kobweb/site/components/sections/home/HeroSection.kt
                 HeroExample(Modifier.fillMaxWidth().borderRadius(12.px))
-                KotlinCode(
-                    // Set the color explicitly to opt-out of color mode for this section, which will always be on a grey
-                    // background
-                    modifier = Modifier
-                        // Choose a background color that's dark-ish but not as dark as the hero example itself, so it
-                        // stands out
-                        .color(Colors.White)
-                        .lineHeight(1.5.cssRem)
-                        .padding(0.75.cssRem)
-                        .background(ColorMode.DARK)
-                        .borderRadius(12.px),
+                CodeBlock(
                     code = """
                         @Page
                         @Composable
@@ -159,7 +183,8 @@ fun HeroSection() {
                             }
                           }
                         }
-                    """.trimIndent()
+                    """.trimIndent(),
+                    lang = "kotlin"
                 )
             }
         }
