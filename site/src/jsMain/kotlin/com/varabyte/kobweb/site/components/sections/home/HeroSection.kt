@@ -1,6 +1,7 @@
 package com.varabyte.kobweb.site.components.sections.home
 
 import androidx.compose.runtime.*
+import com.varabyte.kobweb.browser.dom.ElementTarget
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
@@ -14,19 +15,22 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
-import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
+import com.varabyte.kobweb.silk.components.overlay.Tooltip
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
+import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.style.toModifier
-import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
+import com.varabyte.kobweb.site.components.style.SiteTextSize
+import com.varabyte.kobweb.site.components.style.siteText
 import com.varabyte.kobweb.site.components.widgets.GradientBox
-import com.varabyte.kobweb.site.components.widgets.KotlinCode
 import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.Section
+import com.varabyte.kobweb.site.components.widgets.code.CodeBlock
 import kotlinx.browser.window
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.em
@@ -101,8 +105,7 @@ fun HeroSection() {
                 }
                 SpanText(
                     "Kobweb is an opinionated framework built on top of Compose HTML. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
-                    Modifier.lineHeight(1.5).fontSize(1.25.cssRem)
-                        .textAlign(TextAlign.Center),
+                    Modifier.siteText(SiteTextSize.NORMAL).textAlign(TextAlign.Center),
                     MutedSpanTextVariant
                 )
             }
@@ -115,6 +118,7 @@ fun HeroSection() {
                 LinkButton("https://github.com/varabyte/kobweb", HeroButton.toModifier(), "Github") {
                     FaGithub(Modifier.margin(right = 8.px))
                 }
+                Tooltip(ElementTarget.PreviousSibling, "Kobweb source on GitHub")
             }
 
             Column(
@@ -122,17 +126,7 @@ fun HeroSection() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 HeroExample(Modifier.fillMaxWidth().borderRadius(12.px))
-                KotlinCode(
-                    // Set the color explicitly to opt-out of color mode for this section, which will always be on a grey
-                    // background
-                    modifier = Modifier
-                        // Choose a background color that's dark-ish but not as dark as the hero example itself, so it
-                        // stands out
-                        .color(Colors.White)
-                        .lineHeight(1.5.cssRem)
-                        .padding(0.75.cssRem)
-                        .background(ColorMode.DARK)
-                        .borderRadius(12.px),
+                CodeBlock(
                     code = """
                         @Page
                         @Composable
@@ -159,7 +153,8 @@ fun HeroSection() {
                             }
                           }
                         }
-                    """.trimIndent()
+                    """.trimIndent(),
+                    lang = "kotlin"
                 )
             }
         }
