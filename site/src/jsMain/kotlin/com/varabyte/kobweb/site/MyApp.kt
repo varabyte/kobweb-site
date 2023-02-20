@@ -29,18 +29,11 @@ fun initSilk(ctx: InitSilkContext) {
         registerStyleBase("body") { Modifier.fontFamily("Roboto", "sans-serif") }
         registerStyleBase("code, pre") { Modifier.fontFamily("Roboto Mono", "monospace") }
 
-        val headerCommon = Modifier.fontWeight(FontWeight.Bold).textAlign(TextAlign.Center).margin(bottom = 1.cssRem)
-        registerStyleBase("h1") {
-            headerCommon.fontSize(3.5.cssRem)
-        }
-
-        registerStyleBase("h2") {
-            headerCommon.fontSize(2.5.cssRem)
-        }
-
-        registerStyleBase("h3") {
-            headerCommon.fontSize(1.5.cssRem)
-        }
+        val headerCommon = Modifier.fontWeight(FontWeight.Bold).textAlign(TextAlign.Center).margin(top = 2.cssRem, bottom = 1.cssRem)
+        registerStyleBase("h1") { headerCommon.fontSize(3.5.cssRem) }
+        registerStyleBase("h2") { headerCommon.fontSize(2.5.cssRem) }
+        registerStyleBase("h3") { headerCommon.fontSize(1.5.cssRem) }
+        registerStyleBase("h4") { headerCommon.fontSize(1.35.cssRem) }
     }
 }
 

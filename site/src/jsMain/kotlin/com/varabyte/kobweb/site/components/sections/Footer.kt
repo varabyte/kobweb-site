@@ -15,7 +15,9 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
+import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.boxShadow
+import com.varabyte.kobweb.site.components.style.siteText
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Img
 import org.jetbrains.compose.web.dom.Span
@@ -39,7 +41,7 @@ private fun Logo() {
     ) {
         Box(Modifier.margin(4.px)) {
             Img(
-                "images/logo.png",
+                "/images/logo.png",
                 attrs = {
                     style {
                         height(18.px)
@@ -65,7 +67,7 @@ fun Footer(modifier: Modifier = Modifier) {
             Logo()
             SpanText(
                 "Copyright © 2024 Varabyte. All rights reserved.",
-                Modifier.fontSize(0.75.em).textAlign(TextAlign.Center),
+                Modifier.siteText(SiteTextSize.TINY).textAlign(TextAlign.Center),
                 MutedSpanTextVariant
             )
         }
