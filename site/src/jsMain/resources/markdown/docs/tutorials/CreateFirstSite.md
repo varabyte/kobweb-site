@@ -1,5 +1,6 @@
 ---
-root: .components.layouts.DocsLayout("Your First Site")
+root: .components.layouts.DocsLayout
+title: Creating Your First Site
 ---
 
-Placeholder
+Placeholder (first site)

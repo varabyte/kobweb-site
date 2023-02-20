@@ -11,6 +11,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.backgroundColor
 import com.varabyte.kobweb.compose.ui.modifiers.borderRadius
 import com.varabyte.kobweb.compose.ui.modifiers.color
 import com.varabyte.kobweb.compose.ui.modifiers.padding
+import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.forms.ButtonStyle
@@ -30,11 +31,9 @@ enum class ButtonShape {
 }
 
 private fun getButtonModifier(shape: ButtonShape): Modifier {
-    return Modifier.padding(0.px).then(if (shape == ButtonShape.CIRCLE) {
-        Modifier.borderRadius(50.percent)
-    } else {
-        Modifier.padding(12.px).borderRadius(8.px)
-    })
+    return Modifier
+        .padding(0.px)
+        .thenIf(shape == ButtonShape.CIRCLE, Modifier.borderRadius(50.percent))
 }
 
 val PrimaryButtonVariant = ButtonStyle.addVariant {
