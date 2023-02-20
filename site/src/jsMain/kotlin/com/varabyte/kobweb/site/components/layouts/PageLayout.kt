@@ -2,15 +2,19 @@ package com.varabyte.kobweb.site.components.layouts
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
+import com.varabyte.kobweb.compose.ui.modifiers.gridRow
+import com.varabyte.kobweb.compose.ui.modifiers.gridTemplateRows
+import com.varabyte.kobweb.core.rememberPageContext
+import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.sections.Footer
 import com.varabyte.kobweb.site.components.sections.NavHeader
 import kotlinx.browser.document
-import kotlinx.browser.window
 import org.jetbrains.compose.web.css.fr
 
 @Composable
@@ -19,9 +23,23 @@ fun PageLayout(title: String, content: @Composable () -> Unit) {
         document.title = "Kobweb - $title"
     }
 
-    LaunchedEffect(window.location.href) {
+    val ctx = rememberPageContext()
+    LaunchedEffect(ctx.route) {
         // See kobweb config in build.gradle.kts which sets up highlight.js
         js("hljs.highlightAll()")
+    }
+
+    val colorMode by ColorMode.currentState
+    LaunchedEffect(colorMode) {
+        var styleElement = document.querySelector("""link[title="hljs-style"]""")
+        if (styleElement == null) {
+            styleElement = document.createElement("link").apply {
+                setAttribute("type", "text/css")
+                setAttribute("rel", "stylesheet")
+                setAttribute("title", "hljs-style")
+            }.also { document.head!!.appendChild(it) }
+        }
+        styleElement.setAttribute("href", "/highlight.js/styles/a11y-${colorMode.name.lowercase()}.min.css")
     }
 
     // Create a box with two rows: the main content (fills as much space as it can) and the footer (which reserves

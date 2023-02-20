@@ -20,6 +20,7 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.overlay.Tooltip
 import com.varabyte.kobweb.silk.style.CssStyle
+import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
@@ -29,7 +30,7 @@ import com.varabyte.kobweb.site.components.widgets.ThemedButton
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Img
 
-val NavHeaderStyle = CssStyle {
+val NavHeaderStyle = CssStyle(extraModifier = { SmoothColorStyle.toModifier() }) {
     base {
         Modifier
             .fillMaxWidth()
@@ -48,7 +49,7 @@ private fun HomeLogo() {
     ) {
         Box(Modifier.margin(4.px)) {
             Img(
-                "images/logo.png",
+                "/images/logo.png",
                 attrs = Modifier.height(32.px).toAttrs()
             )
         }
@@ -69,7 +70,7 @@ fun NavHeader() {
     var colorMode by ColorMode.currentState
     Box(NavHeaderStyle.toModifier(), contentAlignment = Alignment.Center) {
         Row(
-            Modifier.fillMaxWidth(90.percent).margin(1.em),
+            Modifier.fillMaxWidth(90.percent).margin(topBottom = 1.em),
             verticalAlignment = Alignment.CenterVertically
         ) {
             HomeLogo()

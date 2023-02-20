@@ -18,7 +18,9 @@ import com.varabyte.kobweb.silk.style.*
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
+import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.boxShadow
+import com.varabyte.kobweb.site.components.style.siteText
 import com.varabyte.kobweb.site.components.widgets.Section
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
@@ -42,17 +44,18 @@ val FeatureItemStyle = CssStyle.base {
 private fun FeatureItem(feature: Feature) {
     val colorMode by ColorMode.currentState
 
-    Box (
-        FeatureItemStyle.toModifier().then(Modifier
-            .borderRadius(12.px)
-            .background(colorMode)
-            .padding(2.em)
-            .boxShadow(colorMode)
+    Box(
+        FeatureItemStyle.toModifier().then(
+            Modifier
+                .borderRadius(12.px)
+                .background(colorMode)
+                .padding(2.em)
+                .boxShadow(colorMode)
         )
     ) {
         Column {
             SpanText(feature.heading, Modifier.fontWeight(FontWeight.Bold).margin(bottom = 0.75.cssRem))
-            SpanText(feature.desc, Modifier.lineHeight(1.5), MutedSpanTextVariant)
+            SpanText(feature.desc, Modifier.siteText(SiteTextSize.SMALL), MutedSpanTextVariant)
         }
     }
 }
@@ -85,10 +88,7 @@ fun FeaturesSection() {
         }
         SpanText(
             "Build your Compose HTML apps quicker and easier",
-            Modifier
-                .lineHeight(1.5)
-                .fontSize(1.25.cssRem)
-                .textAlign(TextAlign.Center),
+            Modifier.siteText(SiteTextSize.NORMAL).textAlign(TextAlign.Center),
             MutedSpanTextVariant
         )
 
