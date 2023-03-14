@@ -1,11 +1,16 @@
 package com.varabyte.kobweb.site.components.sections.home
 
 import androidx.compose.runtime.*
+import com.varabyte.kobweb.compose.css.CSSPosition
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
+import com.varabyte.kobweb.compose.css.functions.RadialGradient
+import com.varabyte.kobweb.compose.css.functions.radialGradient
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.graphics.Color
+import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
@@ -18,12 +23,14 @@ import com.varabyte.kobweb.site.components.widgets.Section
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 
-private fun getBackgroundColor(colorMode: ColorMode): String {
-    return when (colorMode) {
-        ColorMode.DARK -> "radial-gradient(circle at top, rgba(41,41,46,1) 0%, rgba(25,25,28,1) 100%)"
-        ColorMode.LIGHT -> "#ffffff"
-    }
-}
+fun Modifier.background(colorMode: ColorMode) =
+    this.then(when (colorMode) {
+        ColorMode.DARK -> Modifier.backgroundImage(
+            radialGradient(RadialGradient.Shape.Circle, Color.rgb(41, 41, 46), Color.rgb(25, 25, 28), CSSPosition.Top)
+        )
+        ColorMode.LIGHT -> Modifier.backgroundColor(Colors.White)
+    })
+
 
 private class Feature(val heading: String, val desc: String)
 
@@ -38,7 +45,7 @@ private fun FeatureItem(feature: Feature) {
     Box (
         FeatureItemStyle.toModifier().then(Modifier
             .borderRadius(12.px)
-            .background(getBackgroundColor(colorMode))
+            .background(colorMode)
             .padding(2.em)
             .boxShadow(colorMode)
         )

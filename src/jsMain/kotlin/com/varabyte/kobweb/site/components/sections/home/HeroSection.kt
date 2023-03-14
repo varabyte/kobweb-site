@@ -127,7 +127,7 @@ fun HeroSection() {
                         .color(Colors.White)
                         .lineHeight(1.5.cssRem)
                         .padding(0.75.cssRem)
-                        .background("radial-gradient(circle at top, rgba(41,41,46,1) 0%, rgba(25,25,28,1) 100%)")
+                        .background(ColorMode.DARK)
                         .borderRadius(12.px),
                     code = """
                         @Page

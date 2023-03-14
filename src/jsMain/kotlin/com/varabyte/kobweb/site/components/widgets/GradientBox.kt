@@ -1,19 +1,31 @@
 package com.varabyte.kobweb.site.components.widgets
 
 import androidx.compose.runtime.Composable
+import com.varabyte.kobweb.compose.css.CSSPosition
+import com.varabyte.kobweb.compose.css.functions.RadialGradient
+import com.varabyte.kobweb.compose.css.functions.radialGradient
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.BoxScope
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.graphics.Color
+import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.background
+import com.varabyte.kobweb.compose.ui.modifiers.backgroundImage
 import com.varabyte.kobweb.silk.components.style.ComponentStyle
 import com.varabyte.kobweb.silk.components.style.ComponentVariant
 import com.varabyte.kobweb.silk.components.style.base
 import com.varabyte.kobweb.silk.components.style.toModifier
+import org.jetbrains.compose.web.css.percent
 
 val GradientBoxStyle by ComponentStyle.base {
    Modifier
-       .background("radial-gradient(circle at calc(60%), #0079f2 0, rgba(0, 121, 242, .5) 0, transparent 45%)")
+       .backgroundImage(
+           radialGradient(RadialGradient.Shape.Circle, CSSPosition(60.percent)) {
+               add(Color.rgba(0, 121, 242, 0.5f))
+               add(Colors.Transparent, 45.percent)
+           }
+       )
 }
 
 /**
