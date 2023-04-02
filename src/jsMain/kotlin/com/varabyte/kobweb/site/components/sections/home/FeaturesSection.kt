@@ -18,6 +18,7 @@ import com.varabyte.kobweb.silk.components.style.*
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
+import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.style.boxShadow
 import com.varabyte.kobweb.site.components.widgets.Section
 import org.jetbrains.compose.web.css.*
@@ -52,7 +53,7 @@ private fun FeatureItem(feature: Feature) {
     ) {
         Column {
             SpanText(feature.heading, Modifier.fontWeight(FontWeight.Bold).margin(bottom = 0.75.cssRem))
-            SpanText(feature.desc, Modifier.lineHeight(1.5).opacity(70.percent))
+            SpanText(feature.desc, Modifier.lineHeight(1.5), MutedSpanTextVariant)
         }
     }
 }
@@ -88,8 +89,8 @@ fun FeaturesSection() {
             Modifier
                 .lineHeight(1.5)
                 .fontSize(1.25.cssRem)
-                .opacity(70.percent)
-                .textAlign(TextAlign.Center)
+                .textAlign(TextAlign.Center),
+            MutedSpanTextVariant
         )
 
         SimpleGrid(numColumns(1, md = 3)) {

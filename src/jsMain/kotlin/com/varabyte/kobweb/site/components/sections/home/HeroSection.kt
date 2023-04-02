@@ -22,6 +22,7 @@ import com.varabyte.kobweb.silk.components.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.components.style.toModifier
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.widgets.GradientBox
 import com.varabyte.kobweb.site.components.widgets.KotlinCode
 import com.varabyte.kobweb.site.components.widgets.LinkButton
@@ -29,7 +30,6 @@ import com.varabyte.kobweb.site.components.widgets.Section
 import kotlinx.browser.window
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.em
-import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.H3
@@ -101,8 +101,9 @@ fun HeroSection() {
                 }
                 SpanText(
                     "Kobweb is an opinionated framework built on top of Compose for Web. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
-                    Modifier.lineHeight(1.5).fontSize(1.25.cssRem).opacity(70.percent)
-                        .textAlign(TextAlign.Center)
+                    Modifier.lineHeight(1.5).fontSize(1.25.cssRem)
+                        .textAlign(TextAlign.Center),
+                    MutedSpanTextVariant
                 )
             }
 

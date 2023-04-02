@@ -23,10 +23,10 @@ import com.varabyte.kobweb.silk.components.style.toAttrs
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
+import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.style.boxShadow
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.ms
-import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 
 val CtaGridItemStyle by ComponentStyle {
@@ -67,8 +67,8 @@ private fun CtaGridItem(
                     Modifier
                         .lineHeight(1.5)
                         .margin(top = 1.cssRem, bottom = 1.cssRem)
-                        .opacity(70.percent)
-                        .textAlign(TextAlign.Center)
+                        .textAlign(TextAlign.Center),
+                    MutedSpanTextVariant
                 )
             }
         })
