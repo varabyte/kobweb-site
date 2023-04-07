@@ -1,25 +1,5 @@
-FROM debian:stable-slim
+FROM eclipse-temurin:11-jdk-focal as builder
 USER root
-
-# Copy the project code to app dir
-COPY . /app
-
-# Install OpenJDK-11 (earliest JDK kobweb can run on)
-RUN apt-get update \
-    && apt-get install -y openjdk-11-jdk \
-    && apt-get install -y ant \
-    && apt-get clean
-
-# Fix certificate issues
-RUN apt-get update \
-    && apt-get install ca-certificates-java \
-    && apt-get clean \
-    && update-ca-certificates -f
-
-# Setup JAVA_HOME -- needed by kobweb / gradle
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
-RUN export JAVA_HOME
-RUN java -version
 
 # Add Chrome (for export)
 RUN apt-get update \
@@ -44,25 +24,36 @@ RUN apt-get update \
     --no-install-recommends
 
 # Install kobweb
-RUN apt-get update && apt-get install -y wget unzip
+RUN curl -O -L https://github.com/varabyte/kobweb/releases/download/cli-v0.9.7/kobweb-0.9.7.tar \
+    && tar xf kobweb-0.9.7.tar \
+    && rm -r kobweb-0.9.7.tar
+ENV PATH="/kobweb-0.9.7/bin:${PATH}"
 
-RUN wget https://github.com/varabyte/kobweb/releases/download/v0.7.7/kobweb-0.7.7.zip \
-    && unzip kobweb-0.7.7.zip \
-    && rm -r kobweb-0.7.7.zip
-ENV PATH="/kobweb-0.7.7/bin:${PATH}"
-RUN echo $PATH
+# Copy the project code to app dir
+COPY . /app
 
 WORKDIR /app
 
 RUN ./gradlew --stop && kobweb export --mode dumb
 
+FROM eclipse-temurin:11-jre-focal
+USER root
+
+# Install kobweb
+RUN curl -O -L https://github.com/varabyte/kobweb/releases/download/cli-v0.9.7/kobweb-0.9.7.tar \
+    && tar xf kobweb-0.9.7.tar \
+    && rm -r kobweb-0.9.7.tar
+ENV PATH="/kobweb-0.9.7/bin:${PATH}"
+
+# copy exported project code from builder image
+COPY --from=builder /app /app
+WORKDIR /app
+
 ENV PORT=8080
 EXPOSE $PORT
 
-# Purge all the things we don't need anymore
-
-RUN apt-get purge --auto-remove -y curl gnupg wget unzip \
-    && rm -rf /var/lib/apt/lists/*
+# preload the gradle binary
+RUN ./gradlew --stop
 
 # Keep container running because `kobweb run --mode dumb` doesn't block
-CMD ./gradlew --stop && kobweb run --mode dumb --env prod && ./gradlew --stop && tail -f /dev/null
+CMD kobweb run --mode dumb --env prod && tail -f /dev/null
