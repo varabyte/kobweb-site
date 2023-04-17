@@ -39,6 +39,7 @@ kobweb {
 kotlin {
     configAsKobwebApplication("kobweb-site")
 
+    @Suppress("UNUSED_VARIABLE") // sourceSets need to be defined for their property name
     sourceSets {
         val commonMain by getting {
             dependencies {
