@@ -1,68 +1,59 @@
 FROM debian:stable-slim
 USER root
 
-# Copy the project code to app dir
-COPY . /app
+ARG KOBWEB_CLI_VERSION=0.9.12
+
+# Copy the project code to an arbitrary subdir so we can install stuff in the
+# Docker container root without worrying about clobbering project files.
+COPY . /project
+
+# Prepare apt-get and get generally useful packages
+RUN apt-get update \
+    && apt-get install -y curl gnupg unzip wget
+
+# Prepare npm and use it to initialize the browser we'll use for exporting
+# (installed by playwright)
+RUN curl -sL https://deb.nodesource.com/setup_19.x | bash - \
+    && apt-get install -y nodejs \
+    && npm init -y \
+    && npx playwright install --with-deps chromium
 
 # Install OpenJDK-11 (earliest JDK kobweb can run on)
-RUN apt-get update \
-    && apt-get install -y openjdk-11-jdk \
-    && apt-get install -y ant \
-    && apt-get clean
-
-# Fix certificate issues
-RUN apt-get update \
-    && apt-get install ca-certificates-java \
-    && apt-get clean \
-    && update-ca-certificates -f
+RUN apt-get install -y openjdk-11-jdk
 
 # Setup JAVA_HOME -- needed by kobweb / gradle
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
 RUN export JAVA_HOME
 RUN java -version
 
-# Add Chrome (for export)
-RUN apt-get update \
-    && apt-get install -y \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg \
-    --no-install-recommends \
-    && curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
-    && apt-get update && apt-get install -y \
-    google-chrome-stable \
-    fontconfig \
-    fonts-ipafont-gothic \
-    fonts-wqy-zenhei \
-    fonts-thai-tlwg \
-    fonts-kacst \
-    fonts-symbola \
-    fonts-noto \
-    fonts-freefont-ttf \
-    --no-install-recommends
-
 # Install kobweb
-RUN apt-get update && apt-get install -y wget unzip
-
-RUN wget https://github.com/varabyte/kobweb/releases/download/v0.7.7/kobweb-0.7.7.zip \
-    && unzip kobweb-0.7.7.zip \
-    && rm -r kobweb-0.7.7.zip
-ENV PATH="/kobweb-0.7.7/bin:${PATH}"
+RUN wget https://github.com/varabyte/kobweb-cli/releases/download/v${KOBWEB_CLI_VERSION}/kobweb-${KOBWEB_CLI_VERSION}.zip \
+    && unzip kobweb-${KOBWEB_CLI_VERSION}.zip \
+    && rm -r kobweb-${KOBWEB_CLI_VERSION}.zip
+ENV PATH="/kobweb-${KOBWEB_CLI_VERSION}/bin:${PATH}"
 RUN echo $PATH
 
-WORKDIR /app
+# Decrease Gradle memory usage to avoid OOM situations in tight environments.
+RUN touch ~/gradle.properties
+RUN echo "org.gradle.jvmargs=-Xmx256m" >> ~/gradle.properties
 
-RUN ./gradlew --stop && kobweb export --mode dumb
+WORKDIR /project
 
-ENV PORT=8080
+RUN kobweb export --notty
+
+RUN export PORT=$(kobweb conf server.port)
 EXPOSE $PORT
 
-# Purge all the things we don't need anymore
+# Purge all the things we don't need anymore, saving space on web servers that
+# may need all the spare MB they can get!
+RUN apt-get clean && apt-get purge --auto-remove -y curl gnupg nodejs unzip wget  \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf ~/.cache/ms-playwright
 
-RUN apt-get purge --auto-remove -y curl gnupg wget unzip \
-    && rm -rf /var/lib/apt/lists/*
-
-# Keep container running because `kobweb run --mode dumb` doesn't block
-CMD ./gradlew --stop && kobweb run --mode dumb --env prod && ./gradlew --stop && tail -f /dev/null
+# Finally, run our web server! We stop the Gradle daemon at this point because
+# its work is done. Finally, we keep the Docker container from closing (with
+# `tail -f ...`) since `kobweb run --notty` doesn't block but is running in the
+# background.
+CMD kobweb run --notty --env prod \
+  && ./gradlew --stop \
+  && tail -f /dev/null
