@@ -39,7 +39,7 @@ fun CliSection() {
                 attr("controls", "")
             }) {
                 Source(attrs = {
-                    attr("src", "images/kobweb-cli.mp4")
+                    attr("src", "videos/kobweb-cli.mp4")
                     attr("type", "video/mp4")
                 })
             }
