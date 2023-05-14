@@ -6,7 +6,6 @@ server:
     dev:
       contentRoot: "build/processedResources/js/main/public"
       script: "build/developmentExecutable/kobweb-site.js"
-      api: "build/libs/kobweb-site.jar"
     prod:
       script: "build/distributions/kobweb-site.js"
       siteRoot: ".kobweb/site"
