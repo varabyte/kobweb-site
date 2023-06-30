@@ -1,25 +1,32 @@
 package com.varabyte.kobweb.site.components.sections.home
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.silk.components.layout.breakpoint.displayIf
+import com.varabyte.kobweb.compose.ui.modifiers.fontSize
+import com.varabyte.kobweb.compose.ui.modifiers.lineHeight
+import com.varabyte.kobweb.compose.ui.modifiers.padding
+import com.varabyte.kobweb.compose.ui.modifiers.textAlign
+import com.varabyte.kobweb.silk.components.layout.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.components.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.widgets.Section
-import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.*
+import org.jetbrains.compose.web.css.cssRem
+import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.dom.H2
+import org.jetbrains.compose.web.dom.Source
+import org.jetbrains.compose.web.dom.Text
+import org.jetbrains.compose.web.dom.Video
 
 /**
  * A section that demonstrates what the Kobweb CLI behavior looks like.
  */
 @Composable
 fun CliSection() {
-    Section(Modifier.displayIf(Breakpoint.MD)) {
+    Section(Modifier.displayIfAtLeast(Breakpoint.MD)) {
         H2 {
             Text("Kobweb CLI")
         }

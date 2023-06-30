@@ -15,6 +15,7 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.breakpoint.displayIf
+import com.varabyte.kobweb.silk.components.layout.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.style.ComponentStyle
@@ -117,7 +118,10 @@ fun HeroSection() {
                 }
             }
 
-            Column(Modifier.margin(top = 32.px, bottom = 32.px).displayIf(Breakpoint.MD), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(
+                Modifier.margin(top = 32.px, bottom = 32.px).displayIfAtLeast(Breakpoint.MD),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 HeroExample(Modifier.fillMaxWidth().borderRadius(12.px))
                 KotlinCode(
                     // Set the color explicitly to opt-out of color mode for this section, which will always be on a grey
