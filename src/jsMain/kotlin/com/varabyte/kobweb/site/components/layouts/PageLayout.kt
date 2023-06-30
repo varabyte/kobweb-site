@@ -6,14 +6,12 @@ import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
-import com.varabyte.kobweb.compose.ui.modifiers.gridRowEnd
-import com.varabyte.kobweb.compose.ui.modifiers.gridRowStart
-import com.varabyte.kobweb.compose.ui.modifiers.gridTemplateRows
+import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.site.components.sections.Footer
 import com.varabyte.kobweb.site.components.sections.NavHeader
 import kotlinx.browser.document
 import kotlinx.browser.window
+import org.jetbrains.compose.web.css.fr
 
 @Composable
 fun PageLayout(title: String, content: @Composable () -> Unit) {
@@ -31,7 +29,7 @@ fun PageLayout(title: String, content: @Composable () -> Unit) {
     // that row. Since this box is set to *at least* 100%, the footer will always appear at least on the bottom but
     // can be pushed further down if the first row grows beyond the page.
     Box(
-        Modifier.fillMaxSize().gridTemplateRows("1fr auto"),
+        Modifier.fillMaxSize().gridTemplateRows { size(1.fr); size(auto) },
         contentAlignment = Alignment.TopCenter
     ) {
         Column(
@@ -42,6 +40,6 @@ fun PageLayout(title: String, content: @Composable () -> Unit) {
             content()
         }
         // Associate the footer with the row that will get pushed off the bottom of the page if it can't fit.
-        Footer(Modifier.gridRowStart(2).gridRowEnd(3))
+        Footer(Modifier.gridRow(2, 3))
     }
 }
