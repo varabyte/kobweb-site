@@ -26,9 +26,9 @@ enum class ButtonShape {
 
 private fun getButtonModifier(shape: ButtonShape): Modifier {
     return Modifier.padding(0.px).then(if (shape == ButtonShape.CIRCLE) {
-        Modifier.size(32.px).borderRadius(50.percent)
+        Modifier.borderRadius(50.percent)
     } else {
-        Modifier.padding(12.px).fontWeight(600).borderRadius(8.px)
+        Modifier.padding(12.px).borderRadius(8.px)
     })
 }
 
@@ -46,7 +46,7 @@ val PrimaryButtonVariant by ButtonStyle.addVariant {
 }
 
 val NormalButtonVariant by ButtonStyle.addVariant {
-    val colorMode = colorMode.opposite()
+    val colorMode = colorMode.opposite
     base {
         Modifier
             .backgroundColor(SilkTheme.palettes[colorMode].background)

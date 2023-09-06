@@ -11,7 +11,7 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.navigation.Anchor
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.text.SpanText
-import com.varabyte.kobweb.silk.theme.colors.rememberColorMode
+import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.style.boxShadow
 import org.jetbrains.compose.web.css.*
@@ -47,7 +47,7 @@ private fun Logo() {
 
 @Composable
 fun Footer(modifier: Modifier = Modifier) {
-    val colorMode by rememberColorMode()
+    val colorMode by ColorMode.currentState
     Box(
         Modifier.fillMaxWidth().minHeight(200.px).boxShadow(colorMode).then(modifier),
         contentAlignment = Alignment.Center

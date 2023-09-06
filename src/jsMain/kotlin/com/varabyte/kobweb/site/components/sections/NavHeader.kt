@@ -56,7 +56,7 @@ private val BUTTON_MARGIN = Modifier.margin(0.px, 10.px)
 
 @Composable
 fun NavHeader() {
-    var colorMode by rememberColorMode()
+    var colorMode by ColorMode.currentState
     Box(NavHeaderStyle.toModifier(), contentAlignment = Alignment.Center) {
         Row(
             Modifier.fillMaxWidth(90.percent).margin(1.em),
@@ -76,7 +76,7 @@ fun NavHeader() {
                 Tooltip(ElementTarget.PreviousSibling, "Chat with us on Discord")
 
                 ThemedButton(
-                    onClick = { colorMode = colorMode.opposite() },
+                    onClick = { colorMode = colorMode.opposite },
                     BUTTON_MARGIN,
                     shape = ButtonShape.CIRCLE
                 ) {

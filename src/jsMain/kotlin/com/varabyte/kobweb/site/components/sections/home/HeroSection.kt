@@ -14,7 +14,6 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
-import com.varabyte.kobweb.silk.components.layout.breakpoint.displayIf
 import com.varabyte.kobweb.silk.components.layout.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
@@ -43,12 +42,12 @@ private val LIGHT_BACKGROUND = DARK_BACKGROUND.inverted()
 private fun HeroExample(modifier: Modifier) {
     // For the example, we create our own local mode divorced from the site-wide value
     var localColorMode by remember { mutableStateOf(ColorMode.LIGHT) }
-    val background = if (localColorMode.isLight()) LIGHT_BACKGROUND else DARK_BACKGROUND
-    val foreground = if (localColorMode.isLight()) Colors.Black else Colors.White
+    val background = if (localColorMode.isLight) LIGHT_BACKGROUND else DARK_BACKGROUND
+    val foreground = if (localColorMode.isLight) Colors.Black else Colors.White
 
     LaunchedEffect(Unit) {
         window.setInterval({
-            localColorMode = localColorMode.opposite()
+            localColorMode = localColorMode.opposite
         }, timeout = 5000)
     }
 
@@ -57,7 +56,7 @@ private fun HeroExample(modifier: Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(Modifier.align(Alignment.End)) {
-            if (localColorMode.isLight()) FaMoon() else FaSun()
+            if (localColorMode.isLight) FaMoon() else FaSun()
         }
         // We have to slightly tweak header settings here from the actual code sample above since
         // the overall site overloads H1 values from the default

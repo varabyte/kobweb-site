@@ -41,7 +41,7 @@ val FeatureItemStyle by ComponentStyle.base {
 
 @Composable
 private fun FeatureItem(feature: Feature) {
-    val colorMode by rememberColorMode()
+    val colorMode by ColorMode.currentState
 
     Box (
         FeatureItemStyle.toModifier().then(Modifier
