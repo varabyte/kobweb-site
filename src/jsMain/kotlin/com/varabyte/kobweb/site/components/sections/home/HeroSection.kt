@@ -67,7 +67,7 @@ private fun HeroExample(modifier: Modifier) {
             SpanText("Create rich, dynamic web apps with ease, leveraging ")
             Link("https://kotlinlang.org/", "Kotlin")
             SpanText(" and ")
-            Link("https://compose-web.ui.pages.jetbrains.team/", "Compose for Web")
+            Link("https://github.com/JetBrains/compose-multiplatform/#compose-html", "Compose HTML")
         }
     }
 }
@@ -100,7 +100,7 @@ fun HeroSection() {
                     )
                 }
                 SpanText(
-                    "Kobweb is an opinionated framework built on top of Compose for Web. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
+                    "Kobweb is an opinionated framework built on top of Compose HTML. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
                     Modifier.lineHeight(1.5).fontSize(1.25.cssRem)
                         .textAlign(TextAlign.Center),
                     MutedSpanTextVariant
@@ -139,25 +139,23 @@ fun HeroSection() {
                         fun HomePage() {
                           Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                             Row(Modifier.align(Alignment.End)) {
-                              var colorMode by rememberColorMode()
+                              var colorMode by ColorMode.currentState
                               Button(
-                                onClick = { colorMode = colorMode.opposite() },
-                                Modifier.padding(0.px).clip(Circle())
+                                onClick = { colorMode = colorMode.opposite },
+                                Modifier.borderRadius(50.percent).padding(0.px)
                               ) {
-                                Box(Modifier.margin(4.px)) {
-                                  // Includes support for Font Awesome icons
-                                  if (colorMode.isLight()) FaMoon() else FaSun()
-                                }
+                                // Includes support for Font Awesome icons
+                                if (colorMode.isLight) FaMoon() else FaSun()
                               }
                             }
                             H1 {
                               Text("Welcome to Kobweb!")
                             }
-                            Row {
+                            Row(Modifier.flexWrap(FlexWrap.Wrap)) {
                               SpanText("Create rich, dynamic web apps with ease, leveraging ")
                               Link("https://kotlinlang.org/", "Kotlin")
                               SpanText(" and ")
-                              Link("https://compose-web.ui.pages.jetbrains.team/", "Compose for Web")
+                              Link("https://github.com/JetBrains/compose-multiplatform/#compose-html", "Compose HTML")
                             }
                           }
                         }
