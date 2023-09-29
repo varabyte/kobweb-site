@@ -7,14 +7,19 @@ import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.graphics.lightened
-import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.modifiers.backgroundColor
+import com.varabyte.kobweb.compose.ui.modifiers.borderRadius
+import com.varabyte.kobweb.compose.ui.modifiers.color
+import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.forms.ButtonStyle
 import com.varabyte.kobweb.silk.components.style.addVariant
 import com.varabyte.kobweb.silk.components.style.hover
 import com.varabyte.kobweb.silk.components.text.SpanText
-import com.varabyte.kobweb.silk.theme.SilkTheme
+import com.varabyte.kobweb.silk.theme.colors.palette.background
+import com.varabyte.kobweb.silk.theme.colors.palette.color
+import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.colors.shifted
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
@@ -49,11 +54,11 @@ val NormalButtonVariant by ButtonStyle.addVariant {
     val colorMode = colorMode.opposite
     base {
         Modifier
-            .backgroundColor(SilkTheme.palettes[colorMode].background)
-            .color(SilkTheme.palettes[colorMode].color)
+            .backgroundColor(colorMode.toPalette().background)
+            .color(colorMode.toPalette().color)
     }
     hover {
-        Modifier.backgroundColor(SilkTheme.palettes[colorMode].background.shifted(colorMode))
+        Modifier.backgroundColor(colorMode.toPalette().background.shifted(colorMode))
     }
 }
 

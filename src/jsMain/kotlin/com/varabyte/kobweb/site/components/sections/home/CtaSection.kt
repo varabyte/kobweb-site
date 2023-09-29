@@ -21,8 +21,10 @@ import com.varabyte.kobweb.silk.components.style.focus
 import com.varabyte.kobweb.silk.components.style.hover
 import com.varabyte.kobweb.silk.components.style.toAttrs
 import com.varabyte.kobweb.silk.components.text.SpanText
-import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import com.varabyte.kobweb.silk.theme.colors.palette.color
+import com.varabyte.kobweb.silk.theme.colors.palette.link
+import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.style.boxShadow
 import org.jetbrains.compose.web.css.cssRem
@@ -32,12 +34,12 @@ import org.jetbrains.compose.web.css.px
 val CtaGridItemStyle by ComponentStyle {
     base {
         Modifier
-            .color(SilkTheme.palettes[colorMode].color)
+            .color(colorMode.toPalette().color)
             .textDecorationLine(TextDecorationLine.None)
             .transition(CSSTransition("color", 50.ms))
     }
 
-    val linkColorModifier = Modifier.color(SilkTheme.palettes[colorMode].link.default)
+    val linkColorModifier = Modifier.color(colorMode.toPalette().link.default)
     hover { linkColorModifier }
     focus { linkColorModifier }
 }

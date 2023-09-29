@@ -1,7 +1,6 @@
 import com.varabyte.kobweb.gradle.application.util.configAsKobwebApplication
 import kotlinx.html.link
 import kotlinx.html.script
-import kotlinx.html.unsafe
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -39,7 +38,6 @@ kobweb {
 kotlin {
     configAsKobwebApplication("kobweb-site")
 
-    @Suppress("UNUSED_VARIABLE") // sourceSets need to be defined for their property name
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -49,9 +47,10 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
+                implementation(compose.html.core)
                 implementation(libs.kobweb.core)
-                implementation(libs.kobweb.silk.core)
-                implementation(libs.kobweb.silk.icons.fa)
+                implementation(libs.kobweb.silk)
+                implementation(libs.silk.icons.fa)
                 implementation(libs.kobwebx.markdown)
              }
         }
