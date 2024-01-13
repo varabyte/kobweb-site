@@ -1,10 +1,10 @@
 package com.varabyte.kobweb.site.components.widgets
 
 import androidx.compose.runtime.*
-import com.varabyte.kobweb.compose.css.fontFamily
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.toAttrs
 import org.jetbrains.compose.web.css.background
+import org.jetbrains.compose.web.css.fontFamily
 import org.jetbrains.compose.web.dom.Code
 import org.jetbrains.compose.web.dom.Pre
 import org.jetbrains.compose.web.dom.Text
@@ -20,7 +20,7 @@ fun KotlinCode(code: String, modifier: Modifier = Modifier) {
         Code(attrs = {
             classes("language-kotlin").also {
                 style {
-                    fontFamily("Menlo, monospace")
+                    fontFamily("Menlo", "monospace")
                     // Clear the background - otherwise, we might override the color set in the parent modifier
                     background("transparent")
                 }
