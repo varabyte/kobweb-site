@@ -14,7 +14,7 @@ import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
-import com.varabyte.kobweb.silk.components.style.*
+import com.varabyte.kobweb.silk.style.*
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
@@ -34,7 +34,7 @@ fun Modifier.background(colorMode: ColorMode) =
 
 private class Feature(val heading: String, val desc: String)
 
-val FeatureItemStyle by ComponentStyle.base {
+val FeatureItemStyle = CssStyle.base {
     Modifier.margin(18.px)
 }
 

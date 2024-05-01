@@ -19,8 +19,8 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.overlay.Tooltip
-import com.varabyte.kobweb.silk.components.style.ComponentStyle
-import com.varabyte.kobweb.silk.components.style.toModifier
+import com.varabyte.kobweb.silk.style.CssStyle
+import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.boxShadow
 import com.varabyte.kobweb.site.components.widgets.ButtonShape
@@ -29,7 +29,7 @@ import com.varabyte.kobweb.site.components.widgets.ThemedButton
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Img
 
-val NavHeaderStyle by ComponentStyle {
+val NavHeaderStyle = CssStyle {
     base {
         Modifier
             .fillMaxWidth()

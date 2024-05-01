@@ -10,15 +10,13 @@ import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
-import com.varabyte.kobweb.compose.ui.modifiers.background
 import com.varabyte.kobweb.compose.ui.modifiers.backgroundImage
-import com.varabyte.kobweb.silk.components.style.ComponentStyle
-import com.varabyte.kobweb.silk.components.style.ComponentVariant
-import com.varabyte.kobweb.silk.components.style.base
-import com.varabyte.kobweb.silk.components.style.toModifier
+import com.varabyte.kobweb.silk.style.*
 import org.jetbrains.compose.web.css.percent
 
-val GradientBoxStyle by ComponentStyle.base {
+sealed interface GradientBoxKind : ComponentKind
+
+val GradientBoxStyle = CssStyle.base<GradientBoxKind> {
    Modifier
        .backgroundImage(
            radialGradient(RadialGradient.Shape.Circle, CSSPosition(60.percent)) {
@@ -35,7 +33,7 @@ val GradientBoxStyle by ComponentStyle.base {
 fun GradientBox(
     modifier: Modifier = Modifier,
     contentAlignment: Alignment = Alignment.TopStart,
-    variant: ComponentVariant? = null,
+    variant: CssStyleVariant<GradientBoxKind>? = null,
     content: @Composable BoxScope.() -> Unit = {}
 ) {
     Box(GradientBoxStyle.toModifier(variant).then(modifier), contentAlignment, content = content)

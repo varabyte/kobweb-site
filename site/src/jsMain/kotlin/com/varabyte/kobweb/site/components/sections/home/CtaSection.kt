@@ -16,11 +16,11 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaDiscord
 import com.varabyte.kobweb.silk.components.icons.fa.FaStar
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
-import com.varabyte.kobweb.silk.components.style.ComponentStyle
-import com.varabyte.kobweb.silk.components.style.focus
-import com.varabyte.kobweb.silk.components.style.hover
-import com.varabyte.kobweb.silk.components.style.toAttrs
+import com.varabyte.kobweb.silk.style.CssStyle
+import com.varabyte.kobweb.silk.style.toAttrs
 import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.style.selectors.focus
+import com.varabyte.kobweb.silk.style.selectors.hover
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.palette.color
 import com.varabyte.kobweb.silk.theme.colors.palette.link
@@ -31,7 +31,7 @@ import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.ms
 import org.jetbrains.compose.web.css.px
 
-val CtaGridItemStyle by ComponentStyle {
+val CtaGridItemStyle = CssStyle {
     base {
         Modifier
             .color(colorMode.toPalette().color)
