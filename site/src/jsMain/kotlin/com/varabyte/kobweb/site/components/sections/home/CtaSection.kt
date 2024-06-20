@@ -2,9 +2,9 @@ package com.varabyte.kobweb.site.components.sections.home
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import com.varabyte.kobweb.compose.css.CSSTransition
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.TextDecorationLine
+import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
@@ -36,7 +36,7 @@ val CtaGridItemStyle = CssStyle {
         Modifier
             .color(colorMode.toPalette().color)
             .textDecorationLine(TextDecorationLine.None)
-            .transition(CSSTransition("color", 50.ms))
+            .transition(Transition.of("color", 50.ms))
     }
 
     val linkColorModifier = Modifier.color(colorMode.toPalette().link.default)
