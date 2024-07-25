@@ -34,7 +34,7 @@ private fun Logo() {
     ) {
         Box(Modifier.margin(4.px)) {
             Img(
-                "images/logo.png",
+                "/images/logo.png",
                 attrs = {
                     style {
                         height(18.px)
