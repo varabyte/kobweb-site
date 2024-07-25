@@ -6,19 +6,11 @@ import kotlinx.html.link
 import kotlinx.html.script
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kobweb.application)
     alias(libs.plugins.kobwebx.markdown)
-}
-
-repositories {
-    mavenCentral()
-    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    google()
-    maven("https://us-central1-maven.pkg.dev/varabyte-repos/public")
 }
 
 group = "com.varabyte.kobweb.site"
@@ -38,7 +30,10 @@ kobweb {
 
                 link(rel = "preconnect", href = "https://fonts.googleapis.com")
                 link(rel = "preconnect", href = "https://fonts.gstatic.com") { attributes["crossorigin"] = "" }
-                link(href = "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Mono&display=swap", rel = "stylesheet")
+                link(
+                    href = "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Mono&display=swap",
+                    rel = "stylesheet"
+                )
             }
         }
     }
@@ -72,20 +67,16 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.compose.runtime)
-            }
+        commonMain.dependencies {
+            implementation(libs.compose.runtime)
         }
 
-        val jsMain by getting {
-            dependencies {
-                implementation(libs.compose.html.core)
-                implementation(libs.kobweb.core)
-                implementation(libs.kobweb.silk.core)
-                implementation(libs.kobweb.silk.icons.fa)
-                implementation(libs.kobwebx.markdown)
-             }
+        jsMain.dependencies {
+            implementation(libs.compose.html.core)
+            implementation(libs.kobweb.core)
+            implementation(libs.kobweb.silk.core)
+            implementation(libs.kobweb.silk.icons.fa)
+            implementation(libs.kobwebx.markdown)
         }
     }
 }
@@ -106,7 +97,7 @@ object SiteListingGenerator {
     )
 
     private fun MarkdownEntry.toRouteParts() = with(this.toPath().split('/').dropWhile { it.isEmpty() }) {
-        require(this.size == 3) { "Expected category, subcategory, and slug; got \"${this.joinToString("/")}\""}
+        require(this.size == 3) { "Expected category, subcategory, and slug; got \"${this.joinToString("/")}\"" }
         RouteParts(
             category = get(0),
             subcategory = get(1),
