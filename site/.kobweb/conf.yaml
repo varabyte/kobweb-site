@@ -5,9 +5,9 @@ server:
   files:
     dev:
       contentRoot: "build/processedResources/js/main/public"
-      script: "build/dist/js/developmentExecutable/kobweb-site.js"
+      script: "build/kotlin-webpack/js/developmentExecutable/kobweb-site.js"
     prod:
-      script: "build/dist/js/productionExecutable/kobweb-site.js"
+      script: "build/kotlin-webpack/js/productionExecutable/kobweb-site.js"
       siteRoot: ".kobweb/site"
 
   port: 8080
