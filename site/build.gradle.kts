@@ -4,6 +4,7 @@ import com.varabyte.kobwebx.gradle.markdown.MarkdownBlock
 import com.varabyte.kobwebx.gradle.markdown.MarkdownEntry
 import kotlinx.html.link
 import kotlinx.html.script
+import org.commonmark.node.Text
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
@@ -17,6 +18,7 @@ group = "com.varabyte.kobweb.site"
 version = "1.0-SNAPSHOT"
 
 kobweb {
+
     app {
         index {
             head.add {
@@ -50,6 +52,22 @@ kobweb {
 
             inlineCode.set { code ->
                 "$WIDGET_PATH.code.InlineCode(\"\"\"${code.literal.escapeTripleQuotedText()}\"\"\")"
+            }
+
+            // Automatically convert GitHub-style callouts into a custom widget
+            // TODO: this likely has broken edge cases, but it's good enough for now
+            blockquote.set { blockQuote ->
+                blockQuote.firstChild.firstChild?.let { firstChild ->
+                    firstChild as Text
+                    val regex = "\\[!(.*)\\] ".toRegex()
+                    val match = regex.find(firstChild.literal) ?: return@let null
+                    firstChild.literal = firstChild.literal.substringAfter(match.value)
+                    """
+                    com.varabyte.kobweb.site.components.widgets.GitHubStyleCallout(
+                        type = com.varabyte.kobweb.site.components.widgets.CalloutType.${match.groupValues[1]},
+                    )
+                    """.trimIndent()
+                } ?: "com.varabyte.kobweb.compose.dom.GenericTag(\"blockquote\")"
             }
         }
 
