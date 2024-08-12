@@ -1,6 +1,7 @@
 import com.varabyte.kobweb.gradle.application.util.configAsKobwebApplication
 import kotlinx.html.link
 import kotlinx.html.script
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -38,6 +39,10 @@ kobweb {
 
 kotlin {
     configAsKobwebApplication("kobweb-site")
+    js {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions.target = "es2015"
+    }
 
     sourceSets {
         val commonMain by getting {
