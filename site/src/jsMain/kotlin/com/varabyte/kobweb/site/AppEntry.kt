@@ -2,6 +2,7 @@ package com.varabyte.kobweb.site
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import com.varabyte.kobweb.compose.css.BorderCollapse
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.ListStyleType
 import com.varabyte.kobweb.compose.css.ScrollBehavior
@@ -53,15 +54,18 @@ fun initSilk(ctx: InitSilkContext) {
                     .padding(0.px)
                     .margin(0.px)
             }
+            registerStyleBase("table") {
+                Modifier.borderCollapse(BorderCollapse.Collapse)
+            }
         }
 
         val headerCommon = Modifier.fontWeight(FontWeight.Bold).margin(top = 1.25.cssRem, bottom = 0.75.cssRem)
         registerStyleBase("h1") {
-            headerCommon.fontSize(3.25.cssRem)
+            headerCommon.fontSize(3.cssRem)
         }
 
         registerStyleBase("h2") {
-            headerCommon.fontSize(2.25.cssRem)
+            headerCommon.fontSize(2.cssRem)
         }
 
         registerStyleBase("h3") {
