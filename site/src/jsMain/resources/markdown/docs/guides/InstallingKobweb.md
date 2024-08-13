@@ -1,6 +1,6 @@
 ---
 root: .components.layouts.DocsLayout
-title: Tooltip
+title: Installing Kobweb
 ---
 
-Placeholder (tooltip)
+Placeholder (Installing Kobweb)
