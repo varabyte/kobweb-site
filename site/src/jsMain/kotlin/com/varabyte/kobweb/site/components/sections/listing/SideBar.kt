@@ -7,13 +7,13 @@ import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.rememberPageContext
-import com.varabyte.kobweb.silk.components.style.*
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.ComponentKind
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.addVariant
 import com.varabyte.kobweb.silk.style.base
 import com.varabyte.kobweb.silk.style.toModifier
+import com.varabyte.kobweb.site.components.layouts.toArticleHandle
 import com.varabyte.kobweb.site.components.style.ClickableStyle
 import com.varabyte.kobweb.site.model.listing.SITE_LISTING
 import com.varabyte.kobweb.site.util.focusable
@@ -48,10 +48,7 @@ val ListingArticleVariant = ListingStyle.addVariant {
 fun ListingSideBar() {
     val ctx = rememberPageContext()
     var selectedCategory by remember {
-        mutableStateOf(
-            ctx.route.path.substringBeforeLast('/').substringAfterLast('/').let { categorySlug ->
-                SITE_LISTING.firstOrNull { it.slug == categorySlug } ?: SITE_LISTING.first()
-            })
+        mutableStateOf(ctx.route.toArticleHandle()?.category ?: SITE_LISTING.first())
     }
 
     Column(ListingSideBarStyle.toModifier()) {
@@ -72,7 +69,7 @@ fun ListingSideBar() {
                         article.title,
                         ClickableStyle.toModifier()
                             .then(ListingStyle.toModifier(ListingArticleVariant))
-                            .onClick { ctx.router.tryRoutingTo("/docs/${selectedCategory.slug}/${article.slug}") }
+                            .onClick { ctx.router.tryRoutingTo(article.route) }
                     )
                 }
             }
