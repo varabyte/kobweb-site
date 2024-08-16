@@ -1,6 +1,6 @@
 ---
 root: .components.layouts.DocsLayout
-title: Installing Kobweb
+follows: GettingKobweb
 ---
 
 Placeholder (Installing Kobweb)

@@ -1,14 +1,10 @@
+import com.varabyte.kobweb.common.text.camelCaseToKebabCase
 import com.varabyte.kobweb.gradle.application.util.configAsKobwebApplication
 import com.varabyte.kobwebx.gradle.markdown.MarkdownBlock
 import com.varabyte.kobwebx.gradle.markdown.MarkdownEntry
 import kotlinx.html.link
 import kotlinx.html.script
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.commonmark.ext.front.matter.YamlFrontMatterBlock
-import org.commonmark.ext.front.matter.YamlFrontMatterVisitor
-import org.commonmark.node.AbstractVisitor
-import org.commonmark.node.CustomBlock
-import org.gradle.configurationcache.extensions.capitalized
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -81,121 +77,87 @@ kotlin {
 }
 
 object SiteListingGenerator {
-    class Article(val slug: String)
-    class Subcategory(
-        val title: String,
-        vararg val articles: Article
-    ) {
-        constructor(vararg articles: Article) : this("", *articles)
-    }
-
-    class Category(
-        val slug: String,
-        val title: String,
-        vararg val subcategories: Subcategory
-    ) {
-        constructor(slug: String, vararg subcategories: Subcategory) :
-                this(slug, slug.capitalized(), *subcategories)
-    }
-
-    class ArticleMetadata(val title: String)
-    class ArticleEntry(val slug: String, val metadata: ArticleMetadata)
-
-    fun List<Category>.find(categorySlug: String, articleSlug: String): Article? {
-        return this.asSequence()
-            .filter { it.slug == categorySlug }
-            .flatMap { it.subcategories.asSequence() }
-            .flatMap { it.articles.asSequence() }
-            .firstOrNull { it.slug == articleSlug }
-    }
-
-    private val SITE_LISTING = buildList {
-        add(
-            Category(
-                "guides",
-                Subcategory(
-                    "First Steps",
-                    Article("getting-started"),
-                    Article("getting-kobweb"),
-                    Article("installing-kobweb"),
-                ),
-            )
-        )
-
-        add(
-            Category(
-                "widgets",
-                Subcategory(
-                    "Forms",
-                    Article("button"),
-                ),
-                Subcategory(
-                    "Overlay",
-                    Article("tooltip"),
-                ),
-            )
-        )
-
-        add(
-            Category(
-                "tutorials",
-                Subcategory(
-                    Article("create-first-site")
-                ),
-            )
-        )
-    }
+    private const val DOCS_PREFIX = "docs/"
 
     fun generate(scope: MarkdownBlock.ProcessScope, entries: List<MarkdownEntry>) {
-        scope._generate(entries.filter { it.route.startsWith("/docs/") })
+        scope._generate(entries.filter { it.filePath.startsWith(DOCS_PREFIX) })
     }
+
+    private fun MarkdownEntry.toPath() = "/" + filePath.removePrefix(DOCS_PREFIX).removeSuffix(".md")
+
+    private data class RouteParts(
+        val category: String,
+        val subcategory: String,
+        val slug: String,
+    )
+
+    private fun MarkdownEntry.toRouteParts() = with(this.toPath().split('/').dropWhile { it.isEmpty() }) {
+        require(this.size == 3) { "Expected category, subcategory, and slug; got \"${this.joinToString("/")}\""}
+        RouteParts(
+            category = get(0),
+            subcategory = get(1),
+            slug = get(2).camelCaseToKebabCase()
+        )
+    }
+
+    @Suppress("DEPRECATION") // The suggestion to replace `capitalize` with is awful
+    private fun String.convertSlugToTitle() = split('-').joinToString(" ") { it.capitalize() }
 
     @Suppress("FunctionName") // Underscore avoids ambiguity error
     private fun MarkdownBlock.ProcessScope._generate(entries: List<MarkdownEntry>) {
-        val requiredFields = listOf("title")
-        val discoveredMetadata = mutableMapOf<String, MutableList<ArticleEntry>>()
+        val optionalFields = listOf("follows")
+
+        // e.g. "/guides/first-steps/GettingStarted.md"
+        // Should end up being exactly one match; if more, someone is missing metadata in their markdown file
+        val initialArticles = mutableListOf<MarkdownEntry>()
+        // e.g. "/guides/first-steps/GettingStarted.md" -> "/guides/first-steps/InstallingKobweb.md"
+        // e.g. "/guides/first-steps/" -> "/widgets/forms/Button.md"
+        val followingMap = mutableMapOf<String, MutableList<MarkdownEntry>>()
 
         entries.forEach { entry ->
-            val (title) = requiredFields
-                .map { key -> entry.frontMatter[key]?.singleOrNull() }
-                .takeIf { values -> values.all { it != null } }
-                ?.requireNoNulls()
-                ?: run {
-                    println("Skipping ${entry.route} in the listing as it is missing required frontmatter fields (one of $requiredFields)")
-                    return@forEach
-                }
+            val (follows) = optionalFields.map { key -> entry.frontMatter[key]?.singleOrNull() }
 
-            val articleFile = File(entry.filePath)
-            val categorySlug = articleFile.parentFile.name
-            discoveredMetadata.getOrPut(categorySlug) { mutableListOf() }
-                .add(
-                    ArticleEntry(
-                        entry.route.substringAfterLast('/'),
-                        ArticleMetadata(title)
-                    ).also { article ->
-                        if (SITE_LISTING.find(categorySlug, article.slug) == null) {
-                            throw GradleException(
-                                "${entry.route} needs an entry (slug: \"${article.slug}\") in `SITE_LISTING`."
-                            )
-                        }
+            if (follows != null) {
+                // "/a/b/c.md" -> pass through
+                // "z.md" -> "/a/b/z.md" (assume sibling of current entry)
+                followingMap.getOrPut(
+                    if (follows.contains('/')) {
+                        follows
+                    } else {
+                        "${entry.toPath().substringBeforeLast('/')}/$follows"
                     }
-                )
+                ) { mutableListOf() }.add(entry)
+            } else {
+                initialArticles.add(entry)
+            }
         }
 
-        SITE_LISTING.forEach { category ->
-            category.subcategories.forEach { subcategory ->
-                subcategory.articles.forEach { article ->
-                    if (discoveredMetadata[category.slug]?.any { entry -> entry.slug == article.slug } != true) {
-                        throw GradleException(
-                            "`SITE_LISTING` contains entry for \"${category.slug}/${article.slug}\" but no found article satisfies it."
-                        )
-                    }
+        if (initialArticles.size != 1) {
+            println("There should only be one starting article, but one of these articles are missing a `follows` frontmatter value: $initialArticles")
+        }
+
+        val orderedArticleList = mutableListOf<MarkdownEntry>()
+        initialArticles.lastOrNull()?.let { initialArticle ->
+            val nextEntries = mutableListOf(initialArticle)
+            while (nextEntries.isNotEmpty()) {
+                val nextEntry = nextEntries.removeAt(0)
+                orderedArticleList.add(nextEntry)
+                val nextPath = nextEntry.toPath()
+                val followedBy = followingMap[nextPath] ?: followingMap[nextPath.substringBeforeLast('/') + "/"]
+                if (followedBy == null) {
+                    println("No article is following \"$nextPath\". This is OK if it is the last article in the docs.")
+                    continue
                 }
+                if (followedBy.size != 1) {
+                    println("Only one article should ever follow another. For \"$nextPath\", found multiple (so please fix one): ${followedBy.map { it.toPath() }}")
+                }
+
+                nextEntries.addAll(followedBy)
             }
         }
 
         generateKotlin("com/varabyte/kobweb/site/model/listing/SiteListing.kt", buildString {
-            val indent = "   "
+            val indent = "\t"
             appendLine(
                 """
                     package com.varabyte.kobweb.site.model.listing
@@ -207,21 +169,35 @@ object SiteListingGenerator {
                     """.trimIndent()
             )
 
-            SITE_LISTING.forEach { category ->
+
+            val routePartsMap = orderedArticleList.associateWith { it.toRouteParts() }
+            val articleTree = mutableMapOf<String, MutableMap<String, MutableList<MarkdownEntry>>>()
+
+            orderedArticleList.forEach { entry ->
+                val routeParts = routePartsMap.getValue(entry)
+                articleTree
+                    .getOrPut(routeParts.category) { mutableMapOf() }
+                    .getOrPut(routeParts.subcategory) { mutableListOf() }
+                    .add(entry)
+            }
+
+
+            articleTree.forEach { (category, rest) ->
                 appendLine("${indent}add(")
                 appendLine("${indent}${indent}Category(")
-                appendLine("${indent}${indent}${indent}\"${category.slug}\",")
-                appendLine("${indent}${indent}${indent}\"${category.title}\",")
-                category.subcategories.forEach { subcategory ->
+                appendLine("${indent}${indent}${indent}\"${category.convertSlugToTitle()}\",")
+
+                rest.forEach { (subcategory, articles) ->
                     appendLine("${indent}${indent}${indent}Subcategory(")
-                    appendLine("${indent}${indent}${indent}${indent}\"${subcategory.title}\",")
-                    subcategory.articles.forEach { article ->
-                        val metadata =
-                            discoveredMetadata.getValue(category.slug).first { it.slug == article.slug }.metadata
-                        appendLine("${indent}${indent}${indent}${indent}Article(\"${article.slug}\", \"${metadata.title}\"),")
+                    appendLine("${indent}${indent}${indent}${indent}\"${subcategory.convertSlugToTitle()}\",")
+                    articles.forEach { article ->
+                        val routeParts = routePartsMap.getValue(article)
+                        val title = article.frontMatter["title"]?.singleOrNull() ?: routeParts.slug.convertSlugToTitle()
+                        appendLine("${indent}${indent}${indent}${indent}Article(\"$title\", \"${article.route}\"),")
                     }
                     appendLine("${indent}${indent}${indent}),")
                 }
+
                 appendLine("${indent}${indent})")
                 appendLine("${indent})")
             }
@@ -229,15 +205,7 @@ object SiteListingGenerator {
             appendLine(
                 """
                     }
-
-                    fun List<Category>.findArticle(categorySlug: String, articleSlug: String): Article? {
-                       return this.asSequence()
-                          .filter { it.slug == categorySlug }
-                          .flatMap { it.subcategories.asSequence() }
-                          .flatMap { it.articles.asSequence() }
-                          .firstOrNull { it.slug == articleSlug }
-                    }
-                    """.trimIndent()
+                """.trimIndent()
             )
         })
     }

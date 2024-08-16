@@ -1,6 +1,5 @@
 ---
 root: .components.layouts.DocsLayout
-title: Getting Started
 ---
 
 Kobweb is an opinionated Kotlin framework for creating websites and web apps, built on top of

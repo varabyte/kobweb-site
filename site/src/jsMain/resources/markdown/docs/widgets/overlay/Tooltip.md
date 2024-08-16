@@ -1,6 +1,6 @@
 ---
 root: .components.layouts.DocsLayout
-title: Button
+follows: /widgets/forms/
 ---
 
-Placeholder (button)
+Placeholder
