@@ -12,5 +12,5 @@ fun DocsPage() {
     val ctx = rememberPageContext()
     val firstCategory = SITE_LISTING.first()
     val firstArticle = firstCategory.subcategories.first().articles.first()
-    ctx.router.tryRoutingTo("/docs/${firstCategory.slug}/${firstArticle.slug}", updateHistoryMode = UpdateHistoryMode.REPLACE)
+    ctx.router.tryRoutingTo(firstArticle.route, updateHistoryMode = UpdateHistoryMode.REPLACE)
 }
