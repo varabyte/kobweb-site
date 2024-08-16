@@ -19,30 +19,26 @@ import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.Text
 
-fun PageContext.RouteInfo.toArticleInfo(): Pair<Category, Article>? {
-    val categorySlug = path.substringBeforeLast('/').substringAfterLast('/')
-    val category = SITE_LISTING.find { it.slug == categorySlug } ?: return null
-    val subcategorySlug = path.substringAfterLast('/')
-    val article = SITE_LISTING.findArticle(categorySlug, subcategorySlug) ?: return null
-    return category to article
+fun PageContext.RouteInfo.toArticleHandle(): ArticleHandle? {
+    return SITE_LISTING.findArticle(path)
 }
 
 @Composable
 fun DocsLayout(content: @Composable () -> Unit) {
     val ctx = rememberPageContext()
 
-    val articleInfo = ctx.markdown?.let { ctx.route.toArticleInfo() }
-    val title = if (articleInfo != null) {
-        "Docs - ${articleInfo.first.title} - ${articleInfo.second.title}"
+    val articleHandle = ctx.markdown?.let { ctx.route.toArticleHandle() }
+    val title = if (articleHandle != null) {
+        "Docs - ${articleHandle.category.title} - ${articleHandle.article.title}"
     } else "Docs"
 
     PageLayout(title) {
         Row(Modifier.fillMaxWidth().maxWidth(800.px).gap(1.cssRem).fillMaxHeight().siteText(SiteTextSize.NORMAL)) {
             ListingSideBar()
             Column(Modifier.fillMaxSize()) {
-                if (articleInfo != null) {
+                if (articleHandle != null) {
                     H1(Modifier.align(Alignment.CenterHorizontally).toAttrs()) {
-                        Text(articleInfo.second.title)
+                        Text(articleHandle.article.title)
                     }
                 }
                 content()

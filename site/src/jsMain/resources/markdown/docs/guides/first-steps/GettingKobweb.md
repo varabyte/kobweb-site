@@ -1,6 +1,6 @@
 ---
 root: .components.layouts.DocsLayout
-title: Getting Kobweb
+follows: GettingStarted
 ---
 
 The first step is to get the Kobweb binary. You can install it, download it, and/or build it, so we'll include
