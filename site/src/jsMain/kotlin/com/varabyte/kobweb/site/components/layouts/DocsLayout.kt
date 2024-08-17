@@ -21,6 +21,7 @@ import com.varabyte.kobweb.silk.style.vars.color.BorderColorVar
 import com.varabyte.kobweb.silk.theme.colors.palette.background
 import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.colors.shifted
+import com.varabyte.kobweb.site.LocalSideBarContent
 import com.varabyte.kobweb.site.components.sections.listing.NavSideBar
 import com.varabyte.kobweb.site.components.widgets.DynamicToc
 import com.varabyte.kobweb.site.components.widgets.getHeadings
@@ -117,7 +118,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
                     .top(5.cssRem)
                     .toAttrs()
             ) {
-                SideBar(
+                LocalSideBarContent.current.invoke(
                     Modifier
                         .padding(top = 2.cssRem, left = 2.cssRem)
                         .width(15.cssRem)

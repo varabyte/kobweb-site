@@ -1,12 +1,10 @@
 package com.varabyte.kobweb.site
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.BorderCollapse
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.ListStyleType
 import com.varabyte.kobweb.compose.css.ScrollBehavior
-import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.core.App
@@ -20,6 +18,7 @@ import com.varabyte.kobweb.silk.init.layer
 import com.varabyte.kobweb.silk.init.registerStyleBase
 import com.varabyte.kobweb.silk.style.layer.SilkLayer
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import com.varabyte.kobweb.site.components.layouts.SideBar
 import kotlinx.browser.localStorage
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.px
@@ -78,6 +77,10 @@ fun initSilk(ctx: InitSilkContext) {
     }
 }
 
+val LocalSideBarContent = compositionLocalOf {
+    movableContentOf { _: Modifier -> }
+}
+
 @App
 @Composable
 fun AppEntry(content: @Composable () -> Unit) {
@@ -87,8 +90,11 @@ fun AppEntry(content: @Composable () -> Unit) {
             localStorage.setItem(COLOR_MODE_KEY, colorMode.name)
         }
 
+        val sideBarContent = remember { movableContentOf { it: Modifier -> SideBar(it) } }
         Surface(SmoothColorStyle.toModifier().fillMaxWidth().minHeight(100.vh)) {
-            content()
+            CompositionLocalProvider(LocalSideBarContent provides sideBarContent) {
+                content()
+            }
         }
     }
 }
