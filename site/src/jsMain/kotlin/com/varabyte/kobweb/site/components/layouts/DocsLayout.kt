@@ -21,6 +21,7 @@ import com.varabyte.kobweb.silk.style.vars.color.BorderColorVar
 import com.varabyte.kobweb.silk.theme.colors.palette.background
 import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.colors.shifted
+import com.varabyte.kobweb.site.components.sections.listing.NavSideBar
 import com.varabyte.kobweb.site.components.widgets.DynamicToc
 import com.varabyte.kobweb.site.components.widgets.getHeadings
 import com.varabyte.kobweb.site.model.listing.ArticleHandle
@@ -28,7 +29,9 @@ import com.varabyte.kobweb.site.model.listing.SITE_LISTING
 import com.varabyte.kobweb.site.model.listing.findArticle
 import com.varabyte.kobwebx.markdown.markdown
 import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.*
+import org.jetbrains.compose.web.dom.Article
+import org.jetbrains.compose.web.dom.Div
+import org.jetbrains.compose.web.dom.Main
 import org.w3c.dom.HTMLElement
 
 fun PageContext.RouteInfo.toArticleHandle(): ArticleHandle? {
@@ -116,7 +119,8 @@ fun DocsLayout(content: @Composable () -> Unit) {
             ) {
                 SideBar(
                     Modifier
-                        .width(18.cssRem)
+                        .padding(top = 2.cssRem, left = 2.cssRem)
+                        .width(15.cssRem)
                         .fillMaxHeight()
                 )
             }
@@ -136,6 +140,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
             }
             Div(
                 Modifier
+                    .padding(top = 2.cssRem)
                     .displayIfAtLeast(Breakpoint.LG)
                     .position(Position.Sticky)
                     .top(5.cssRem)
@@ -152,16 +157,11 @@ fun DocsLayout(content: @Composable () -> Unit) {
 
 @Composable
 fun SideBar(modifier: Modifier = Modifier) {
-    //ListingSideBar()
-    Ul(
+    NavSideBar(
+        SITE_LISTING,
         Modifier
             .displayIfAtLeast(Breakpoint.MD)
             .listStyle(ListStyleType.None)
             .then(modifier)
-            .toAttrs()
-    ) {
-        Li { Text("Concepts") }
-        Li { Text("Components") }
-        Li { Text("Derived Values") }
-    }
+    )
 }
