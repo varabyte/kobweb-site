@@ -66,9 +66,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            dependencies {
-                implementation(libs.compose.runtime)
-            }
+            implementation(libs.compose.runtime)
         }
 
         jsMain.dependencies {
