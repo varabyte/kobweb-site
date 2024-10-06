@@ -6,7 +6,6 @@ import kotlinx.html.link
 import kotlinx.html.script
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose.compiler)
