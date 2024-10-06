@@ -9,10 +9,12 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.PageContext
 import com.varabyte.kobweb.core.rememberPageContext
-import com.varabyte.kobweb.site.components.sections.listing.ListingSideBar
+import com.varabyte.kobweb.site.components.sections.listing.MobileLocalNav
 import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.siteText
-import com.varabyte.kobweb.site.model.listing.*
+import com.varabyte.kobweb.site.model.listing.ArticleHandle
+import com.varabyte.kobweb.site.model.listing.SITE_LISTING
+import com.varabyte.kobweb.site.model.listing.findArticle
 import com.varabyte.kobwebx.markdown.markdown
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.px
@@ -33,8 +35,9 @@ fun DocsLayout(content: @Composable () -> Unit) {
     } else "Docs"
 
     PageLayout(title) {
+        MobileLocalNav({})
         Row(Modifier.fillMaxWidth().maxWidth(800.px).gap(1.cssRem).fillMaxHeight().siteText(SiteTextSize.NORMAL)) {
-            ListingSideBar()
+//            ListingSideBar()
             Column(Modifier.fillMaxSize()) {
                 if (articleHandle != null) {
                     H1(Modifier.align(Alignment.CenterHorizontally).toAttrs()) {
