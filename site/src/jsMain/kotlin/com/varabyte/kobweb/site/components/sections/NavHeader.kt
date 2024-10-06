@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.varabyte.kobweb.browser.dom.ElementTarget
+import com.varabyte.kobweb.compose.css.StyleVariable
 import com.varabyte.kobweb.compose.css.functions.blur
 import com.varabyte.kobweb.compose.css.functions.saturate
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -30,6 +31,8 @@ import com.varabyte.kobweb.site.components.widgets.ThemedButton
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Img
 
+val NavHeaderHeight by StyleVariable(64.px)
+
 val NavHeaderStyle = CssStyle(extraModifier = { SmoothColorStyle.toModifier() }) {
     base {
         Modifier
@@ -39,6 +42,7 @@ val NavHeaderStyle = CssStyle(extraModifier = { SmoothColorStyle.toModifier() })
             .top(0.percent)
             .backdropFilter(saturate(180.percent), blur(5.px))
             .boxShadow(colorMode)
+            .height(NavHeaderHeight.value())
     }
 }
 
@@ -70,7 +74,7 @@ fun NavHeader() {
     var colorMode by ColorMode.currentState
     Box(NavHeaderStyle.toModifier(), contentAlignment = Alignment.Center) {
         Row(
-            Modifier.fillMaxWidth(90.percent).margin(topBottom = 1.em),
+            Modifier.fillMaxWidth(90.percent),
             verticalAlignment = Alignment.CenterVertically
         ) {
             HomeLogo()
