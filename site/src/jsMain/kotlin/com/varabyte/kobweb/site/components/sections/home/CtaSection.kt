@@ -1,7 +1,6 @@
 package com.varabyte.kobweb.site.components.sections.home
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.TextDecorationLine
 import com.varabyte.kobweb.compose.css.Transition
@@ -16,18 +15,17 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaDiscord
 import com.varabyte.kobweb.silk.components.icons.fa.FaStar
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
-import com.varabyte.kobweb.silk.style.CssStyle
-import com.varabyte.kobweb.silk.style.toAttrs
 import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.selectors.focus
 import com.varabyte.kobweb.silk.style.selectors.hover
-import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import com.varabyte.kobweb.silk.style.toAttrs
 import com.varabyte.kobweb.silk.theme.colors.palette.color
 import com.varabyte.kobweb.silk.theme.colors.palette.link
 import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.style.SiteTextSize
-import com.varabyte.kobweb.site.components.style.boxShadow
+import com.varabyte.kobweb.site.components.style.dividerBoxShadow
 import com.varabyte.kobweb.site.components.style.siteText
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.ms
@@ -53,11 +51,10 @@ private fun CtaGridItem(
     href: String,
     content: @Composable () -> Unit = {}
 ) {
-    val colorMode by ColorMode.currentState
-    Column (
+    Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(topBottom = 0.px, leftRight = 3.cssRem).boxShadow(colorMode)
+        modifier = Modifier.padding(topBottom = 0.px, leftRight = 3.cssRem).dividerBoxShadow()
     ) {
         Anchor(href, attrs = CtaGridItemStyle.toAttrs(), content = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -94,7 +91,7 @@ fun CtaSection() {
         ) {
             FaArrowRight(iconModifier)
         }
-        
+
         CtaGridItem(
             "Star & Contribute",
             "Kobweb is fully open source and community driven. We invite you to help make Kobweb the best web development framework!",
