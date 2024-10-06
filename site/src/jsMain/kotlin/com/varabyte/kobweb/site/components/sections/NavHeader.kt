@@ -24,7 +24,7 @@ import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.site.components.style.boxShadow
+import com.varabyte.kobweb.site.components.style.dividerBoxShadow
 import com.varabyte.kobweb.site.components.widgets.ButtonShape
 import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.ThemedButton
@@ -41,7 +41,7 @@ val NavHeaderStyle = CssStyle(extraModifier = { SmoothColorStyle.toModifier() })
             .position(Position.Sticky)
             .top(0.percent)
             .backdropFilter(saturate(180.percent), blur(5.px))
-            .boxShadow(colorMode)
+            .dividerBoxShadow()
             .height(NavHeaderHeight.value())
     }
 }
