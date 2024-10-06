@@ -20,8 +20,8 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.overlay.Tooltip
-import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
+import com.varabyte.kobweb.silk.style.extendedByBase
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.dividerBoxShadow
@@ -33,17 +33,19 @@ import org.jetbrains.compose.web.dom.Img
 
 val NavHeaderHeight by StyleVariable(64.px)
 
-val NavHeaderStyle = CssStyle(extraModifier = { SmoothColorStyle.toModifier() }) {
-    base {
-        Modifier
-            .fillMaxWidth()
-            .backgroundColor(getNavBackgroundColor(colorMode))
-            .position(Position.Sticky)
-            .top(0.percent)
-            .backdropFilter(saturate(180.percent), blur(5.px))
-            .dividerBoxShadow()
-            .height(NavHeaderHeight.value())
-    }
+val NavHeaderBackgroundStyle = SmoothColorStyle.extendedByBase {
+    Modifier
+        .backgroundColor(getNavBackgroundColor(colorMode))
+        .backdropFilter(saturate(180.percent), blur(5.px))
+        .dividerBoxShadow()
+}
+
+val NavHeaderStyle = NavHeaderBackgroundStyle.extendedByBase {
+    Modifier
+        .fillMaxWidth()
+        .position(Position.Sticky)
+        .top(0.percent)
+        .height(NavHeaderHeight.value())
 }
 
 @Composable
