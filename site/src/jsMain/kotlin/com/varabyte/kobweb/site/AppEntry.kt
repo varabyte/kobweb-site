@@ -5,16 +5,18 @@ import androidx.compose.runtime.LaunchedEffect
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.core.App
 import com.varabyte.kobweb.silk.SilkApp
 import com.varabyte.kobweb.silk.components.layout.Surface
-import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
-import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.init.InitSilk
 import com.varabyte.kobweb.silk.init.InitSilkContext
 import com.varabyte.kobweb.silk.init.registerStyleBase
+import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
+import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import com.varabyte.kobweb.site.components.style.DividerColor
 import kotlinx.browser.localStorage
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.vh
@@ -46,7 +48,15 @@ fun AppEntry(content: @Composable () -> Unit) {
             localStorage.setItem(COLOR_MODE_KEY, colorMode.name)
         }
 
-        Surface(SmoothColorStyle.toModifier().fillMaxWidth().minHeight(100.vh)) {
+        Surface(
+            SmoothColorStyle.toModifier()
+                .fillMaxWidth()
+                .minHeight(100.vh)
+                .setVariable(
+                    DividerColor,
+                    if (colorMode.isDark) Color.rgba(238, 238, 238, 0.2f) else Color.rgba(17, 17, 17, 0.2f)
+                )
+        ) {
             content()
         }
     }
