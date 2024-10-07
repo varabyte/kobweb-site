@@ -62,15 +62,15 @@ fun initSilk(ctx: InitSilkContext) {
 
         val headerCommon = Modifier.fontWeight(FontWeight.Bold).margin(top = 1.25.cssRem, bottom = 0.75.cssRem)
         registerStyleBase("h1") {
-            headerCommon.fontSize(3.cssRem)
+            headerCommon.fontSize(2.25.cssRem)
         }
 
         registerStyleBase("h2") {
-            headerCommon.fontSize(2.cssRem)
+            headerCommon.fontSize(1.875.cssRem)
         }
 
         registerStyleBase("h3") {
-            headerCommon.fontSize(1.5.cssRem)
+            headerCommon.fontSize(1.25.cssRem)
         }
 
         registerStyleBase("h4") {
