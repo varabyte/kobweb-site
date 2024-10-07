@@ -35,6 +35,15 @@ fun PageContext.RouteInfo.toArticleHandle(): ArticleHandle? {
 }
 
 val ArticleStyle = CssStyle {
+    base {
+        Modifier
+            .padding(2.cssRem)
+            .padding { top(3.cssRem) } // Extra space for nav menu on mobile
+    }
+    Breakpoint.MD {
+        Modifier.padding(2.cssRem)
+    }
+
     descendants("ul", "ol", "menu") {
         Modifier
             .listStyle(ListStyleType.Revert)
@@ -100,7 +109,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
     } else "Docs"
 
     PageLayout(title) {
-        MobileLocalNav({})
+        MobileLocalNav()
         Row(
             Modifier
                 .margin(leftRight = autoLength) // Centers content
@@ -126,7 +135,6 @@ fun DocsLayout(content: @Composable () -> Unit) {
             Main(
                 ArticleStyle.toModifier()
                     .minWidth(0.px)
-                    .padding(2.cssRem)
                     .fillMaxWidth()
                     .toAttrs()
             ) {

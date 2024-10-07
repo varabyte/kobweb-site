@@ -12,6 +12,8 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.foundation.layout.Spacer
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.graphics.Color
+import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.navigation.Anchor
@@ -28,7 +30,9 @@ import com.varabyte.kobweb.site.components.style.dividerBoxShadow
 import com.varabyte.kobweb.site.components.widgets.ButtonShape
 import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.ThemedButton
-import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.css.Position
+import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Img
 
 val NavHeaderHeight by StyleVariable(64.px)
@@ -38,6 +42,11 @@ val NavHeaderBackgroundStyle = SmoothColorStyle.extendedByBase {
         .backgroundColor(getNavBackgroundColor(colorMode))
         .backdropFilter(saturate(180.percent), blur(5.px))
         .dividerBoxShadow()
+}
+
+val NavHeaderDarkenedBackgroundStyle = NavHeaderBackgroundStyle.extendedByBase {
+    Modifier
+        .backgroundColor(getNavBackgroundColor(colorMode).copyf(alpha = 0.8f))
 }
 
 val NavHeaderStyle = NavHeaderBackgroundStyle.extendedByBase {
@@ -62,11 +71,11 @@ private fun HomeLogo() {
     }
 }
 
-private fun getNavBackgroundColor(colorMode: ColorMode): CSSColorValue {
+private fun getNavBackgroundColor(colorMode: ColorMode): Color.Rgb {
     return when (colorMode) {
-        ColorMode.DARK -> rgba(0.0, 0.0, 0.0, 0.65)
-        ColorMode.LIGHT -> rgba(255, 255, 255, 0.65)
-    }
+        ColorMode.DARK -> Colors.Black
+        ColorMode.LIGHT -> Colors.White
+    }.copyf(alpha = 0.65f)
 }
 
 private val BUTTON_MARGIN = Modifier.margin(0.px, 10.px)

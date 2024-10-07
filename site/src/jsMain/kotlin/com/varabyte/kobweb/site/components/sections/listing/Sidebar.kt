@@ -82,7 +82,7 @@ fun ListingSidebar(
 private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Modifier) {
     val ctx = rememberPageContext()
     Li(ListingElementStyle.toModifier().fontSize(0.875.cssRem).then(modifier).toAttrs()) {
-        SpanText(text = subcategory.title)
+        SpanText(text = subcategory.title, Modifier.fontWeight(FontWeight.Bold))
 
         Ul(
             Modifier
