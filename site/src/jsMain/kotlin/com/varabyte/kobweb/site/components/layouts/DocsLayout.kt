@@ -28,9 +28,7 @@ import com.varabyte.kobweb.site.model.listing.SITE_LISTING
 import com.varabyte.kobweb.site.model.listing.findArticle
 import com.varabyte.kobwebx.markdown.markdown
 import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.Article
-import org.jetbrains.compose.web.dom.Div
-import org.jetbrains.compose.web.dom.Main
+import org.jetbrains.compose.web.dom.*
 
 fun PageContext.RouteInfo.toArticleHandle(): ArticleHandle? {
     return SITE_LISTING.findArticle(path)
@@ -133,6 +131,11 @@ fun DocsLayout(content: @Composable () -> Unit) {
                     .toAttrs()
             ) {
                 Article {
+                    if (articleHandle != null) {
+                        H1 {
+                            Text(articleHandle.article.title)
+                        }
+                    }
                     content()
                 }
             }
