@@ -4,18 +4,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import com.varabyte.kobweb.compose.foundation.layout.Box
-import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.compose.ui.modifiers.gridRow
 import com.varabyte.kobweb.compose.ui.modifiers.gridTemplateRows
+import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.sections.Footer
 import com.varabyte.kobweb.site.components.sections.NavHeader
 import kotlinx.browser.document
 import org.jetbrains.compose.web.css.fr
+import org.jetbrains.compose.web.dom.Div
 
 @Composable
 fun PageLayout(title: String, content: @Composable () -> Unit) {
@@ -50,10 +51,7 @@ fun PageLayout(title: String, content: @Composable () -> Unit) {
         Modifier.fillMaxSize().gridTemplateRows { size(1.fr); size(auto) },
         contentAlignment = Alignment.TopCenter
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize().align(Alignment.TopCenter),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Div(Modifier.fillMaxSize().align(Alignment.TopCenter).toAttrs()) {
             NavHeader()
             content()
         }
