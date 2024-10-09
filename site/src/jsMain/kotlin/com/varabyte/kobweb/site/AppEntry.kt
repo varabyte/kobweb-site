@@ -2,10 +2,7 @@ package com.varabyte.kobweb.site
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import com.varabyte.kobweb.compose.css.BorderCollapse
-import com.varabyte.kobweb.compose.css.FontWeight
-import com.varabyte.kobweb.compose.css.ListStyleType
-import com.varabyte.kobweb.compose.css.ScrollBehavior
+import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.modifiers.*
@@ -34,10 +31,11 @@ fun initSilk(ctx: InitSilkContext) {
 //        registerStyleBase("body") { Modifier.fontFamily("Roboto", "sans-serif") }
 //        registerStyleBase("code, pre") { Modifier.fontFamily("Roboto Mono", "monospace") }
         registerStyleBase("body") {
-            Modifier.fontFamily(
-                "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-                "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif"
-            )
+            Modifier
+                .fontFamily(
+                    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+                    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif"
+                ).overflowWrap(OverflowWrap.BreakWord)
         }
 
         registerStyle("html") {
@@ -60,13 +58,18 @@ fun initSilk(ctx: InitSilkContext) {
             }
         }
 
-        val headerCommon = Modifier.fontWeight(FontWeight.Bold).margin(top = 1.25.cssRem, bottom = 0.75.cssRem)
+        val headerCommon = Modifier
+            .fontWeight(FontWeight.SemiBold)
+            .margin { top(1.6.cssRem); bottom(0.75.cssRem) }
+
         registerStyleBase("h1") {
             headerCommon.fontSize(2.25.cssRem)
         }
 
         registerStyleBase("h2") {
-            headerCommon.fontSize(1.875.cssRem)
+            headerCommon
+                .fontSize(1.875.cssRem)
+                .margin { top(2.2.cssRem) }
         }
 
         registerStyleBase("h3") {

@@ -37,8 +37,7 @@ fun PageContext.RouteInfo.toArticleHandle(): ArticleHandle? {
 val ArticleStyle = CssStyle {
     base {
         Modifier
-            .padding(2.cssRem)
-            .padding { top(3.cssRem) } // Extra space for nav menu on mobile
+            .padding(top = 3.cssRem, leftRight = 1.25.cssRem, bottom = 2.cssRem)
     }
     Breakpoint.MD {
         Modifier.padding(2.cssRem)
