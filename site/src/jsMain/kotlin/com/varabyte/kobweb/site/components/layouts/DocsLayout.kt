@@ -1,6 +1,7 @@
 package com.varabyte.kobweb.site.components.layouts
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import com.varabyte.kobweb.browser.dom.observers.IntersectionObserver
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
@@ -11,6 +12,7 @@ import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.PageContext
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.navigation.LinkVars
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
@@ -23,12 +25,16 @@ import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.colors.shifted
 import com.varabyte.kobweb.site.components.sections.listing.ListingSidebar
 import com.varabyte.kobweb.site.components.sections.listing.MobileLocalNav
+import com.varabyte.kobweb.site.components.widgets.DynamicToc
+import com.varabyte.kobweb.site.components.widgets.getHeadings
 import com.varabyte.kobweb.site.model.listing.ArticleHandle
 import com.varabyte.kobweb.site.model.listing.SITE_LISTING
 import com.varabyte.kobweb.site.model.listing.findArticle
 import com.varabyte.kobwebx.markdown.markdown
+import kotlinx.browser.document
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
+import org.w3c.dom.HTMLElement
 
 fun PageContext.RouteInfo.toArticleHandle(): ArticleHandle? {
     return SITE_LISTING.findArticle(path)
@@ -118,6 +124,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
         ) {
             Div(
                 Modifier
+                    .displayIfAtLeast(Breakpoint.MD)
                     .position(Position.Sticky)
                     .top(5.cssRem)
                     .toAttrs()
@@ -128,14 +135,16 @@ fun DocsLayout(content: @Composable () -> Unit) {
                         .padding(top = 2.cssRem, left = 2.cssRem)
                         .width(15.cssRem)
                         .fillMaxHeight()
-                        .displayIfAtLeast(Breakpoint.MD)
                 )
             }
+            var mainElement by remember { mutableStateOf<HTMLElement?>(null) }
             Main(
                 ArticleStyle.toModifier()
                     .minWidth(0.px)
                     .fillMaxWidth()
-                    .toAttrs()
+                    .toAttrs {
+                        ref { mainElement = it; onDispose { } }
+                    }
             ) {
                 Article {
                     if (articleHandle != null) {
@@ -150,11 +159,26 @@ fun DocsLayout(content: @Composable () -> Unit) {
                 Modifier
                     .displayIfAtLeast(Breakpoint.LG)
                     .position(Position.Sticky)
+                    .padding(top = 2.cssRem)
                     .top(5.cssRem)
                     .toAttrs()
             ) {
-                Div(Modifier.displayIfAtLeast(Breakpoint.MD).width(16.cssRem).toAttrs())
-                //Toc()
+                SpanText("On this page", Modifier.fontWeight(FontWeight.Bold))
+
+                // Should `IntersectionObserver.Options` implement equals() so that it doesn't have to be remembered?
+                val options = remember {
+                    val top = 64 // Height of the top nav bar
+                    val bottom = top + 125
+                    val height = document.documentElement!!.clientHeight
+                    IntersectionObserver.Options(rootMargin = "-${top}px 0% ${bottom - height}px")
+                }
+                DynamicToc(
+                    headings = mainElement?.getHeadings().orEmpty(),
+                    intersectionObserverOptions = options,
+                    modifier = Modifier
+                        .width(16.cssRem)
+                        .margin(top = 0.25.cssRem)
+                )
             }
         }
     }
