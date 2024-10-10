@@ -8,7 +8,7 @@ instructions for all these approaches.
 
 ## Install the Kobweb binary
 
-### [Homebrew](https://brew.sh/)
+### Homebrew
 
 *OS: Mac and Linux*
 
@@ -16,11 +16,11 @@ instructions for all these approaches.
 $ brew install varabyte/tap/kobweb
 ```
 
-### [Scoop](https://scoop.sh/)
+### Scoop
 
 *OS: Windows*
 
-```shell
+```text
 # Note: Adding buckets only has to be done once.
 
 # Feel free to skip java if you already have it
@@ -32,11 +32,11 @@ $ brew install varabyte/tap/kobweb
 > scoop install varabyte/kobweb
 ```
 
-### [SDKMAN!](https://sdkman.io/)
+### SDKMAN!
 
 *OS: Windows, Mac, and \*nix*
 
-```shell
+```text
 $ sdk install kobweb
 ```
 
@@ -134,4 +134,3 @@ you installed it.
 | Scoop                     | `scoop update kobweb`                                                                                                                |
 | SDKMAN!                   | `sdk upgrade kobweb`                                                                                                                 |
 | Downloaded from<br>Github | Visit the [latest release](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.12). You can find both a zip and tar file there. |
-
