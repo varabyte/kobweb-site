@@ -133,7 +133,7 @@ object SiteListingGenerator {
         }
 
         if (initialArticles.size != 1) {
-            println("There should only be one starting article, but one of these articles are missing a `follows` frontmatter value: $initialArticles")
+            println("There should only be one starting article, but one of these articles are missing a `follows` frontmatter value: ${initialArticles.map { it.toPath() }}")
         }
 
         val orderedArticleList = mutableListOf<MarkdownEntry>()
