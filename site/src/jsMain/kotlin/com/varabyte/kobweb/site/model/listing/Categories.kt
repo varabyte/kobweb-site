@@ -31,3 +31,12 @@ fun List<Category>.findArticle(route: String): ArticleHandle? {
     return null
 }
 
+
+fun List<Category>.findOffsetFrom(articleHandle: ArticleHandle, indexOffset: (Int) -> Int): Article? {
+    val articleIndex = articleHandle.subcategory.articles.indexOf(articleHandle.article)
+    val subCategoryIndex by lazy { articleHandle.category.subcategories.indexOf(articleHandle.subcategory) }
+    val categoryIndex by lazy { this.indexOf(articleHandle.category) }
+    return articleHandle.subcategory.articles.getOrNull(indexOffset(articleIndex))
+        ?: articleHandle.category.subcategories.getOrNull(indexOffset(subCategoryIndex))?.articles?.first()
+        ?: SITE_LISTING.getOrNull(indexOffset(categoryIndex))?.subcategories?.first()?.articles?.first()
+}
