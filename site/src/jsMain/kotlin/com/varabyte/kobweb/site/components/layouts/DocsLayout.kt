@@ -11,8 +11,10 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.PageContext
 import com.varabyte.kobweb.core.rememberPageContext
+import com.varabyte.kobweb.silk.components.layout.HorizontalDivider
 import com.varabyte.kobweb.silk.components.navigation.LinkVars
 import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.style.CssLayer
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
@@ -23,6 +25,7 @@ import com.varabyte.kobweb.silk.style.vars.color.BorderColorVar
 import com.varabyte.kobweb.silk.theme.colors.palette.background
 import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.colors.shifted
+import com.varabyte.kobweb.site.components.sections.*
 import com.varabyte.kobweb.site.components.sections.listing.ListingSidebar
 import com.varabyte.kobweb.site.components.sections.listing.MobileLocalNav
 import com.varabyte.kobweb.site.components.widgets.DynamicToc
@@ -40,6 +43,7 @@ fun PageContext.RouteInfo.toArticleHandle(): ArticleHandle? {
     return SITE_LISTING.findArticle(path)
 }
 
+@CssLayer("component-styles") // Allow variants to override these styles
 val ArticleStyle = CssStyle {
     base {
         Modifier
@@ -153,6 +157,37 @@ fun DocsLayout(content: @Composable () -> Unit) {
                         }
                     }
                     content()
+                    HorizontalDivider(Modifier.fillMaxWidth().margin(bottom = 1.5.cssRem).opacity(0.75))
+                    if (articleHandle == null) return@Article
+                    val articleIndex = articleHandle.subcategory.articles.indexOf(articleHandle.article)
+                    val subCategoryIndex = articleHandle.category.subcategories.indexOf(articleHandle.subcategory)
+                    val categoryIndex = SITE_LISTING.indexOf(articleHandle.category)
+
+                    val prev = articleHandle.subcategory.articles.getOrNull(articleIndex - 1)
+                        ?: articleHandle.category.subcategories.getOrNull(subCategoryIndex - 1)?.articles?.first()
+                        ?: SITE_LISTING.getOrNull(categoryIndex - 1)?.subcategories?.first()?.articles?.first()
+                    val next = articleHandle.subcategory.articles.getOrNull(articleIndex + 1)
+                        ?: articleHandle.category.subcategories.getOrNull(subCategoryIndex + 1)?.articles?.first()
+                        ?: SITE_LISTING.getOrNull(categoryIndex + 1)?.subcategories?.first()?.articles?.first()
+
+                    PaginationNav1(prev, next)
+                    HorizontalDivider(Modifier.fillMaxWidth().margin(topBottom = 1.25.cssRem).opacity(0.75))
+                    PaginationNav2(prev, next)
+                    HorizontalDivider(Modifier.fillMaxWidth().margin(topBottom = 1.25.cssRem).opacity(0.75))
+                    PaginationNav3(prev, next)
+                    HorizontalDivider(Modifier.fillMaxWidth().margin(topBottom = 1.25.cssRem).opacity(0.75))
+                    PaginationNav4(prev, next)
+                    HorizontalDivider(Modifier.fillMaxWidth().margin(topBottom = 1.25.cssRem).opacity(0.75))
+                    PaginationNav5(prev, next)
+                    HorizontalDivider(Modifier.fillMaxWidth().margin(topBottom = 1.25.cssRem).opacity(0.75))
+                    PaginationNav6(prev, next)
+                    HorizontalDivider(Modifier.fillMaxWidth().margin(topBottom = 1.25.cssRem).opacity(0.75))
+                    PaginationNav7(prev, next)
+                    HorizontalDivider(Modifier.fillMaxWidth().margin(topBottom = 1.25.cssRem).opacity(0.75))
+                    PaginationNav8(prev, next)
+                    HorizontalDivider(Modifier.fillMaxWidth().margin(topBottom = 1.25.cssRem).opacity(0.75))
+                    PaginationNav9(prev, next)
+                    HorizontalDivider(Modifier.fillMaxWidth().margin(topBottom = 1.25.cssRem).opacity(0.75))
                 }
             }
             Div(
