@@ -13,6 +13,7 @@ import com.varabyte.kobweb.core.PageContext
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.navigation.LinkVars
 import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.style.CssLayer
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
@@ -23,6 +24,7 @@ import com.varabyte.kobweb.silk.style.vars.color.BorderColorVar
 import com.varabyte.kobweb.silk.theme.colors.palette.background
 import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.colors.shifted
+import com.varabyte.kobweb.site.components.sections.PaginationNav
 import com.varabyte.kobweb.site.components.sections.listing.ListingSidebar
 import com.varabyte.kobweb.site.components.sections.listing.MobileLocalNav
 import com.varabyte.kobweb.site.components.widgets.DynamicToc
@@ -30,6 +32,7 @@ import com.varabyte.kobweb.site.components.widgets.getHeadings
 import com.varabyte.kobweb.site.model.listing.ArticleHandle
 import com.varabyte.kobweb.site.model.listing.SITE_LISTING
 import com.varabyte.kobweb.site.model.listing.findArticle
+import com.varabyte.kobweb.site.model.listing.findOffsetFrom
 import com.varabyte.kobwebx.markdown.markdown
 import kotlinx.browser.document
 import org.jetbrains.compose.web.css.*
@@ -40,6 +43,7 @@ fun PageContext.RouteInfo.toArticleHandle(): ArticleHandle? {
     return SITE_LISTING.findArticle(path)
 }
 
+@CssLayer("component-styles") // Allow variants to override these styles
 val ArticleStyle = CssStyle {
     base {
         Modifier
@@ -153,6 +157,13 @@ fun DocsLayout(content: @Composable () -> Unit) {
                         }
                     }
                     content()
+
+                    if (articleHandle == null) return@Article
+
+                    val prev = SITE_LISTING.findOffsetFrom(articleHandle) { it - 1 }
+                    val next = SITE_LISTING.findOffsetFrom(articleHandle) { it + 1 }
+
+                    PaginationNav(prev, next, Modifier.margin(top = 3.cssRem))
                 }
             }
             Div(
