@@ -16,6 +16,7 @@ import com.varabyte.kobweb.silk.style.vars.size.FontSizeVars
 import com.varabyte.kobweb.site.components.sections.listing.ListingElementStyle
 import com.varabyte.kobweb.site.components.sections.listing.ListingIndentVar
 import com.varabyte.kobweb.site.components.sections.listing.ListingLinkVariant
+import kotlinx.browser.window
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.css.s
 import org.jetbrains.compose.web.dom.Li
@@ -79,8 +80,13 @@ fun DynamicToc(
                 }
             }
         }
-        headings.forEach { heading ->
-            observer.observe(heading)
+        // Ensure all elements are loaded & positioned before we start observing
+        // Otherwise, reloading the page while scrolled fully down will cause no TOC element to be selected
+        // TODO (maybe): figure out if this is intended behavior and why it only happens when fully scrolled down
+        window.runWhenLoaded {
+            headings.forEach { heading ->
+                observer.observe(heading)
+            }
         }
         onDispose {
             headings.forEach { heading ->
@@ -122,5 +128,13 @@ fun TocContent(
                 )
             }
         }
+    }
+}
+
+private fun Window.runWhenLoaded(block: () -> Unit) {
+    if (document.readyState == DocumentReadyState.COMPLETE) {
+        block()
+    } else {
+        addEventListener("load", { block() })
     }
 }
