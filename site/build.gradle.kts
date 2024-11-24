@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kobweb.application)
     alias(libs.plugins.kobwebx.markdown)
+
 }
 
 repositories {
@@ -53,12 +54,14 @@ kotlin {
 
         val jsMain by getting {
             dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
                 implementation(libs.compose.html.core)
                 implementation(libs.kobweb.core)
                 implementation(libs.kobweb.silk)
                 implementation(libs.silk.icons.fa)
                 implementation(libs.kobwebx.markdown)
-             }
+                implementation(libs.kobwebx.serialization.kotlinx)
+            }
         }
     }
 }
