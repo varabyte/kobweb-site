@@ -27,7 +27,7 @@ private fun OssLabel() {
     Span(Modifier.margin(bottom = 2.cssRem).whiteSpace(WhiteSpace.PreWrap).textAlign(TextAlign.Center).toAttrs()) {
         FaGithub(Modifier.margin(right = 8.px))
         Text("This site is ")
-        SilkLink ("https://github.com/varabyte/kobweb-site", "open source")
+        SilkLink("https://github.com/varabyte/kobweb-site", "open source")
         Text(".")
     }
 }
