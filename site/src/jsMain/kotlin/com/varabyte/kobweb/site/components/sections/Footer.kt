@@ -23,7 +23,7 @@ import org.jetbrains.compose.web.dom.Text
 import com.varabyte.kobweb.silk.components.navigation.Link as SilkLink
 
 @Composable
-private fun OSSLabel() {
+private fun OssLabel() {
     Span(Modifier.margin(bottom = 2.cssRem).whiteSpace(WhiteSpace.PreWrap).textAlign(TextAlign.Center).toAttrs()) {
         FaGithub(Modifier.margin(right = 8.px))
         Text("This site is ")
@@ -61,7 +61,7 @@ fun Footer(modifier: Modifier = Modifier) {
             Modifier.fillMaxWidth(70.percent).margin(1.em),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            OSSLabel()
+            OssLabel()
             Logo()
             SpanText(
                 "Copyright © 2024 Varabyte. All rights reserved.",
