@@ -1,6 +1,7 @@
 package com.varabyte.kobweb.site.components.sections.home
 
 import androidx.compose.runtime.*
+import com.varabyte.kobweb.browser.util.setInterval
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
@@ -15,14 +16,14 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.Surface
-import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
+import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
-import com.varabyte.kobweb.silk.style.toModifier
-import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
+import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.widgets.GradientBox
@@ -36,6 +37,7 @@ import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.H3
 import org.jetbrains.compose.web.dom.Text
+import kotlin.time.Duration.Companion.seconds
 
 private val DARK_BACKGROUND = Color.rgb(25, 25, 25)
 private val LIGHT_BACKGROUND = DARK_BACKGROUND.inverted()
@@ -48,9 +50,9 @@ private fun HeroExample(modifier: Modifier) {
     val foreground = if (localColorMode.isLight) Colors.Black else Colors.White
 
     LaunchedEffect(Unit) {
-        window.setInterval({
+        window.setInterval(5.seconds) {
             localColorMode = localColorMode.opposite
-        }, timeout = 5000)
+        }
     }
 
     // Wrap in a surface so that we can override the color mode for this specific section
