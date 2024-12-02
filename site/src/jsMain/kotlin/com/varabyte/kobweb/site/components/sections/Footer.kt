@@ -1,13 +1,15 @@
 package com.varabyte.kobweb.site.components.sections
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import com.varabyte.kobweb.compose.css.TextAlign
+import com.varabyte.kobweb.compose.css.WhiteSpace
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
-import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.navigation.Anchor
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.text.SpanText
@@ -15,15 +17,18 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.style.boxShadow
 import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.*
+import org.jetbrains.compose.web.dom.Img
+import org.jetbrains.compose.web.dom.Span
+import org.jetbrains.compose.web.dom.Text
 import com.varabyte.kobweb.silk.components.navigation.Link as SilkLink
 
 @Composable
 private fun OSSLabel() {
-    Row(Modifier.margin(bottom = 32.px).flexWrap(FlexWrap.Wrap), verticalAlignment = Alignment.CenterVertically) {
+    Span(Modifier.margin(bottom = 2.cssRem).whiteSpace(WhiteSpace.PreWrap).textAlign(TextAlign.Center).toAttrs()) {
         FaGithub(Modifier.margin(right = 8.px))
-        SpanText("This site is ")
+        Text("This site is ")
         SilkLink ("https://github.com/varabyte/kobweb-site", "open source")
+        Text(".")
     }
 }
 
