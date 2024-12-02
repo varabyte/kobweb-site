@@ -14,6 +14,7 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
+import com.varabyte.kobweb.silk.components.layout.Surface
 import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.components.layout.numColumns
 import com.varabyte.kobweb.silk.components.navigation.Link
@@ -21,6 +22,7 @@ import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.widgets.GradientBox
@@ -51,23 +53,28 @@ private fun HeroExample(modifier: Modifier) {
         }, timeout = 5000)
     }
 
-    Column(
-        modifier.backgroundColor(background).color(foreground).padding(12.px),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row(Modifier.align(Alignment.End)) {
-            if (localColorMode.isLight) FaMoon() else FaSun()
-        }
-        // We have to slightly tweak header settings here from the actual code sample above since
-        // the overall site overloads H1 values from the default
-        H3(attrs = Modifier.margin(bottom = 1.cssRem).toAttrs()) {
-            Text("Welcome to Kobweb!")
-        }
-        Row {
-            SpanText("Create rich, dynamic web apps with ease, leveraging ")
-            Link("https://kotlinlang.org/", "Kotlin")
-            SpanText(" and ")
-            Link("https://github.com/JetBrains/compose-multiplatform/#compose-html", "Compose HTML")
+    // Wrap in a surface so that we can override the color mode for this specific section
+    Surface(Modifier.backgroundColor(Colors.Transparent).fillMaxSize(), colorModeOverride = localColorMode) {
+        Column(
+            SmoothColorStyle.toModifier().then(
+                modifier.backgroundColor(background).color(foreground).padding(12.px)
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(Modifier.align(Alignment.End)) {
+                if (localColorMode.isLight) FaMoon() else FaSun()
+            }
+            // We have to slightly tweak header settings here from the actual code sample above since
+            // the overall site overloads H1 values from the default
+            H3(attrs = Modifier.margin(bottom = 1.cssRem).toAttrs()) {
+                Text("Welcome to Kobweb!")
+            }
+            Row {
+                SpanText("Create rich, dynamic web apps with ease, leveraging ")
+                Link("https://kotlinlang.org/", "Kotlin")
+                SpanText(" and ")
+                Link("https://github.com/JetBrains/compose-multiplatform/#compose-html", "Compose HTML")
+            }
         }
     }
 }
