@@ -28,15 +28,8 @@ fun initSilk(ctx: InitSilkContext) {
     ctx.config.initialColorMode = localStorage.getItem(COLOR_MODE_KEY)?.let { ColorMode.valueOf(it) } ?: ColorMode.DARK
 
     ctx.stylesheet.apply {
-//        registerStyleBase("body") { Modifier.fontFamily("Roboto", "sans-serif") }
-//        registerStyleBase("code, pre") { Modifier.fontFamily("Roboto Mono", "monospace") }
-        registerStyleBase("body") {
-            Modifier
-                .fontFamily(
-                    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-                    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "sans-serif"
-                ).overflowWrap(OverflowWrap.BreakWord)
-        }
+        registerStyleBase("body") { Modifier.fontFamily("Roboto", "sans-serif").overflowWrap(OverflowWrap.BreakWord) }
+        registerStyleBase("code, pre") { Modifier.fontFamily("Roboto Mono", "monospace") }
 
         registerStyle("html") {
             base {
