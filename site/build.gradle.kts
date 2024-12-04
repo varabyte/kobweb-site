@@ -24,6 +24,8 @@ kobweb {
                 script {
                     src = "/highlight.js/highlight.min.js"
                 }
+
+                link(rel = "stylesheet", href = "/fonts/faces.css")
             }
         }
     }
