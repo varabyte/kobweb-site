@@ -27,6 +27,8 @@ import com.varabyte.kobweb.silk.theme.colors.shifted
 import com.varabyte.kobweb.site.components.sections.PaginationNav
 import com.varabyte.kobweb.site.components.sections.listing.ListingSidebar
 import com.varabyte.kobweb.site.components.sections.listing.MobileLocalNav
+import com.varabyte.kobweb.site.components.style.SiteTextSize
+import com.varabyte.kobweb.site.components.style.siteText
 import com.varabyte.kobweb.site.components.widgets.DynamicToc
 import com.varabyte.kobweb.site.components.widgets.getHeadings
 import com.varabyte.kobweb.site.model.listing.ArticleHandle
@@ -48,6 +50,7 @@ val ArticleStyle = CssStyle {
     base {
         Modifier
             .padding(top = 3.cssRem, leftRight = 1.25.cssRem, bottom = 2.cssRem)
+            .siteText(SiteTextSize.NORMAL)
     }
     Breakpoint.MD {
         Modifier.padding(2.cssRem)
