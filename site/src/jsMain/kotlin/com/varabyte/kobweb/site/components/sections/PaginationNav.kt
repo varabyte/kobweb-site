@@ -20,6 +20,8 @@ import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.selectors.hover
 import com.varabyte.kobweb.silk.style.toModifier
+import com.varabyte.kobweb.site.components.style.SiteTextSize
+import com.varabyte.kobweb.site.components.style.siteText
 import com.varabyte.kobweb.site.model.listing.Article
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
@@ -65,15 +67,14 @@ fun PaginationNav(prev: Article?, next: Article?, modifier: Modifier = Modifier)
                     Modifier
                         .fontWeight(FontWeight.SemiBold)
                         .display(DisplayStyle.Block)
-                        .fontSize(0.8125.cssRem)
-                        .lineHeight(1.5)
+                        .siteText(SiteTextSize.TINY)
                 )
                 SpanText(
                     article.title,
                     Modifier
                         .color(Colors.DodgerBlue)
-                        .fontSize(115.percent)
                         .fontWeight(FontWeight.Bold)
+                        .siteText(SiteTextSize.SMALL)
                         .transition(Transition.of("color", 0.25.s))
                 )
             }
