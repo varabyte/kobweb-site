@@ -13,6 +13,7 @@ import com.varabyte.kobweb.core.PageContext
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.navigation.LinkVars
 import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.init.registerStyleBase
 import com.varabyte.kobweb.silk.style.CssLayer
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
@@ -105,10 +106,15 @@ val ArticleStyle = CssStyle {
     descendants("a:any-link") {
         Modifier.color(LinkVars.DefaultColor.value())
     }
-    // This is an alternative to scrollPadding on the html
-//    descendants("h2", "h3", "h4", "h5", "h6") {
+
+    descendants(*((2..6).map { level -> "h$level" }.toTypedArray())) {
+        // By making the header full width, it means when the user mouses over the entire line they'll see the link
+        Modifier.fillMaxWidth()
+
+        // This is an alternative to scrollPadding on the html
 //        Modifier.scrollMargin(top = 5.5.cssRem)
-//    }
+
+    }
 }
 
 @Composable
