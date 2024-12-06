@@ -20,7 +20,7 @@ $ brew install varabyte/tap/kobweb
 
 *OS: Windows*
 
-```shell
+```bash
 # Note: Adding buckets only has to be done once.
 
 # Feel free to skip java if you already have it
@@ -36,7 +36,7 @@ $ brew install varabyte/tap/kobweb
 
 *OS: Windows, Mac, and \*nix*
 
-```shell
+```bash
 $ sdk install kobweb
 ```
 
