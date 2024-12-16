@@ -8,8 +8,10 @@ import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.toModifier
+import com.varabyte.kobweb.site.components.style.DividerColor
 import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.siteText
+import org.jetbrains.compose.web.css.LineStyle
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.css.vw
@@ -27,6 +29,7 @@ val CodeBlockStyle = CssStyle {
             .borderRadius(10.px)
             .overflow { x(Overflow.Auto) }
             .siteText(SiteTextSize.SMALL)
+            .border(1.px, LineStyle.Solid, DividerColor.value())
     }
     Breakpoint.MD { Modifier.maxWidth(100.percent) }
 }
