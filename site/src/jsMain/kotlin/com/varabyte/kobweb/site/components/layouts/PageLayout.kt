@@ -1,6 +1,7 @@
 package com.varabyte.kobweb.site.components.layouts
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import com.varabyte.kobweb.compose.foundation.layout.Box
@@ -31,16 +32,15 @@ fun PageLayout(title: String, content: @Composable () -> Unit) {
     }
 
     val colorMode by ColorMode.currentState
-    LaunchedEffect(colorMode) {
-        var styleElement = document.querySelector("""link[title="hljs-style"]""")
-        if (styleElement == null) {
-            styleElement = document.createElement("link").apply {
-                setAttribute("type", "text/css")
-                setAttribute("rel", "stylesheet")
-                setAttribute("title", "hljs-style")
-            }.also { document.head!!.appendChild(it) }
-        }
-        styleElement.setAttribute("href", "/highlight.js/styles/a11y-${colorMode.name.lowercase()}.min.css")
+    DisposableEffect(colorMode) {
+        val styleElement = document.createElement("link").apply {
+            setAttribute("type", "text/css")
+            setAttribute("rel", "stylesheet")
+            setAttribute("title", "hljs-style")
+            setAttribute("href", "/highlight.js/styles/a11y-${colorMode.name.lowercase()}.min.css")
+        }.also { document.head!!.appendChild(it) }
+
+        onDispose { styleElement.remove() }
     }
 
     // Create a box with two rows: the main content (fills as much space as it can) and the footer (which reserves
