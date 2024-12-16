@@ -42,7 +42,7 @@ val CodeBlockStyle = CssStyle {
 // block in our build.gradle.kts file to see how this was done.
 @Composable
 fun CodeBlock(code: String, modifier: Modifier = Modifier, lang: String? = null) {
-    Pre(Modifier.fillMaxWidth().classNames("wtf").toAttrs()) {
+    Pre(Modifier.fillMaxWidth().toAttrs()) {
         Code(attrs = CodeBlockStyle.toModifier().then(modifier).classNames(lang?.let { "language-$it"} ?: "nohighlight").toAttrs()) {
             Text(code)
         }
