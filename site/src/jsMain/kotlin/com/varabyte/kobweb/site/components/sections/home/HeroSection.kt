@@ -4,6 +4,7 @@ import androidx.compose.runtime.*
 import com.varabyte.kobweb.browser.dom.ElementTarget
 import com.varabyte.kobweb.browser.util.setInterval
 import com.varabyte.kobweb.compose.css.TextAlign
+import com.varabyte.kobweb.compose.css.WhiteSpace
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
@@ -12,6 +13,7 @@ import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
+import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
@@ -35,19 +37,50 @@ import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.Section
 import com.varabyte.kobweb.site.components.widgets.code.CodeBlock
 import kotlinx.browser.window
-import org.jetbrains.compose.web.css.cssRem
-import org.jetbrains.compose.web.css.em
-import org.jetbrains.compose.web.css.px
-import org.jetbrains.compose.web.dom.H1
-import org.jetbrains.compose.web.dom.H3
-import org.jetbrains.compose.web.dom.Text
+import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.dom.*
 import kotlin.time.Duration.Companion.seconds
 
 private val DARK_BACKGROUND = Color.rgb(25, 25, 25)
 private val LIGHT_BACKGROUND = DARK_BACKGROUND.inverted()
 
 @Composable
-private fun HeroExample(modifier: Modifier) {
+fun HeroCode() {
+    CodeBlock(
+        """
+        @Page
+        @Composable
+        fun HomePage() {
+          Column(
+            Modifier.fillMaxWidth().whiteSpace(WhiteSpace.PreWrap).textAlign(TextAlign.Center),,
+            horizontalAlignment = Alignment.CenterHorizontally
+          ) {
+            var colorMode by ColorMode.currentState
+            Button(
+              onClick = { colorMode = colorMode.opposite },
+              Modifier.borderRadius(50.percent).padding(0.px).align(Alignment.End)
+            ) {
+              // Includes support for Font Awesome icons
+              if (colorMode.isLight) FaMoon() else FaSun()
+            }
+            H1 {
+              Text("Welcome to Kobweb!")
+            }
+            Span {
+              Text("Create rich, dynamic web apps with ease, leveraging ")
+              Link("https://kotlinlang.org/", "Kotlin")
+              Text(" and ")
+              Link("https://github.com/JetBrains/compose-multiplatform/#compose-html", "Compose HTML")
+            }
+          }
+        }
+        """.trimIndent(),
+        lang = "kotlin",
+    )
+}
+
+@Composable
+fun HeroExample() {
     // For the example, we create our own local mode divorced from the site-wide value
     var localColorMode by remember { mutableStateOf(ColorMode.LIGHT) }
     val background = if (localColorMode.isLight) LIGHT_BACKGROUND else DARK_BACKGROUND
@@ -60,14 +93,23 @@ private fun HeroExample(modifier: Modifier) {
     }
 
     // Wrap in a surface so that we can override the color mode for this specific section
-    Surface(Modifier.backgroundColor(Colors.Transparent).fillMaxSize(), colorModeOverride = localColorMode) {
+    Surface(Modifier.fillMaxWidth().backgroundColor(Colors.Transparent), colorModeOverride = localColorMode) {
         Column(
-            SmoothColorStyle.toModifier().then(
-                modifier.backgroundColor(background).color(foreground).padding(12.px)
-            ),
+            SmoothColorStyle.toModifier()
+                .fillMaxWidth()
+                .borderRadius(12.px)
+                .backgroundColor(background)
+                .color(foreground)
+                .padding(12.px)
+                .whiteSpace(WhiteSpace.PreWrap)
+                .textAlign(TextAlign.Center),
+
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row(Modifier.align(Alignment.End)) {
+            Button(
+                onClick = { localColorMode = localColorMode.opposite },
+                Modifier.borderRadius(50.percent).padding(0.px).align(Alignment.End)
+            ) {
                 if (localColorMode.isLight) FaMoon() else FaSun()
             }
             // We have to slightly tweak header settings here from the actual code sample above since
@@ -75,10 +117,10 @@ private fun HeroExample(modifier: Modifier) {
             H3(attrs = Modifier.margin(bottom = 1.cssRem).toAttrs()) {
                 Text("Welcome to Kobweb!")
             }
-            Row {
-                SpanText("Create rich, dynamic web apps with ease, leveraging ")
+            Span {
+                Text("Create rich, dynamic web apps with ease, leveraging ")
                 Link("https://kotlinlang.org/", "Kotlin")
-                SpanText(" and ")
+                Text(" and ")
                 Link("https://github.com/JetBrains/compose-multiplatform/#compose-html", "Compose HTML")
             }
         }
@@ -134,37 +176,8 @@ fun HeroSection() {
                 Modifier.margin(top = 32.px, bottom = 32.px).displayIfAtLeast(Breakpoint.MD),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                HeroExample(Modifier.fillMaxWidth().borderRadius(12.px))
-                CodeBlock(
-                    code = """
-                        @Page
-                        @Composable
-                        fun HomePage() {
-                          Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                            Row(Modifier.align(Alignment.End)) {
-                              var colorMode by ColorMode.currentState
-                              Button(
-                                onClick = { colorMode = colorMode.opposite },
-                                Modifier.borderRadius(50.percent).padding(0.px)
-                              ) {
-                                // Includes support for Font Awesome icons
-                                if (colorMode.isLight) FaMoon() else FaSun()
-                              }
-                            }
-                            H1 {
-                              Text("Welcome to Kobweb!")
-                            }
-                            Row(Modifier.flexWrap(FlexWrap.Wrap)) {
-                              SpanText("Create rich, dynamic web apps with ease, leveraging ")
-                              Link("https://kotlinlang.org/", "Kotlin")
-                              SpanText(" and ")
-                              Link("https://github.com/JetBrains/compose-multiplatform/#compose-html", "Compose HTML")
-                            }
-                          }
-                        }
-                    """.trimIndent(),
-                    lang = "kotlin"
-                )
+                HeroExample()
+                HeroCode()
             }
         }
     }

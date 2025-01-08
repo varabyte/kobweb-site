@@ -6,37 +6,11 @@ Kobweb is an opinionated Kotlin framework for creating websites and web apps, bu
 [Compose HTML](https://github.com/JetBrains/compose-multiplatform#compose-html) and inspired by [Next.js](https://nextjs.org)
 and [Chakra UI](https://chakra-ui.com).
 
-```kotlin
-@Page
-@Composable
-fun HomePage() {
-  Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-    Row(Modifier.align(Alignment.End)) {
-      var colorMode by rememberColorMode()
-      Button(
-        onClick = { colorMode = colorMode.opposite() },
-        Modifier.borderRadius(50.percent).padding(0.px)
-      ) {
-        Box(Modifier.margin(7.px)) {
-          // Includes support for Font Awesome icons
-          if (colorMode.isLight()) FaSun() else FaMoon()
-        }
-      }
-    }
-    H1 {
-      Text("Welcome to Kobweb!")
-    }
-    Row(Modifier.flexWrap(FlexWrap.Wrap)) {
-      SpanText("Create rich, dynamic web apps with ease, leveraging ")
-      Link("https://kotlinlang.org/", "Kotlin")
-      SpanText(" and ")
-      Link("https://github.com/JetBrains/compose-multiplatform#compose-html/", "Compose HTML")
-    }
-  }
-}
-```
+{{{ .components.sections.home.HeroCode }}}
 
-<img src="https://github.com/varabyte/media/raw/main/kobweb/screencasts/kobweb-welcome.gif" style="width:100%"/>
+{{{ .components.sections.home.HeroExample }}}
+
+## Goals
 
 Our goal is to provide:
 
