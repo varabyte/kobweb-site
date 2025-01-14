@@ -37,6 +37,7 @@ kobweb {
 
     markdown {
         defaultRoot.set(".components.layouts.DocsLayout")
+        imports.add(".components.widgets.filesystem.Folders")
 
         handlers {
             val WIDGET_PATH = "com.varabyte.kobweb.site.components.widgets"
