@@ -4,15 +4,13 @@ With the following languages selected:
 * Bash
 * CSS
 * Dockerfile
-* GraphQL
+* diff
 * HTML/XML
 * JavaScript
 * Kotlin
 * Markdown
 * Plain Text
 * TypeScript
-* WebAssembly
-* SCSS
-* TOML
+* TOML (ini)
 * YAML
 * .properties
