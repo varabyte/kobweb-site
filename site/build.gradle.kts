@@ -153,7 +153,7 @@ object SiteListingGenerator {
         }
 
         if (initialArticles.size != 1) {
-            println("There should only be one starting article, but one of these articles are missing a `follows` frontmatter value: ${initialArticles.map { it.toPath() }}")
+            println("e: There should only be one starting article, but one of these articles are missing a `follows` frontmatter value: ${initialArticles.map { it.toPath() }}")
         }
 
         val orderedArticleList = mutableListOf<MarkdownEntry>()
@@ -164,15 +164,21 @@ object SiteListingGenerator {
                 orderedArticleList.add(nextEntry)
                 val nextPath = nextEntry.toPath()
                 val followedBy = followingMap[nextPath] ?: followingMap[nextPath.substringBeforeLast('/') + "/"]
-                if (followedBy == null) {
-                    println("No article is following \"$nextPath\". This is OK if it is the last article in the docs.")
-                    continue
-                }
+                if (followedBy == null) continue
                 if (followedBy.size != 1) {
-                    println("Only one article should ever follow another. For \"$nextPath\", found multiple (so please fix one): ${followedBy.map { it.toPath() }}")
+                    println("e: Only one article should ever follow another. For \"$nextPath\", found multiple (so please fix one): ${followedBy.map { it.toPath() }}")
                 }
 
                 nextEntries.addAll(followedBy)
+            }
+        }
+
+        run {
+            val allEntries = entries.toMutableSet()
+            orderedArticleList.forEach { allEntries.remove(it) }
+
+            allEntries.forEach { orphanedEntry ->
+                println("e: Orphaned markdown file (probably a bad `Follows` value): ${orphanedEntry.toPath()}.md")
             }
         }
 
