@@ -6,6 +6,29 @@ and [Chakra UI](https://chakra-ui.com).
 
 {{{ .components.sections.home.HeroExample }}}
 
+## Objective
+
+We wrote Kobweb in order to make using Compose HTML feel way more enjoyable. We want to enable a world where more
+developers can enjoy the experience of creating websites using Kotlin.
+
+Compose HTML is a very powerful library, but it leaves many decisions up to the user that many might not care about that
+much. These decisions can get in the way of writing the fun parts of a website, spawning many threads across Kotlin
+webdev forums as everyone tries to solve the same thing in slightly different ways.
+
+> [!NOTE] (To learn more about Compose HTML, please visit [the official tutorials](https://github.com/JetBrains/compose-jb/tree/master/tutorials/HTML/Getting_Started)).
+
+For example, at the very beginning, when we were evaluating if Kobweb was even worth writing, we experimented to see if
+there was an easier way to set up routing across pages, eliminate the need to write a dummy `index.html` file, style
+HTML elements with CSS without having to create a global stylesheet object, and support live reloading as a first-class
+feature and not an afterthought.
+
+Kobweb, in addition to being a collection of libraries, also provides Gradle plugins which analyze your codebase in
+order to generate  boilerplate.
+
+Kobweb is also a CLI binary of the same name which provides commands to handle the tedious parts of building and/or
+running a Compose HTML app. We want to get that stuff out of the way, so you can enjoy focusing on the more
+interesting work!
+
 ## Goals
 
 Our goal is to provide:
