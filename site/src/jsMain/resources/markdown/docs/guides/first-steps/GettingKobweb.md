@@ -1,5 +1,4 @@
 ---
-root: .components.layouts.DocsLayout
 follows: GettingStarted
 ---
 
@@ -47,7 +46,7 @@ Please see: https://github.com/varabyte/kobweb/issues/117 and consider leaving a
 ## Download the Kobweb binary
 
 Our binary artifact is hosted on GitHub. To download latest, you can either
-[grab the zip or tar file from the GitHub](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.12) or you can fetch
+[grab the zip or tar file from the GitHub](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.18) or you can fetch
 it from your terminal:
 
 ```bash
@@ -55,19 +54,19 @@ $ cd /path/to/applications
 
 # You can either pull down the zip file
 
-$ wget https://github.com/varabyte/kobweb-cli/releases/download/v0.9.12/kobweb-0.9.12.zip
-$ unzip kobweb-0.9.12.zip
+$ wget https://github.com/varabyte/kobweb-cli/releases/download/v0.9.18/kobweb-0.9.18.zip
+$ unzip kobweb-0.9.18.zip
 
 # ... or the tar file
 
-$ wget https://github.com/varabyte/kobweb-cli/releases/download/v0.9.12/kobweb-0.9.12.tar
-$ tar -xvf kobweb-0.9.12.tar
+$ wget https://github.com/varabyte/kobweb-cli/releases/download/v0.9.18/kobweb-0.9.18.tar
+$ tar -xvf kobweb-0.9.18.tar
 ```
 
 and I recommend adding it to your path, either directly:
 
 ```bash
-$ PATH=$PATH:/path/to/applications/kobweb-0.9.12/bin
+$ PATH=$PATH:/path/to/applications/kobweb-0.9.18/bin
 $ kobweb version # to check it's working
 ```
 
@@ -75,7 +74,7 @@ or via symbolic link:
 
 ```bash
 $ cd /path/to/bin # some folder you've created that's in your PATH
-$ ln -s /path/to/applications/kobweb-0.9.12/bin/kobweb kobweb
+$ ln -s /path/to/applications/kobweb-0.9.18/bin/kobweb kobweb
 ```
 
 ## Build the Kobweb binary
@@ -133,5 +132,5 @@ you installed it.
 | Homebrew                  | `brew upgrade kobweb`                                                                                                                |
 | Scoop                     | `scoop update kobweb`                                                                                                                |
 | SDKMAN!                   | `sdk upgrade kobweb`                                                                                                                 |
-| Downloaded from<br>Github | Visit the [latest release](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.12). You can find both a zip and tar file there. |
+| Downloaded from<br>Github | Visit the [latest release](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.18). You can find both a zip and tar file there. |
 
