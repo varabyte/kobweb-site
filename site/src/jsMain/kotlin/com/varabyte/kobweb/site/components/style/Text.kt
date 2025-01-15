@@ -14,7 +14,7 @@ fun Modifier.siteText(size: SiteTextSize) =
     this
         .lineHeight(1.5)
         .fontSize(when (size) {
-            SiteTextSize.NORMAL -> 1.25.cssRem
+            SiteTextSize.NORMAL -> 1.10.cssRem
             SiteTextSize.SMALL -> 1.00.cssRem
             SiteTextSize.TINY -> 0.75.cssRem
         })
