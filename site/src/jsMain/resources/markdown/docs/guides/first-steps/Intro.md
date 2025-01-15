@@ -11,11 +11,14 @@ and [Chakra UI](https://chakra-ui.com).
 We wrote Kobweb in order to make using Compose HTML feel way more enjoyable. We want to enable a world where more
 developers can enjoy the experience of creating websites using Kotlin.
 
-Compose HTML is a very powerful library, but it leaves many decisions up to the user that many might not care about that
-much. These decisions can get in the way of writing the fun parts of a website, spawning many threads across Kotlin
-webdev forums as everyone tries to solve the same thing in slightly different ways.
+Compose HTML is a very powerful library, but it leaves a lot of problems up to the developer to solve. While power in
+the hands of the developer seems like a good thing, sometimes these are the sorts of decisions that end up spawning
+countless threads across developer forums where everyone tries to solve the
+same thing and are clearly frustrated because they just want it to work so they can move onto the more important
+features.
 
-> [!NOTE] (To learn more about Compose HTML, please visit [the official tutorials](https://github.com/JetBrains/compose-jb/tree/master/tutorials/HTML/Getting_Started)).
+> [!NOTE]
+> To learn more about Compose HTML, please visit [the official tutorials](https://github.com/JetBrains/compose-jb/tree/master/tutorials/HTML/Getting_Started).
 
 For example, at the very beginning, when we were evaluating if Kobweb was even worth writing, we experimented to see if
 there was an easier way to set up routing across pages, eliminate the need to write a dummy `index.html` file, style
@@ -23,11 +26,13 @@ HTML elements with CSS without having to create a global stylesheet object, and 
 feature and not an afterthought.
 
 Kobweb, in addition to being a collection of libraries, also provides Gradle plugins which analyze your codebase in
-order to generate  boilerplate.
+order to generate all necessary boilerplate.
 
 Kobweb is also a CLI binary of the same name which provides commands to handle the tedious parts of building and/or
-running a Compose HTML app. We want to get that stuff out of the way, so you can enjoy focusing on the more
-interesting work!
+running a Compose HTML app.
+
+Ultimately, we want to get all the tedious stuff out of the way, so you can enjoy focusing on the more interesting parts
+of writing a website!
 
 ## Goals
 
