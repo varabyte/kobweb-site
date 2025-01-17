@@ -4,6 +4,7 @@ import com.varabyte.kobwebx.gradle.markdown.MarkdownBlock
 import com.varabyte.kobwebx.gradle.markdown.MarkdownEntry
 import com.varabyte.kobwebx.gradle.markdown.ext.kobwebcall.KobwebCall
 import com.varabyte.kobwebx.gradle.markdown.handlers.MarkdownHandlers
+import com.varabyte.kobwebx.gradle.markdown.handlers.SilkCalloutBlockquoteHandler
 import kotlinx.html.link
 import kotlinx.html.script
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
@@ -66,6 +67,8 @@ kobweb {
 
                 result
             }
+
+            blockquote.set(SilkCalloutBlockquoteHandler(labels = mapOf("QUOTE" to "")))
         }
 
         process.set { entries ->
