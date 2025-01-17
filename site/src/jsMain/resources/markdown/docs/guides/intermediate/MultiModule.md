@@ -10,22 +10,24 @@ on them (in contrast to your main module which applies the `com.varabyte.kobweb.
 
 In other words, you can split up and organize your project like this:
 
-```
-my-project
-├── sitelib
-│   ├── build.gradle.kts # apply "com.varabyte.kobweb.library"
-│   └── src/jsMain
-│       └── kotlin.org.example.myproject.sitelib
-│           ├── components
-│           └── pages
-└── site
-    ├── build.gradle.kts # apply "com.varabyte.kobweb.application"
-    ├── .kobweb/conf.yaml
-    └── src/jsMain
-        └── kotlin.org.example.myproject.site
-            ├── components
-            └── pages
-```
+{{{ Folders
+
+* my-project
+  * sitelib
+    * build.gradle.kts
+    * src/jsMain
+      * kotlin/org/example/myproject/sitelib
+        * components
+      * pages
+  * site
+    * build.gradle.kts
+    * .kobweb/conf.yaml
+    * src/jsMain
+       * kotlin/org/example/myproject/site
+         * components
+         * pages
+
+}}}
 
 If you'd like to explore a multimodule project example, you can do so by running:
 

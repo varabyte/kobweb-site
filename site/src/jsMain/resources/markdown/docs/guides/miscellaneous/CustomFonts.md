@@ -67,16 +67,18 @@ source font [Lobster](https://fonts.google.com/specimen/Lobster) from Google Fon
 You need to put the font file inside your public resources directory, so it can be found by the user visiting your site.
 I recommend the following file organization:
 
-```
-jsMain
-└── resources
-    └── public
-        └── fonts
-            ├── faces.css
-            └── lobster
-                ├── OFL.txt
-                └── Lobster-Regular.ttf
-```
+{{{ Folders
+
+* jsMain
+  * resources
+    * public
+      * fonts
+        * faces.css
+        * lobster
+          * OFL.txt
+          * Lobster-Regular.ttf
+
+}}}
 
 where `faces.css` contains all your `@font-face` rule definitions (we just have a single one for now):
 
