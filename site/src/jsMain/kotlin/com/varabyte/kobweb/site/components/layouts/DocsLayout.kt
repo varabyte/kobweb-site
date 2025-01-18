@@ -130,6 +130,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
         Row(
             Modifier
                 .margin(leftRight = autoLength) // Centers content
+                .padding(bottom = 1.cssRem)
                 .maxWidth(80.cssRem),
             horizontalArrangement = Arrangement.Center,
         ) {
@@ -145,8 +146,8 @@ fun DocsLayout(content: @Composable () -> Unit) {
                 ListingSidebar(
                     SITE_LISTING,
                     Modifier
-                        .padding(top = 2.cssRem, left = 2.cssRem)
-                        .width(15.cssRem)
+                        .padding(top = 2.cssRem, left = 1.5.cssRem)
+                        .width(16.cssRem)
                         .fillMaxHeight()
                         .overflow { y(Overflow.Auto) }
                         .overscrollBehavior(OverscrollBehavior.Contain)
