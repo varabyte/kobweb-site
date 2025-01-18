@@ -49,6 +49,11 @@ fun initSilk(ctx: InitSilkContext) {
             registerStyleBase("table") {
                 Modifier.borderCollapse(BorderCollapse.Collapse)
             }
+            registerStyleBase("img, picture, video, canvas, svg") {
+                Modifier
+                    .display(DisplayStyle.Block)
+                    .maxWidth(100.percent)
+            }
         }
 
         val headerCommon = Modifier
