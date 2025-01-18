@@ -194,12 +194,18 @@ fun DocsLayout(content: @Composable () -> Unit) {
                     val height = document.documentElement!!.clientHeight
                     IntersectionObserver.Options(rootMargin = "-${top}px 0% ${bottom - height}px")
                 }
+                val headings = remember(mainElement) {
+                    mainElement?.getHeadings().orEmpty()
+                }
                 DynamicToc(
-                    headings = mainElement?.getHeadings().orEmpty(),
+                    headings = headings,
                     intersectionObserverOptions = options,
                     modifier = Modifier
                         .width(16.cssRem)
                         .margin(top = 0.25.cssRem)
+                        .maxHeight(70.vh)
+                        .overflow { y(Overflow.Auto) }
+                        .overscrollBehavior(OverscrollBehavior.Contain)
                 )
             }
         }
