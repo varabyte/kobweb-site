@@ -13,7 +13,6 @@ import com.varabyte.kobweb.core.PageContext
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.navigation.LinkVars
 import com.varabyte.kobweb.silk.components.text.SpanText
-import com.varabyte.kobweb.silk.init.registerStyleBase
 import com.varabyte.kobweb.silk.style.CssLayer
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
@@ -131,15 +130,16 @@ fun DocsLayout(content: @Composable () -> Unit) {
         Row(
             Modifier
                 .margin(leftRight = autoLength) // Centers content
-                .fillMaxSize()
                 .maxWidth(80.cssRem),
             horizontalArrangement = Arrangement.Center,
         ) {
+            val topOffset = 5.cssRem
             Div(
                 Modifier
                     .displayIfAtLeast(Breakpoint.MD)
                     .position(Position.Sticky)
-                    .top(5.cssRem)
+                    .top(topOffset)
+                    .height(100.vh - topOffset)
                     .toAttrs()
             ) {
                 ListingSidebar(
@@ -148,6 +148,8 @@ fun DocsLayout(content: @Composable () -> Unit) {
                         .padding(top = 2.cssRem, left = 2.cssRem)
                         .width(15.cssRem)
                         .fillMaxHeight()
+                        .overflow { y(Overflow.Auto) }
+                        .overscrollBehavior(OverscrollBehavior.Contain)
                 )
             }
             var mainElement by remember { mutableStateOf<HTMLElement?>(null) }
@@ -180,7 +182,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
                     .displayIfAtLeast(Breakpoint.LG)
                     .position(Position.Sticky)
                     .padding(top = 2.cssRem)
-                    .top(5.cssRem)
+                    .top(topOffset)
                     .toAttrs()
             ) {
                 SpanText("On this page", Modifier.fontWeight(FontWeight.Bold))
