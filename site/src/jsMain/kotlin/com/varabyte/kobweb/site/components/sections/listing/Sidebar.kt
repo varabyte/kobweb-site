@@ -1,10 +1,11 @@
 package com.varabyte.kobweb.site.components.sections.listing
 
-import androidx.compose.runtime.Composable
-import com.varabyte.kobweb.browser.util.setTimeout
+import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.StyleVariable
 import com.varabyte.kobweb.compose.css.functions.calc
+import com.varabyte.kobweb.compose.dom.ref
+import com.varabyte.kobweb.compose.dom.registerRefScope
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
@@ -26,13 +27,11 @@ import com.varabyte.kobweb.silk.theme.colors.shifted
 import com.varabyte.kobweb.site.model.listing.Category
 import com.varabyte.kobweb.site.model.listing.Subcategory
 import kotlinx.browser.document
-import kotlinx.browser.window
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Li
 import org.jetbrains.compose.web.dom.Nav
 import org.jetbrains.compose.web.dom.Ul
 import org.w3c.dom.HTMLElement
-import kotlin.time.Duration.Companion.milliseconds
 
 val ListingIndentVar by StyleVariable<Int>()
 
@@ -54,12 +53,27 @@ val ListingLinkVariant = UndecoratedLinkVariant.extendedBy {
     }
 }
 
+// This needs to be global so that it can be saved between different pages, which each recreate the sidebar
+private var SidebarScroll: Double? = null
+
 @Composable
 fun ListingSidebar(
     categories: List<Category>,
     modifier: Modifier = Modifier,
 ) {
+    val ctx = rememberPageContext()
+    var navElement: HTMLElement? by remember { mutableStateOf(null) }
     Nav(modifier.toAttrs()) {
+        registerRefScope(ref { element ->
+            navElement = element
+            if (SidebarScroll != null) {
+                element.scrollTop = SidebarScroll!!
+                // if the user clicks a link and then presses `tab`, the focus should move to the next link
+                document
+                    .querySelector("nav a[href=\"${ctx.route.path}\"]")
+                    .unsafeCast<HTMLElement?>()?.focus()
+            }
+        })
         Ul {
             categories.forEach { category ->
                 Li {
@@ -70,7 +84,11 @@ fun ListingSidebar(
                             .fontWeight(FontWeight.Bold)
                     )
                     category.subcategories.forEach { subcategory ->
-                        SubcategoryContent(subcategory, Modifier.margin(leftRight = 0.125.cssRem))
+                        SubcategoryContent(
+                            subcategory,
+                            Modifier.margin(leftRight = 0.125.cssRem),
+                            onLinkClick = { SidebarScroll = navElement!!.scrollTop }
+                        )
                     }
                 }
             }
@@ -79,7 +97,7 @@ fun ListingSidebar(
 }
 
 @Composable
-private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Modifier) {
+private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Modifier, onLinkClick: () -> Unit) {
     val ctx = rememberPageContext()
     Li(ListingElementStyle.toModifier().fontSize(0.875.cssRem).then(modifier).toAttrs()) {
         SpanText(text = subcategory.title, Modifier.fontWeight(FontWeight.Bold))
@@ -97,16 +115,7 @@ private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Mo
                         path = article.route,
                         text = article.title,
                         Modifier
-                            .onClick {
-                                // if the user clicks a link and then presses `tab`, the focus
-                                // should move to the next link
-                                // + hack to try to wait until page is loaded
-                                window.setTimeout(50.milliseconds) {
-                                    document
-                                        .querySelector("nav a[href=\"${ctx.route.path}\"]")
-                                        .unsafeCast<HTMLElement?>()?.focus()
-                                }
-                            }
+                            .onClick { onLinkClick() }
                             .padding(left = 0.5.cssRem)
                             .display(DisplayStyle.Block)
                             .thenIf(article.route == ctx.route.path) {
