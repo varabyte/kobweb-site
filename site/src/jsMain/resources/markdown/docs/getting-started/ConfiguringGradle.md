@@ -3,8 +3,8 @@ follows: SampleSites
 ---
 
 When you create a Kobweb site from any of the provided Kobweb templates, they will already be set up in the way that
-this section recommends. However, if you are using an older legacy project, or trying to add Kobweb to an existing
-project, or even just for learning purposes, users might find the information here useful.
+this section recommends. However, if you are trying to add Kobweb to an existing project, or even if you're just curious
+about this for learning purposes, the information here might be useful.
 
 ### Kobweb artifact repositories
 

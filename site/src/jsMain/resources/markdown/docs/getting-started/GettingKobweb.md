@@ -1,5 +1,5 @@
 ---
-follows: Intro
+follows: WhatIsKobweb
 ---
 
 The first step is to get the Kobweb binary. You can install it, download it, and/or build it, so we'll include

@@ -115,11 +115,11 @@ object SiteListingGenerator {
     )
 
     private fun MarkdownEntry.toRouteParts() = with(this.toPath().split('/').dropWhile { it.isEmpty() }) {
-        require(this.size == 3) { "Expected category, subcategory, and slug; got \"${this.joinToString("/")}\""}
+        require(this.size == 2 || this.size == 3) { "Expected category, subcategory (optional), and slug; got \"${this.joinToString("/")}\""}
         RouteParts(
             category = get(0),
-            subcategory = get(1),
-            slug = get(2).camelCaseToKebabCase()
+            subcategory = if (this.size == 3) get(1) else "",
+            slug = last().camelCaseToKebabCase()
         )
     }
 
