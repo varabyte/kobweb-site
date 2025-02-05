@@ -1,5 +1,5 @@
 ---
-follows: Testimonials
+follows: Intro
 ---
 
 * [Join our Discord!](https://discord.gg/5NZ2GKV5Cs)

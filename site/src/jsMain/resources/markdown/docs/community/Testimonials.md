@@ -1,5 +1,5 @@
 ---
-follows: /guides/miscellaneous/
+follows: SubmittingIssuesAndFeedback
 ---
 
 I'm pleased to mention that Kobweb has received feedback from some satisfied users. Here are a few:
