@@ -2,12 +2,10 @@
 follows: Index
 ---
 
-## Debugging your site
-
 A Kobweb project always has a frontend and, if configured as a full stack site, a backend as well. Both require
 different steps to debug them.
 
-### Debugging the frontend
+## Debugging the frontend
 
 At the moment, attaching a debugger to Kotlin/JS code requires IntelliJ Ultimate. If you have it, you
 can [follow these steps](https://kotlinlang.org/docs/js-debugging.html#debug-in-the-ide) in the official docs.
@@ -25,10 +23,11 @@ issues.
 > license [here](https://www.jetbrains.com/community/education/#students). If you maintain an open source project, you
 > can apply [here](https://www.jetbrains.com/community/opensource/#support).
 
-### Debugging the backend
+## Debugging the backend
 
-Debugging the backend first requires configuring the Kobweb server to support remote debugging. This is easy to do by
-modifying the `kobweb` block in your build script to enable remote debugging:
+Debugging the backend first requires configuring the Kobweb server to
+support [remote debugging](https://en.wikipedia.org/wiki/Debugging#Remote_debugging). This is easy to do by modifying
+the `kobweb` block in your build script to enable it:
 
 ```kotlin
 kobweb {
@@ -55,8 +54,8 @@ to add a *remote JVM debug* configuration to your IDE.
 > For remote debugging to work:
 > * The *Debugger Mode* should be set to *Attach to remote JVM*.
 > * You need to correctly specify the *Use module classpath* value. In general, use the `jvmMain` classpath associated
-    >   with your Kobweb application, e.g. `app.site.jvmMain`. If you've refactored your backend code out to another module,
-    >   you should be able to use that instead.
+>   with your Kobweb application, e.g. `app.site.jvmMain`. If you've refactored your backend code out to another module,
+>   you should be able to use that instead.
 
 At this point, start up your Kobweb server using `kobweb run`.
 

@@ -1,6 +1,6 @@
 ---
 title: Exporting using GitHub Workflows
-follows: GeneratingCode
+follows: GeneratingCodeAtBuildTime
 ---
 
 While you can always export your site manually on your machine, you may want to automate this process. A common
@@ -15,7 +15,7 @@ be downloaded from a link shown in the workflow summary page):
 name: Export Kobweb site
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: #A
 
 jobs:
   export_and_upload:
@@ -38,13 +38,16 @@ jobs:
       - name: Ensure Gradle is executable
         run: chmod +x gradlew
 
+      # B  
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
+      # C
       - name: Query Browser Cache ID
         id: browser-cache-id
         run: echo "value=$(./gradlew -q :site:kobwebBrowserCacheId)" >> $GITHUB_OUTPUT
 
+      # Also C
       - name: Cache Browser Dependencies
         uses: actions/cache@v4
         id: playwright-cache
@@ -69,6 +72,7 @@ jobs:
           cd site
           ../kobweb-${{ env.KOBWEB_CLI_VERSION }}/bin/kobweb export --notty --layout static
 
+      # D
       - name: Upload site
         uses: actions/upload-artifact@v4
         with:
@@ -78,19 +82,19 @@ jobs:
           retention-days: 1
 ```
 
-You can copy this workflow (or parts of it) into your own GitHub project and then modify it to your needs.
+You can copy this workflow into your own GitHub project and then modify it to your needs.
 
 Some notes...
 
-* ***workflow_dispatch***: This means that you can manually trigger this workflow from the GitHub UI, which I
+* ***workflow_dispatch (A):*** This means that you can manually trigger this workflow from the GitHub UI, which I
   suggested here to prevent running an expensive export operation more than you need to. Of course, you can also
   configure your workflow to run on a schedule, or on push to a branch, etc.
-* ***Setup Gradle***: This action is optional but I recommend it because it configures a bunch of caching for you.
-* ***Caching the browser***: `kobweb export` needs to download a browser the first time it is run. This workflow sets up
-  a cache that saves it across runs. The cache is tagged with a unique ID so that future Kobweb releases, which may
-  change the version of the browser downloaded, will use a new cache bucket (allowing GitHub to eventually clean up the old
-  one).
-* ***Upload site***: This action uploads the exported site as an artifact. You can then download the artifact from the
+* ***Setup Gradle (B):*** This action is optional but I recommend it because it configures a bunch of caching for you.
+* ***Caching the browser (C):*** `kobweb export` needs to download a browser the first time it is run. This workflow sets up
+  a cache that saves it across runs. The cache is tagged with a unique ID tied to the current browser version used by
+  Kobweb. If this ever changes in a future release, GitHub will be instructed to use a new cache bucket (allowing
+  GitHub to eventually clean up the old one).
+* ***Upload site (D):*** This action uploads the exported site as an artifact. You can then download the artifact from the
   workflow summary page. Your own workflow will likely delete this action and do something else here, like upload to a
   web server (or some location accessible by your web server) or copy files over into a `gh_pages` repository. I've
   included this here (and set the retention days very low) just so you can verify that the workflow is working for your
