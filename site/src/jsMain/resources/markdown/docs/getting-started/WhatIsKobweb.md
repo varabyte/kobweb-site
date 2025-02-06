@@ -2,6 +2,10 @@ Kobweb is an opinionated Kotlin framework for creating websites and web apps, bu
 [Compose HTML](https://github.com/JetBrains/compose-multiplatform#compose-html) and inspired by [Next.js](https://nextjs.org)
 and [Chakra UI](https://chakra-ui.com).
 
+This means you get to use Compose (an elegant, reactive library which should be familiar to most Android developers) to
+declare your HTML structure while also leaning on the framework for features like page routing, client/server
+communication, light/dark color mode support, and a modern widget set.
+
 {{{ .components.sections.home.HeroCode }}}
 
 {{{ .components.sections.home.HeroExample }}}
@@ -9,34 +13,37 @@ and [Chakra UI](https://chakra-ui.com).
 ## Objective
 
 We wrote Kobweb in order to make using Compose HTML feel way more enjoyable. We want to enable a world where more
-developers can enjoy the experience of creating websites using Kotlin.
-
-Compose HTML is a very powerful library, but it leaves a lot of problems up to the developer to solve. While power in
-the hands of the developer seems like a good thing, sometimes these are the sorts of decisions that end up spawning
-countless threads across developer forums where everyone tries to solve the
-same thing and are clearly frustrated because they just want it to work so they can move onto the more important
-features.
+developers can confidently choose Kotlin as a way to create modern websites.
 
 > [!NOTE]
 > To learn more about Compose HTML, please visit [the official tutorials](https://github.com/JetBrains/compose-jb/tree/master/tutorials/HTML/Getting_Started).
 
-For example, at the very beginning, when we were evaluating if Kobweb was even worth writing, we experimented to see if
-there was an easier way to set up routing across pages, eliminate the need to write a dummy `index.html` file, style
-HTML elements with CSS without having to create a global stylesheet object, and support live reloading as a first-class
-feature and not an afterthought.
+Compose HTML is a very powerful library, but it leaves a lot of basic decisions up to the developer to navigate. While
+putting power in the hands of the developer seems like a good approach, these often can be the sort of choices many
+developers don't actually care that much about.
 
-Kobweb, in addition to being a collection of libraries, also provides Gradle plugins which analyze your codebase in
-order to generate all necessary boilerplate.
+For example, when we were first evaluating if our vision of Kobweb was even possible, we experimented to see if
+we could trivialize setting up routing across pages, eliminate the need to write a dummy `index.html` file, style
+HTML elements with CSS without having to create a global stylesheet object, and support live reloading as a first-class
+feature.
+
+You get these features (and much more) out of the box these days when you create your first Kobweb project. Are those
+the sort of problems you'd want to solve yourself?
+
+In short, we want to get all the tedious stuff out of the way, so you can enjoy focusing on the more interesting parts
+of designing and developing your website!
+
+## High-level structure
+
+Kobweb, in addition to being a collection of libraries, also provides Gradle plugins and KSP processors which analyze
+your codebase in order to generate all necessary boilerplate for you at compile time.
 
 Kobweb is also a CLI binary of the same name which provides commands to handle the tedious parts of building and/or
-running a Compose HTML app.
-
-Ultimately, we want to get all the tedious stuff out of the way, so you can enjoy focusing on the more interesting parts
-of writing a website!
+running a Compose HTML app (e.g. `kobweb run`).
 
 ## Goals
 
-Our goal is to provide:
+We aim to provide:
 
 * an intuitive structure for organizing your Kotlin website or web app
 * automatic handling of routing between pages
@@ -49,46 +56,3 @@ Our goal is to provide:
 * a way to easily define server API routes
 * an open source foundation that the community can extend
 * and much, much more!
-
-## Videos
-
-If you prefer to watch videos instead of (or in addition to) reading text, this section introduces a handful of
-external resources that can also help you get started with Kobweb.
-
-Otherwise, feel free to skip and proceed to the next section!
-
-### Intro talk
-
-You
-can [check out my talk at Droidcon SF 24](https://www.droidcon.com/2024/07/17/kobwebcreating-websites-in-kotlin-leveraging-compose-html/)
-for a high level overview of Kobweb. The talk showcases what Kobweb can do, introduces Compose HTML (which it builds
-on top of), and covers a wide range of frontend and backend functionality. It is light on code but heavy on
-understanding the structure and capabilities of the framework.
-
-### Community
-
-#### Stevdza-san
-
-One of Kobweb's users, Stevdza-San, has created free starting tutorials that demonstrate how to build projects using
-Kobweb.
-
-* [Getting started with Kobweb](https://www.youtube.com/watch?v=F5B-CxJTKlg)
-    * This video introduces basic Kobweb concepts and walks you through the process from creating a simple
-      (static layout) site to exporting it locally on your machine (with files you can then upload to a static hosting
-      provider of your choice).
-* [Deploying a Kobweb site](https://www.youtube.com/watch?v=ciAqQPThXn0)
-    * This video builds upon the previous, showcasing some additional tips and tricks, and walks you all the way through
-      to deploying your site live on the internet using free hosting.
-* [Building a full stack multiplatform site](https://www.youtube.com/watch?v=zcrY0qayWF4)
-    * This demonstrates how to write both frontend and backend logic. It also demonstrates how you can write a separate
-      Android frontend that can also work with your server. (This video is still useful to watch even if you never
-      intend to use Android).
-
-> [!TIP]
-> It's easy to start with a static layout site first and migrate to a full stack site later. (You can read more
-> about [Static layout vs. Full stack sites▼](#static-layout-vs-full-stack-sites) below.)
-
-#### Skyfish
-
-A YouTube channel called SkyFish created a tutorial video
-on [how to build a fullstack site with Kobweb](https://www.youtube.com/watch?v=VVNq6yovU_0).

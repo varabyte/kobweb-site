@@ -170,7 +170,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
                 Article {
                     if (articleHandle != null) {
                         H1 {
-                            Text(articleHandle.article.titleOrSubcategoryTitle)
+                            Text(articleHandle.article.titleOrFallback)
                         }
                     }
                     content()
@@ -189,8 +189,6 @@ fun DocsLayout(content: @Composable () -> Unit) {
                     .top(topOffset)
                     .toAttrs()
             ) {
-                SpanText("On this page", Modifier.fontWeight(FontWeight.Bold))
-
                 // Should `IntersectionObserver.Options` implement equals() so that it doesn't have to be remembered?
                 val options = remember {
                     val top = 64 // Height of the top nav bar
@@ -200,6 +198,9 @@ fun DocsLayout(content: @Composable () -> Unit) {
                 }
                 val headings = remember(mainElement) {
                     mainElement?.getHeadings().orEmpty()
+                }
+                if (headings.isNotEmpty()) {
+                    SpanText("On this page", Modifier.fontWeight(FontWeight.Bold))
                 }
                 DynamicToc(
                     headings = headings,

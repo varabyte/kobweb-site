@@ -1,10 +1,12 @@
 ---
+title: Providng Custom Fonts
 follows: Debugging
 ---
 
-It is common to want to use a custom font on your site. Setting this up is fairly easy.
+It is common to want to use a custom font on your site. Setting this up is fairly easy, and we provide two suggested
+approaches.
 
-### Font hosting service
+## Font hosting service
 
 The easiest way to use a custom font is if it is already hosted for you. For example, Google Fonts provides a CDN that
 you can use to load fonts directly.
@@ -13,7 +15,7 @@ you can use to load fonts directly.
 > While this is the easiest approach, be sure you won't run into compliance issues! If you use Google Fonts on your
 > site, you may technically be in violation of the GDPR in Europe, because an EU citizen's IP address is communicated to
 > Google and logged. You may wish to find a Europe-safe host instead, or self-host, which you can read about
-> in [the next section▼](#self-hosted-fonts).
+> in the next section.
 
 The font service should give you HTML to add to your site's `<head>` tag. For example, Google Fonts suggests the
 following when I select Roboto Regular 400:
@@ -51,7 +53,7 @@ Column(Modifier.fontFamily("Roboto")) {
 }
 ```
 
-### Self-hosted fonts
+## Self-hosted fonts
 
 Users can flexibly declare a custom font by using
 CSS's [`@font-face` rule](https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face).
@@ -91,7 +93,7 @@ where `faces.css` contains all your `@font-face` rule definitions (we just have 
 
 > [!NOTE]
 > The above layout may be slightly overkill if you are sure you'll only ever have a single font, but it's flexible
-> enough to support additional fonts if you decide to add more in the future, which is why we recommend it as a general
+> enough to support additional fonts if you decide to add more in the future, which is why we recommend it as general
 > advice here.
 
 Now, you need to reference this CSS file from your `build.gradle.kts` script:
@@ -108,7 +110,7 @@ kobweb {
 }
 ```
 
-Finally, you can reference the font in your code:
+At this point, you can reference the font in your code:
 
 ```kotlin
 Column(Modifier.fontFamily("Lobster")) {
