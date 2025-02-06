@@ -31,10 +31,7 @@ import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.siteText
 import com.varabyte.kobweb.site.components.widgets.DynamicToc
 import com.varabyte.kobweb.site.components.widgets.getHeadings
-import com.varabyte.kobweb.site.model.listing.ArticleHandle
-import com.varabyte.kobweb.site.model.listing.SITE_LISTING
-import com.varabyte.kobweb.site.model.listing.findArticle
-import com.varabyte.kobweb.site.model.listing.findOffsetFrom
+import com.varabyte.kobweb.site.model.listing.*
 import com.varabyte.kobwebx.markdown.markdown
 import kotlinx.browser.document
 import org.jetbrains.compose.web.css.*
@@ -174,9 +171,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
 
                     if (articleHandle == null) return@Article
 
-                    val prev = SITE_LISTING.findOffsetFrom(articleHandle) { it - 1 }
-                    val next = SITE_LISTING.findOffsetFrom(articleHandle) { it + 1 }
-
+                    val (prev, next) = SITE_LISTING.findArticleNeighbors(articleHandle)
                     PaginationNav(prev, next, Modifier.margin(top = 3.cssRem))
                 }
             }

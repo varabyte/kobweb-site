@@ -32,11 +32,19 @@ fun List<Category>.findArticle(route: String): ArticleHandle? {
 }
 
 
-fun List<Category>.findOffsetFrom(articleHandle: ArticleHandle, indexOffset: (Int) -> Int): Article? {
+fun List<Category>.findArticleNeighbors(articleHandle: ArticleHandle): Pair<Article?, Article?> {
     val articleIndex = articleHandle.subcategory.articles.indexOf(articleHandle.article)
-    val subCategoryIndex by lazy { articleHandle.category.subcategories.indexOf(articleHandle.subcategory) }
+    val subcategoryIndex by lazy { articleHandle.category.subcategories.indexOf(articleHandle.subcategory)  }
     val categoryIndex by lazy { this.indexOf(articleHandle.category) }
-    return articleHandle.subcategory.articles.getOrNull(indexOffset(articleIndex))
-        ?: articleHandle.category.subcategories.getOrNull(indexOffset(subCategoryIndex))?.articles?.first()
-        ?: SITE_LISTING.getOrNull(indexOffset(categoryIndex))?.subcategories?.first()?.articles?.first()
+
+    val prev = articleHandle.subcategory.articles.getOrNull(articleIndex - 1)
+                ?: articleHandle.category.subcategories.getOrNull(subcategoryIndex - 1)?.articles?.last()
+                ?: SITE_LISTING.getOrNull(categoryIndex - 1)?.subcategories?.last()?.articles?.last()
+
+    val next =
+            articleHandle.subcategory.articles.getOrNull(articleIndex + 1)
+                ?: articleHandle.category.subcategories.getOrNull(subcategoryIndex + 1)?.articles?.last()
+                ?: SITE_LISTING.getOrNull(categoryIndex + 1)?.subcategories?.last()?.articles?.last()
+
+    return prev to next
 }
