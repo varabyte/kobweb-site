@@ -70,7 +70,7 @@ fun PaginationNav(prev: Article?, next: Article?, modifier: Modifier = Modifier)
                         .siteText(SiteTextSize.TINY)
                 )
                 SpanText(
-                    article.titleOrSubcategoryTitle,
+                    article.titleOrFallback,
                     Modifier
                         .color(Colors.DodgerBlue)
                         .fontWeight(FontWeight.Bold)

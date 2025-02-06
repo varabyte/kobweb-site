@@ -28,9 +28,10 @@ which the following steps help you work around:
    # delete app
    ```
 4. Ensure your Gradle project is configured to include Maven Central and Gradle Plugin Portal repositories, as
-   described in [Gradle Configuration▲](#gradle-configuration).
-5. Kobweb uses version catalogs for its dependencies. Add or update your version catalog under
-   `gradle/libs.versions.toml`
+   described in
+   ${DocsLink("Kobweb artifact repositories", "/docs/getting-started/gradle-and-maven-artifacts#kobweb-artifact-repositories")}.
+5. Kobweb uses ${DocsLink("Gradle version catalogs", "/docs/getting-started/gradle-and-maven-artifacts#gradle-version-catalogs")} 
+   for its dependencies. Add or update your version catalog under `gradle/libs.versions.toml`:
    ```toml
    [versions]
    jetbrains-compose = "..." # replace with actual version, see COMPATIBILITY.md!
@@ -58,7 +59,3 @@ If everything is working as expected, you should be able to run Kobweb within yo
 cd site
 kobweb run
 ```
-
-If you're still having issues, you may want to [connect with us▼](#connecting-with-us)
-for support (but understand that getting Kobweb added to complex existing projects may not be something we can currently
-prioritize).

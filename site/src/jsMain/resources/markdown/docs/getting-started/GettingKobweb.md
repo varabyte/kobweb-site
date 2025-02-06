@@ -1,9 +1,11 @@
 ---
-follows: WhatIsKobweb
+follows: Videos
 ---
 
-The first step is to get the Kobweb binary. You can install it, download it, and/or build it, so we'll include
-instructions for all these approaches.
+The first step for starting with Kobweb is to get the Kobweb binary. You can install it, download it, and/or build it,
+so we'll include instructions for all these approaches.
+
+When in doubt, we recommend installation via one of the package managers we support.
 
 ## Install the Kobweb binary
 
@@ -39,9 +41,28 @@ $ brew install varabyte/tap/kobweb
 $ sdk install kobweb
 ```
 
+### Arch Linux
+
+With an [AUR helper](https://wiki.archlinux.org/title/AUR_helpers), e.g.:
+
+```bash
+$ yay -S kobweb
+$ paru -S kobweb
+$ trizen -S kobweb
+# etc.
+```
+
+Without an AUR helper:
+
+```bash
+$ git clone https://aur.archlinux.org/kobweb.git
+$ cd kobweb
+$ makepkg -si
+```
+
 ### Don't see your favorite package manager?
 
-Please see: https://github.com/varabyte/kobweb/issues/117 and consider leaving a comment!
+Please visit https://github.com/varabyte/kobweb-cli/issues/11 and consider leaving a comment!
 
 ## Download the Kobweb binary
 
@@ -79,14 +100,14 @@ $ ln -s /path/to/applications/kobweb-0.9.18/bin/kobweb kobweb
 
 ## Build the Kobweb binary
 
-Although we host Kobweb artifacts on GitHub, it's easy enough to build your own.
+Although we host Kobweb artifacts on GitHub, it is easy enough to build your own.
 
-Building Kobweb requires JDK11 or newer. We'll first discuss how to add it, but you can skip this step if you have
+Building Kobweb requires JDK11 or newer. We'll first discuss how to add that, but you can skip this step if you have
 already done this on your machine.
 
 ### Download a JDK
 
-If you want full control over your JDK install, manually downloading is a good option.
+If you want full control over your JDK install, manually downloading is a fine option.
 
 * [Download a JDK for your OS](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html)
 * Unzip it somewhere
@@ -99,11 +120,11 @@ JAVA_HOME=/path/to/jdks/corretto-11.0.12
 
 ### Install a JDK with the IntelliJ IDE
 
-For a more automated approach, you can request IntelliJ install a JDK for you.
+For a more automated approach, you can request IntelliJ to install a JDK for you.
 
 Follow their instructions here: https://www.jetbrains.com/help/idea/sdk.html#set-up-jdk
 
-### Building the Kobweb CLI
+### Compile the source
 
 The Kobweb CLI is actually maintained in a separate GitHub repo. Once you have the JDK set up, it should be easy to
 clone and build it:
@@ -132,5 +153,6 @@ you installed it.
 | Homebrew                  | `brew upgrade kobweb`                                                                                                                |
 | Scoop                     | `scoop update kobweb`                                                                                                                |
 | SDKMAN!                   | `sdk upgrade kobweb`                                                                                                                 |
+| Arch Linux                | Rerunning [install steps](#arch-linux) should work. If using an AUR helper, you may need to review its manual.                       |
 | Downloaded from<br>Github | Visit the [latest release](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.18). You can find both a zip and tar file there. |
 

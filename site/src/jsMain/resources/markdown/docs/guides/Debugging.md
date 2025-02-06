@@ -2,12 +2,10 @@
 follows: Index
 ---
 
-## Debugging your site
-
 A Kobweb project always has a frontend and, if configured as a full stack site, a backend as well. Both require
 different steps to debug them.
 
-### Debugging the frontend
+## Debugging the frontend
 
 At the moment, attaching a debugger to Kotlin/JS code requires IntelliJ Ultimate. If you have it, you
 can [follow these steps](https://kotlinlang.org/docs/js-debugging.html#debug-in-the-ide) in the official docs.
@@ -25,7 +23,7 @@ issues.
 > license [here](https://www.jetbrains.com/community/education/#students). If you maintain an open source project, you
 > can apply [here](https://www.jetbrains.com/community/opensource/#support).
 
-### Debugging the backend
+## Debugging the backend
 
 Debugging the backend first requires configuring the Kobweb server to support remote debugging. This is easy to do by
 modifying the `kobweb` block in your build script to enable remote debugging:

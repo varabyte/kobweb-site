@@ -24,10 +24,7 @@ import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.palette.color
 import com.varabyte.kobweb.silk.theme.colors.shifted
-import com.varabyte.kobweb.site.model.listing.Article
-import com.varabyte.kobweb.site.model.listing.Category
-import com.varabyte.kobweb.site.model.listing.Subcategory
-import com.varabyte.kobweb.site.model.listing.titleOrSubcategoryTitle
+import com.varabyte.kobweb.site.model.listing.*
 import kotlinx.browser.document
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Li
@@ -105,7 +102,7 @@ private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Mo
     fun LinkFor(article: Article, modifier: Modifier = Modifier) {
         Link(
             path = article.route,
-            text = article.titleOrSubcategoryTitle,
+            text = article.titleOrSubcategory,
             modifier = modifier
                 .onClick { onLinkClick() }
                 .display(DisplayStyle.Block)

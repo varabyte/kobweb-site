@@ -19,8 +19,23 @@ class ArticleHandle(
 )
 
 /** Article title or, if set to "", its parent subcategory title which should represent it. */
-val Article.titleOrSubcategoryTitle: String get() {
-    return title.takeIf { it.isNotEmpty() } ?: SITE_LISTING.findArticle(route)!!.subcategory.title
+val Article.titleOrSubcategory: String get() {
+    return title.takeIf { it.isNotEmpty() }
+        ?: SITE_LISTING
+            .findArticle(route)!!
+            .subcategory.title.takeIf { it.isNotEmpty() }
+            .orEmpty()
+}
+
+/** Article title, subcategory title, or category title. */
+val Article.titleOrFallback: String get() {
+    return title.takeIf { it.isNotEmpty() }
+        ?: SITE_LISTING
+            .findArticle(route)!!.let { articleHandle ->
+                articleHandle.subcategory.title.takeIf { it.isNotEmpty() }
+                    ?: articleHandle.category.title.takeIf { it.isNotEmpty() }
+                        .orEmpty()
+            }
 }
 
 fun List<Category>.findArticle(route: String): ArticleHandle? {

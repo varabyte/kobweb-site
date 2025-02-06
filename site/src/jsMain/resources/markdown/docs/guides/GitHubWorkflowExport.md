@@ -1,6 +1,6 @@
 ---
 title: Exporting using GitHub Workflows
-follows: GeneratingCode
+follows: GeneratingCodeAtBuildTime
 ---
 
 While you can always export your site manually on your machine, you may want to automate this process. A common
