@@ -38,7 +38,11 @@ kobweb {
 
     markdown {
         defaultRoot.set(".components.layouts.DocsLayout")
-        imports.add(".components.widgets.filesystem.Folders")
+        imports.addAll(
+            ".components.widgets.filesystem.Folders",
+            ".components.widgets.navigation.DocsLink",
+            ".components.widgets.navigation.DocsAside",
+        )
 
         handlers {
             val WIDGET_PATH = "com.varabyte.kobweb.site.components.widgets"
@@ -129,7 +133,10 @@ object SiteListingGenerator {
         "a",
         "an",
         "and",
+        "at",
+        "the",
         "to",
+        "us",
         "with",
     )
 
