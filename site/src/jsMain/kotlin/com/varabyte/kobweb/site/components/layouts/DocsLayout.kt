@@ -77,6 +77,7 @@ val ArticleStyle = CssStyle {
     }
     descendants("code") {
         Modifier
+            .fontSize(90.percent)
             .whiteSpace(WhiteSpace.BreakSpaces)
             .overflowWrap(OverflowWrap.BreakWord)
             .padding(2.px, 4.px)
