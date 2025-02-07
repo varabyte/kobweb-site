@@ -124,7 +124,7 @@ object SiteListingGenerator {
     }
 
     @Suppress("DEPRECATION") // The suggestion to replace `capitalize` with is awful
-    private fun String.convertSlugToTitle() = split('-').joinToString(" ") { it.capitalize() }
+    private fun String.convertSlugToTitle() = split('-').joinToString(" ") { it.capitalize() }.takeIf { it != "Index" } ?: ""
 
     @Suppress("FunctionName") // Underscore avoids ambiguity error
     private fun MarkdownBlock.ProcessScope._generate(entries: List<MarkdownEntry>) {

@@ -1,6 +1,6 @@
 ---
 title: HTML Styling Basics
-follows: Intro
+follows: Index
 ---
 
 ### Inline vs StyleSheet

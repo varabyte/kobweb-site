@@ -1,5 +1,5 @@
 ---
-follows: Intro
+follows: Index
 ---
 
 Silk is a UI layer included with Kobweb and built upon Compose HTML.

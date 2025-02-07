@@ -1,5 +1,5 @@
 ---
-follows: Intro
+follows: Index
 ---
 
 Let's say you've decided on creating a full stack website using Kobweb. This section walks you through setting it up as

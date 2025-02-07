@@ -1,5 +1,5 @@
 ---
-follows: Intro
+follows: Index
 ---
 
 Creating a page is easy! It's just a normal `@Composable` method. To upgrade your composable to a page, all you need to

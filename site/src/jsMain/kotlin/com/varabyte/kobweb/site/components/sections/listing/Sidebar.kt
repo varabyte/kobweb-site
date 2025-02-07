@@ -24,8 +24,10 @@ import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.palette.color
 import com.varabyte.kobweb.silk.theme.colors.shifted
+import com.varabyte.kobweb.site.model.listing.Article
 import com.varabyte.kobweb.site.model.listing.Category
 import com.varabyte.kobweb.site.model.listing.Subcategory
+import com.varabyte.kobweb.site.model.listing.titleOrSubcategoryTitle
 import kotlinx.browser.document
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Li
@@ -99,8 +101,32 @@ fun ListingSidebar(
 @Composable
 private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Modifier, onLinkClick: () -> Unit) {
     val ctx = rememberPageContext()
+
+    @Composable
+    fun LinkFor(article: Article, modifier: Modifier = Modifier) {
+        Link(
+            path = article.route,
+            text = article.titleOrSubcategoryTitle,
+
+            modifier
+                .onClick { onLinkClick() }
+                .display(DisplayStyle.Block)
+                .thenIf(article.route == ctx.route.path) {
+                    Modifier
+                        .color(Colors.DodgerBlue)
+                        .fontWeight(FontWeight.Bold)
+                },
+            variant = ListingLinkVariant
+        )
+    }
+
     Li(ListingElementStyle.toModifier().fontSize(0.875.cssRem).then(modifier).toAttrs()) {
-        SpanText(text = subcategory.title, Modifier.fontWeight(FontWeight.Bold))
+        val firstArticle = subcategory.articles.first()
+        if (firstArticle.title.isNotEmpty()) {
+            SpanText(text = subcategory.title, Modifier.fontWeight(FontWeight.Bold))
+        } else {
+            LinkFor(firstArticle)
+        }
 
         Ul(
             Modifier
@@ -110,21 +136,10 @@ private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Mo
                 .toAttrs()
         ) {
             subcategory.articles.forEach { article ->
+                if (article.title.isEmpty()) return@forEach // Link already added to parent category
+
                 Li(ListingElementStyle.toModifier().fillMaxWidth().toAttrs()) {
-                    Link(
-                        path = article.route,
-                        text = article.title,
-                        Modifier
-                            .onClick { onLinkClick() }
-                            .padding(left = 0.5.cssRem)
-                            .display(DisplayStyle.Block)
-                            .thenIf(article.route == ctx.route.path) {
-                                Modifier
-                                    .color(Colors.DodgerBlue)
-                                    .fontWeight(FontWeight.Bold)
-                            },
-                        variant = ListingLinkVariant
-                    )
+                    LinkFor(article, Modifier.padding(left = 0.5.cssRem))
                 }
             }
         }

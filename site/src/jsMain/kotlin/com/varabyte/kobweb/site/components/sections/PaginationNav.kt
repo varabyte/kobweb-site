@@ -22,7 +22,7 @@ import com.varabyte.kobweb.silk.style.selectors.hover
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.siteText
-import com.varabyte.kobweb.site.model.listing.Article
+import com.varabyte.kobweb.site.model.listing.*
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 
@@ -70,7 +70,7 @@ fun PaginationNav(prev: Article?, next: Article?, modifier: Modifier = Modifier)
                         .siteText(SiteTextSize.TINY)
                 )
                 SpanText(
-                    article.title,
+                    article.titleOrSubcategoryTitle,
                     Modifier
                         .color(Colors.DodgerBlue)
                         .fontWeight(FontWeight.Bold)

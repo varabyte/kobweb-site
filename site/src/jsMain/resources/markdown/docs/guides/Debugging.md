@@ -1,5 +1,5 @@
 ---
-follows: Intro
+follows: Index
 ---
 
 ## Debugging your site

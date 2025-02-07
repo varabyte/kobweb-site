@@ -1,5 +1,5 @@
 ---
-follows: Intro
+follows: Index
 ---
 
 * [Join our Discord!](https://discord.gg/5NZ2GKV5Cs)

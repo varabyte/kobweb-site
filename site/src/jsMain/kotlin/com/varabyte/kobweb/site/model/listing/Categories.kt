@@ -18,6 +18,11 @@ class ArticleHandle(
     val article: Article,
 )
 
+/** Article title or, if set to "", its parent subcategory title which should represent it. */
+val Article.titleOrSubcategoryTitle: String get() {
+    return title.takeIf { it.isNotEmpty() } ?: SITE_LISTING.findArticle(route)!!.subcategory.title
+}
+
 fun List<Category>.findArticle(route: String): ArticleHandle? {
     for (category in this) {
         for (subcategory in category.subcategories) {
@@ -43,8 +48,8 @@ fun List<Category>.findArticleNeighbors(articleHandle: ArticleHandle): Pair<Arti
 
     val next =
             articleHandle.subcategory.articles.getOrNull(articleIndex + 1)
-                ?: articleHandle.category.subcategories.getOrNull(subcategoryIndex + 1)?.articles?.last()
-                ?: SITE_LISTING.getOrNull(categoryIndex + 1)?.subcategories?.last()?.articles?.last()
+                ?: articleHandle.category.subcategories.getOrNull(subcategoryIndex + 1)?.articles?.first()
+                ?: SITE_LISTING.getOrNull(categoryIndex + 1)?.subcategories?.first()?.articles?.first()
 
     return prev to next
 }
