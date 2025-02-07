@@ -2,11 +2,9 @@ package com.varabyte.kobweb.site.components.sections.home
 
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.browser.dom.ElementTarget
-import com.varabyte.kobweb.browser.util.setInterval
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.css.WhiteSpace
 import com.varabyte.kobweb.compose.foundation.layout.Column
-import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Color
@@ -36,10 +34,8 @@ import com.varabyte.kobweb.site.components.widgets.GradientBox
 import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.Section
 import com.varabyte.kobweb.site.components.widgets.code.CodeBlock
-import kotlinx.browser.window
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
-import kotlin.time.Duration.Companion.seconds
 
 private val DARK_BACKGROUND = Color.rgb(25, 25, 25)
 private val LIGHT_BACKGROUND = DARK_BACKGROUND.inverted()
@@ -85,12 +81,6 @@ fun HeroExample() {
     var localColorMode by remember { mutableStateOf(ColorMode.LIGHT) }
     val background = if (localColorMode.isLight) LIGHT_BACKGROUND else DARK_BACKGROUND
     val foreground = if (localColorMode.isLight) Colors.Black else Colors.White
-
-    LaunchedEffect(Unit) {
-        window.setInterval(5.seconds) {
-            localColorMode = localColorMode.opposite
-        }
-    }
 
     // Wrap in a surface so that we can override the color mode for this specific section
     Surface(Modifier.fillMaxWidth().backgroundColor(Colors.Transparent), colorModeOverride = localColorMode) {
