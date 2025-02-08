@@ -123,8 +123,21 @@ object SiteListingGenerator {
         )
     }
 
+    // https://en.wikipedia.org/wiki/Title_case
+    // We'll go case by case for now but we can improve this later if necessary
+    private val LOWERCASE_TITLE_WORDS = setOf(
+        "a",
+        "an",
+        "and",
+        "to",
+    )
+
     @Suppress("DEPRECATION") // The suggestion to replace `capitalize` with is awful
-    private fun String.convertSlugToTitle() = split('-').joinToString(" ") { it.capitalize() }.takeIf { it != "Index" } ?: ""
+    private fun String.convertSlugToTitle() = split('-')
+        .joinToString(" ") { word ->
+            if (word in LOWERCASE_TITLE_WORDS) word.lowercase() else word.capitalize()
+        }
+        .takeIf { it != "Index" } ?: ""
 
     @Suppress("FunctionName") // Underscore avoids ambiguity error
     private fun MarkdownBlock.ProcessScope._generate(entries: List<MarkdownEntry>) {
