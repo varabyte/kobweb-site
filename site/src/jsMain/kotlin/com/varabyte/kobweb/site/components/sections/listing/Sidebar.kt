@@ -107,8 +107,7 @@ private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Mo
         Link(
             path = article.route,
             text = article.titleOrSubcategoryTitle,
-
-            modifier
+            modifier = modifier
                 .onClick { onLinkClick() }
                 .display(DisplayStyle.Block)
                 .thenIf(article.route == ctx.route.path) {
@@ -122,15 +121,16 @@ private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Mo
 
     Li(ListingElementStyle.toModifier().fontSize(0.875.cssRem).then(modifier).toAttrs()) {
         val firstArticle = subcategory.articles.first()
+        val subcategoryModifier = Modifier.fontWeight(FontWeight.Bold).margin(bottom = 0.5.cssRem)
         if (firstArticle.title.isNotEmpty()) {
-            SpanText(text = subcategory.title, Modifier.fontWeight(FontWeight.Bold))
+            SpanText(text = subcategory.title, subcategoryModifier)
         } else {
-            LinkFor(firstArticle)
+            LinkFor(firstArticle, subcategoryModifier)
         }
 
         Ul(
             Modifier
-                .margin(top = 0.5.cssRem, left = 0.25.cssRem)
+                .margin(left = 0.25.cssRem)
                 .padding(leftRight = 0.75.cssRem)
                 .borderLeft(1.px, LineStyle.Solid, Colors.Gray.copyf(alpha = 0.5f))
                 .toAttrs()
