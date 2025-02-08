@@ -120,7 +120,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
 
     val articleHandle = ctx.markdown?.let { ctx.route.toArticleHandle() }
     val title = if (articleHandle != null) {
-        "Docs - ${articleHandle.category.title} - ${articleHandle.article.title}"
+        "Docs - ${articleHandle.category.title} - ${articleHandle.article.titleOrSubcategoryTitle}"
     } else "Docs"
 
     PageLayout(title) {
@@ -165,7 +165,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
                 Article {
                     if (articleHandle != null) {
                         H1 {
-                            Text(articleHandle.article.title)
+                            Text(articleHandle.article.titleOrSubcategoryTitle)
                         }
                     }
                     content()
