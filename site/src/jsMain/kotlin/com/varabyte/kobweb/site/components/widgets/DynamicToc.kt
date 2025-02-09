@@ -2,7 +2,10 @@ package com.varabyte.kobweb.site.components.widgets
 
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.browser.dom.observers.IntersectionObserver
-import com.varabyte.kobweb.compose.css.*
+import com.varabyte.kobweb.compose.css.FontWeight
+import com.varabyte.kobweb.compose.css.ListStyleType
+import com.varabyte.kobweb.compose.css.Transition
+import com.varabyte.kobweb.compose.css.TransitionTimingFunction
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
@@ -17,6 +20,7 @@ import com.varabyte.kobweb.site.components.sections.listing.ListingElementStyle
 import com.varabyte.kobweb.site.components.sections.listing.ListingIndentVar
 import com.varabyte.kobweb.site.components.sections.listing.ListingLinkVariant
 import kotlinx.browser.window
+import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.css.s
 import org.jetbrains.compose.web.dom.Li
@@ -111,6 +115,7 @@ fun TocContent(
         headings.forEach { heading ->
             Li(
                 ListingElementStyle.toModifier()
+                    .padding { topBottom(0.5.cssRem) }
                     .setVariable(ListingIndentVar, heading.tagName[1].digitToInt() - 2)
                     .toAttrs()
             ) {

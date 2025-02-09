@@ -42,7 +42,6 @@ val ListingElementStyle = CssStyle.base {
     Modifier
         .padding {
             left(calc { num(ListingIndentVar.value()) * 1.cssRem })
-            topBottom(0.5.cssRem)
         }
 }
 
@@ -88,7 +87,7 @@ fun ListingSidebar(
                     category.subcategories.forEach { subcategory ->
                         SubcategoryContent(
                             subcategory,
-                            Modifier.margin(leftRight = 0.125.cssRem),
+                            Modifier.margin(leftRight = 0.125.cssRem, topBottom = 0.5.cssRem),
                             onLinkClick = { SidebarScroll = navElement!!.scrollTop }
                         )
                     }
@@ -110,8 +109,10 @@ private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Mo
             modifier = modifier
                 .onClick { onLinkClick() }
                 .display(DisplayStyle.Block)
+                .borderLeft(if (article.title.isNotEmpty()) 1.px else 0.px, LineStyle.Solid, Colors.Transparent)
                 .thenIf(article.route == ctx.route.path) {
                     Modifier
+                        .borderLeft { color(Color.currentColor) }
                         .color(Colors.DodgerBlue)
                         .fontWeight(FontWeight.Bold)
                 },
@@ -131,15 +132,24 @@ private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Mo
         Ul(
             Modifier
                 .margin(left = 0.25.cssRem)
-                .padding(leftRight = 0.75.cssRem)
+                .padding(right = 0.75.cssRem)
                 .borderLeft(1.px, LineStyle.Solid, Colors.Gray.copyf(alpha = 0.5f))
                 .toAttrs()
         ) {
             subcategory.articles.forEach { article ->
                 if (article.title.isEmpty()) return@forEach // Link already added to parent category
 
-                Li(ListingElementStyle.toModifier().fillMaxWidth().toAttrs()) {
-                    LinkFor(article, Modifier.padding(left = 0.5.cssRem))
+                Li(
+                    ListingElementStyle.toModifier()
+                        .fillMaxWidth()
+                        .toAttrs()
+                ) {
+                    LinkFor(
+                        article,
+                        Modifier
+                            .padding { left(1.25.cssRem); topBottom(0.25.cssRem) }
+                            .margin { left((-1).px); topBottom(0.5.cssRem) }
+                    )
                 }
             }
         }
