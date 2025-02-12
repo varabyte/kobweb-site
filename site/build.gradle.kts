@@ -224,19 +224,28 @@ object SiteListingGenerator {
                     .add(entry)
             }
 
-
+            println("Article tree:\n")
             articleTree.forEach { (category, rest) ->
                 appendLine("${indent}add(")
                 appendLine("${indent}${indent}Category(")
                 appendLine("${indent}${indent}${indent}\"${category.convertSlugToTitle()}\",")
+                println("- ${category.convertSlugToTitle()}")
 
                 rest.forEach { (subcategory, articles) ->
                     appendLine("${indent}${indent}${indent}Subcategory(")
                     appendLine("${indent}${indent}${indent}${indent}\"${subcategory.convertSlugToTitle()}\",")
+                    if (subcategory.isNotEmpty()) {
+                        println("${indent}- ${subcategory.convertSlugToTitle()}")
+                    }
+
                     articles.forEach { article ->
                         val routeParts = routePartsMap.getValue(article)
                         val title = article.frontMatter["title"]?.singleOrNull() ?: routeParts.slug.convertSlugToTitle()
                         appendLine("${indent}${indent}${indent}${indent}Article(\"$title\", \"${article.route}\"),")
+                        if (title.isNotEmpty()) {
+                            if (subcategory.isNotEmpty()) print(indent)
+                            println("${indent}- $title")
+                        }
                     }
                     appendLine("${indent}${indent}${indent}),")
                 }
