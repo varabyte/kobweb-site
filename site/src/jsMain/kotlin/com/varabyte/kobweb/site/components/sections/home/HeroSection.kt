@@ -11,6 +11,7 @@ import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
+import com.varabyte.kobweb.silk.components.forms.ButtonVars
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
@@ -83,7 +84,8 @@ private fun HeroExample(modifier: Modifier) {
 
 val HeroButton = CssStyle {
     base {
-        Modifier.width(300.px)
+        // Extra height helps these hero buttons feel a bit more substantial
+        Modifier.width(300.px).setVariable(ButtonVars.Height, 3.cssRem)
     }
 
     Breakpoint.MD {
