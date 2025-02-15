@@ -17,20 +17,26 @@ import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.navigation.Anchor
+import com.varabyte.kobweb.silk.components.forms.Button
+import com.varabyte.kobweb.silk.components.icons.MoonIcon
+import com.varabyte.kobweb.silk.components.icons.SunIcon
 import com.varabyte.kobweb.silk.components.icons.fa.FaDiscord
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
-import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
-import com.varabyte.kobweb.silk.components.icons.fa.FaSun
+import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.overlay.Tooltip
+import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
 import com.varabyte.kobweb.silk.style.extendedByBase
+import com.varabyte.kobweb.silk.style.selectors.hover
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import com.varabyte.kobweb.silk.theme.colors.palette.color
+import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
+import com.varabyte.kobweb.silk.theme.colors.shifted
+import com.varabyte.kobweb.site.components.sections.listing.UnstyledButtonVariant
 import com.varabyte.kobweb.site.components.style.dividerBoxShadow
-import com.varabyte.kobweb.site.components.widgets.ButtonShape
-import com.varabyte.kobweb.site.components.widgets.LinkButton
-import com.varabyte.kobweb.site.components.widgets.ThemedButton
 import org.jetbrains.compose.web.css.Position
+import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Img
@@ -57,6 +63,16 @@ val NavHeaderStyle = NavHeaderBackgroundStyle.extendedByBase {
         .height(NavHeaderHeight.value())
 }
 
+val HoverBrightenStyle = CssStyle {
+    val color = colorMode.toPalette().color
+    base {
+        Modifier.color(color.shifted(colorMode.opposite, 0.2f))
+    }
+    hover {
+        Modifier.color(color)
+    }
+}
+
 @Composable
 private fun HomeLogo() {
     Anchor(
@@ -78,8 +94,6 @@ private fun getNavBackgroundColor(colorMode: ColorMode): Color.Rgb {
     }.copyf(alpha = 0.65f)
 }
 
-private val BUTTON_MARGIN = Modifier.margin(0.px, 10.px)
-
 @Composable
 fun NavHeader() {
     var colorMode by ColorMode.currentState
@@ -90,28 +104,32 @@ fun NavHeader() {
         ) {
             HomeLogo()
             Spacer()
-            Row(Modifier.margin(0.px, 12.px)) {
-                LinkButton("https://github.com/varabyte/kobweb", BUTTON_MARGIN, shape = ButtonShape.CIRCLE) {
+            Row(
+                Modifier
+                    .margin(0.px, 12.px)
+                    .gap(1.cssRem)
+                    .fontSize(1.5.cssRem),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Link("https://github.com/varabyte/kobweb", HoverBrightenStyle.toModifier()) {
                     FaGithub()
                 }
-                Tooltip(ElementTarget.PreviousSibling, "Kobweb source on GitHub")
 
-                LinkButton("https://discord.gg/5NZ2GKV5Cs", BUTTON_MARGIN, shape = ButtonShape.CIRCLE) {
+                Link("https://discord.gg/5NZ2GKV5Cs", HoverBrightenStyle.toModifier()) {
                     FaDiscord()
                 }
-                Tooltip(ElementTarget.PreviousSibling, "Chat with us on Discord")
 
-                ThemedButton(
+                Button(
                     onClick = { colorMode = colorMode.opposite },
-                    BUTTON_MARGIN,
-                    shape = ButtonShape.CIRCLE
+                    modifier = HoverBrightenStyle.toModifier(),
+                    variant = UnstyledButtonVariant,
                 ) {
                     when (colorMode) {
-                        ColorMode.DARK -> FaSun()
-                        ColorMode.LIGHT -> FaMoon()
+                        ColorMode.DARK -> SunIcon()
+                        ColorMode.LIGHT -> MoonIcon()
                     }
                 }
-                Tooltip(ElementTarget.PreviousSibling, "Toggle color mode")
+                Tooltip(ElementTarget.PreviousSibling, "Toggle color mode", Modifier.zIndex(10))
             }
         }
     }
