@@ -142,4 +142,4 @@ kotlin {
 ```
 
 To read more about the version catalogs, please check out the
-[official docs](https://docs.gradle.org/current/userguide/platforms.html#sub:conventional-dependencies-toml).
+[official docs](https://docs.gradle.org/current/userguide/version_catalogs.html).

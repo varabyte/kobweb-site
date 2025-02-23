@@ -179,7 +179,7 @@ Sometimes, you have behavior that should run when an actual user is navigating y
 example, maybe you offer logged-in users an authenticated experience, but you'll never have a logged-in user when
 exporting.
 
-You can determine if your page is being rendered as part of an export by checking the `PageContext.isExporting`property.
+You can determine if your page is being rendered as part of an export by checking the `PageContext.isExporting` property.
 This gives you the opportunity to manipulate the exported HTML or avoid side effects associated with page loading.
 
 ```kotlin
@@ -215,7 +215,7 @@ kobweb {
   app {
     export {
       // "/users/{user}/posts/{post}" has special handling for the "default" / "0" case
-      addExtraRoute("/users/default/posts/0", "users/index.html")
+      addExtraRoute("/users/default/posts/0", exportPath = "users/index.html")
     }
   }
 }

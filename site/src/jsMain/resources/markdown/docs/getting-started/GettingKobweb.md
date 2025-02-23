@@ -148,11 +148,10 @@ $ kobweb version # to check it's working
 If you previously installed Kobweb and are aware that a new version is available, the way you update it depends on how
 you installed it.
 
-| Method                    | Instructions                                                                                                                         |
-|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| Homebrew                  | `brew upgrade kobweb`                                                                                                                |
-| Scoop                     | `scoop update kobweb`                                                                                                                |
-| SDKMAN!                   | `sdk upgrade kobweb`                                                                                                                 |
-| Arch Linux                | Rerunning [install steps](#arch-linux) should work. If using an AUR helper, you may need to review its manual.                       |
-| Downloaded from<br>Github | Visit the [latest release](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.18). You can find both a zip and tar file there. |
-
+| Method                 | Instructions                                                                                                                         |
+|------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| Homebrew               | `brew upgrade kobweb`                                                                                                                |
+| Scoop                  | `scoop update kobweb`                                                                                                                |
+| SDKMAN!                | `sdk upgrade kobweb`                                                                                                                 |
+| Arch Linux             | Rerunning [install steps](#arch-linux) should work. If using an AUR helper, you may need to review its manual.                       |
+| Downloaded from Github | Visit the [latest release](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.18). You can find both a zip and tar file there. |

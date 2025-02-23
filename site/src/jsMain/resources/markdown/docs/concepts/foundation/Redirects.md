@@ -23,7 +23,7 @@ server:
       to: "/new-page"
 ```
 
-Kobweb servers will pick up these redirect values from the `conf.yaml` file and will intercept any matching incoming
+Kobweb servers will pick up these redirect values from the `conf.yaml` file and intercept any matching incoming
 route requests, sending back a [301 status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/301) to the
 client.
 
