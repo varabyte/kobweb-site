@@ -30,7 +30,7 @@ KobwebApp {
 }
 ```
 
-## App
+## `@App`
 
 It is likely you'll want to configure this further for your own application. Perhaps you have some initialization logic
 that you'd like to run before any page gets run (like logic for updating saved settings into local storage). And for

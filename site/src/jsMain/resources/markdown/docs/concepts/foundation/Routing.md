@@ -34,7 +34,7 @@ By default, the slug comes from the file name, which is converted into kebab-cas
 want (more on that shortly).
 
 In other words, the name of your method is not used when generating the URL. You can call it whatever you want, but as
-a convention, we normally suggest using a name that matches the name of the file (appended by the `Page` suffix).
+a convention, we suggest using a name that matches the name of the file, appended by the `Page` suffix.
 
 The file name `Index.kt` is special. If a page is defined inside such a file, it will be treated as the default page
 under that URL. For example, a page defined in `.../pages/admin/Index.kt` will be visited if the user visits

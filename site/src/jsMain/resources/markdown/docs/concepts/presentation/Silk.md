@@ -484,14 +484,14 @@ slightly simplify their declaration:
 
 ```kotlin
 // Before
-val HighlightedCustomVariant by CustomStyle.addVariant {
+val HighlightedCustomVariant = CustomStyle.addVariant {
     base {
         Modifier.backgroundColor(Colors.Green)
     }
 }
 
 // After
-val HighlightedCustomVariant by CustomStyle.addVariantBase {
+val HighlightedCustomVariant = CustomStyle.addVariantBase {
     Modifier.backgroundColor(Colors.Green)
 }
 ```
@@ -600,7 +600,7 @@ which you can pass into the `Modifier.animation` modifier.
 The name of the keyframes block is automatically derived from the property name (here, `ShiftRightKeyframes` is
 converted into `"shift-right"`).
 
-## ElementRefScope and raw HTML elements
+## `ElementRefScope` and raw HTML elements
 
 Occasionally, you may need access to the raw element backing the Silk widget you've just created. All Silk widgets
 provide an optional `ref` parameter which takes a listener that provides this information.

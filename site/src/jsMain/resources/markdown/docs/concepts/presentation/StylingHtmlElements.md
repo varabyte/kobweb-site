@@ -54,7 +54,7 @@ Box(Modifier.color(Colors.Red)) { /* ... */ }
 
 // Uses a stylesheet
 val BoxStyle = CssStyle {
-    base { Modifier.Color(Colors.Red) }
+    base { Modifier.color(Colors.Red) }
 }
 Box(BoxStyle.toModifier()) { /* ... */ }
 ```
@@ -145,7 +145,7 @@ val SIZE_AND_COLOR_MODIFIER = SIZE_MODIFIER.then(COLOR_MODIFIER)
 
 Since modifiers are immutable, you can reuse and combine them fearlessly.
 
-### toAttrs
+### `toAttrs`
 
 `Modifier` is a Kobweb concept, but Compose HTML doesn't know anything about it. It works with a concept called
 `AttrsScope` for declaring attributes and styles.
@@ -191,7 +191,7 @@ fun LargeInput(name: String, placeholder: String) {
 }
 ```
 
-### attrsModifier and styleModifier
+### `attrsModifier` and `styleModifier`
 
 There are a bunch of modifier extensions (and they're growing) provided by Kobweb, like `background`, `color`, and
 `padding` above. But there are also two escape hatches anytime you run into a modifier that's missing:
@@ -229,7 +229,7 @@ Modifier.attrsModifier {
 ```
 but in the above case, you are encouraged to use a `styleModifier` instead for simplicity.
 
-### attr and property
+### `attr` and `property`
 
 In the occasional (and hopefully rare!) case where Kobweb doesn't provide a modifier and Compose HTML doesn't provide
 the attribute or style support you need, you can use `attrsModifier` plus the `attr` method or `styleModifier` plus the
@@ -263,7 +263,7 @@ so that we can add the missing style modifier to the framework.
 At the very least, you are encouraged to define your own extension method to create your own type-safe style modifier:
 
 ```kotlin
-Modifier.someMissingStyle() = styleModifier {
+fun Modifier.someMissingStyle() = styleModifier {
     property("some-missing-style", "value")
 }
 ```

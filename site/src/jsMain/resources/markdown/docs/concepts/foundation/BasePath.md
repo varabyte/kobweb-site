@@ -44,8 +44,8 @@ calling the `BasePath.prepend` companion method.
 // The Video element comes from Compose HTML and is NOT base-path aware.
 // Therefore, we need to manually prepend the base path to the video source.
 Video(attrs = {
-    attr("width", 320.px.toString())
-    attr("height", 240.px.toString())
+    width(320)
+    height(240)
 }) {
     Source(attrs = {
         attr("type", "video/mp4")
