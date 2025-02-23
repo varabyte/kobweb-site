@@ -7,7 +7,6 @@ import com.varabyte.kobwebx.gradle.markdown.handlers.MarkdownHandlers
 import com.varabyte.kobwebx.gradle.markdown.handlers.SilkCalloutBlockquoteHandler
 import kotlinx.html.link
 import kotlinx.html.script
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -84,16 +83,12 @@ kobweb {
 kotlin {
     configAsKobwebApplication("kobweb-site")
     js {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions.target = "es2015"
     }
 
     sourceSets {
-        commonMain.dependencies {
-            implementation(libs.compose.runtime)
-        }
-
         jsMain.dependencies {
+            implementation(libs.compose.runtime)
             implementation(libs.compose.html.core)
             implementation(libs.kobweb.core)
             implementation(libs.kobweb.silk.core)
@@ -119,7 +114,9 @@ object SiteListingGenerator {
     )
 
     private fun MarkdownEntry.toRouteParts() = with(this.toPath().split('/').dropWhile { it.isEmpty() }) {
-        require(this.size == 2 || this.size == 3) { "Expected category, subcategory (optional), and slug; got \"${this.joinToString("/")}\""}
+        require(this.size == 2 || this.size == 3) {
+            "Expected category, subcategory (optional), and slug; got \"${this.joinToString("/")}\""
+        }
         RouteParts(
             category = get(0),
             subcategory = if (this.size == 3) get(1) else "",
@@ -198,13 +195,8 @@ object SiteListingGenerator {
             }
         }
 
-        run {
-            val allEntries = entries.toMutableSet()
-            orderedArticleList.forEach { allEntries.remove(it) }
-
-            allEntries.forEach { orphanedEntry ->
-                println("e: Orphaned markdown file (probably a bad `Follows` value): ${orphanedEntry.toPath()}.md")
-            }
+        (entries.toSet() - orderedArticleList).forEach { orphanedEntry ->
+            println("e: Orphaned markdown file (probably a bad `Follows` value): ${orphanedEntry.toPath()}.md")
         }
 
         generateKotlin("com/varabyte/kobweb/site/model/listing/SiteListing.kt", buildString {
@@ -220,17 +212,9 @@ object SiteListingGenerator {
                     """.trimIndent()
             )
 
-
-            val routePartsMap = orderedArticleList.associateWith { it.toRouteParts() }
-            val articleTree = mutableMapOf<String, MutableMap<String, MutableList<MarkdownEntry>>>()
-
-            orderedArticleList.forEach { entry ->
-                val routeParts = routePartsMap.getValue(entry)
-                articleTree
-                    .getOrPut(routeParts.category) { mutableMapOf() }
-                    .getOrPut(routeParts.subcategory) { mutableListOf() }
-                    .add(entry)
-            }
+            val articleTree = orderedArticleList
+                .map { it to it.toRouteParts() }
+                .groupBy { it.second.category }
 
             println("Article tree:\n")
             articleTree.forEach { (category, rest) ->
@@ -239,15 +223,14 @@ object SiteListingGenerator {
                 appendLine("${indent}${indent}${indent}\"${category.convertSlugToTitle()}\",")
                 println("- ${category.convertSlugToTitle()}")
 
-                rest.forEach { (subcategory, articles) ->
+                rest.groupBy { it.second.subcategory }.forEach { (subcategory, articles) ->
                     appendLine("${indent}${indent}${indent}Subcategory(")
                     appendLine("${indent}${indent}${indent}${indent}\"${subcategory.convertSlugToTitle()}\",")
                     if (subcategory.isNotEmpty()) {
                         println("${indent}- ${subcategory.convertSlugToTitle()}")
                     }
 
-                    articles.forEach { article ->
-                        val routeParts = routePartsMap.getValue(article)
+                    articles.forEach { (article, routeParts) ->
                         val title = article.frontMatter["title"]?.singleOrNull() ?: routeParts.slug.convertSlugToTitle()
                         appendLine("${indent}${indent}${indent}${indent}Article(\"$title\", \"${article.route}\"),")
                         if (title.isNotEmpty()) {
