@@ -11,6 +11,7 @@ import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.compose.ui.toAttrs
+import com.varabyte.kobweb.core.PageContext
 import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.navigation.UndecoratedLinkVariant
@@ -53,6 +54,24 @@ val ListingLinkVariant = UndecoratedLinkVariant.extendedBy {
 
 // This needs to be global so that it can be saved between different pages, which each recreate the sidebar
 private var SidebarScroll: Double? = null
+@Composable
+private fun LinkFor(ctx: PageContext, article: Article, title: String, modifier: Modifier = Modifier, onLinkClick: () -> Unit) {
+    Link(
+        path = article.route,
+        text = title,
+        modifier = modifier
+            .onClick { onLinkClick() }
+            .display(DisplayStyle.Block)
+            .borderLeft(if (article.title.isNotEmpty()) 1.px else 0.px, LineStyle.Solid, Colors.Transparent)
+            .thenIf(article.route == ctx.route.path) {
+                Modifier
+                    .borderLeft { color(Color.currentColor) }
+                    .color(Colors.DodgerBlue)
+                    .fontWeight(FontWeight.Bold)
+            },
+        variant = ListingLinkVariant
+    )
+}
 
 @Composable
 fun ListingSidebar(
@@ -75,14 +94,32 @@ fun ListingSidebar(
         Ul {
             categories.forEach { category ->
                 Li {
-                    SpanText(
-                        text = category.title,
-                        modifier = Modifier
-                            .fontSize(115.percent)
-                            .fontWeight(FontWeight.Bold)
-                    )
+                    val titleShouldBeLink = category.subcategories.firstOrNull()?.let { firstSubcategory ->
+                        firstSubcategory.title.isEmpty() && firstSubcategory.articles.firstOrNull()?.title == ""
+                    } ?: false
+
+                    val titleModifier = Modifier
+                        .fontSize(115.percent)
+                        .fontWeight(FontWeight.Bold)
+                    if (!titleShouldBeLink) {
+                        SpanText(
+                            text = category.title,
+                            modifier = titleModifier,
+                        )
+                    } else {
+                        LinkFor(
+                            ctx,
+                            category.subcategories.first().articles.first(),
+                            title = category.title,
+                            modifier = Modifier
+                                .fontSize(115.percent)
+                                .fontWeight(FontWeight.Bold),
+                            onLinkClick = { SidebarScroll = navElement!!.scrollTop }
+                        )
+                    }
                     category.subcategories.forEach { subcategory ->
                         SubcategoryContent(
+                            ctx,
                             subcategory,
                             Modifier.margin(leftRight = 0.125.cssRem, topBottom = 0.5.cssRem),
                             onLinkClick = { SidebarScroll = navElement!!.scrollTop }
@@ -95,26 +132,10 @@ fun ListingSidebar(
 }
 
 @Composable
-private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Modifier, onLinkClick: () -> Unit) {
-    val ctx = rememberPageContext()
-
+private fun SubcategoryContent(ctx: PageContext, subcategory: Subcategory, modifier: Modifier = Modifier, onLinkClick: () -> Unit) {
     @Composable
-    fun LinkFor(article: Article, modifier: Modifier = Modifier) {
-        Link(
-            path = article.route,
-            text = article.titleOrSubcategory,
-            modifier = modifier
-                .onClick { onLinkClick() }
-                .display(DisplayStyle.Block)
-                .borderLeft(if (article.title.isNotEmpty()) 1.px else 0.px, LineStyle.Solid, Colors.Transparent)
-                .thenIf(article.route == ctx.route.path) {
-                    Modifier
-                        .borderLeft { color(Color.currentColor) }
-                        .color(Colors.DodgerBlue)
-                        .fontWeight(FontWeight.Bold)
-                },
-            variant = ListingLinkVariant
-        )
+    fun LinkFor(ctx: PageContext, article: Article, modifier: Modifier = Modifier, onLinkClick: () -> Unit) {
+        LinkFor(ctx, article, article.titleOrSubcategory, modifier, onLinkClick)
     }
 
     Li(ListingElementStyle.toModifier().fontSize(0.875.cssRem).then(modifier).toAttrs()) {
@@ -123,7 +144,7 @@ private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Mo
         if (firstArticle.title.isNotEmpty()) {
             SpanText(text = subcategory.title, subcategoryModifier)
         } else {
-            LinkFor(firstArticle, subcategoryModifier)
+            LinkFor(ctx, firstArticle, subcategoryModifier, onLinkClick)
         }
 
         Ul(
@@ -142,10 +163,12 @@ private fun SubcategoryContent(subcategory: Subcategory, modifier: Modifier = Mo
                         .toAttrs()
                 ) {
                     LinkFor(
+                        ctx,
                         article,
                         Modifier
                             .padding { left(1.25.cssRem); topBottom(0.25.cssRem) }
-                            .margin { left((-1).px); topBottom(0.5.cssRem) }
+                            .margin { left((-1).px); topBottom(0.5.cssRem) },
+                        onLinkClick,
                     )
                 }
             }
