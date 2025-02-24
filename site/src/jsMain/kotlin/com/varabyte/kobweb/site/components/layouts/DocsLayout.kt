@@ -159,6 +159,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
             var mainElement by remember { mutableStateOf<HTMLElement?>(null) }
             Main(
                 ArticleStyle.toModifier()
+                    .dataAttr("pagefind-body", "")
                     // Ensure height is greater than sidebar because otherwise sidebar isn't properly positioned
                     .minHeight(100.vh - (topOffset / 2))
                     .minWidth(0.px)

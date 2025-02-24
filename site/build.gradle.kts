@@ -8,6 +8,7 @@ import com.varabyte.kobwebx.gradle.markdown.handlers.SilkCalloutBlockquoteHandle
 import kotlinx.html.link
 import kotlinx.html.script
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsExec
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -32,6 +33,9 @@ kobweb {
                 }
 
                 link(rel = "stylesheet", href = "/fonts/faces.css")
+
+                link(href = "/pagefind/pagefind-ui.css", rel = "stylesheet")
+                script(src = "/pagefind/pagefind-ui.js") {}
             }
         }
     }
@@ -99,8 +103,25 @@ kotlin {
             implementation(libs.kobweb.silk.core)
             implementation(libs.kobweb.silk.icons.fa)
             implementation(libs.kobwebx.markdown)
+            implementation(devNpm("pagefind", "1.3.0"))
         }
     }
+}
+
+// Create a "pagefind" task that will generate a search index for the site
+// To get search working in dev mode, export the site and then copy `.kobweb/site/pagefind` into
+// `src/jsMain/resources/public/pagefind`. Note that this will *not* update as the site is modified.
+val pagefind = NodeJsExec.create(kotlin.js().compilations["main"]!!, "pagefind") {
+    group = "build"
+    description = "???"
+
+    inputFileProperty.set(npmProject.dir.map { it.file("../../node_modules/pagefind/lib/runner/bin.cjs") })
+
+    args("--site", project.layout.projectDirectory.file(".kobweb/site").asFile.absolutePath)
+}
+
+tasks.named("kobwebExport") {
+    finalizedBy(pagefind)
 }
 
 object SiteListingGenerator {

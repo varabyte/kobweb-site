@@ -22,7 +22,8 @@ import com.varabyte.kobweb.silk.style.selectors.hover
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.siteText
-import com.varabyte.kobweb.site.model.listing.*
+import com.varabyte.kobweb.site.model.listing.Article
+import com.varabyte.kobweb.site.model.listing.titleOrFallback
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 
@@ -83,6 +84,7 @@ fun PaginationNav(prev: Article?, next: Article?, modifier: Modifier = Modifier)
 
     Div(
         Modifier
+            .dataAttr("pagefind-ignore", "")
             .gap(1.cssRem)
             .grid {
                 columns {

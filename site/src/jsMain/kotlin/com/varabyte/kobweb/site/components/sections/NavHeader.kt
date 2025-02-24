@@ -1,9 +1,11 @@
 package com.varabyte.kobweb.site.components.sections
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.varabyte.kobweb.browser.dom.ElementTarget
+import com.varabyte.kobweb.compose.css.Overflow
 import com.varabyte.kobweb.compose.css.StyleVariable
 import com.varabyte.kobweb.compose.css.functions.blur
 import com.varabyte.kobweb.compose.css.functions.saturate
@@ -22,18 +24,25 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
 import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.overlay.Tooltip
+import com.varabyte.kobweb.silk.style.CssLayer
+import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
 import com.varabyte.kobweb.silk.style.extendedByBase
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
+import com.varabyte.kobweb.silk.theme.colors.palette.background
+import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.site.components.style.dividerBoxShadow
 import com.varabyte.kobweb.site.components.widgets.ButtonShape
 import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.ThemedButton
 import org.jetbrains.compose.web.css.Position
+import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Img
+import kotlin.js.json
 
 val NavHeaderHeight by StyleVariable(64.px)
 
@@ -80,6 +89,26 @@ private fun getNavBackgroundColor(colorMode: ColorMode): Color.Rgb {
 
 private val BUTTON_MARGIN = Modifier.margin(0.px, 10.px)
 
+external class PagefindUI(options: dynamic)
+
+@CssLayer("")
+val SearchStyle = CssStyle {
+    cssRule(" form") {
+        Modifier
+            .position(Position.Relative)
+    }
+    cssRule(" .pagefind-ui__drawer") {
+        Modifier
+            .position(Position.Absolute)
+            .left((-50).percent)
+            .right((-50).percent)
+            .maxHeight(500.px)
+            .overflow { y(Overflow.Auto) }
+            .backgroundColor(colorMode.toPalette().background)
+            .padding(1.cssRem)
+    }
+}
+
 @Composable
 fun NavHeader() {
     var colorMode by ColorMode.currentState
@@ -89,6 +118,27 @@ fun NavHeader() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             HomeLogo()
+            Spacer()
+            Div(SearchStyle.toModifier().background(colorMode.toPalette().background).toAttrs()) {
+                Div(Modifier.id("search").toAttrs())
+                DisposableEffect(Unit) {
+                    PagefindUI(
+                        json(
+                            "element" to "#search",
+                            "showSubResults" to true,
+                            "showImages" to false,
+                            "processResult" to { result: dynamic ->
+                                result.url = result.url.replace(".html", "")
+                                result.sub_results.forEach { subResult ->
+                                    subResult.url = subResult.url.replace(".html", "")
+                                }
+                                result
+                            }
+                        )
+                    )
+                    onDispose { }
+                }
+            }
             Spacer()
             Row(Modifier.margin(0.px, 12.px)) {
                 LinkButton("https://github.com/varabyte/kobweb", BUTTON_MARGIN, shape = ButtonShape.CIRCLE) {
