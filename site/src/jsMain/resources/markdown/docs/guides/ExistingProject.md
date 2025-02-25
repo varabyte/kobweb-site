@@ -1,6 +1,6 @@
 ---
 title: Adding Kobweb to an Existing Project
-follows: CustomFonts
+follows: SharingDataObjects
 ---
 
 Currently, Kobweb is still under active development, and due to our limited resources, we are focusing on improving the
