@@ -25,7 +25,12 @@ plugins {
 
 kotlin {
     configAsKobwebApplication(includeServer = true)
-    /* ... */
+    sourceSets {
+        /* ... */
+        jvmMain.dependencies {
+            /* ... */
+        }
+    }
 }
 ```
 
