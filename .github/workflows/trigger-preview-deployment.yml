@@ -1,0 +1,22 @@
+# When the user checks code into the `dev` branch, we'll send an event to
+# the `varabyte/kobweb-site-preview` repo to trigger a deployment.
+# We use a separate repo here because GHP has a limitation of one subdomain
+# per repo.
+
+name: Trigger preview deployment
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch: # allow manual triggering
+
+jobs:
+  trigger-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch event to kobweb-site-preview repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.KOBWEB_SITE_PAT }}
+          repository: varabyte/kobweb-site-preview
+          event-type: deploy-site-preview
