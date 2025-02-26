@@ -41,7 +41,7 @@ for both plugin *and* library blocks.
 
 An easy way to enable this is by adding the following block of code into your `settings.gradle.kts` file:
 
-```diff
+```diff-kotlin
 pluginManagement {
     repositories {
         gradlePluginPortal()

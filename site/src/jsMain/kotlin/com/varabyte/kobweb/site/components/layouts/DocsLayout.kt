@@ -75,7 +75,7 @@ val ArticleStyle = CssStyle {
         Modifier
             .backgroundColor(colorMode.toPalette().background.shifted(colorMode, 0.05f))
     }
-    descendants("code") {
+    descendants("code:not(pre *)") {
         Modifier
             .fontSize(90.percent)
             .whiteSpace(WhiteSpace.BreakSpaces)

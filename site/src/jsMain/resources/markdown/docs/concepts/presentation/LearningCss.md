@@ -116,7 +116,7 @@ Next, search the internet for "CSS border". One of the top links should be: http
 Skim the docs and play around with the interactive examples. With an understanding of the border property now, let's use
 code completion to discover the Kobweb version of the API:
 
-```diff
+```diff-kotlin
 Box(
   Modifier
     .padding(topBottom = 5.px, leftRight = 30.px)
@@ -133,7 +133,7 @@ Box(
 Search for "CSS rounded corners". It turns out the CSS property in this case is called a "border
 radius": https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius
 
-```diff
+```diff-kotlin
 Box(
   Modifier
     .padding(topBottom = 5.px, leftRight = 30.px)
@@ -153,7 +153,7 @@ realize we want to use box shadows: https://developer.mozilla.org/en-US/docs/Web
 
 After playing around with blur and spread values, we get something that looks decent:
 
-```diff
+```diff-kotlin
 Box(
   Modifier
     .padding(topBottom = 5.px, leftRight = 30.px)
@@ -175,7 +175,7 @@ get a more general documentation page explaining the feature: https://developer.
 This case turns out to be a little trickier to ultimately find the Kotlin, type-safe equivalent, but if you dig a bit
 more into the CSS docs, you'll learn that a linear gradient is a type of background image.
 
-```diff
+```diff-kotlin
 Box(
   Modifier
     .padding(topBottom = 5.px, leftRight = 30.px)
@@ -202,7 +202,7 @@ animations": https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Usi
 You can review the ${DocsLink("animation section", "silk#animations")} for a refresher on how Kobweb supports this
 feature, which requires declaring a top-level `Keyframes` block which then gets referenced inside an animation modifier:
 
-```diff
+```diff-kotlin
 // Top level property
 +val WobbleKeyframes = Keyframes {
 +  from { Modifier.rotate((-5).deg) }
