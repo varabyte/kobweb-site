@@ -1,0 +1,394 @@
+/*
+    An adaptation of the One Dark and One Light themes for prism.js, with plugin support from the default prism theme.
+
+    Sources:
+    https://github.com/PrismJS/prism-themes/blob/447479fc7b2be2051fe27e561aceed7cc87a589f/themes/prism-one-dark.css
+    https://github.com/PrismJS/prism-themes/blob/447479fc7b2be2051fe27e561aceed7cc87a589f/themes/prism-one-dark.css
+    https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+bash+diff+docker+kotlin+toml+typescript+yaml&plugins=line-highlight+toolbar+copy-to-clipboard+diff-highlight
+
+    Changes include:
+    - Combining the light and dark themes using CSS variables, with values set on the `silk-colors_light/dark` classes
+    - Incorporating the default prism theme for styles not in the One Dark/Light theme
+    - Removing legacy CSS
+    - Removing styles for unused plugins
+    - Changing the `--mono-3` color in both color modes to improve readability/contrast
+ */
+
+.silk-colors_light {
+    --mono-1: hsl(230, 8%, 24%);
+    --mono-2: hsl(230, 6%, 44%);
+    /* Custom change: this increases contrast with the background, making comments more readable */
+    --mono-3: hsl(230, 4%, 54%); /*Original value:  hsl(230, 4%, 64%); */
+    --hue-1: hsl(198, 99%, 37%);
+    --hue-2: hsl(221, 87%, 60%);
+    --hue-3: hsl(301, 63%, 40%);
+    --hue-4: hsl(119, 34%, 47%);
+    --hue-5: hsl(5, 74%, 59%);
+    --hue-5-2: hsl(344, 84%, 43%);
+    --hue-6: hsl(35, 99%, 36%);
+    /*--hue-6-2: hsl(35, 99%, 40%);*/
+    /*--syntax-fg: hsl(230, 8%, 24%);*/
+    --syntax-bg: hsl(230, 1%, 98%);
+    /*--syntax-gutter: hsl(230, 1%, 62%);*/
+    /*--syntax-guide: hsla(230, 8%, 24%, 0.2);*/
+    /*--syntax-accent: hsl(230, 100%, 66%);*/
+    --syntax-selection-color: hsl(230, 1%, 90%);
+    --syntax-gutter-background-color-selected: hsl(230, 1%, 90%);
+    --syntax-cursor-line: hsla(230, 8%, 24%, 0.05);
+    /* An extra color used but not defined in the original variable list */
+    --syntax-extra-1: hsl(230, 1%, 78%);
+}
+
+.silk-colors_dark {
+    --mono-1: hsl(220, 14%, 71%);
+    --mono-2: hsl(220, 9%, 55%);
+    /* Custom change: this increases contrast with the background, making comments more readable */
+    --mono-3: hsl(220, 10%, 48%); /* Original value: hsl(220, 10%, 40%); */
+    --hue-1: hsl(187, 47%, 55%);
+    --hue-2: hsl(207, 82%, 66%);
+    --hue-3: hsl(286, 60%, 67%);
+    --hue-4: hsl(95, 38%, 62%);
+    --hue-5: hsl(355, 65%, 65%);
+    --hue-5-2: hsl(5, 48%, 51%);
+    --hue-6: hsl(29, 54%, 61%);
+    /*--hue-6-2: hsl(39, 67%, 69%);*/
+    /*--syntax-fg: hsl(220, 14%, 71%);*/
+    --syntax-bg: hsl(220, 13%, 18%);
+    /*--syntax-gutter: hsl(220, 14%, 45%);*/
+    /*--syntax-guide: hsla(220, 14%, 71%, 0.15);*/
+    /*--syntax-accent: hsl(220, 100%, 66%);*/
+    --syntax-selection-color: hsl(220, 13%, 28%);
+    --syntax-gutter-background-color-selected: hsl(220, 13%, 26%);
+    --syntax-cursor-line: hsla(220, 100%, 80%, 0.04);
+    /* An extra color used but not defined in the original variable list */
+    --syntax-extra-1: var(--syntax-selection-color);
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+    background: var(--syntax-bg);
+    color: var(--mono-1);
+    font-family: "Fira Code", "Fira Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    direction: ltr;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    line-height: 1.5;
+    tab-size: 2;
+}
+
+/* Selection */
+
+code[class*="language-"]::selection,
+code[class*="language-"] *::selection,
+pre[class*="language-"] *::selection {
+    background: var(--syntax-selection-color);
+    color: inherit;
+}
+
+.token.comment,
+.token.prolog,
+.token.cdata {
+    color: var(--mono-3);
+}
+
+.token.doctype,
+.token.punctuation,
+.token.entity {
+    color: var(--mono-1);
+}
+
+.token.attr-name,
+.token.class-name,
+.token.boolean,
+.token.constant,
+.token.number,
+.token.atrule {
+    color: var(--hue-6);
+}
+
+.token.keyword {
+    color: var(--hue-3);
+}
+
+.token.property,
+.token.tag,
+.token.symbol,
+.token.deleted,
+.token.important {
+    color: var(--hue-5);
+}
+
+.token.selector,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted,
+.token.regex,
+.token.attr-value,
+.token.attr-value > .token.punctuation {
+    color: var(--hue-4);
+}
+
+.token.variable,
+.token.operator,
+.token.function {
+    color: var(--hue-2);
+}
+
+.token.url {
+    color: var(--hue-1);
+}
+
+/* HTML overrides */
+.token.attr-value > .token.punctuation.attr-equals,
+.token.special-attr > .token.attr-value > .token.value.css {
+    color: var(--mono-1);
+}
+
+/* CSS overrides */
+.language-css .token.selector {
+    color: var(--hue-5);
+}
+
+.language-css .token.property {
+    color: var(--mono-1);
+}
+
+.language-css .token.function,
+.language-css .token.url > .token.function {
+    color: var(--hue-1);
+}
+
+.language-css .token.url > .token.string.url {
+    color: var(--hue-4);
+}
+
+.language-css .token.important,
+.language-css .token.atrule .token.rule {
+    color: var(--hue-3);
+}
+
+/* JS overrides */
+.language-javascript .token.operator {
+    color: var(--hue-3);
+}
+
+.language-javascript .token.template-string > .token.interpolation > .token.interpolation-punctuation.punctuation {
+    color: var(--hue-5-2);
+}
+
+/* JSON overrides */
+.language-json .token.operator {
+    color: var(--mono-1);
+}
+
+.language-json .token.null.keyword {
+    color: var(--hue-6);
+}
+
+/* MD overrides */
+.language-markdown .token.url,
+.language-markdown .token.url > .token.operator,
+.language-markdown .token.url-reference.url > .token.string {
+    color: var(--mono-1);
+}
+
+.language-markdown .token.url > .token.content {
+    color: var(--hue-2);
+}
+
+.language-markdown .token.url > .token.url,
+.language-markdown .token.url-reference.url {
+    color: var(--hue-1);
+}
+
+.language-markdown .token.blockquote.punctuation,
+.language-markdown .token.hr.punctuation {
+    color: var(--mono-3);
+    font-style: italic;
+}
+
+.language-markdown .token.code-snippet {
+    color: var(--hue-4);
+}
+
+.language-markdown .token.bold .token.content {
+    color: var(--hue-6);
+}
+
+.language-markdown .token.italic .token.content {
+    color: var(--hue-3);
+}
+
+.language-markdown .token.strike .token.content,
+.language-markdown .token.strike .token.punctuation,
+.language-markdown .token.list.punctuation,
+.language-markdown .token.title.important > .token.punctuation {
+    color: var(--hue-5);
+}
+
+/* General */
+.token.bold {
+    font-weight: bold;
+}
+
+.token.comment,
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+.token.namespace {
+    opacity: 0.8;
+}
+
+/* Plugin styles */
+
+/* Toolbar plugin */
+div.code-toolbar {
+    position: relative;
+}
+
+div.code-toolbar > .toolbar {
+    position: absolute;
+    z-index: 5;
+    top: .3em;
+    right: .2em;
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+}
+
+div.code-toolbar:hover > .toolbar,
+div.code-toolbar:focus-within > .toolbar {
+    opacity: 1;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item {
+    display: inline-block;
+    /* Space out all buttons and move them away from the right edge of the code block */
+    margin-right: 0.4em;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > a {
+    cursor: pointer;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > button {
+    border: 0;
+    font: inherit;
+    line-height: normal;
+    overflow: visible;
+    user-select: none;
+}
+
+/* Styling the buttons */
+div.code-toolbar > .toolbar > .toolbar-item > button,
+div.code-toolbar > .toolbar > .toolbar-item > a,
+div.code-toolbar > .toolbar > .toolbar-item > span {
+    background: var(--syntax-gutter-background-color-selected);
+    color: var(--mono-2);
+    padding: 0.1em 0.4em;
+    border-radius: 0.3em;
+    font-size: .8em;
+}
+
+div.code-toolbar > .toolbar > .toolbar-item > button:hover,
+div.code-toolbar > .toolbar > .toolbar-item > button:focus,
+div.code-toolbar > .toolbar > .toolbar-item > a:hover,
+div.code-toolbar > .toolbar > .toolbar-item > a:focus,
+div.code-toolbar > .toolbar > .toolbar-item > span:hover,
+div.code-toolbar > .toolbar > .toolbar-item > span:focus {
+    background: var(--syntax-extra-1);
+    color: var(--mono-1);
+    text-decoration: none;
+}
+
+/* Line Highlight plugin */
+pre[data-line] {
+    position: relative;
+    padding: 1em 0 1em 3em;
+}
+
+/* The highlighted line itself */
+.line-highlight {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: 1em; /* Same as .prism’s padding-top */
+    background: var(--syntax-cursor-line);
+    pointer-events: none;
+    line-height: inherit;
+    white-space: pre;
+}
+
+@media print {
+    .line-highlight {
+        /*
+         * This will prevent browsers from replacing the background color with white.
+         * It's necessary because the element is layered on top of the displayed code.
+         */
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+    }
+}
+
+/* Uncomment to add line numbers to highlighted lines */
+
+/*.line-highlight:before,*/
+/*.line-highlight[data-end]:after {*/
+/*    content: attr(data-start);*/
+/*    position: absolute;*/
+/*    top: .4em;*/
+/*    left: .6em;*/
+/*    min-width: 1em;*/
+/*    padding: 0 .5em;*/
+/*    background-color: hsla(24, 20%, 50%,.4);*/
+/*    color: hsl(24, 20%, 95%);*/
+/*    font: bold 65%/1.5 sans-serif;*/
+/*    text-align: center;*/
+/*    vertical-align: .3em;*/
+/*    border-radius: 999px;*/
+/*    text-shadow: none;*/
+/*    box-shadow: 0 1px white;*/
+/*}*/
+
+/*.line-highlight[data-end]:after {*/
+/*    content: attr(data-end);*/
+/*    top: auto;*/
+/*    bottom: .4em;*/
+/*}*/
+
+/* Diff Highlight plugin */
+/* Taken from https://github.com/atom/github/blob/master/styles/variables.less */
+pre.diff-highlight > code .token.deleted:not(.prefix),
+pre > code.diff-highlight .token.deleted:not(.prefix) {
+    background-color: hsla(353, 100%, 66%, 0.15);
+    color: inherit;
+    display: block;
+}
+
+pre.diff-highlight > code .token.deleted:not(.prefix)::selection,
+pre.diff-highlight > code .token.deleted:not(.prefix) *::selection,
+pre > code.diff-highlight .token.deleted:not(.prefix)::selection,
+pre > code.diff-highlight .token.deleted:not(.prefix) *::selection {
+    background-color: hsla(353, 95%, 66%, 0.25);
+}
+
+pre.diff-highlight > code .token.inserted:not(.prefix),
+pre > code.diff-highlight .token.inserted:not(.prefix) {
+    background-color: hsla(137, 100%, 55%, 0.15);
+    color: inherit;
+    display: block;
+}
+
+pre.diff-highlight > code .token.inserted:not(.prefix)::selection,
+pre.diff-highlight > code .token.inserted:not(.prefix) *::selection,
+pre > code.diff-highlight .token.inserted:not(.prefix)::selection,
+pre > code.diff-highlight .token.inserted:not(.prefix) *::selection {
+    background-color: hsla(135, 73%, 55%, 0.25);
+}

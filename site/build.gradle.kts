@@ -26,10 +26,10 @@ kobweb {
             head.add {
                 link {
                     rel = "stylesheet"
-                    href = "/highlight.js/styles/dracula.css"
+                    href = "/prism/prism.css"
                 }
                 script {
-                    src = "/highlight.js/highlight.min.js"
+                    src = "/prism/prism.js"
                 }
 
                 link(rel = "stylesheet", href = "/fonts/faces.css")
