@@ -46,7 +46,7 @@ fun PageContext.RouteInfo.toArticleHandle(): ArticleHandle? {
 val ArticleStyle = CssStyle {
     base {
         Modifier
-            .padding(top = 3.cssRem, leftRight = 1.25.cssRem, bottom = 2.cssRem)
+            .padding(top = 3.cssRem, leftRight = 1.cssRem, bottom = 2.cssRem)
             .siteText(SiteTextSize.NORMAL)
     }
     Breakpoint.MD {
@@ -56,7 +56,7 @@ val ArticleStyle = CssStyle {
     descendants("ul", "ol", "menu") {
         Modifier
             .listStyle(ListStyleType.Revert)
-            .paddingInline(2.cssRem)
+            .paddingInline(start = 1.5.cssRem)
     }
     descendants("table") {
         Modifier
