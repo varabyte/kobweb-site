@@ -13,6 +13,7 @@ import com.varabyte.kobweb.silk.init.InitSilk
 import com.varabyte.kobweb.silk.init.InitSilkContext
 import com.varabyte.kobweb.silk.init.layer
 import com.varabyte.kobweb.silk.init.registerStyleBase
+import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
 import com.varabyte.kobweb.silk.style.layer.SilkLayer
 import com.varabyte.kobweb.silk.style.toModifier
@@ -65,16 +66,29 @@ fun initSilk(ctx: InitSilkContext) {
 
         val headerCommon = Modifier
             .fontWeight(FontWeight.SemiBold)
-            .margin { top(1.6.cssRem); bottom(0.75.cssRem) }
+            .margin { top(1.5.cssRem); bottom(1.cssRem) }
+            .lineHeight(1.2)
 
-        registerStyleBase("h1") {
-            headerCommon.fontSize(2.25.cssRem)
+        registerStyle("h1") {
+            base {
+                headerCommon
+                    .fontSize(2.25.cssRem)
+                    .margin { bottom(1.5.cssRem) }
+            }
+            Breakpoint.MD {
+                Modifier.fontSize(2.5.cssRem)
+            }
         }
 
-        registerStyleBase("h2") {
-            headerCommon
-                .fontSize(1.875.cssRem)
-                .margin { top(2.2.cssRem) }
+        registerStyle("h2") {
+            base {
+                headerCommon
+                    .fontSize(1.625.cssRem)
+                    .margin { top(2.2.cssRem) }
+            }
+            Breakpoint.MD {
+                Modifier.fontSize(1.875.cssRem)
+            }
         }
 
         registerStyleBase("h3") {
