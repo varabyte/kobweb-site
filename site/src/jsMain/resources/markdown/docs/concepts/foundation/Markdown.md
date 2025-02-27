@@ -7,7 +7,7 @@ imports:
   - com.varabyte.kobweb.silk.components.display.OutlinedCalloutVariant
 ---
 
-If you create a markdown file under the `jsMain/resources/markdown` folder, a corresponding page will be created for you
+If you create a Markdown file under the `jsMain/resources/markdown` folder, a corresponding page will be created for you
 at build time, using the filename as its path.
 
 For example, if I create the following file:
@@ -55,8 +55,8 @@ fun AuthorWidget() {
 
 ### Root
 
-Within your front matter, there's a special value which, if set, will be used to render a root `@Composable` that adds
-the rest of your markdown code as its content. This is useful for specifying a layout for example:
+Within your front matter, there's a special value which, if set, will be used to render a root `@Composable` that wraps
+the rest of your Markdown code as its content. This is useful for specifying a layout for example:
 
 ```text
 ---
@@ -69,12 +69,10 @@ root: .components.layout.DocsLayout
 The above will generate code like the following:
 
 ```kotlin
-import com.mysite.components.layout.DocsLayout
-
 @Composable
 @Page
 fun KobwebPage() {
-  DocsLayout {
+    com.mysite.components.layout.DocsLayout {
     H1 {
       Text("Kobweb Tutorial")
     }
@@ -82,8 +80,12 @@ fun KobwebPage() {
 }
 ```
 
-If you have a default root that you'd like to use in most / all of your markdown files, you can specify it in the
-markdown block in your build script:
+> [!NOTE]
+> You may have noticed that the code path above is prefixed with a `.` (here, `.components.layouts.DocsLayout`).
+> Whenever you do that in Kobweb Markdown, the framework will detect it and convert it to your site's full package.
+
+If you have a default root that you'd like to use in most / all of your Markdown files, you can specify it in the
+`markdown` block in your build script:
 
 ```kotlin
 // site/build.gradle.kts
@@ -126,8 +128,8 @@ enables special syntax that can be used to insert live Kotlin code into your pag
 
 ### Block syntax
 
-Usually, you will define widgets that belong in their own section. Just use three triple-curly braces to insert a
-function that lives in its own block:
+Usually, you will define widgets that stand alone, without text or other components crowding around them. For this case,
+use three triple-curly braces (this of this like Markdown's triple \`\`\` tick syntax, but for code):
 
 ```markdown
 # Kobweb Tutorial
@@ -137,7 +139,7 @@ function that lives in its own block:
 {{{ .components.widgets.VisitorCounter }}}
 ```
 
-which will generate code for you like the following:
+This will generate code for you like the following:
 
 ```kotlin
 @Composable
@@ -147,10 +149,6 @@ fun KobwebPage() {
   com.mysite.components.widgets.VisitorCounter()
 }
 ```
-
-You may have noticed that the code path in the markdown file is prefixed with a `.` (as in
-`.components.widgets.VisitorCounter`). When you do that, Kobweb will detect it and convert it to your site's full
-package.
 
 ### Inline syntax
 
@@ -167,7 +165,7 @@ Press ${.components.widgets.ColorButton} to toggle the site's current color.
 
 ## Imports
 
-You may wish to add imports to the code generated from your markdown. Kobweb Markdown supports registering both
+You may wish to add imports to the code generated from your Markdown. Kobweb Markdown supports registering both
 *global* imports (imports that will be added to every generated file) and *local* imports (those that will only apply
 to a single target file).
 
@@ -185,8 +183,7 @@ kobweb {
 }
 ```
 
-Notice that you can begin your path with a "." to tell the Kobweb Markdown plugin to prepend your site's package to it.
-The above would ensure that every markdown file generated would have the following import:
+The above would ensure that every Markdown file generated would have the following import:
 
 ```kotlin
 import com.mysite.components.widgets.*
@@ -206,13 +203,13 @@ Press ${ColorButton} to toggle the site's current color.
 
 ### Local Imports
 
-Local imports are specified in your markdown's front matter (and can even be used by the root declaration!):
+Local imports are specified in your Markdown's front matter (and can even be used by the root declaration!):
 
 ```text
 ---
 root: DocsLayout
 imports:
-  - .components.sections.DocsLayout
+  - .components.layouts.DocsLayout
   - .components.widgets.VisitorCounter
 ---
 
@@ -343,7 +340,7 @@ kobweb {
 }
 ```
 
-You can also specify the variant from within the markdown syntax, passing it in as a parameter using a curly brace
+You can also specify the variant from within the Markdown syntax, passing it in as a parameter using a curly brace
 syntax:
 
 ```markdown
@@ -382,7 +379,7 @@ kobweb {
 }
 ```
 
-That's it! At this point, you can use it in your markdown:
+That's it! At this point, you can use it in your Markdown:
 
 ```markdown
 > [!CUSTOM]
@@ -391,13 +388,13 @@ That's it! At this point, you can use it in your markdown:
 
 ## Iterating over all markdown files
 
-It can be really useful to process all markdown files when your site is being built. A common example is to collect all
-markdown articles and generate a listing page from them.
+It can be really useful to process all Markdown files when your site is being built. A common example is to collect all
+Markdown articles and generate a listing page from them.
 
 You can actually do this using pure Gradle code, but it is common enough that Kobweb provides a convenience API, via the
 `markdown` block's `process` callback.
 
-You can register a callback that will be triggered at build time with a list of all markdown files in your project.
+You can register a callback that will be triggered at build time with a list of all Markdown files in your project.
 
 ```kotlin
 kobweb {
