@@ -84,17 +84,20 @@ jobs:
 
 You can copy this workflow into your own GitHub project and then modify it to your needs.
 
-Some notes...
+We tagged some of the workflow code above with lettered comments (`#A`, `#B`, ...). Here are some additional notes about
+those sections:
 
-* ***workflow_dispatch (A):*** This means that you can manually trigger this workflow from the GitHub UI, which I
-  suggested here to prevent running an expensive export operation more than you need to. Of course, you can also
-  configure your workflow to run on a schedule, or on push to a branch, etc.
-* ***Setup Gradle (B):*** This action is optional but I recommend it because it configures a bunch of caching for you.
-* ***Caching the browser (C):*** `kobweb export` needs to download a browser the first time it is run. This workflow sets up
+* ***(A) `workflow_dispatch`:*** This means that you can manually trigger this workflow from the GitHub UI, which I
+  suggested here to prevent running a potentially expensive export operation without your direct involvement. Of course,
+  you can also configure your workflow to run on a schedule, or on push to a branch, etc. Please refer to
+  the [relevant GitHub docs](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows)
+  for a full list of events you can use.
+* ***(B) Setup Gradle:*** This action is optional but I recommend it because it configures a bunch of caching for you.
+* ***(C) Caching the browser:*** `kobweb export` needs to download a browser the first time it is run. This workflow sets up
   a cache that saves it across runs. The cache is tagged with a unique ID tied to the current browser version used by
   Kobweb. If this ever changes in a future release, GitHub will be instructed to use a new cache bucket (allowing
   GitHub to eventually clean up the old one).
-* ***Upload site (D):*** This action uploads the exported site as an artifact. You can then download the artifact from the
+* ***(D) Upload site:*** This action uploads the exported site as an artifact. You can then download the artifact from the
   workflow summary page. Your own workflow will likely delete this action and do something else here, like upload to a
   web server (or some location accessible by your web server) or copy files over into a `gh_pages` repository. I've
   included this here (and set the retention days very low) just so you can verify that the workflow is working for your
