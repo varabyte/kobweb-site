@@ -21,6 +21,8 @@ version = "1.0-SNAPSHOT"
 kobweb {
     app {
         index {
+            description.set("The official Kobweb site")
+
             head.add {
                 link {
                     rel = "stylesheet"
