@@ -16,7 +16,6 @@ individual contributors for the features they helped us out with.
   * API and framework design
   * Documentation
   * Community management
-  
 * [Dennis Tsar](https://github.com/DennisTsar)
   * Gradle modernization / KSP migration
   * Major `CssStyle` redesign (used to be `ComponentStyle`)

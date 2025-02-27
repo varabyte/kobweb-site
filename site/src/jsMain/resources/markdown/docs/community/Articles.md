@@ -9,7 +9,7 @@ If you write one and would like us to share it here, please reach out to us with
 ## General
 
 * [Exploring Kobweb: A New Framework for Compose Web Development](https://medium.com/@b.vogtman/exploring-kobweb-4d54f9288ce)
-  <br>by Barret Vogtman 
+  <br>by Barret Vogtman
 * [Build Awesome Sites Using Kobweb](https://medium.com/@binayshaw7777/unleash-the-power-of-kotlin-build-awesome-sites-using-kobweb-dbe588b0c2fb)
   <br>by Binay Shaw
 
