@@ -119,17 +119,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
     val ctx = rememberPageContext()
 
     val articleHandle = ctx.markdown?.let { ctx.route.toArticleHandle() }
-    val title = buildList {
-        if (articleHandle != null) {
-            articleHandle.article.title.takeIf { it.isNotEmpty() }?.let { add(it) }
-            articleHandle.subcategory.title.takeIf { it.isNotEmpty() }?.let { add(it) }
-            articleHandle.category.title.takeIf { it.isNotEmpty() }?.let { add(it) }
-        }
-
-        if (this.isEmpty()) {
-            add("Docs")
-        }
-    }.joinToString(" - ")
+    val title = articleHandle?.article?.titleOrFallback?.takeIf { it.isNotEmpty() } ?: "Docs"
 
     PageLayout(title) {
         MobileLocalNav()
