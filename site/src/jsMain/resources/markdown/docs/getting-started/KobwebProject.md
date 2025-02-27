@@ -1,4 +1,5 @@
 ---
+title: Creating and Running a Kobweb Project
 follows: GettingKobweb
 ---
 

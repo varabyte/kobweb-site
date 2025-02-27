@@ -1,5 +1,5 @@
 ---
-follows: CreatingAndRunningAKobwebProject
+follows: KobwebProject
 ---
 
 When you create a Kobweb site from any of the provided Kobweb templates, they will already be set up in the way that
