@@ -49,7 +49,7 @@ fun HeroCode() {
         @Composable
         fun HomePage() {
           Column(
-            Modifier.fillMaxWidth().whiteSpace(WhiteSpace.PreWrap).textAlign(TextAlign.Center),,
+            Modifier.fillMaxWidth().whiteSpace(WhiteSpace.PreWrap).textAlign(TextAlign.Center),
             horizontalAlignment = Alignment.CenterHorizontally
           ) {
             var colorMode by ColorMode.currentState
