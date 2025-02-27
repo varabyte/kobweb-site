@@ -22,7 +22,7 @@ import org.jetbrains.compose.web.dom.Div
 @Composable
 fun PageLayout(title: String, content: @Composable () -> Unit) {
     LaunchedEffect(title) {
-        document.title = "Kobweb - $title"
+        document.title = "$title | Kobweb"
     }
 
     val ctx = rememberPageContext()
