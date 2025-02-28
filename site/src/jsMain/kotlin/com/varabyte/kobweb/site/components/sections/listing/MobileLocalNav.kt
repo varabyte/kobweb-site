@@ -15,6 +15,8 @@ import com.varabyte.kobweb.silk.components.forms.ButtonStyle
 import com.varabyte.kobweb.silk.components.icons.ChevronDownIcon
 import com.varabyte.kobweb.silk.components.icons.ChevronRightIcon
 import com.varabyte.kobweb.silk.components.text.SpanText
+import com.varabyte.kobweb.silk.init.InitSilk
+import com.varabyte.kobweb.silk.init.InitSilkContext
 import com.varabyte.kobweb.silk.style.addVariantBase
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.breakpoint.displayUntil
@@ -32,6 +34,18 @@ import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Div
+
+val MobileNavHeight by StyleVariable<CSSLengthNumericValue>()
+
+private val MaxMobileBreakpoint = Breakpoint.MD
+
+@InitSilk
+fun initMobileNavHeight(ctx: InitSilkContext) = with(ctx.stylesheet) {
+    registerStyle("html") {
+        base { Modifier.setVariable(MobileNavHeight, 2.75.cssRem) }
+        MaxMobileBreakpoint { Modifier.setVariable(MobileNavHeight, 0.px) }
+    }
+}
 
 val UnsizedButtonStyle = ButtonStyle.addVariantBase {
     Modifier
@@ -61,22 +75,22 @@ fun MobileLocalNav() {
     Column(
         NavHeaderBackgroundStyle.toModifier()
             .position(Position.Fixed)
-            .displayUntil(Breakpoint.MD)
+            .displayUntil(MaxMobileBreakpoint)
             .top(NavHeaderHeight.value())
             .thenIf(open, NavHeaderDarkenedBackgroundStyle.toModifier().bottom(0.px))
             .fillMaxWidth()
-            .padding(leftRight = 1.cssRem, topBottom = 0.5.cssRem)
+            .padding(leftRight = 1.cssRem)
     ) {
         Button(
             onClick = { open = !open },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().height(MobileNavHeight.value()),
             variant = UnstyledButtonVariant
         ) {
             // Even though the button content is a row, this row is needed for vertical alignment with the text & icon
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(topBottom = 0.25.cssRem)
+                    .padding(topBottom = 0.75.cssRem)
                     .gap(0.5.cssRem)
                     .alignItems(AlignItems.Stretch), // Nicer vertical alignment
             ) {
@@ -88,7 +102,7 @@ fun MobileLocalNav() {
             Div(
                 Modifier
                     .fillMaxWidth()
-                    .padding(topBottom = 1.cssRem, leftRight = 0.5.cssRem)
+                    .padding(top = 0.5.cssRem, leftRight = 0.5.cssRem, bottom = 1.cssRem)
                     .overflow(Overflow.Hidden, Overflow.Auto)
                     // Note: this only disables scroll-through when the nav content is actually scrollable,
                     // which is not currently the case, though likely will happen when more content is added

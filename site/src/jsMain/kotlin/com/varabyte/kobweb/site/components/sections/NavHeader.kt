@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.varabyte.kobweb.browser.dom.ElementTarget
+import com.varabyte.kobweb.compose.css.CSSLengthNumericValue
 import com.varabyte.kobweb.compose.css.StyleVariable
 import com.varabyte.kobweb.compose.css.functions.blur
 import com.varabyte.kobweb.compose.css.functions.saturate
@@ -24,7 +25,10 @@ import com.varabyte.kobweb.silk.components.icons.fa.FaDiscord
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.overlay.Tooltip
+import com.varabyte.kobweb.silk.init.InitSilk
+import com.varabyte.kobweb.silk.init.InitSilkContext
 import com.varabyte.kobweb.silk.style.CssStyle
+import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
 import com.varabyte.kobweb.silk.style.extendedByBase
 import com.varabyte.kobweb.silk.style.selectors.hover
@@ -41,7 +45,15 @@ import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Img
 
-val NavHeaderHeight by StyleVariable(64.px)
+val NavHeaderHeight by StyleVariable<CSSLengthNumericValue>()
+
+@InitSilk
+fun initNavHeaderHeight(ctx: InitSilkContext) = with(ctx.stylesheet) {
+    registerStyle("html") {
+        base { Modifier.setVariable(NavHeaderHeight, 56.px) }
+        Breakpoint.MD { Modifier.setVariable(NavHeaderHeight, 64.px) }
+    }
+}
 
 val NavHeaderBackgroundStyle = SmoothColorStyle.extendedByBase {
     Modifier
