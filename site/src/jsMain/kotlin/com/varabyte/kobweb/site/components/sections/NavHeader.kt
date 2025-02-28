@@ -107,12 +107,12 @@ private fun getNavBackgroundColor(colorMode: ColorMode): Color.Rgb {
 }
 
 // The nav header needs a higher z-index to be shown above elements with `position: sticky`
-private val ZIndexModifier = Modifier.zIndex(10)
+fun Modifier.navHeaderZIndex() = this.zIndex(10)
 
 @Composable
 fun NavHeader() {
     var colorMode by ColorMode.currentState
-    Box(NavHeaderStyle.toModifier().then(ZIndexModifier), contentAlignment = Alignment.Center) {
+    Box(NavHeaderStyle.toModifier().navHeaderZIndex(), contentAlignment = Alignment.Center) {
         Row(
             Modifier.fillMaxWidth(90.percent),
             verticalAlignment = Alignment.CenterVertically
@@ -129,12 +129,12 @@ fun NavHeader() {
                 Link("https://github.com/varabyte/kobweb", HoverBrightenStyle.toModifier()) {
                     FaGithub()
                 }
-                Tooltip(ElementTarget.PreviousSibling, "Kobweb source on GitHub", ZIndexModifier)
+                Tooltip(ElementTarget.PreviousSibling, "Kobweb source on GitHub", Modifier.navHeaderZIndex())
 
                 Link("https://discord.gg/5NZ2GKV5Cs", HoverBrightenStyle.toModifier()) {
                     FaDiscord()
                 }
-                Tooltip(ElementTarget.PreviousSibling, "Chat with us on Discord", ZIndexModifier)
+                Tooltip(ElementTarget.PreviousSibling, "Chat with us on Discord", Modifier.navHeaderZIndex())
 
                 Button(
                     onClick = { colorMode = colorMode.opposite },
@@ -146,7 +146,7 @@ fun NavHeader() {
                         ColorMode.LIGHT -> MoonIcon()
                     }
                 }
-                Tooltip(ElementTarget.PreviousSibling, "Toggle color mode", ZIndexModifier)
+                Tooltip(ElementTarget.PreviousSibling, "Toggle color mode", Modifier.navHeaderZIndex())
             }
         }
     }
