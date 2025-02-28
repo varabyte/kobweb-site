@@ -28,6 +28,7 @@ import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.site.components.sections.NavHeaderBackgroundStyle
 import com.varabyte.kobweb.site.components.sections.NavHeaderDarkenedBackgroundStyle
 import com.varabyte.kobweb.site.components.sections.NavHeaderHeight
+import com.varabyte.kobweb.site.components.sections.navHeaderZIndex
 import com.varabyte.kobweb.site.model.listing.SITE_LISTING
 import org.jetbrains.compose.web.css.Position
 import org.jetbrains.compose.web.css.cssRem
@@ -80,6 +81,7 @@ fun MobileLocalNav() {
             .thenIf(open, NavHeaderDarkenedBackgroundStyle.toModifier().bottom(0.px))
             .fillMaxWidth()
             .padding(leftRight = 1.cssRem)
+            .navHeaderZIndex()
     ) {
         Button(
             onClick = { open = !open },
