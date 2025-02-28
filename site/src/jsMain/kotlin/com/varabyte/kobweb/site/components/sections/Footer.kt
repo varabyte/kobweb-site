@@ -11,23 +11,26 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.navigation.Anchor
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
+import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.dividerBoxShadow
 import com.varabyte.kobweb.site.components.style.siteText
-import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.css.cssRem
+import org.jetbrains.compose.web.css.em
+import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Img
 import org.jetbrains.compose.web.dom.Span
 import org.jetbrains.compose.web.dom.Text
-import com.varabyte.kobweb.silk.components.navigation.Link as SilkLink
 
 @Composable
 private fun OssLabel() {
     Span(Modifier.margin(bottom = 2.cssRem).whiteSpace(WhiteSpace.PreWrap).textAlign(TextAlign.Center).toAttrs()) {
         FaGithub(Modifier.margin(right = 8.px))
         Text("This site is ")
-        SilkLink("https://github.com/varabyte/kobweb-site", "open source")
+        Link("https://github.com/varabyte/kobweb-site", "open source")
         Text(".")
     }
 }
@@ -40,11 +43,7 @@ private fun Logo() {
         Box(Modifier.margin(4.px)) {
             Img(
                 "/images/logo.png",
-                attrs = {
-                    style {
-                        height(18.px)
-                    }
-                }
+                attrs = Modifier.height(18.px).toAttrs()
             )
         }
     }

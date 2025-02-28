@@ -16,9 +16,9 @@ import org.jetbrains.compose.web.css.px
 sealed interface SectionKind : ComponentKind
 
 val SectionStyle = CssStyle.base<SectionKind> {
-       Modifier.width(100.percent)
-           .maxWidth(1024.px)
-           .padding(top = 4.cssRem, bottom = 0.cssRem, left = 2.cssRem, right = 2.cssRem)
+    Modifier.width(100.percent)
+        .maxWidth(1024.px)
+        .padding(top = 4.cssRem, leftRight = 2.cssRem)
 }
 
 /**
@@ -31,5 +31,9 @@ fun Section(
     variant: CssStyleVariant<SectionKind>? = null,
     content: @Composable ColumnScope.() -> Unit = {}
 ) {
-    Column(SectionStyle.toModifier(variant).then(modifier), horizontalAlignment = horizontalAlignment, content = content)
+    Column(
+        SectionStyle.toModifier(variant).then(modifier),
+        horizontalAlignment = horizontalAlignment,
+        content = content
+    )
 }
