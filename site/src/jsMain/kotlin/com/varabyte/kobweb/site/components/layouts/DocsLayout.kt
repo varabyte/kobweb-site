@@ -107,10 +107,6 @@ val ArticleStyle = CssStyle {
     descendants(*((2..6).map { level -> "h$level" }.toTypedArray())) {
         // By making the header full width, it means when the user mouses over the entire line they'll see the link
         Modifier.fillMaxWidth()
-
-        // This is an alternative to scrollPadding on the html
-//        Modifier.scrollMargin(top = 5.5.cssRem)
-
     }
 }
 
