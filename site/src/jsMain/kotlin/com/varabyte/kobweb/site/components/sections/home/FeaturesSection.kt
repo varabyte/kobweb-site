@@ -1,7 +1,6 @@
 package com.varabyte.kobweb.site.components.sections.home
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import com.varabyte.kobweb.compose.css.CSSPosition
 import com.varabyte.kobweb.compose.css.FontWeight
@@ -48,16 +47,12 @@ val FeatureItemStyle = CssStyle.base {
 
 @Composable
 private fun FeatureItem(feature: Feature) {
-    val colorMode by ColorMode.currentState
-
     Box(
-        FeatureItemStyle.toModifier().then(
-            Modifier
-                .borderRadius(12.px)
-                .background(colorMode)
-                .padding(2.em)
-                .dividerBoxShadow()
-        )
+        FeatureItemStyle.toModifier()
+            .borderRadius(12.px)
+            .background(ColorMode.current)
+            .padding(2.em)
+            .dividerBoxShadow()
     ) {
         Column {
             SpanText(feature.heading, Modifier.fontWeight(FontWeight.Bold).margin(bottom = 0.75.cssRem))

@@ -29,7 +29,6 @@ import com.varabyte.kobweb.site.components.style.dividerBoxShadow
 import com.varabyte.kobweb.site.components.style.siteText
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.ms
-import org.jetbrains.compose.web.css.px
 
 val CtaGridItemStyle = CssStyle {
     base {
@@ -54,9 +53,9 @@ private fun CtaGridItem(
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(topBottom = 0.px, leftRight = 3.cssRem).dividerBoxShadow()
+        modifier = Modifier.padding(leftRight = 3.cssRem).dividerBoxShadow()
     ) {
-        Anchor(href, attrs = CtaGridItemStyle.toAttrs(), content = {
+        Anchor(href, attrs = CtaGridItemStyle.toAttrs()) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 content()
                 SpanText(
@@ -67,12 +66,12 @@ private fun CtaGridItem(
                     subText,
                     Modifier
                         .siteText(SiteTextSize.NORMAL)
-                        .margin(top = 1.cssRem, bottom = 1.cssRem)
+                        .margin(topBottom = 1.cssRem)
                         .textAlign(TextAlign.Center),
                     MutedSpanTextVariant
                 )
             }
-        })
+        }
     }
 }
 

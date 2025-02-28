@@ -13,9 +13,9 @@ import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.forms.ButtonVars
+import com.varabyte.kobweb.silk.components.icons.MoonIcon
+import com.varabyte.kobweb.silk.components.icons.SunIcon
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
-import com.varabyte.kobweb.silk.components.icons.fa.FaMoon
-import com.varabyte.kobweb.silk.components.icons.fa.FaSun
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.Surface
 import com.varabyte.kobweb.silk.components.layout.numColumns
@@ -35,8 +35,14 @@ import com.varabyte.kobweb.site.components.widgets.GradientBox
 import com.varabyte.kobweb.site.components.widgets.LinkButton
 import com.varabyte.kobweb.site.components.widgets.Section
 import com.varabyte.kobweb.site.components.widgets.code.CodeBlock
-import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.*
+import org.jetbrains.compose.web.css.cssRem
+import org.jetbrains.compose.web.css.em
+import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.dom.H1
+import org.jetbrains.compose.web.dom.H3
+import org.jetbrains.compose.web.dom.Span
+import org.jetbrains.compose.web.dom.Text
 
 private val DARK_BACKGROUND = Color.rgb(25, 25, 25)
 private val LIGHT_BACKGROUND = DARK_BACKGROUND.inverted()
@@ -101,7 +107,7 @@ fun HeroExample() {
                 onClick = { localColorMode = localColorMode.opposite },
                 Modifier.borderRadius(50.percent).padding(0.px).align(Alignment.End)
             ) {
-                if (localColorMode.isLight) FaMoon() else FaSun()
+                if (localColorMode.isLight) MoonIcon() else SunIcon()
             }
             // We have to slightly tweak header settings here from the actual code sample above since
             // the overall site overloads H1 values from the default
@@ -137,7 +143,7 @@ fun HeroSection() {
     GradientBox(contentAlignment = Alignment.Center) {
         Section {
             Column(
-                Modifier.margin(left = 3.em, right = 3.em, top = 3.em),
+                Modifier.margin(top = 3.em, leftRight = 3.em),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 H1 {
@@ -165,7 +171,7 @@ fun HeroSection() {
             }
 
             Column(
-                Modifier.margin(top = 32.px, bottom = 32.px).displayIfAtLeast(Breakpoint.MD),
+                Modifier.margin(topBottom = 32.px).displayIfAtLeast(Breakpoint.MD),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 HeroExample()
