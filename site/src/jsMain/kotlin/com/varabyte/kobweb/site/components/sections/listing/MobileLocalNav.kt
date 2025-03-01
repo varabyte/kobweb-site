@@ -8,7 +8,6 @@ import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.forms.ButtonStyle
@@ -17,22 +16,24 @@ import com.varabyte.kobweb.silk.components.icons.ChevronRightIcon
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.init.InitSilk
 import com.varabyte.kobweb.silk.init.InitSilkContext
-import com.varabyte.kobweb.silk.style.addVariantBase
+import com.varabyte.kobweb.silk.style.*
 import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.breakpoint.displayUntil
-import com.varabyte.kobweb.silk.style.cssRules
-import com.varabyte.kobweb.silk.style.extendedBy
 import com.varabyte.kobweb.silk.style.selectors.active
 import com.varabyte.kobweb.silk.style.selectors.hover
-import com.varabyte.kobweb.silk.style.toModifier
+import com.varabyte.kobweb.silk.theme.name
 import com.varabyte.kobweb.site.components.sections.NavHeaderBackgroundStyle
 import com.varabyte.kobweb.site.components.sections.NavHeaderDarkenedBackgroundStyle
 import com.varabyte.kobweb.site.components.sections.NavHeaderHeight
 import com.varabyte.kobweb.site.components.sections.navHeaderZIndex
 import com.varabyte.kobweb.site.model.listing.SITE_LISTING
+import kotlinx.browser.document
+import kotlinx.dom.addClass
+import kotlinx.dom.removeClass
 import org.jetbrains.compose.web.css.Position
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.percent
+import org.jetbrains.compose.web.css.plus
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Div
 
@@ -69,16 +70,20 @@ val UnstyledButtonVariant = UnsizedButtonStyle.extendedBy {
     }
 }
 
+val FixedNoScrollStyle = CssStyle {
+    until(MaxMobileBreakpoint) {
+        Modifier.overflow { y(Overflow.Hidden) }
+    }
+}
 
 @Composable
 fun MobileLocalNav() {
     var open by remember { mutableStateOf(false) }
     Column(
         NavHeaderBackgroundStyle.toModifier()
-            .position(Position.Fixed)
             .displayUntil(MaxMobileBreakpoint)
+            .position(Position.Sticky)
             .top(NavHeaderHeight.value())
-            .thenIf(open, NavHeaderDarkenedBackgroundStyle.toModifier().bottom(0.px))
             .fillMaxWidth()
             .padding(leftRight = 1.cssRem)
             .navHeaderZIndex()
@@ -100,20 +105,26 @@ fun MobileLocalNav() {
                 SpanText("Menu")
             }
         }
-        if (open) {
-            Div(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 0.5.cssRem, leftRight = 0.5.cssRem, bottom = 1.cssRem)
-                    .overflow(Overflow.Hidden, Overflow.Auto)
-                    // Note: this only disables scroll-through when the nav content is actually scrollable,
-                    // which is not currently the case, though likely will happen when more content is added
-                    .overscrollBehavior(OverscrollBehavior.Contain)
-                    .bottom(0.px)
-                    .toAttrs()
-            ) {
-                ListingSidebar(SITE_LISTING)
-            }
+    }
+    if (open) {
+        DisposableEffect(Unit) {
+            // Prevent scrolling under the menu from the top of the screen (which the menu div does not cover)
+            document.body?.addClass(FixedNoScrollStyle.name)
+            onDispose { document.body?.removeClass(FixedNoScrollStyle.name) }
+        }
+        Div(
+            NavHeaderDarkenedBackgroundStyle.toModifier()
+                .displayUntil(MaxMobileBreakpoint)
+                .position(Position.Fixed)
+                .top(NavHeaderHeight.value() + MobileNavHeight.value())
+                .bottom(0.px)
+                .fillMaxWidth()
+                .padding(1.cssRem)
+                .overflow(Overflow.Hidden, Overflow.Auto)
+                .navHeaderZIndex()
+                .toAttrs()
+        ) {
+            ListingSidebar(SITE_LISTING)
         }
     }
 }
