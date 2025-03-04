@@ -13,17 +13,21 @@ Silk uses them, so users can still benefit from the feature.
 
 ## Default layers
 
-By default, Silk defines six layers (from lowest to highest ordering priority):
+By default, Silk defines seven layers (from lowest to highest ordering priority):
 
 1. reset
-2. base
-3. component-styles
-4. component-variants
-5. restricted-styles
-6. general-styles
+2. kobweb-compose
+3. base
+4. component-styles
+5. component-variants
+6. restricted-styles
+7. general-styles
 
 The *reset* layer is useful for defining CSS rules that exist to compensate for browser defaults that are inconsistent
 with each other or to override values that exist for legacy reasons that modern web design has moved away from.
+
+The *kobweb-compose* layer contains styles we use to power the composable concepts we ported over from Jetpack Compose
+(e.g. functions like `Box`, `Column`, and `Row`).
 
 The *base* layer is actually not used by Silk (this may change someday), but it is provided as a useful place for users
 to define global styles that should get easily overridden by any other CSS rule defined elsewhere in your project.
@@ -84,7 +88,7 @@ val ImportantStyle = CssStyle { /* ... */ }
 >
 > If you don't do this, the browser will append any unknown layer to the end of the CSS layer list (which is the highest
 > priority spot). In many cases this will be fine, but being explicit both expresses your intention clearly and reduces
-> the chance of your site breaking in subtle ways when a future developer adds a new layer in the future.
+> the chance of your site breaking in subtle ways when a future developer adds a new layer.
 >
 > Silk will print out a warning to the console if it detects any unregistered layers.
 
