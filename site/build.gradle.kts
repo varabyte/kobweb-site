@@ -31,6 +31,10 @@ kobweb {
                 script {
                     src = "/prism/prism.js"
                 }
+                link {
+                    rel = "stylesheet"
+                    href = "https://cdn.jsdelivr.net/npm/@docsearch/css@3"
+                }
 
                 link(rel = "stylesheet", href = "/fonts/faces.css")
             }
@@ -96,6 +100,7 @@ kotlin {
             implementation(libs.kobweb.silk.core)
             implementation(libs.kobweb.silk.icons.fa)
             implementation(libs.kobwebx.markdown)
+            implementation(npm("@docsearch/js", "3.9.0"))
         }
     }
 }
