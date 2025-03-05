@@ -27,7 +27,7 @@ val HoverLinkStyle = CssStyle {
             .margin(left = 0.5.em)
     }
 
-    cssRule(":is(:hover > *), :focus") { Modifier.opacity(80.percent) }
+    cssRule(":is(:hover > *, :focus)") { Modifier.opacity(80.percent) }
 }
 
 /**
@@ -35,9 +35,11 @@ val HoverLinkStyle = CssStyle {
  */
 @Composable
 fun HoverLink(href: String, modifier: Modifier = Modifier) {
-    Link(href,
+    Link(
+        href,
         HoverLinkStyle.toModifier()
-            .onClick { (document.activeElement as? HTMLElement)?.clearFocus() },
+            .onClick { (document.activeElement as? HTMLElement)?.clearFocus() }
+            .then(modifier),
         UndecoratedLinkVariant.then(UncoloredLinkVariant)
     ) {
         FaLink(Modifier.display(DisplayStyle.Inline))
