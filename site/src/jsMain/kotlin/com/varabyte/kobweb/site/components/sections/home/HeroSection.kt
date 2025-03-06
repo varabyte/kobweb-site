@@ -143,14 +143,11 @@ fun HeroSection() {
     GradientBox(contentAlignment = Alignment.Center) {
         Section {
             Column(
-                Modifier.margin(top = 3.em, leftRight = 3.em),
+                Modifier.margin(top = 3.em, leftRight = 1.em),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                H1 {
-                    SpanText(
-                        "Create web apps in Kotlin",
-                        Modifier.textAlign(TextAlign.Center)
-                    )
+                H1(Modifier.textAlign(TextAlign.Center).toAttrs()) {
+                    SpanText("Create web apps in Kotlin")
                 }
                 SpanText(
                     "Kobweb is an opinionated framework built on top of Compose HTML. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
@@ -161,17 +158,17 @@ fun HeroSection() {
 
             SimpleGrid(
                 numColumns(1, md = 2),
-                Modifier.margin(topBottom = 32.px).rowGap(1.cssRem).columnGap(16.px),
+                Modifier.margin(topBottom = 2.cssRem).rowGap(1.cssRem).columnGap(1.cssRem),
             ) {
                 LinkButton("/docs", HeroButton.toModifier(), "Start Learning", primary = true)
                 LinkButton("https://github.com/varabyte/kobweb", HeroButton.toModifier(), "Github") {
-                    FaGithub(Modifier.margin(right = 8.px))
+                    FaGithub(Modifier.margin(right = 0.5.cssRem))
                 }
                 Tooltip(ElementTarget.PreviousSibling, "Kobweb source on GitHub")
             }
 
             Column(
-                Modifier.margin(topBottom = 32.px).displayIfAtLeast(Breakpoint.MD),
+                Modifier.margin(topBottom = 2.cssRem).displayIfAtLeast(Breakpoint.MD),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 HeroExample()
