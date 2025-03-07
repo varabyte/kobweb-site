@@ -202,6 +202,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
                         .maxHeight(70.vh)
                         .overflow { y(Overflow.Auto) }
                         .overscrollBehavior(OverscrollBehavior.Contain)
+                        .scrollbarWidth(ScrollbarWidth.Thin)
                 )
             }
         }

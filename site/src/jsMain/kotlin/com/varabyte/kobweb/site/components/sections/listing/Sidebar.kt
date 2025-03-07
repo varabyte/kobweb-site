@@ -2,6 +2,7 @@ package com.varabyte.kobweb.site.components.sections.listing
 
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.FontWeight
+import com.varabyte.kobweb.compose.css.ScrollbarWidth
 import com.varabyte.kobweb.compose.css.StyleVariable
 import com.varabyte.kobweb.compose.css.functions.calc
 import com.varabyte.kobweb.compose.dom.ref
@@ -80,7 +81,7 @@ fun ListingSidebar(
 ) {
     val ctx = rememberPageContext()
     var navElement: HTMLElement? by remember { mutableStateOf(null) }
-    Nav(modifier.toAttrs()) {
+    Nav(modifier.scrollbarWidth(ScrollbarWidth.Thin).toAttrs()) {
         registerRefScope(ref { element ->
             navElement = element
             if (SidebarScroll != null) {
