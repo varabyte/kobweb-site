@@ -7,6 +7,7 @@ import org.jetbrains.compose.web.css.*
 enum class SiteTextSize {
     NORMAL,
     SMALL,
+    CODE,
     TINY,
 }
 
@@ -19,5 +20,6 @@ fun Modifier.siteText(size: SiteTextSize) =
         .fontSize(when (size) {
             SiteTextSize.NORMAL -> 1.05.cssRem
             SiteTextSize.SMALL -> 1.00.cssRem
+            SiteTextSize.CODE -> 0.90.cssRem
             SiteTextSize.TINY -> 0.75.cssRem
         })

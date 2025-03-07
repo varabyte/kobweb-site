@@ -28,7 +28,8 @@ val CodeBlockStyle = CssStyle {
             .maxWidth(90.vw).fillMaxWidth()
             .borderRadius(10.px)
             .overflow { x(Overflow.Auto) }
-            .siteText(SiteTextSize.SMALL)
+            .siteText(SiteTextSize.CODE)
+
             .border(1.px, LineStyle.Solid, DividerColor.value())
     }
     Breakpoint.MD { Modifier.maxWidth(100.percent) }
