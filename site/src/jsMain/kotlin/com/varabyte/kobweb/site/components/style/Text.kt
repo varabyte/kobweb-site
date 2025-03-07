@@ -17,7 +17,7 @@ fun Modifier.siteText(size: SiteTextSize) =
             else -> 1.50
         })
         .fontSize(when (size) {
-            SiteTextSize.NORMAL -> 1.05.cssRem
-            SiteTextSize.SMALL -> 1.00.cssRem
+            SiteTextSize.NORMAL -> 1.00.cssRem
+            SiteTextSize.SMALL -> 0.95.cssRem
             SiteTextSize.TINY -> 0.75.cssRem
         })

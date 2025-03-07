@@ -125,7 +125,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
                 .padding(bottom = 1.cssRem)
                 // The following is a reasonably large width which gives our content about as much room to grow on wide
                 // monitors as you would get in a GitHub README
-                .maxWidth(90.cssRem),
+                .maxWidth(85.cssRem),
             horizontalArrangement = Arrangement.Center,
         ) {
             val topOffset = 5.cssRem
