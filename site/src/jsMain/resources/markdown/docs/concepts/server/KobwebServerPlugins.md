@@ -44,15 +44,15 @@ The following steps will walk you through creating your first Kobweb Server Plug
 * **For all remaining steps, create all files / directories under your new module's directory (e.g. `demo-server-plugin/`).**
 * Create `build.gradle.kts`:
   ```kotlin
-    plugins {
-      alias(libs.plugins.kotlin.jvm)
-    }
-    group = "org.example.app" // update to your own project's group
-    version = "1.0-SNAPSHOT"
+  plugins {
+    alias(libs.plugins.kotlin.jvm)
+  }
+  group = "org.example.app" // update to your own project's group
+  version = "1.0-SNAPSHOT"
 
-    dependencies {
-      compileOnly(libs.kobweb.server.plugin)
-    }
+  dependencies {
+    compileOnly(libs.kobweb.server.plugin)
+  }
   ```
 * Create `src/main/kotlin/DemoKobwebServerPlugin.kt`:
   ```kotlin
