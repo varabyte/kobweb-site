@@ -72,7 +72,7 @@ The above will generate code like the following:
 @Composable
 @Page
 fun KobwebPage() {
-    com.mysite.components.layout.DocsLayout {
+  com.mysite.components.layout.DocsLayout {
     H1 {
       Text("Kobweb Tutorial")
     }
