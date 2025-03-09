@@ -20,6 +20,7 @@ individual contributors for the features they helped us out with.
   * Gradle modernization / KSP migration
   * Major `CssStyle` redesign (used to be `ComponentStyle`)
   * Author of [CSS 2 Kobweb](https://opletter.github.io/css2kobweb/) and [Chess Playground](http://chess-playground.fly.dev/)
+  * Docs site implementation
 
 ## Guest contributors
 
