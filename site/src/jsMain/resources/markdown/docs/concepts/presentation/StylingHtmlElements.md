@@ -1,4 +1,5 @@
 ---
+description: The various ways you can declare CSS styles on HTML elements in Kobweb.
 title: Styling HTML Elements
 follows: Index
 ---

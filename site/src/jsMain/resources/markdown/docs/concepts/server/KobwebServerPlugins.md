@@ -1,4 +1,5 @@
 ---
+description: How to declare a Kobweb Server Plugin (which exposes underlying Ktor functionality).
 follows: Fullstack
 ---
 

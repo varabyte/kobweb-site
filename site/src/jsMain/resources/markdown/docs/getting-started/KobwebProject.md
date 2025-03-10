@@ -1,4 +1,5 @@
 ---
+description: A simple example of creating and running a Kobweb project.
 title: Creating and Running a Kobweb Project
 follows: GettingKobweb
 ---

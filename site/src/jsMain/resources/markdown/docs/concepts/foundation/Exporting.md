@@ -1,4 +1,5 @@
 ---
+description: How to export your Kobweb site into a final layout that is ready to be served by a webserver.
 follows: ProjectOrganization
 ---
 

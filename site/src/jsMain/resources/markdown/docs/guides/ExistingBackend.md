@@ -1,4 +1,5 @@
 ---
+description: A guide for how to use Kobweb if you already have your own existing backend.
 title: Using a Custom Backend
 follows: ExistingProject
 ---

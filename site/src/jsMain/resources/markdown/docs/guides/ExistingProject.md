@@ -1,4 +1,5 @@
 ---
+description: A guide for how to add a Kobweb module to an existing project.
 title: Adding Kobweb to an Existing Project
 follows: SharingDataObjects
 ---

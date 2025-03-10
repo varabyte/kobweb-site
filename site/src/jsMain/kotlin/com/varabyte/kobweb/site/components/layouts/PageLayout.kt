@@ -16,7 +16,7 @@ import org.jetbrains.compose.web.css.fr
 import org.jetbrains.compose.web.dom.Div
 
 @Composable
-fun PageLayout(title: String, content: @Composable () -> Unit) {
+fun PageLayout(title: String, description: String? = null, content: @Composable () -> Unit) {
     LaunchedEffect(title) {
         document.title = "$title | Kobweb"
     }
@@ -24,6 +24,20 @@ fun PageLayout(title: String, content: @Composable () -> Unit) {
     LaunchedEffect(Unit) {
         // See kobweb config in build.gradle.kts which sets up Prism
         js("Prism.highlightAll()")
+    }
+
+    LaunchedEffect(description) {
+        val head = document.head!!
+        if (description != null) {
+
+            val meta = head.querySelector("meta[name='description']") ?: document.createElement("meta").apply {
+                setAttribute("name", "description")
+                head.appendChild(this)
+            }
+            meta.setAttribute("content", description)
+        } else {
+            head.querySelector("meta[name='description']")?.let { head.removeChild(it) }
+        }
     }
 
     // Create a box with two rows: the main content (fills as much space as it can) and the footer (which reserves

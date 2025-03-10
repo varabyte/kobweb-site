@@ -1,4 +1,5 @@
 ---
+description: How to organize your Kobweb project following recommended conventions.
 follows: ApplicationRoot
 ---
 

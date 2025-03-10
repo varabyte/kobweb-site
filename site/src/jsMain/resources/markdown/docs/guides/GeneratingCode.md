@@ -1,4 +1,5 @@
 ---
+description: A guide for how to generate code and resources for your site from your build script.
 title: Generating Code at Build Time
 follows: ExistingBackend
 ---

@@ -1,4 +1,5 @@
 ---
+description: How to set a base path for your project (and what that means).
 follows: PersistingState
 ---
 

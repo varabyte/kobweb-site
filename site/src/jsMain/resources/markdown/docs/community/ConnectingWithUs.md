@@ -1,4 +1,5 @@
 ---
+description: Various ways to reach out to the Kobweb team.
 follows: Index
 ---
 

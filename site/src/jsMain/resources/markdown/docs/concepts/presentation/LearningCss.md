@@ -1,4 +1,5 @@
 ---
+description: New to CSS? How to start learning it via Kobweb's approach.
 title: Learning CSS
 follows: Silk
 imports:

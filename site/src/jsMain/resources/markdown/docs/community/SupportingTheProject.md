@@ -1,4 +1,5 @@
 ---
+description: Ways you can support the Kobweb project.
 follows: SubmittingIssuesAndFeedback
 ---
 

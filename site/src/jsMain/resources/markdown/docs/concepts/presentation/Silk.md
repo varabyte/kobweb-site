@@ -1,4 +1,5 @@
 ---
+description: A comprehensive overview of Silk, Kobweb's UI layer.
 follows: StylingHtmlElements
 imports:
   - com.varabyte.kobweb.site.components.widgets.docs.silk.*

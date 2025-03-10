@@ -1,4 +1,5 @@
 ---
+description: How to submit issues and feedback to the Kobweb team.
 follows: ConnectingWithUs
 ---
 

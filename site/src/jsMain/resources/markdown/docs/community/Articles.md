@@ -1,4 +1,5 @@
 ---
+description: Articles written by the community about Kobweb.
 follows: Contributors
 ---
 

@@ -1,4 +1,5 @@
 ---
+description: Information about where Kobweb artifacts are hosted.
 follows: KobwebProject
 ---
 

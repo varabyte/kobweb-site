@@ -1,3 +1,7 @@
+---
+description: A high level overview of what Kobweb is and what it can do.
+---
+
 Kobweb is an opinionated Kotlin framework for creating websites and web apps, built on top of
 [Compose HTML](https://github.com/JetBrains/compose-multiplatform#compose-html) and inspired by [Next.js](https://nextjs.org)
 and [Chakra UI](https://chakra-ui.com).

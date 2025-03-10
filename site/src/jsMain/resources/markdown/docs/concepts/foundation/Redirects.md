@@ -1,4 +1,5 @@
 ---
+description: How to define redirects in your Kobweb site.
 follows: Workers
 ---
 

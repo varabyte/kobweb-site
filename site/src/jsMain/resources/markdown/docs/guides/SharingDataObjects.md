@@ -1,4 +1,5 @@
 ---
+description: A guide on how you can use Kotlinx serialization to share data objects across the network.
 title: Sharing Data Objects Between Frontend and Backend
 follows: CustomFonts
 ---

@@ -1,4 +1,5 @@
 ---
+description: A guide for how to debug your site's frontend and backend code.
 follows: Index
 ---
 

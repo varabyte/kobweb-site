@@ -1,4 +1,5 @@
 ---
+description: Recommended IDE setup for Kobweb development.
 title: IDE
 follows: WhatIsKobweb
 ---

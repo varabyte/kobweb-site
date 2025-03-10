@@ -1,4 +1,5 @@
 ---
+description: How to write Kobweb-flavored Markdown that gets converted into pages on your site.
 follows: BasePath
 imports:
   - com.varabyte.kobweb.silk.components.display.LeftBorderedCalloutVariant

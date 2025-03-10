@@ -1,4 +1,5 @@
 ---
+description: Information about the CSSNumericValue type-aliases added by Kobweb.
 title: CSSNumericValue Type-aliases
 follows: CssLayers
 ---

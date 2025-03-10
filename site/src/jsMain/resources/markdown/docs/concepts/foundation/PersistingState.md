@@ -1,4 +1,5 @@
 ---
+description: How to use web storage to persist state that lives across pages and even a user's browsing sessions.
 follows: ApplicationGlobals
 ---
 

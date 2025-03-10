@@ -1,4 +1,5 @@
 ---
+description: Video resources to help you learn Kobweb that can supplement this guide (especially for visual learners).
 follows: Ide
 ---
 

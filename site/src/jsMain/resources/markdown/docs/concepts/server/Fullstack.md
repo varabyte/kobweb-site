@@ -1,4 +1,5 @@
 ---
+description: How to declare a full stack Kobweb project and define API routes.
 follows: Index
 ---
 

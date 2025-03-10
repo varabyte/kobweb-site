@@ -1,4 +1,5 @@
 ---
+description: Understanding and declaring CSS layers in Silk.
 title: CSS Layers
 follows: LearningCss
 ---

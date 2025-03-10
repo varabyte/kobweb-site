@@ -1,4 +1,5 @@
 ---
+description: A guide showcasing an example GitHub workflow for exporting your site on the GitHub CI.
 title: Exporting using GitHub Workflows
 follows: GeneratingCode
 ---

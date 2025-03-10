@@ -1,4 +1,5 @@
 ---
+description: How to define a web worker enhanced by Kobweb.
 follows: Markdown
 ---
 

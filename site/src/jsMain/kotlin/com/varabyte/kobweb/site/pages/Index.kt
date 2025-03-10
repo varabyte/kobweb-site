@@ -16,7 +16,7 @@ import org.jetbrains.compose.web.css.*
 @Page
 @Composable
 fun HomePage() {
-    PageLayout("Home") {
+    PageLayout("Home", description = "The official Kobweb site.") {
         Column(
             Modifier.width(100.percent),
             horizontalAlignment = Alignment.CenterHorizontally,

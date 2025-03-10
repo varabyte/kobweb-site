@@ -116,8 +116,9 @@ fun DocsLayout(content: @Composable () -> Unit) {
 
     val articleHandle = ctx.markdown?.let { ctx.route.toArticleHandle() }
     val title = articleHandle?.article?.titleOrFallback?.takeIf { it.isNotEmpty() } ?: "Docs"
+    val desc = ctx.markdown?.frontMatter?.get("description")?.singleOrNull()
 
-    PageLayout(title) {
+    PageLayout(title, desc) {
         MobileLocalNav()
         Row(
             Modifier

@@ -1,4 +1,5 @@
 ---
+description: Testimonials from real Kobweb users.
 follows: Articles
 ---
 

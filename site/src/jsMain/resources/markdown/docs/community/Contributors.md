@@ -1,4 +1,5 @@
 ---
+description: People who have contributed their time to Kobweb.
 follows: SupportingTheProject
 ---
 

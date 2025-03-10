@@ -1,4 +1,5 @@
 ---
+description: How to download the Kobweb CLI, the first step you should take to get started with Kobweb.
 follows: Videos
 ---
 
