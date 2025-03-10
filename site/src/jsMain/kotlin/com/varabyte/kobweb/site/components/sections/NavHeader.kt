@@ -1,8 +1,9 @@
 package com.varabyte.kobweb.site.components.sections
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import com.varabyte.kobweb.browser.dom.ElementTarget
-import com.varabyte.kobweb.browser.util.invokeLater
 import com.varabyte.kobweb.compose.css.CSSLengthNumericValue
 import com.varabyte.kobweb.compose.css.StyleVariable
 import com.varabyte.kobweb.compose.css.functions.blur
@@ -16,7 +17,6 @@ import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
-import com.varabyte.kobweb.core.rememberPageContext
 import com.varabyte.kobweb.navigation.Anchor
 import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.icons.MoonIcon
@@ -39,16 +39,12 @@ import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.colors.shifted
 import com.varabyte.kobweb.site.components.sections.listing.UnstyledButtonVariant
 import com.varabyte.kobweb.site.components.style.dividerBoxShadow
-import kotlinx.browser.document
-import kotlinx.browser.window
+import com.varabyte.kobweb.site.components.widgets.Search
 import org.jetbrains.compose.web.css.Position
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
-import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.Img
-import org.w3c.dom.events.Event
-import kotlin.js.json
 
 val NavHeaderHeight by StyleVariable<CSSLengthNumericValue>()
 
@@ -114,34 +110,10 @@ private fun getNavBackgroundColor(colorMode: ColorMode): Color.Rgb {
 // The nav header needs a higher z-index to be shown above elements with `position: sticky`
 fun Modifier.navHeaderZIndex() = this.zIndex(10)
 
-@JsModule("@docsearch/js")
-external fun docsearch(options: dynamic)
-
-@JsModule("preact")
-external object Preact {
-    fun createElement(
-        type: String,
-        props: dynamic,
-        vararg children: dynamic
-    ): dynamic
-}
-
-// Algolia search returns absolute URLs with a prefix we configured with them. However, absolute paths cause Kobweb to
-// send out a request to the server each time, instead of routing instantly which happens when we navigate to an
-// internal route, which we want to do instead (so, not `https://blah.com/...` but `/...`).
-private fun String.removeAlgoliaPrefix() = removePrefix("https://kobweb.varabyte.com")
-
+@OptIn(ExperimentalJsCollectionsApi::class, ExperimentalJsExport::class)
 @Composable
 fun NavHeader() {
     var colorMode by ColorMode.currentState
-    LaunchedEffect(colorMode) {
-        // Algolia DocSearch uses the `data-theme` attribute to determine the color mode for its default styles
-        document.documentElement?.setAttribute(
-            "data-theme",
-            if (colorMode == ColorMode.DARK) "dark" else "light"
-        )
-    }
-
     Box(NavHeaderStyle.toModifier().navHeaderZIndex(), contentAlignment = Alignment.Center) {
         Row(
             Modifier.fillMaxWidth(90.percent),
@@ -150,46 +122,7 @@ fun NavHeader() {
             HomeLogo()
             Spacer()
 
-            val ctx = rememberPageContext()
-            Div(Modifier.toAttrs()) {
-                DisposableEffect(Unit) {
-                    fun kobwebNavigate(url: String) {
-                        // The invokeLater prevents wrong scroll position - maybe a kobweb bug?
-                        window.invokeLater { ctx.router.navigateTo(url) }
-                    }
-                    docsearch(
-                        // See https://docsearch.algolia.com/docs/api (and thank you Algolia!)
-                        json(
-                            "container" to scopeElement,
-                            "appId" to "X21XB42TEV",
-                            "apiKey" to "34b8a0edc48e894f0181756e01d54e63",
-                            "indexName" to "kobweb-varabyte",
-                            "hitComponent" to { data: dynamic ->
-                                val url = data.hit.url
-                                    .unsafeCast<String>()
-                                    .removeAlgoliaPrefix()
-                                Preact.createElement(
-                                    "a", json(
-                                        "href" to url,
-                                        "onClick" to { event: Event ->
-                                            event.preventDefault()
-                                            // The invokeLater prevents wrong scroll position - maybe a kobweb bug?
-                                            kobwebNavigate(url)
-                                        }),
-                                    data.children
-                                )
-                            },
-                            "navigator" to json(
-                                //https://www.algolia.com/doc/ui-libraries/autocomplete/core-concepts/keyboard-navigation/#usage
-                                "navigate" to { data: dynamic ->
-                                    kobwebNavigate(data.itemUrl.unsafeCast<String>().removeAlgoliaPrefix())
-                                }
-                            )
-                        )
-                    )
-                    onDispose { }
-                }
-            }
+            Search()
 
             Row(
                 Modifier
