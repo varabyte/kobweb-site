@@ -122,8 +122,6 @@ fun NavHeader() {
             HomeLogo()
             Spacer()
 
-            Search()
-
             Row(
                 Modifier
                     .margin(0.px, 12.px)
@@ -131,6 +129,8 @@ fun NavHeader() {
                     .fontSize(1.5.cssRem),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Search()
+
                 Link("https://github.com/varabyte/kobweb", HoverBrightenStyle.toModifier()) {
                     FaGithub()
                 }
