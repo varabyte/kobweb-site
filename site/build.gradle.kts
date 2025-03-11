@@ -100,7 +100,8 @@ kotlin {
             implementation(libs.kobweb.silk.core)
             implementation(libs.kobweb.silk.icons.fa)
             implementation(libs.kobwebx.markdown)
-            implementation(npm("@docsearch/js", "3.9.0"))
+            implementation(npm("@docsearch/react", "3.9.0"))
+            implementation(npm("preact", "10.26.4"))
         }
     }
 }

@@ -25,6 +25,7 @@ import kotlinx.browser.window
 import org.jetbrains.compose.web.css.CSSColorValue
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Div
+import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
 import kotlin.js.collections.JsArray
@@ -87,14 +88,18 @@ fun Search() {
     Div(SearchStyle.toAttrs()) {
         DisposableEffect(Unit) {
             initAlgoliaSearch(scopeElement, ctx.router)
-            onDispose { }
+            onDispose {
+                Preact.render(null, scopeElement)
+            }
         }
     }
 }
 
 
-@JsModule("@docsearch/js")
-private external fun docsearch(options: dynamic)
+@JsModule("@docsearch/react")
+private external object DocSearchModule {
+    val DocSearch: dynamic
+}
 
 @JsModule("preact")
 private external object Preact {
@@ -103,6 +108,16 @@ private external object Preact {
         props: dynamic,
         vararg children: dynamic
     ): dynamic
+
+    fun h(
+        jsx: dynamic,
+        options: dynamic,
+    ): dynamic
+
+    fun render(
+        element: dynamic,
+        container: Element?
+    )
 }
 
 // See https://docsearch.algolia.com/docs/api (and thank you Algolia!)
@@ -112,41 +127,48 @@ private fun initAlgoliaSearch(element: HTMLElement, router: Router) {
         // The invokeLater prevents wrong scroll position - maybe a kobweb bug?
         window.invokeLater { router.navigateTo(url) }
     }
-    docsearch(
-        json(
-            "container" to element,
-            "appId" to "X21XB42TEV",
-            "apiKey" to "34b8a0edc48e894f0181756e01d54e63",
-            "indexName" to "kobweb-varabyte",
-            "transformItems" to { items: JsArray<dynamic> ->
-                items.toList().map { item ->
-                    // The search API returns an absolute URL, but we make it relative so that Kobweb
-                    // treats it as internal navigation.
-                    // Note: In the live site, Kobweb would treat it as internal anyway due to matching
-                    // domains, but this standardizes the experience in the localhost/preview sites.
-                    item.url = item.url.unsafeCast<String>().removePrefix("https://kobweb.varabyte.com")
-                    item
-                }.asJsReadonlyArrayView()
-            },
-            "hitComponent" to { data: dynamic ->
-                // Replace the default component with a custom anchor element that uses Kobweb's router
-                val url = data.hit.url
-                Preact.createElement(
-                    "a", json(
-                        "href" to url,
-                        "onClick" to { event: Event ->
-                            event.preventDefault()
-                            kobwebNavigate(url)
-                        }),
-                    data.children
+    Preact.render(
+        Preact.h(
+            DocSearchModule.DocSearch,
+            json(
+                "container" to element,
+                "appId" to "X21XB42TEV",
+                "apiKey" to "34b8a0edc48e894f0181756e01d54e63",
+                "indexName" to "kobweb-varabyte",
+                "transformItems" to { items: JsArray<dynamic> ->
+                    items.toList().map { item ->
+                        // The search API returns an absolute URL, but we make it relative so that Kobweb
+                        // treats it as internal navigation.
+                        // Note: In the live site, Kobweb would treat it as internal anyway due to matching
+                        // domains, but this standardizes the experience in the localhost/preview sites.
+                        item.url = item.url.unsafeCast<String>().removePrefix("https://kobweb.varabyte.com")
+                        item
+                    }.asJsReadonlyArrayView()
+                },
+                "hitComponent" to { data: dynamic ->
+                    // Replace the default component with a custom anchor element that uses Kobweb's router
+                    val url = data.hit.url
+                    Preact.createElement(
+                        "a", json(
+                            "href" to url,
+                            "onClick" to { event: Event ->
+                                event.preventDefault()
+                                kobwebNavigate(url)
+                            }),
+                        data.children
+                    )
+                },
+                "navigator" to json(
+                    //https://www.algolia.com/doc/ui-libraries/autocomplete/core-concepts/keyboard-navigation/#usage
+                    "navigate" to { data: dynamic ->
+                        kobwebNavigate(data.itemUrl)
+                    }
                 )
-            },
-            "navigator" to json(
-                //https://www.algolia.com/doc/ui-libraries/autocomplete/core-concepts/keyboard-navigation/#usage
-                "navigate" to { data: dynamic ->
-                    kobwebNavigate(data.itemUrl)
-                }
+                // TODO: docsearch/js adds a default "transformSearchClient", should we?
+                //  https://github.com/algolia/docsearch/blob/c591f004423a9ead953409f3d4a89643fa84b994/packages/docsearch-js/src/docsearch.tsx#L22
+                //  See also: See also: https://docsearch.algolia.com/docs/api/#transformsearchclient
             )
-        )
+        ),
+        element
     )
 }
