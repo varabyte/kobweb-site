@@ -25,7 +25,6 @@ import kotlinx.browser.window
 import org.jetbrains.compose.web.css.CSSColorValue
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Div
-import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
 import kotlin.js.collections.JsArray
@@ -116,11 +115,13 @@ private external object Preact {
 
     fun render(
         element: dynamic,
-        container: Element?
+        container: HTMLElement
     )
 }
 
 // See https://docsearch.algolia.com/docs/api (and thank you Algolia!)
+// We use Preact to render the DocSearch react component, to avoid an issue with DocSearch's own Preact-based wrapper:
+// https://github.com/algolia/docsearch/issues/1363
 @OptIn(ExperimentalJsCollectionsApi::class, ExperimentalJsExport::class)
 private fun initAlgoliaSearch(element: HTMLElement, router: Router) {
     fun kobwebNavigate(url: String) {
@@ -164,9 +165,6 @@ private fun initAlgoliaSearch(element: HTMLElement, router: Router) {
                         kobwebNavigate(data.itemUrl)
                     }
                 )
-                // TODO: docsearch/js adds a default "transformSearchClient", should we?
-                //  https://github.com/algolia/docsearch/blob/c591f004423a9ead953409f3d4a89643fa84b994/packages/docsearch-js/src/docsearch.tsx#L22
-                //  See also: See also: https://docsearch.algolia.com/docs/api/#transformsearchclient
             )
         ),
         element
