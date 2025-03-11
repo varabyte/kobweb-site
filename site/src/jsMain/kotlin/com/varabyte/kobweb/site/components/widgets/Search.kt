@@ -25,6 +25,7 @@ import kotlinx.browser.window
 import org.jetbrains.compose.web.css.CSSColorValue
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Div
+import org.w3c.dom.HTMLButtonElement
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
 import kotlin.js.collections.JsArray
@@ -77,6 +78,45 @@ val SearchStyle = CssStyle {
 
 @Composable
 fun Search() {
+    // Algolia DocSearch via keyboard is BUGGED!
+    // See https://github.com/algolia/docsearch/issues/1363
+    // So we immediately register a keydown listener to intercept it.
+    LaunchedEffect(Unit) {
+        window.onkeydown = { event ->
+            // Clicking on the Algolia search button works, so as a workaround, we intercept the "open search dialog"
+            // key press and convert it into a click.
+            // See related Algolia code here:
+            // https://github.com/algolia/docsearch/blob/c591f004423a9ead953409f3d4a89643fa84b994/packages/docsearch-react/src/useDocSearchKeyboardEvents.ts#L33
+            if (event.key.lowercase() == "k" && (event.metaKey || event.ctrlKey)) {
+                event.stopImmediatePropagation()
+                (document.querySelector(".DocSearch-Button") as? HTMLButtonElement)?.click()
+            }
+        }
+
+    }
+    // WIP: This is a better approach but we don't stay in front of Algolio this way
+    // Probably we want to register the keydown in AppEntry but somehow delegate its handling to here
+    // because overwriting `onkeydown` feels like a scary choice which will be hard to debug in the future
+
+
+//    DisposableEffect(Unit) {
+//        val listenerManager = EventListenerManager(window)
+//        listenerManager.addEventListener("keydown", {
+//            val event = it as KeyboardEvent
+//            // Clicking on the Algolia search button works, so as a workaround, we intercept the "open search dialog"
+//            // key press and convert it into a click.
+//            // See related Algolia code here:
+//            // https://github.com/algolia/docsearch/blob/c591f004423a9ead953409f3d4a89643fa84b994/packages/docsearch-react/src/useDocSearchKeyboardEvents.ts#L33
+//            if (event.key.lowercase() == "k" && (event.metaKey || event.ctrlKey)) {
+//                event.stopImmediatePropagation()
+//                (document.querySelector(".DocSearch-Button") as? HTMLButtonElement)?.click()
+//            }
+//        })
+//
+//        onDispose { listenerManager.clearAllListeners() }
+//    }
+
+
     val ctx = rememberPageContext()
     val colorMode = ColorMode.current
     LaunchedEffect(colorMode) {
