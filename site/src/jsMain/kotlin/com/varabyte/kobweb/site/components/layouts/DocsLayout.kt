@@ -130,7 +130,11 @@ fun DocsLayout(content: @Composable () -> Unit) {
                     setAttribute("name", metaName)
                     head.appendChild(this)
                 }
-                meta.setAttribute("content", breadcrumbs.joinToString(" > "))
+                // Although we originally intended to render breadcrumbs as a full path, e.g. "Concepts > Presentation",
+                // we'll stick with a simple single breadcrumb for now, e.g. "Presentation", as it subjectively looks
+                // cleaner. We can always revisit this decision and change the code back to
+                // `breadcrumbs.joinToString(" > ")` if we change our minds.
+                meta.setAttribute("content", breadcrumbs.lastOrNull().orEmpty())
                 onDispose { head.removeChild(meta) }
             }
         }
