@@ -116,21 +116,21 @@ fun DocsLayout(content: @Composable () -> Unit) {
 
     val articleHandle = ctx.markdown?.let { ctx.route.toArticleHandle() }
     val title = articleHandle?.article?.titleOrFallback ?: "Docs"
-    val parentTitle = articleHandle?.article?.parentTitle
+    val breadcrumbs = articleHandle?.article?.breadcrumbs
     val desc = ctx.markdown?.frontMatter?.get("description")?.singleOrNull()
 
     PageLayout(title, desc) {
         // We surface the parent title for the page as a meta tag so that the search engine we use can use surface it
         // as useful metadata.
-        if (parentTitle != null) {
-            DisposableEffect(parentTitle) {
+        if (breadcrumbs != null) {
+            DisposableEffect(breadcrumbs) {
                 val head = document.head!!
                 val metaName = "algolia-docsearch-lvl0"
                 val meta = head.querySelector("meta[name='$metaName']") ?: document.createElement("meta").apply {
                     setAttribute("name", metaName)
                     head.appendChild(this)
                 }
-                meta.setAttribute("content", parentTitle)
+                meta.setAttribute("content", breadcrumbs.joinToString(" > "))
                 onDispose { head.removeChild(meta) }
             }
         }

@@ -35,13 +35,21 @@ private class TitleHierarchy(
     }
 }
 
-/** The article's subcategory title or category title, whichever is relevant.  */
-val Article.parentTitle: String? get() {
+/**
+ * The path to this article as a list of strings.
+ *
+ * For example, ["Concepts", "Presentations"] could be used to generate the final text "Concepts > Presentations"
+ */
+val Article.breadcrumbs: List<String> get() {
     return with(TitleHierarchy.from(this)) {
-        when {
-            article.isNotEmpty() -> subcategory.takeIf { it.isNotEmpty() } ?: category
-            subcategory.isNotEmpty() -> category
-            else -> null
+        buildList {
+            add(category)
+
+            // If the article title is empty, that means the subcategory is essentially the article name, so in that
+            // case we shouldn't include the subcategory in the breadcrumbs.
+            if (subcategory.isNotEmpty() && article.isNotEmpty()) {
+                add(subcategory)
+            }
         }
     }
 }
