@@ -5,6 +5,7 @@ import com.varabyte.kobweb.compose.css.MinWidth
 import com.varabyte.kobweb.compose.css.Overflow
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
+import com.varabyte.kobweb.compose.ui.styleModifier
 import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.style.CssStyle
@@ -14,10 +15,7 @@ import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.site.components.style.DividerColor
 import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.siteText
-import org.jetbrains.compose.web.css.DisplayStyle
-import org.jetbrains.compose.web.css.LineStyle
-import org.jetbrains.compose.web.css.em
-import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Code
 import org.jetbrains.compose.web.dom.Pre
 import org.jetbrains.compose.web.dom.Text
@@ -43,6 +41,9 @@ fun CodeBlock(code: String, modifier: Modifier = Modifier, lang: String? = null)
             attrs = SmoothColorStyle.toModifier()
                 // Set min width so that `diff-highlight` coverts the entire width even when the code is scrollable
                 .display(DisplayStyle.Block).minWidth(MinWidth.MaxContent)
+                // The above style messes up text sizes inside code blocks that can
+                // scroll horizontally (but only on iOS...)
+                .styleModifier { property("-webkit-text-size-adjust", 100.percent) }
                 .classNames("language-${lang ?: "none"}")
                 .thenIf(lang?.startsWith("diff") == true, Modifier.classNames("diff-highlight"))
                 .then(modifier)
