@@ -18,24 +18,54 @@ class ArticleHandle(
     val article: Article,
 )
 
+private class TitleHierarchy(
+    val category: String,
+    val subcategory: String,
+    val article: String,
+) {
+    companion object {
+        fun from(article: Article): TitleHierarchy {
+            val listing = SITE_LISTING.findArticle(article.route)!!
+            return TitleHierarchy(
+                listing.category.title,
+                listing.subcategory.title,
+                listing.article.title
+            )
+        }
+    }
+}
+
+/** The article's subcategory title or category title, whichever is relevant.  */
+val Article.parentTitle: String? get() {
+    return with(TitleHierarchy.from(this)) {
+        when {
+            article.isNotEmpty() -> subcategory.takeIf { it.isNotEmpty() } ?: category
+            subcategory.isNotEmpty() -> category
+            else -> null
+        }
+    }
+}
+
+
 /** Article title or, if set to "", its parent subcategory title which should represent it. */
 val Article.titleOrSubcategory: String get() {
-    return title.takeIf { it.isNotEmpty() }
-        ?: SITE_LISTING
-            .findArticle(route)!!
-            .subcategory.title.takeIf { it.isNotEmpty() }
-            .orEmpty()
+    return with(TitleHierarchy.from(this)) {
+        when {
+            article.isNotEmpty() -> article
+            else -> subcategory
+        }
+    }
 }
 
 /** Article title, subcategory title, or category title. */
 val Article.titleOrFallback: String get() {
-    return title.takeIf { it.isNotEmpty() }
-        ?: SITE_LISTING
-            .findArticle(route)!!.let { articleHandle ->
-                articleHandle.subcategory.title.takeIf { it.isNotEmpty() }
-                    ?: articleHandle.category.title.takeIf { it.isNotEmpty() }
-                        .orEmpty()
-            }
+    return with(TitleHierarchy.from(this)) {
+        when {
+            article.isNotEmpty() -> article
+            subcategory.isNotEmpty() -> subcategory
+            else -> category
+        }
+    }
 }
 
 fun List<Category>.findArticle(route: String): ArticleHandle? {
