@@ -87,6 +87,8 @@ fun Search() {
     Div(SearchStyle.toAttrs()) {
         DisposableEffect(Unit) {
             initAlgoliaSearch(scopeElement, ctx.router)
+            // We need to dispose the search element so that exit hooks are run and listeners are unregistered
+            // See also: https://github.com/algolia/docsearch/issues/1363
             onDispose {
                 Preact.render(null, scopeElement)
             }
@@ -95,10 +97,8 @@ fun Search() {
 }
 
 
-@JsModule("@docsearch/react")
-private external object DocSearchModule {
-    val DocSearch: dynamic
-}
+@JsModule("@docsearch/js")
+private external fun docsearch(options: dynamic)
 
 @JsModule("preact")
 private external object Preact {
@@ -108,11 +108,6 @@ private external object Preact {
         vararg children: dynamic
     ): dynamic
 
-    fun h(
-        jsx: dynamic,
-        options: dynamic,
-    ): dynamic
-
     fun render(
         element: dynamic,
         container: HTMLElement
@@ -120,53 +115,47 @@ private external object Preact {
 }
 
 // See https://docsearch.algolia.com/docs/api (and thank you Algolia!)
-// We use Preact to render the DocSearch react component, to avoid an issue with DocSearch's own Preact-based wrapper:
-// https://github.com/algolia/docsearch/issues/1363
 @OptIn(ExperimentalJsCollectionsApi::class, ExperimentalJsExport::class)
 private fun initAlgoliaSearch(element: HTMLElement, router: Router) {
     fun kobwebNavigate(url: String) {
         // The invokeLater prevents wrong scroll position - maybe a kobweb bug?
         window.invokeLater { router.navigateTo(url) }
     }
-    Preact.render(
-        Preact.h(
-            DocSearchModule.DocSearch,
-            json(
-                "container" to element,
-                "appId" to "X21XB42TEV",
-                "apiKey" to "34b8a0edc48e894f0181756e01d54e63",
-                "indexName" to "kobweb-varabyte",
-                "transformItems" to { items: JsArray<dynamic> ->
-                    items.toList().map { item ->
-                        // The search API returns an absolute URL, but we make it relative so that Kobweb
-                        // treats it as internal navigation.
-                        // Note: In the live site, Kobweb would treat it as internal anyway due to matching
-                        // domains, but this standardizes the experience in the localhost/preview sites.
-                        item.url = item.url.unsafeCast<String>().removePrefix("https://kobweb.varabyte.com")
-                        item
-                    }.asJsReadonlyArrayView()
-                },
-                "hitComponent" to { data: dynamic ->
-                    // Replace the default component with a custom anchor element that uses Kobweb's router
-                    val url = data.hit.url
-                    Preact.createElement(
-                        "a", json(
-                            "href" to url,
-                            "onClick" to { event: Event ->
-                                event.preventDefault()
-                                kobwebNavigate(url)
-                            }),
-                        data.children
-                    )
-                },
-                "navigator" to json(
-                    //https://www.algolia.com/doc/ui-libraries/autocomplete/core-concepts/keyboard-navigation/#usage
-                    "navigate" to { data: dynamic ->
-                        kobwebNavigate(data.itemUrl)
-                    }
+    docsearch(
+        json(
+            "container" to element,
+            "appId" to "X21XB42TEV",
+            "apiKey" to "34b8a0edc48e894f0181756e01d54e63",
+            "indexName" to "kobweb-varabyte",
+            "transformItems" to { items: JsArray<dynamic> ->
+                items.toList().map { item ->
+                    // The search API returns an absolute URL, but we make it relative so that Kobweb
+                    // treats it as internal navigation.
+                    // Note: In the live site, Kobweb would treat it as internal anyway due to matching
+                    // domains, but this standardizes the experience in the localhost/preview sites.
+                    item.url = item.url.unsafeCast<String>().removePrefix("https://kobweb.varabyte.com")
+                    item
+                }.asJsReadonlyArrayView()
+            },
+            "hitComponent" to { data: dynamic ->
+                // Replace the default component with a custom anchor element that uses Kobweb's router
+                val url = data.hit.url
+                Preact.createElement(
+                    "a", json(
+                        "href" to url,
+                        "onClick" to { event: Event ->
+                            event.preventDefault()
+                            kobwebNavigate(url)
+                        }),
+                    data.children
                 )
+            },
+            "navigator" to json(
+                //https://www.algolia.com/doc/ui-libraries/autocomplete/core-concepts/keyboard-navigation/#usage
+                "navigate" to { data: dynamic ->
+                    kobwebNavigate(data.itemUrl)
+                }
             )
-        ),
-        element
+        )
     )
 }
