@@ -15,6 +15,7 @@ import com.varabyte.kobweb.silk.components.forms.Button
 import com.varabyte.kobweb.silk.components.forms.ButtonVars
 import com.varabyte.kobweb.silk.components.icons.MoonIcon
 import com.varabyte.kobweb.silk.components.icons.SunIcon
+import com.varabyte.kobweb.silk.components.icons.fa.FaBook
 import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.Surface
@@ -156,13 +157,20 @@ fun HeroSection() {
                 )
             }
 
+            val iconMargin = Modifier.margin(right = 0.5.cssRem)
+
             SimpleGrid(
                 numColumns(1, md = 2),
                 Modifier.margin(topBottom = 2.cssRem).rowGap(1.cssRem).columnGap(1.cssRem),
             ) {
-                LinkButton("/docs", HeroButton.toModifier(), "Start Learning", primary = true)
+                LinkButton("/docs", HeroButton.toModifier(), "Get Started", primary = true) {
+                    FaBook(iconMargin)
+                }
+                Tooltip(ElementTarget.PreviousSibling, "Read the Kobweb guide")
+
+
                 LinkButton("https://github.com/varabyte/kobweb", HeroButton.toModifier(), "Github") {
-                    FaGithub(Modifier.margin(right = 0.5.cssRem))
+                    FaGithub(iconMargin)
                 }
                 Tooltip(ElementTarget.PreviousSibling, "Kobweb source on GitHub")
             }
