@@ -260,14 +260,14 @@ fun PostPage() {
 As seen above, dynamic routes so far capture a single part of the entire route, e.g. `"/users/{user}/profile"` capturing
 `"bitspittle"` in the URL `"/users/bitspittle/profile"`.
 
-Kobweb also supports catch-all dynamic routes, which capture the remainder of the URL, at which point the page can parse
-it and handle it as it sees fit.
+Kobweb also supports *catch-all* dynamic routes, which capture the remainder of the URL, at which point the page can
+parse it and handle it as it sees fit.
 
 To create a catch-all route, prepend your dynamic route name with an ellipsis.
 
 For example, the catch-all route `"/a/b/c/{...rest}"` would capture `"x/y/z"` in the URL `"/a/b/c/x/y/z"`.
 
-In practice, it looks like this:
+In practice, using it looks like this:
 
 ```kotlin
 // pages/com/mysite/store/products/ProductDetails.kt
@@ -285,6 +285,7 @@ fun ProductDetailsPage() {
 
 It's not expected that many sites will ever use a catch-all route, but in the above case, you could use the captured
 value as a way to encode fluid details of a product, perhaps with sub-routes contextually depending on the product type.
+
 For example, the above page could handle `/store/products/home-and-garden/hoses/19528`,
 `/store/products/electronics/phones/google/pixel/4a`, and whatever other scheme each department demands.
 
