@@ -1,7 +1,8 @@
 package com.varabyte.kobweb.site.components.widgets.video
 
 
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import com.varabyte.kobweb.compose.dom.ref
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
@@ -14,6 +15,8 @@ import com.varabyte.kobweb.silk.style.toAttrs
 import com.varabyte.kobweb.silk.style.toModifier
 import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.dom.Iframe
+import org.w3c.dom.HTMLAnchorElement
+import org.w3c.dom.asList
 
 val YouTubeVideoStyle = CssStyle {
     base {
@@ -21,19 +24,19 @@ val YouTubeVideoStyle = CssStyle {
             .aspectRatio(width = 16, height = 9)
     }
     Breakpoint.ZERO {
-        Modifier.width(50.percent)
+        Modifier.width(85.percent)
     }
     Breakpoint.SM {
-        Modifier.width(60.percent)
+        Modifier.width(86.percent)
     }
     Breakpoint.MD {
-        Modifier.width(70.percent)
+        Modifier.width(88.percent)
     }
     Breakpoint.LG {
-        Modifier.width(80.percent)
+        Modifier.width(90.percent)
     }
     Breakpoint.XL {
-        Modifier.width(90.percent)
+        Modifier.width(100.percent)
     }
 }
 
@@ -41,21 +44,34 @@ val YouTubeVideoStyle = CssStyle {
  * Youtube Video Player
  */
 @Composable
-fun YouTubeVideo(url: String) {
+fun YouTubeVideo(url: String? = null) {
+    var videoId by remember { mutableStateOf(url?.let { extractVideoId(url) }) }
 
-    val videoId = try {
-        val id = extractVideoId(url)
-        id
-    } catch (e: Exception) {
-        console.error("parse $url video id failed", e.message)
-        null
-    }
-
-    if (!videoId.isNullOrBlank()) {
-        Box(
-            modifier = YouTubeVideoStyle.toModifier(),
-            contentAlignment = Alignment.CenterStart
-        ) {
+    Box(
+        modifier = YouTubeVideoStyle.toModifier(),
+        contentAlignment = Alignment.CenterStart,
+        ref = ref { element ->
+            if (videoId != null) return@ref
+            try {
+                var currentElement = element.parentElement
+                while (currentElement != null && videoId == null) {
+                    val links = currentElement.querySelectorAll("a")
+                    links.asList().forEach { node ->
+                        if (node is HTMLAnchorElement && node.href.contains("youtube.com")) {
+                            extractVideoId(node.href)?.let {
+                                videoId = it
+                                return@forEach
+                            }
+                        }
+                    }
+                    currentElement = currentElement.parentElement
+                }
+            } catch (e: Exception) {
+                console.error("Error finding YouTube links: ${e.message}")
+            }
+        }
+    ) {
+        if (videoId != null) {
             Iframe(
                 attrs = YouTubeVideoStyle.toAttrs {
                     attr("src", "https://www.youtube.com/embed/$videoId")
