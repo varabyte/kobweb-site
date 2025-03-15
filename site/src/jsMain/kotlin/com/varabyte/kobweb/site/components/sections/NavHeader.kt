@@ -1,8 +1,6 @@
 package com.varabyte.kobweb.site.components.sections
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import com.varabyte.kobweb.browser.dom.ElementTarget
 import com.varabyte.kobweb.compose.css.CSSLengthNumericValue
 import com.varabyte.kobweb.compose.css.StyleVariable
@@ -37,9 +35,15 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.silk.theme.colors.palette.color
 import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.colors.shifted
+import com.varabyte.kobweb.site.Constants
 import com.varabyte.kobweb.site.components.sections.listing.UnstyledButtonVariant
 import com.varabyte.kobweb.site.components.style.dividerBoxShadow
 import com.varabyte.kobweb.site.components.widgets.Search
+import com.varabyte.kobweb.site.components.widgets.button.LanguageSwitcherButton
+import com.varabyte.kobweb.site.util.defaultLanguage
+import com.varabyte.kobweb.site.util.defaultLanguageCode
+import kotlinx.browser.localStorage
+import kotlinx.browser.window
 import org.jetbrains.compose.web.css.Position
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.percent
@@ -114,6 +118,11 @@ fun Modifier.navHeaderZIndex() = this.zIndex(10)
 @Composable
 fun NavHeader() {
     var colorMode by ColorMode.currentState
+    var currentLanguageCode = remember {
+        localStorage.getItem(Constants.APP_LOCALE_KEY)
+    } ?: Res.defaultLanguageCode
+    var showLanguageMenu by remember { mutableStateOf(false) }
+
     Box(NavHeaderStyle.toModifier().navHeaderZIndex(), contentAlignment = Alignment.Center) {
         Row(
             Modifier.fillMaxWidth(90.percent),
@@ -152,6 +161,20 @@ fun NavHeader() {
                     }
                 }
                 Tooltip(ElementTarget.PreviousSibling, "Toggle color mode", Modifier.navHeaderZIndex())
+
+                LanguageSwitcherButton(
+                    currentLanguageCode = currentLanguageCode,
+                    showMenu = showLanguageMenu,
+                    onLanguageClick = {
+                        showLanguageMenu = !showLanguageMenu
+                    },
+                    onLanguageSelect = {
+                        currentLanguageCode = it
+                        showLanguageMenu = false
+                        window.localStorage.setItem(Constants.APP_LOCALE_KEY, currentLanguageCode)
+                        window.location.reload()
+                    }
+                )
             }
         }
     }

@@ -21,7 +21,10 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.sections.NavHeaderHeight
 import com.varabyte.kobweb.site.components.sections.listing.MobileNavHeight
 import com.varabyte.kobweb.site.components.style.DividerColor
+import com.varabyte.kobweb.site.util.locales
+import io.github.skeptick.libres.LibresSettings
 import kotlinx.browser.localStorage
+import kotlinx.browser.window
 import org.jetbrains.compose.web.css.*
 
 private const val COLOR_MODE_KEY = "app:colorMode"
@@ -106,12 +109,17 @@ fun initSilk(ctx: InitSilkContext) {
 @App
 @Composable
 fun AppEntry(content: @Composable () -> Unit) {
+    // init language code
+    LibresSettings.languageCode =
+        (localStorage.getItem(Constants.APP_LOCALE_KEY) ?: Res.locales.find { it == window.navigator.language }
+        ?: Res.locales.first().toString())
+            .also { localStorage.setItem(Constants.APP_LOCALE_KEY, it) }.toString()
+
     SilkApp {
         val colorMode = ColorMode.current
         LaunchedEffect(colorMode) {
             localStorage.setItem(COLOR_MODE_KEY, colorMode.name)
         }
-
         Surface(
             SmoothColorStyle.toModifier()
                 .fillMaxWidth()

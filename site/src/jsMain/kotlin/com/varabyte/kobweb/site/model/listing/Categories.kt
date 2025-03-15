@@ -1,5 +1,7 @@
 package com.varabyte.kobweb.site.model.listing
 
+import com.varabyte.kobweb.site.util.getSiteListing
+
 class Article(val title: String, val route: String)
 
 class Subcategory(
@@ -25,7 +27,7 @@ private class TitleHierarchy(
 ) {
     companion object {
         fun from(article: Article): TitleHierarchy {
-            val listing = SITE_LISTING.findArticle(article.route)!!
+            val listing = getSiteListing(article).findArticle(article.route)!!
             return TitleHierarchy(
                 listing.category.title,
                 listing.subcategory.title,
@@ -97,12 +99,12 @@ fun List<Category>.findArticleNeighbors(articleHandle: ArticleHandle): Pair<Arti
 
     val prev = articleHandle.subcategory.articles.getOrNull(articleIndex - 1)
                 ?: articleHandle.category.subcategories.getOrNull(subcategoryIndex - 1)?.articles?.last()
-                ?: SITE_LISTING.getOrNull(categoryIndex - 1)?.subcategories?.last()?.articles?.last()
+                ?: getSiteListing(articleHandle.article).getOrNull(categoryIndex - 1)?.subcategories?.last()?.articles?.last()
 
     val next =
             articleHandle.subcategory.articles.getOrNull(articleIndex + 1)
                 ?: articleHandle.category.subcategories.getOrNull(subcategoryIndex + 1)?.articles?.first()
-                ?: SITE_LISTING.getOrNull(categoryIndex + 1)?.subcategories?.first()?.articles?.first()
+                ?: getSiteListing(articleHandle.article).getOrNull(categoryIndex + 1)?.subcategories?.first()?.articles?.first()
 
     return prev to next
 }
