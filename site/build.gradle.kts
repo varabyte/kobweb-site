@@ -45,7 +45,6 @@ kobweb {
             ".components.widgets.filesystem.Folders",
             ".components.widgets.navigation.DocsLink",
             ".components.widgets.navigation.DocsAside",
-            ".components.widgets.video.YoutubeVideo"
         )
 
         handlers {

@@ -1,6 +1,8 @@
 ---
 description: Video resources to help you learn Kobweb that can supplement this guide (especially for visual learners).
 follows: Ide
+imports:
+  - .components.widgets.video.YouTubeVideo
 ---
 
 If you prefer to watch videos instead of (or in addition to) reading text, this section introduces a handful of
@@ -24,16 +26,18 @@ One of Kobweb's users, Stevdza-San, has created free starting tutorials that dem
 Kobweb.
 
 * [Getting started with Kobweb](https://www.youtube.com/watch?v=F5B-CxJTKlg)
-  ${YoutubeVideo("https://www.youtube.com/watch?v=F5B-CxJTKlg")}
+    ${YouTubeVideo}
     * This video introduces basic Kobweb concepts and walks you through the process from creating a simple
       (static layout) site to exporting it locally on your machine (with files you can then upload to a static hosting
       provider of your choice).
+  
 * [Deploying a Kobweb site](https://www.youtube.com/watch?v=ciAqQPThXn0)
-  ${YoutubeVideo("https://www.youtube.com/watch?v=ciAqQPThXn0")}
+    ${YouTubeVideo}
     * This video builds upon the previous, showcasing some additional tips and tricks, and walks you all the way through
       to deploying your site live on the internet using free hosting.
+
 * [Building a full stack multiplatform site](https://www.youtube.com/watch?v=zcrY0qayWF4)
-  ${YoutubeVideo("https://www.youtube.com/watch?v=zcrY0qayWF4")}
+    ${YouTubeVideo}
     * This demonstrates how to write both frontend and backend logic. It also demonstrates how you can write a separate
       Android frontend that can also work with your server. (This video is still useful to watch even if you never
       intend to use Android).
@@ -46,3 +50,4 @@ Kobweb.
 
 A YouTube channel called SkyFish created a tutorial video
 on [how to build a fullstack site with Kobweb](https://www.youtube.com/watch?v=VVNq6yovU_0).
+{{{ YouTubeVideo }}}
