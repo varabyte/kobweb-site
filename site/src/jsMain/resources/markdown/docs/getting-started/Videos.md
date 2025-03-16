@@ -20,6 +20,26 @@ understanding the structure and capabilities of the framework.
 
 ## Community
 
+> [!CAUTION]
+> The following videos were created while Kobweb was still in its relative infancy, so they may occasionally introduce
+> concepts that have since been updated.
+>
+> Most significantly, `ComponentStyle` has been renamed to
+> [`CssStyle`](https://kobweb.varabyte.com/docs/concepts/presentation/silk#cssstyle), because the feature grew beyond
+> just applying to widgets and is more generally applicable now.
+> 
+> So if you see:
+> ```kotlin
+> SomeStyle by ComponentStyle { /* ... */ }
+> ```
+> that should now be written as:
+> ```kotlin
+> SomeStyle = CssStyle { /* ... */ }
+> ```
+>
+> Overall, the information provided in these videos will still be helpful for learning and understanding the structure
+> of a Kobweb project.
+
 ### Stevdza-san
 
 One of Kobweb's users, Stevdza-San, has created free starting tutorials that demonstrate how to build projects using
