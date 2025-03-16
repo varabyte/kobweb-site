@@ -26,6 +26,6 @@ individual contributors for the features they helped us out with.
 ## Guest contributors
 
 * [Aakarshit Uppal](https://github.com/aksh1618) - Arch Linux support
+* Conrad Boehnke - Template design, owner of [UI Rocket](https://ui-rocket.com)
 * [Jose Salgado](https://github.com/jassycliq) - MDI icons
 * [MartinTheDragon](https://github.com/MartinTheDragon) - Markdown cross-page linking
-* Conrad Boehnke - Template design, owner of [UI Rocket](https://ui-rocket.com)
