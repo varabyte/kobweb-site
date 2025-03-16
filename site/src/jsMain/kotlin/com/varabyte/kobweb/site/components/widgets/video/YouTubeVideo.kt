@@ -39,45 +39,29 @@ val YouTubeVideoStyle = CssStyle {
 /**
  * Youtube Video Player
  *
- * @param url The full YouTube URL to play (e.g. `https://www.youtube.com/watch?v=...`).
- *    If incorrectly formatted, the player will be left blank. If null, then the player will search
- *    its siblings for a YouTube URL, so that you can have a direct link to a video followed by
- *    an embedded video player that will just work automatically.
+ * @param url The full YouTube URL to play (e.g. `https://www.youtube.com/watch?v=...`). If incorrectly formatted, no
+ *   element will be composed and an error will be logged to the console.
  */
 @Composable
-fun YouTubeVideo(url: String? = null) {
-    var videoId by remember { mutableStateOf(url?.let { extractVideoId(url) }) }
+fun YouTubeVideo(url: String) {
+    val videoId = remember {
+        extractVideoId(url)
+            .also {
+                if (it == null) {
+                    console.error("Could not extract YouTube video ID from URL: $url")
+                }
+            }
+    } ?: return
 
     Box(
         modifier = YouTubeVideoStyle.toModifier(),
         contentAlignment = Alignment.CenterStart,
-        ref = ref { element ->
-            if (videoId != null) return@ref
-            try {
-                // Only check the immediate parent
-                element.parentElement?.let { parent ->
-                    val links = parent.querySelectorAll("a")
-                    links.asList().forEach { node ->
-                        if (node is HTMLAnchorElement && node.href.contains("youtube.com")) {
-                            extractVideoId(node.href)?.let {
-                                videoId = it
-                                return@forEach
-                            }
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                console.error("Error finding YouTube links: ${e.message}")
-            }
-        }
     ) {
-        if (videoId != null) {
-            Iframe(
-                attrs = YouTubeVideoStyle.toAttrs {
-                    attr("src", "https://www.youtube.com/embed/$videoId")
-                }
-            )
-        }
+        Iframe(
+            attrs = YouTubeVideoStyle.toAttrs {
+                attr("src", "https://www.youtube.com/embed/$videoId")
+            }
+        )
     }
 }
 
