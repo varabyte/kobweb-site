@@ -25,7 +25,24 @@ individual contributors for the features they helped us out with.
 
 ## Guest contributors
 
+### Kobweb
+
 * [Aakarshit Uppal](https://github.com/aksh1618) - Arch Linux support
+* [Binay Shaw](https://github.com/binayshaw7777) - SVG APIs and icons
 * Conrad Boehnke - Template design, owner of [UI Rocket](https://ui-rocket.com)
+* [DVDAndroid](https://github.com/DVDAndroid) - Gradle support for custom source set names
+* [Ellet](https://github.com/EchoEllet) - Added modifiers, CI test support
+* [Fabian](https://github.com/zypus) - API events
+* [Jakub Meysner](https://github.com/jakubmeysner) - Dokka documentation help
+* [Jan Wiesbauer](https://github.com/Geanik) - `AlwaysUnderlined` link variant
 * [Jose Salgado](https://github.com/jassycliq) - MDI icons
+* [Kalle Strålman](https://github.com/kjeller) - `generate` code methods in Markdown `process`
 * [MartinTheDragon](https://github.com/MartinTheDragon) - Markdown cross-page linking
+* [Rafael Tonholo](https://github.com/rafaeltonholo) - Box shadows and `Arrangement.spacedBy`
+* [Vaibhav Raj](https://github.com/dead8309) - Kotlinx serialization extensions for HTTP APIs 
+* [Yongshun Shreck Ye](https://github.com/ShreckYe) - Added modifiers
+
+### Kobweb Site
+
+* [Mrldjx](https://github.com/mrljdx) - Inline YouTube video player
+* [Ondra Karmazín](https://github.com/okarmazin) - Docs additions
