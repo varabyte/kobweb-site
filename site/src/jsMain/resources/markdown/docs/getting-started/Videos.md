@@ -27,26 +27,26 @@ Kobweb.
 
 #### Getting started with Kobweb
 
-{{{ YouTubeVideo("https://www.youtube.com/watch?v=F5B-CxJTKlg") }}}
-
 This video introduces basic Kobweb concepts and walks you through the process from creating a simple (static layout)
 site to exporting it locally on your machine (with files you can then upload to a static hosting provider of your
 choice).
 
-#### Deploying a Kobweb site
+{{{ YouTubeVideo("https://www.youtube.com/watch?v=F5B-CxJTKlg") }}}
 
-{{{ YouTubeVideo("https://www.youtube.com/watch?v=ciAqQPThXn0") }}}
+#### Deploying a Kobweb site
 
 This video builds upon the previous, showcasing some additional tips and tricks, and walks you all the way through to
 deploying your site live on the internet using free hosting.
 
-#### Building a full stack multiplatform site
+{{{ YouTubeVideo("https://www.youtube.com/watch?v=ciAqQPThXn0") }}}
 
-{{{ YouTubeVideo("https://www.youtube.com/watch?v=zcrY0qayWF4") }}}
+#### Building a full stack multiplatform site
 
 This video demonstrates how to write both frontend and backend logic. It also demonstrates how you can write a separate
 Android frontend that can also work with your server. (This video is still useful to watch even if you never intend to
 use Android).
+
+{{{ YouTubeVideo("https://www.youtube.com/watch?v=zcrY0qayWF4") }}}
 
 > [!TIP]
 > It's easy to start with a static layout site first and migrate to a full stack site later, in case you're feeling
@@ -58,7 +58,7 @@ A YouTube channel called SkyFish creates webdev tutorials.
 
 #### Building a full stack site with a MongoDB server
 
-{{{ YouTubeVideo("https://www.youtube.com/watch?v=VVNq6yovU_0") }}}
-
 This video demonstrates how to build a simple website with a frontend and a backend, using API routes and leveraging a
 MongoDB instance for persistent data storage.
+
+{{{ YouTubeVideo("https://www.youtube.com/watch?v=VVNq6yovU_0") }}}
