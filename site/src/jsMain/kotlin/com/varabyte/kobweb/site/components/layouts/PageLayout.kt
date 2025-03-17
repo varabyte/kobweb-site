@@ -29,7 +29,6 @@ fun PageLayout(title: String, description: String? = null, content: @Composable 
     LaunchedEffect(description) {
         val head = document.head!!
         if (description != null) {
-
             val meta = head.querySelector("meta[name='description']") ?: document.createElement("meta").apply {
                 setAttribute("name", "description")
                 head.appendChild(this)
