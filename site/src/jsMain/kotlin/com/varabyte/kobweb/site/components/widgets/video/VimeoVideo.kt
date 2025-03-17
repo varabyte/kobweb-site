@@ -13,16 +13,16 @@ import org.jetbrains.compose.web.dom.Iframe
 /**
  * Youtube Video Player
  *
- * @param url The full YouTube URL to play (e.g. `https://www.youtube.com/watch?v=...`). If incorrectly formatted, no
+ * @param url The full Vimeo URL to play (e.g. `https://player.vimeo.com/video/....`). If incorrectly formatted, no
  *   element will be composed and an error will be logged to the console.
  */
 @Composable
-fun YouTubeVideo(url: String) {
+fun VimeoVideo(url: String) {
     val videoId = remember {
         extractVideoId(url)
             .also {
                 if (it == null) {
-                    console.error("Could not extract YouTube video ID from URL: $url")
+                    console.error("Could not extract Vimeo video ID from URL: $url")
                 }
             }
     } ?: return
@@ -33,15 +33,15 @@ fun YouTubeVideo(url: String) {
     ) {
         Iframe(
             attrs = Modifier.fillMaxSize().toAttrs {
-                attr("src", "https://www.youtube.com/embed/$videoId")
+                attr("src", "https://player.vimeo.com/video/$videoId")
             }
         )
     }
 }
 
 private fun extractVideoId(url: String): String? {
-    if (!url.contains(".youtube.com")) return null
-    val regex = Regex("v=([A-Za-z0-9_-]{11})")
+    if (!url.contains(".vimeo.com")) return null
+    val regex = Regex("video/([A-Za-z0-9_-]+)")
     val matchResult = regex.find(url)
     return matchResult?.groups?.get(1)?.value
 }

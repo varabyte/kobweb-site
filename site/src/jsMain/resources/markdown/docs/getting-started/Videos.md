@@ -2,6 +2,7 @@
 description: Video resources to help you learn Kobweb that can supplement this guide (especially for visual learners).
 follows: Ide
 imports:
+  - .components.widgets.video.VimeoVideo
   - .components.widgets.video.YouTubeVideo
 ---
 
@@ -17,6 +18,8 @@ can [check out my talk at Droidcon SF 24](https://www.droidcon.com/2024/07/17/ko
 for a high level overview of Kobweb. The talk showcases what Kobweb can do, introduces Compose HTML (which it builds
 on top of), and covers a wide range of frontend and backend functionality. It is light on code but heavy on
 understanding the structure and capabilities of the framework.
+
+{{{ VimeoVideo("https://player.vimeo.com/video/969515286") }}}
 
 ## Community
 
