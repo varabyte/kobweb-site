@@ -54,7 +54,7 @@ fun Folders(content: @Composable () -> Unit) {
                         }
                         i.addClass(
                             "fa-regular", when {
-                                childText.contains('.') -> "fa-file"
+                                child.children.length == 0 && childText.contains('.') -> "fa-file"
                                 child.children.length > 0 -> "fa-folder-open"
                                 else -> "fa-folder"
                             }

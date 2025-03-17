@@ -1,6 +1,6 @@
 ---
 description: How to declare pages and their URL routes for your site.
-follows: Index
+follows: ProjectStructure
 ---
 
 ## `@Page`

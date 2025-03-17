@@ -41,7 +41,7 @@ and look the same as the `jsMain` folder):
 
 ![Kobweb JVM main set up correctly](https://github.com/varabyte/media/raw/main/kobweb/images/kobweb-jvm-main.png)
 
-## Define API routes
+## <span id="api-routes">Define API routes</span>
 
 You can define and annotate methods which will generate server endpoints you can interact with. To add one:
 
