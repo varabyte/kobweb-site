@@ -645,6 +645,23 @@ Box(
 )
 ```
 
+Finally, here is a pattern you can use to extract a raw backing element which has some role to play during composition:
+
+```kotlin
+var backingElement by remember { mutableStateOf<HTMLElement?>(null) }
+
+SomeSilkWidget(ref = ref { backingElement = it }) {
+    if (backingElement != null) {
+        /* ... */
+    }
+}
+```
+
+> [!NOTE]
+> Extracting a raw element as above will cause a composition to take two passes -- the first one where the content of
+> your widget will be empty, and a second where it will be populated -- but in general this should be invisible to the
+> user. 
+
 ### `disposableRef`
 
 If you need to know both when the element enters *and* exits the DOM, you can use `disposableRef` instead. With
