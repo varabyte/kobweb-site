@@ -28,9 +28,9 @@ understanding the structure and capabilities of the framework.
 > concepts that have since been updated.
 >
 > Most significantly, `ComponentStyle` has been renamed to
-> [`CssStyle`](https://kobweb.varabyte.com/docs/concepts/presentation/silk#cssstyle), because the feature grew beyond
-> just applying to widgets and is more generally applicable now.
-> 
+> ${DocsLink("CssStyle", "/docs/concepts/presentation/silk#cssstyle")}, because the feature grew beyond just applying to
+> widgets and is more generally applicable now.
+>
 > So if you see:
 > ```kotlin
 > SomeStyle by ComponentStyle { /* ... */ }
