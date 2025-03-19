@@ -1,6 +1,7 @@
 ---
-title: "项目导出"
-follows: ProjectOrganization
+description: 如何将你的 Kobweb 站点导出为可以由网络服务器提供服务的最终布局。
+title: 项目导出
+follows: ApplicationRoot
 ---
 
 Kobweb 在 Compose HTML 基础上的一个主要增强是导出功能。

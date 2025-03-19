@@ -1,6 +1,6 @@
 ---
-title: 什么是 Kobweb 
-#routeOverride: docs
+description: A high level overview of what Kobweb is and what it can do.
+title: 什么是 Kobweb
 ---
 Kobweb 是一个基于 [Compose HTML](https://github.com/JetBrains/compose-multiplatform#compose-html) 构建的 Kotlin 网站和 Web 应用程序开发框架，其设计理念受到 [Next.js](https://nextjs.org) 和 [Chakra UI](https://chakra-ui.com) 的启发。
 

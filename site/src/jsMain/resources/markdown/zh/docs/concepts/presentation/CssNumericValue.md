@@ -1,4 +1,5 @@
 ---
+description: 关于 Kobweb 添加的 CSSNumericValue 类型别名的信息。
 title: CSSNumericValue 类型别名
 follows: CssLayers
 ---

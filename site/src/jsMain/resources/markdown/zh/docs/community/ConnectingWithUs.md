@@ -1,9 +1,8 @@
 ---
+description: 联系Kobweb团队的各种方式。
 title: 联系我们
 follows: Index
 ---
-
-以下是联系方式的方式
 
 * [加入我们的Discord！](https://discord.gg/5NZ2GKV5Cs)
 * [GitHub讨论区](https://github.com/varabyte/kobweb/discussions) 项目交流

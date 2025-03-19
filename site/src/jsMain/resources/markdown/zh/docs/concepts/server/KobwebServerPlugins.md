@@ -1,4 +1,5 @@
 ---
+description: 如何声明一个 Kobweb 服务器插件（用于暴露底层 Ktor 功能）。
 title: Kobweb服务插件
 follows: Fullstack
 ---

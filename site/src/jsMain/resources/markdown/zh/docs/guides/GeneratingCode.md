@@ -1,4 +1,5 @@
 ---
+description: A guide for how to generate code and resources for your site from your build script.
 title: 在构建时生成代码
 follows: ExistingBackend
 ---

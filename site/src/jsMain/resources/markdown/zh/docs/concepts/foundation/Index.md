@@ -1,5 +1,5 @@
 ---
-title: "基础概念"
+description: 如何在构建脚本中定义可在运行时被您的网站访问的全局值。
 follows: /getting-started/
 ---
 

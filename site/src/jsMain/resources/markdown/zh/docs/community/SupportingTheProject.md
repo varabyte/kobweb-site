@@ -1,4 +1,5 @@
 ---
+description: 支持 Kobweb 项目的方式。
 title: 支持 Kobweb 项目
 follows: SubmittingIssuesAndFeedback
 ---

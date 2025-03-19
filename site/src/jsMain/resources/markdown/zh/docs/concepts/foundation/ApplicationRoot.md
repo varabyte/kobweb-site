@@ -1,5 +1,6 @@
 ---
-title: "应用入口"
+description: 如何声明一个将被每个页面调用的入口点。
+title: 应用入口
 follows: Routing
 ---
 

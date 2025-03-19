@@ -1,5 +1,6 @@
 ---
-title: "全栈项目"
+description: 如何声明全栈 Kobweb 项目并定义 API 路由。
+title: 全栈项目
 follows: Index
 ---
 

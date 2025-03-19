@@ -1,5 +1,6 @@
 ---
-title: "重定向"
+description: 如何在 Kobweb 站点中定义重定向。
+title: 重定向
 follows: Workers
 ---
 

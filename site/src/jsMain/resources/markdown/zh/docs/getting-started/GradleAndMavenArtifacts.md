@@ -1,4 +1,5 @@
 ---
+description: Information about where Kobweb artifacts are hosted.
 title: Gradle 及 Maven 产物
 follows: KobwebProject
 ---

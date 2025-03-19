@@ -1,4 +1,5 @@
 ---
+description: A guide on how you can use Kotlinx serialization to share data objects across the network.
 title: 前后端之间共享数据对象
 follows: CustomFonts
 ---

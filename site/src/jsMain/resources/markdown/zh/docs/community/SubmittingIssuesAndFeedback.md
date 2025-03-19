@@ -1,4 +1,5 @@
 ---
+description: 如何向 Kobweb 团队提交问题和反馈。
 title: 提交问题和反馈
 follows: ConnectingWithUs
 ---

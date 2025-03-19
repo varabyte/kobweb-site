@@ -1,5 +1,6 @@
 ---
-title: "状态持久化"
+description: 如何使用 Web 存储来持久化跨页面甚至跨浏览会话的状态。
+title: 状态持久化
 follows: ApplicationGlobals
 ---
 

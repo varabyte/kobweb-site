@@ -1,4 +1,5 @@
 ---
+description: 理解和声明 Silk 中的 CSS 层。
 title: CSS 层
 follows: LearningCss
 ---

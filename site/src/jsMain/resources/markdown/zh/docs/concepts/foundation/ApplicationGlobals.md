@@ -1,5 +1,6 @@
 ---
-title: "应用全局变量"
+description: 如何在构建脚本中定义可在运行时被站点访问的全局值。
+title: 应用全局变量
 follows: Exporting
 ---
 

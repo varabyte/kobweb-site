@@ -1,4 +1,5 @@
 ---
+description: 刚接触 CSS？了解如何通过 Kobweb 的方式开始学习它。
 title: 学习 CSS
 follows: Silk
 imports:

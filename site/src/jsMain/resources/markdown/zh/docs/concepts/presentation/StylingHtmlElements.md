@@ -1,4 +1,5 @@
 ---
+description: 在Kobweb中声明HTML元素CSS样式的各种方式。
 title: HTML元素样式设置
 follows: Index
 ---

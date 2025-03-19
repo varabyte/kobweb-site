@@ -1,4 +1,5 @@
 ---
+description: 如何编写 Kobweb 风格的 Markdown，它会被转换成你网站上的页面。
 follows: BasePath
 imports:
   - com.varabyte.kobweb.silk.components.display.LeftBorderedCalloutVariant

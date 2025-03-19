@@ -1,4 +1,5 @@
 ---
+description: Silk(Kobweb的UI层)的全面概述。
 follows: StylingHtmlElements
 imports:
   - com.varabyte.kobweb.site.components.widgets.docs.silk.*

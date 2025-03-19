@@ -1,4 +1,5 @@
 ---
+description: 如何将 Kobweb 模块添加到现有项目中的指南。
 title: 将 Kobweb 添加到现有项目中
 follows: SharingDataObjects
 ---

@@ -1,4 +1,5 @@
 ---
+description: 为Kobweb贡献时间的人们。
 title: Kobweb 贡献者
 follows: SupportingTheProject
 ---
@@ -22,7 +23,25 @@ Kobweb多年来得到了社区的大力支持。我们想借此页面特别感�
 
 ## 特邀贡献者
 
+### Kobweb
+
 * [Aakarshit Uppal](https://github.com/aksh1618) - Arch Linux支持
-* [Jose Salgado](https://github.com/jassycliq) - MDI图标
-* [MartinTheDragon](https://github.com/MartinTheDragon) - Markdown跨页面链接
+* [Binay Shaw](https://github.com/binayshaw7777) - SVG APIs and icons
 * Conrad Boehnke - 模板设计，[UI Rocket](https://ui-rocket.com)的所有者
+* [DVDAndroid](https://github.com/DVDAndroid) - 为自定义源集名称提供Gradle支持
+* [Ellet](https://github.com/EchoEllet) - 添加修饰符，CI测试支持
+* [Fabian](https://github.com/zypus) - API events
+* [Jakub Meysner](https://github.com/jakubmeysner) - Dokka文档帮助
+* [Jan Wiesbauer](https://github.com/Geanik) - `AlwaysUnderlined` 链接变体
+* [Jose Salgado](https://github.com/jassycliq) - MDI图标
+* [Kalle Strålman](https://github.com/kjeller) - 在Markdown `process`中添加`generate`代码方法
+* [MartinTheDragon](https://github.com/MartinTheDragon) - Markdown 跨页面链接
+* [Rafael Tonholo](https://github.com/rafaeltonholo) - Box阴影和 `Arrangement.spacedBy` 功能
+* [Vaibhav Raj](https://github.com/dead8309) - HTTP APIs的Kotlinx序列化扩展
+* [Yongshun Shreck Ye](https://github.com/ShreckYe) - Added modifiers
+* [MartinTheDragon](https://github.com/MartinTheDragon) - Markdown跨页面链接
+
+### Kobweb Site
+
+* [Mrldjx](https://github.com/mrljdx) - 内嵌YouTube视频播放器
+* [Ondra Karmazín](https://github.com/okarmazin) - 文档补充

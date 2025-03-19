@@ -1,5 +1,6 @@
 ---
-title: "基础路径"
+description: 如何为您的项目设置基础路径（以及这意味着什么）。
+title: 基础路径
 follows: PersistingState
 ---
 

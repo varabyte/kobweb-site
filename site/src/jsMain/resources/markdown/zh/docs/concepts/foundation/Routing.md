@@ -1,6 +1,7 @@
 ---
-title: "路由"
-follows: Index
+description: 如何为你的网站声明页面及其 URL 路由。
+title: 路由
+follows: ProjectStructure
 ---
 
 ## `@Page`
