@@ -12,24 +12,26 @@ ${DocsAside("Static layout vs. Full stack sites", "/docs/concepts/foundation/exp
 and then add code to your backend to serve the files yourself, as it is fairly trivial.
 
 When you export a site statically, it will generate all files into your `.kobweb/site` folder. Then, if using Ktor, for
-example, serving these files is a one-liner:
+example, you can serve these files using their [`staticFiles` method](https://ktor.io/docs/server-static-content.html):
 
 ```kotlin
 routing {
-    staticFiles("/", File(".kobweb/site"))
+    staticFiles("/", File(".kobweb/site")) {
+        // Support clean URLs (ktor auto-appends ".html")
+        extensions("html")
+        // Fallback if a file was not found.
+        default("index.html")
+    }
 }
 ```
 
-If using Ktor, you should also install
-the [`IgnoreTrailingSlash` plugin](https://api.ktor.io/ktor-server/ktor-server-core/io.ktor.server.routing/-ignore-trailing-slash.html)
-so that your web server will serve `index.html` when a user visits a directory (e.g. `/docs/`) instead of returning a 404:
+When using Ktor,
+adding `html` to the extensions (as shown above)
+is required to ensure the web server serves `index.html` when accessing a URL
+without the suffix `.html` (e.g., `/docs` instead of `/docs.html`) and avoid 404.
+For more information,
+refer to the [Ktor documentation on file extension fallbacks](https://ktor.io/docs/server-static-content.html#extensions).
 
-```kotlin
-embeddedServer(...) { // `this` is `Application` in this scope
-  this.install(IgnoreTrailingSlash)
-  // Remaining configuration
-}
-```
 
 If you need to access HTTP endpoints exposed by your backend, you can use [`window.fetch(...)`](https://developer.mozilla.org/en-US/docs/Web/API/fetch)
 directly, or you can use the convenience `http` property that Kobweb adds to the `window` object which exposes
