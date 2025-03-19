@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="locale">zh</string>
+    <string name="get_started">开始使用</string>
+    <string name="get_started_tips">阅读Kobweb使用文档</string>
+    <string name="github">Github</string>
+    <string name="github_tips">Kobweb在GitHub上的源码</string>
+    <string name="kobweb_create_app_title">使用Kotlin创建Web应用</string>
+    <string name="kobweb_create_app_description">Kobweb是基于Compose HTML构建的一个自主框架。它包含了构建丰富、动态的网站和Web应用所需的一切，同时还能够利用更广泛的Kotlin生态系统。</string>
+    <string name="why_kobweb">为什么选择Kobweb？</string>
+    <string name="why_kobweb_subtitle">更快更简单地构建Compose HTML应用</string>
+    <string name="page_routing">页面路由</string>
+    <string name="page_routing_description">使用@Page注解标记composable方法即可创建路由</string>
+    <string name="live_reloading">实时重载</string>
+    <string name="live_reloading_description">从底层开始构建的实时重载环境</string>
+    <string name="light_and_dark_ui">明暗主题UI</string>
+    <string name="light_and_dark_ui_description">内置支持多种颜色模式</string>
+    <string name="component_library">组件库</string>
+    <string name="component_library_description">Silk是Kobweb附带的UI层，建立在Compose HTML之上</string>
+    <string name="component_styling">组件样式</string>
+    <string name="component_styling_description">强大而简单的API用于定义和覆盖样式</string>
+    <string name="seo_friendly">SEO友好</string>
+    <string name="seo_friendly_description">支持静态站点导出以改善SEO</string>
+    <string name="server_api_routes">服务器API路由</string>
+    <string name="server_api_routes_description">使用@Api注解标记方法以生成服务器API端点</string>
+    <string name="markdown_support">Markdown支持</string>
+    <string name="markdown_support_description">开箱即用的Markdown支持</string>
+    <string name="font_awesome_md_icons">Font Awesome / Material Design图标</string>
+    <string name="font_awesome_md_icons_description">轻松集成Font Awesome和/或Material Design图标</string>
+    <string name="compose_extensions">Compose扩展</string>
+    <string name="compose_extensions_description">为Compose HTML添加熟悉的Modifier、Box、Row和Column概念</string>
+    <string name="java_script_ecosystem">JavaScript生态系统</string>
+    <string name="java_script_ecosystem_description">Compose HTML意味着你可以利用庞大的NPM包和JS库生态系统</string>
+    <string name="open_source">开源</string>
+    <string name="open_source_description">一个采用友好许可证并拥有热情社区的开源项目</string>
+    <string name="kobweb_cli">Kobweb CLI</string>
+    <string name="kobweb_cli_description">Kobweb CLI提供命令来处理构建Compose HTML应用中繁琐的部分，包括项目设置和配置</string>
+    <string name="get_started_description">访问我们的文档，通过教程和API示例快速上手并运行你自己的网站。</string>
+    <string name="star_and_contribute">点赞与贡献</string>
+    <string name="star_and_contribute_description">Kobweb完全开源并由社区驱动。我们邀请你一起帮助Kobweb成为最好的Web开发框架！</string>
+    <string name="join_the_community">加入社区</string>
+    <string name="join_the_community_description">加入我们的社区，获得即时支持，并参与关于Kobweb和使用Kotlin进行Web开发未来的精彩讨论。</string>
+    <string name="this_site_is">这个网站也是 </string>
 </resources>

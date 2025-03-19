@@ -29,8 +29,8 @@ import org.jetbrains.compose.web.dom.Text
 private fun OssLabel() {
     Span(Modifier.margin(bottom = 2.cssRem).whiteSpace(WhiteSpace.PreWrap).textAlign(TextAlign.Center).toAttrs()) {
         FaGithub(Modifier.margin(right = 8.px))
-        Text("This site is ")
-        Link("https://github.com/varabyte/kobweb-site", "open source")
+        Text(Res.string.this_site_is)
+        Link("https://github.com/varabyte/kobweb-site", Res.string.open_source)
         Text(".")
     }
 }

@@ -148,10 +148,10 @@ fun HeroSection() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 H1(Modifier.textAlign(TextAlign.Center).toAttrs()) {
-                    SpanText("Create web apps in Kotlin")
+                    SpanText(Res.string.kobweb_create_app_title)
                 }
                 SpanText(
-                    "Kobweb is an opinionated framework built on top of Compose HTML. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.",
+                    Res.string.kobweb_create_app_description,
                     Modifier.siteText(SiteTextSize.NORMAL).textAlign(TextAlign.Center),
                     MutedSpanTextVariant
                 )
@@ -163,16 +163,16 @@ fun HeroSection() {
                 numColumns(1, md = 2),
                 Modifier.margin(topBottom = 2.cssRem).rowGap(1.cssRem).columnGap(1.cssRem),
             ) {
-                LinkButton("/docs", HeroButton.toModifier(), "Get Started", primary = true) {
+                LinkButton("/docs", HeroButton.toModifier(), Res.string.get_started, primary = true) {
                     FaBook(iconMargin)
                 }
-                Tooltip(ElementTarget.PreviousSibling, "Read the Kobweb guide")
+                Tooltip(ElementTarget.PreviousSibling, Res.string.get_started_tips)
 
 
-                LinkButton("https://github.com/varabyte/kobweb", HeroButton.toModifier(), "Github") {
+                LinkButton("https://github.com/varabyte/kobweb", HeroButton.toModifier(), Res.string.github) {
                     FaGithub(iconMargin)
                 }
-                Tooltip(ElementTarget.PreviousSibling, "Kobweb source on GitHub")
+                Tooltip(ElementTarget.PreviousSibling, Res.string.github_tips)
             }
 
             Column(

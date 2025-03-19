@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
     <string name="locale">en</string>
+    <string name="get_started">Get Started</string>
+    <string name="get_started_tips">Read the Kobweb guide</string>
+    <string name="github">Github</string>
+    <string name="github_tips">Kobweb source on GitHub</string>
+    <string name="kobweb_create_app_title">Create web apps in Kotlin</string>
+    <string name="kobweb_create_app_description">Kobweb is an opinionated framework built on top of Compose HTML. It includes everything you need to build rich, dynamic websites, as well as web applications, while being able to leverage the greater Kotlin ecosystem.</string>
+    <string name="why_kobweb">Why Kobweb?</string>
+    <string name="why_kobweb_subtitle">Build your Compose HTML apps quicker and easier</string>
+    <string name="page_routing">Page Routing</string>
+    <string name="page_routing_description">Annotate a composable method with @Page to make it a route</string>
+    <string name="live_reloading">Live Reloading</string>
+    <string name="live_reloading_description">An environment built from the ground up around live reloading</string>
+    <string name="light_and_dark_ui">Light and Dark UI</string>
+    <string name="light_and_dark_ui_description">Built-in support for multiple color modes</string>
+    <string name="component_library">Component library</string>
+    <string name="component_library_description">Silk is a UI layer included with Kobweb and built upon Compose HTML</string>
+    <string name="component_styling">Component styling</string>
+    <string name="component_styling_description">Powerful and simple API for defining and overriding styles</string>
+    <string name="seo_friendly">SEO-friendly</string>
+    <string name="seo_friendly_description">Supports static site exports for improved SEO</string>
+    <string name="server_api_routes">Server API Routes</string>
+    <string name="server_api_routes_description">Annotate methods with @Api to generate server API endpoints</string>
+    <string name="markdown_support">Markdown support</string>
+    <string name="markdown_support_description">Out-of-the-box Markdown support</string>
+    <string name="font_awesome_md_icons">Font Awesome / Material Design Icons</string>
+    <string name="font_awesome_md_icons_description">Easily include Font Awesome and/or Material Design icons</string>
+    <string name="compose_extensions">Compose extensions</string>
+    <string name="compose_extensions_description">Adds familiar Modifier, Box, Row, and Columns concepts to Compose HTML</string>
+    <string name="java_script_ecosystem">JavaScript Ecosystem</string>
+    <string name="java_script_ecosystem_description">Compose HTML means you can leverage a massive ecosystem of NPM packages and JS libraries</string>
+    <string name="open_source">Open source</string>
+    <string name="open_source_description">An open source project built with a friendly license and a welcoming community</string>
+    <string name="kobweb_cli">Kobweb CLI</string>
+    <string name="kobweb_cli_description">Kobweb CLI provides commands to handle the tedious parts of building a Compose HTML app, including project setup and configuration</string>
+    <string name="get_started_description">Visit our docs, with tutorials and API examples to get you up and running with your own site in no time.</string>
+    <string name="star_and_contribute">SStar &amp; Contribute</string>
+    <string name="star_and_contribute_description">Kobweb is fully open source and community driven. We invite you to help make Kobweb the best web development framework!</string>
+    <string name="join_the_community">Join the Community</string>
+    <string name="join_the_community_description">Join our community for instant support and great conversations about the future of the Kobweb and web development using Kotlin.</string>
+    <string name="this_site_is">This site is </string>
 </resources>

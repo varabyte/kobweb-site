@@ -65,30 +65,30 @@ private fun FeatureItem(feature: Feature) {
 fun FeaturesSection() {
     val features = remember {
         listOf(
-            Feature("Page Routing", "Annotate a composable method with @Page to make it a route"),
-            Feature("Live Reloading", "An environment built from the ground up around live reloading"),
-            Feature("Light and Dark UI", "Built-in support for multiple color modes"),
-            Feature("Component library", "Silk is a UI layer included with Kobweb and built upon Compose HTML"),
-            Feature("Component styling", "Powerful and simple API for defining and overriding styles"),
-            Feature("SEO-friendly", "Supports static site exports for improved SEO"),
-            Feature("Server API Routes", "Annotate methods with @Api to generate server API endpoints"),
-            Feature("Markdown support", "Out-of-the-box Markdown support"),
-            Feature("Font Awesome / Material Design Icons", "Easily include Font Awesome and/or Material Design icons"),
-            Feature("Compose extensions", "Adds familiar Modifier, Box, Row, and Columns concepts to Compose HTML"),
-            Feature("JavaScript Ecosystem", "Compose HTML means you can leverage a massive ecosystem of NPM packages and JS libraries"),
-            Feature("Open source", "An open source project built with a friendly license and a welcoming community"),
+            Feature(Res.string.page_routing, Res.string.page_routing_description),
+            Feature(Res.string.live_reloading, Res.string.live_reloading_description),
+            Feature(Res.string.light_and_dark_ui, Res.string.light_and_dark_ui_description),
+            Feature(Res.string.component_library, Res.string.component_library_description),
+            Feature(Res.string.component_styling, Res.string.component_styling_description),
+            Feature(Res.string.seo_friendly, Res.string.seo_friendly_description),
+            Feature(Res.string.server_api_routes, Res.string.server_api_routes_description),
+            Feature(Res.string.markdown_support, Res.string.markdown_support_description),
+            Feature(Res.string.font_awesome_md_icons, Res.string.font_awesome_md_icons_description),
+            Feature(Res.string.compose_extensions, Res.string.compose_extensions_description),
+            Feature(Res.string.java_script_ecosystem, Res.string.java_script_ecosystem_description),
+            Feature(Res.string.open_source, Res.string.open_source_description),
         )
     }
 
     Section {
         H2 {
             SpanText(
-                "Why Kobweb?",
+                Res.string.why_kobweb,
                 Modifier.textAlign(TextAlign.Center)
             )
         }
         SpanText(
-            "Build your Compose HTML apps quicker and easier",
+            Res.string.why_kobweb_subtitle,
             Modifier.siteText(SiteTextSize.NORMAL).textAlign(TextAlign.Center),
             MutedSpanTextVariant
         )

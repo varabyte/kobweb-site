@@ -31,10 +31,10 @@ import org.jetbrains.compose.web.dom.Video
 fun CliSection() {
     Section(Modifier.displayIfAtLeast(Breakpoint.MD)) {
         H2 {
-            Text("Kobweb CLI")
+            Text(Res.string.kobweb_cli)
         }
         SpanText(
-            "Kobweb CLI provides commands to handle the tedious parts of building a Compose HTML app, including project setup and configuration",
+            Res.string.kobweb_cli_description,
             Modifier.lineHeight(1.5).siteText(SiteTextSize.NORMAL).textAlign(TextAlign.Center),
             MutedSpanTextVariant
         )

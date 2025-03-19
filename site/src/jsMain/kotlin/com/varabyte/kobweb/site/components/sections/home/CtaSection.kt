@@ -84,24 +84,24 @@ fun CtaSection() {
     SimpleGrid(numColumns(1, md = 3), Modifier.margin(top = 6.cssRem).fillMaxWidth()) {
         val iconModifier = Modifier.fontSize(2.cssRem).margin(0.75.cssRem)
         CtaGridItem(
-            "Get started",
-            "Visit our docs, with tutorials and API examples to get you up and running with your own site in no time.",
+            Res.string.get_started,
+            Res.string.get_started_description,
             "/docs"
         ) {
             FaArrowRight(iconModifier)
         }
 
         CtaGridItem(
-            "Star & Contribute",
-            "Kobweb is fully open source and community driven. We invite you to help make Kobweb the best web development framework!",
+            Res.string.star_and_contribute,
+            Res.string.star_and_contribute_description,
             "https://github.com/varabyte/kobweb"
         ) {
             FaStar(iconModifier)
         }
 
         CtaGridItem(
-            "Join the Community",
-            "Join our community for instant support and great conversations about the future of the Kobweb and web development using Kotlin.",
+            Res.string.join_the_community,
+            Res.string.join_the_community_description,
             "https://discord.gg/5NZ2GKV5Cs"
         ) {
             FaDiscord(iconModifier)
