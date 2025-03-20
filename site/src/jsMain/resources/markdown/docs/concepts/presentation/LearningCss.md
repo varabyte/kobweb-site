@@ -185,7 +185,7 @@ Box(
     .boxShadow(blurRadius = 5.px, spreadRadius = 3.px, color = Colors.DarkGray)
 +   .backgroundImage(
 +       linearGradient(
-+          LinearGradient.Direction.ToRight, Colors.LightBlue, Colors.LightGreen
++          Colors.LightBlue, Colors.LightGreen, LinearGradient.Direction.ToRight
 +       )
 +    )
 ) {

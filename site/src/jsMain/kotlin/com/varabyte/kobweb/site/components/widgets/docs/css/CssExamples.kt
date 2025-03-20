@@ -24,7 +24,9 @@ private val MODIFIER_1 = Modifier.padding(topBottom = 0.05.cssRem, leftRight = 1
 private val MODIFIER_2 = MODIFIER_1.border(1.px, LineStyle.Solid, Colors.Black)
 private val MODIFIER_3 = MODIFIER_2.borderRadius(5.px)
 private val MODIFIER_4 = MODIFIER_3.boxShadow(blurRadius = 5.px, spreadRadius = 3.px, color = Colors.DarkGray)
-private val MODIFIER_5 = MODIFIER_4.backgroundImage(linearGradient(LinearGradient.Direction.ToRight, Colors.LightBlue, Colors.LightGreen))
+private val MODIFIER_5 = MODIFIER_4.backgroundImage(
+    linearGradient(Colors.LightBlue, Colors.LightGreen, LinearGradient.Direction.ToRight)
+)
 // lazy block required to avoid `toAnimation` from throwing; Silk must be initialized first.
 private val MODIFIER_6 by lazy {
     MODIFIER_5.animation(
