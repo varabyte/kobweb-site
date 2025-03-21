@@ -286,7 +286,7 @@ fun getUsers(ctx: ApiContext) {
 }
 ```
 
-## Define API streams
+## <span id="api-streams">Define API streams</span>
 
 Kobweb servers support persistent connections via streams. Streams are essentially named channels that maintain
 continuous contact between the client and the server, allowing either to send messages to the other at any time. This is
