@@ -22,12 +22,15 @@ import com.varabyte.kobweb.silk.style.breakpoint.displayUntil
 import com.varabyte.kobweb.silk.style.selectors.active
 import com.varabyte.kobweb.silk.style.selectors.hover
 import com.varabyte.kobweb.silk.theme.name
+import com.varabyte.kobweb.site.Constants
 import com.varabyte.kobweb.site.components.sections.NavHeaderBackgroundStyle
 import com.varabyte.kobweb.site.components.sections.NavHeaderDarkenedBackgroundStyle
 import com.varabyte.kobweb.site.components.sections.NavHeaderHeight
 import com.varabyte.kobweb.site.components.sections.navHeaderZIndex
-import com.varabyte.kobweb.site.model.listing.SITE_LISTING
+import com.varabyte.kobweb.site.util.defaultLanguageCode
+import com.varabyte.kobweb.site.util.getSiteListing
 import kotlinx.browser.document
+import kotlinx.browser.localStorage
 import kotlinx.dom.addClass
 import kotlinx.dom.removeClass
 import org.jetbrains.compose.web.css.Position
@@ -79,6 +82,9 @@ val FixedNoScrollStyle = CssStyle {
 @Composable
 fun MobileLocalNav() {
     var open by remember { mutableStateOf(false) }
+    val currentLanguageCode = remember {
+        localStorage.getItem(Constants.APP_LOCALE_KEY)
+    } ?: Res.defaultLanguageCode
     Column(
         NavHeaderBackgroundStyle.toModifier()
             .displayUntil(MaxMobileBreakpoint)
@@ -124,7 +130,7 @@ fun MobileLocalNav() {
                 .navHeaderZIndex()
                 .toAttrs()
         ) {
-            ListingSidebar(SITE_LISTING)
+            ListingSidebar(getSiteListing(currentLanguageCode))
         }
     }
 }

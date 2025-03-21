@@ -24,6 +24,7 @@ import com.varabyte.kobweb.silk.style.vars.color.BorderColorVar
 import com.varabyte.kobweb.silk.theme.colors.palette.background
 import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.colors.shifted
+import com.varabyte.kobweb.site.Constants
 import com.varabyte.kobweb.site.components.sections.PaginationNav
 import com.varabyte.kobweb.site.components.sections.listing.ListingSidebar
 import com.varabyte.kobweb.site.components.sections.listing.MobileLocalNav
@@ -32,14 +33,17 @@ import com.varabyte.kobweb.site.components.style.siteText
 import com.varabyte.kobweb.site.components.widgets.DynamicToc
 import com.varabyte.kobweb.site.components.widgets.getHeadings
 import com.varabyte.kobweb.site.model.listing.*
+import com.varabyte.kobweb.site.util.defaultLanguageCode
+import com.varabyte.kobweb.site.util.getSiteListing
 import com.varabyte.kobwebx.markdown.markdown
 import kotlinx.browser.document
+import kotlinx.browser.localStorage
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import org.w3c.dom.HTMLElement
 
-fun PageContext.RouteInfo.toArticleHandle(): ArticleHandle? {
-    return SITE_LISTING.findArticle(path)
+fun PageContext.RouteInfo.toArticleHandle(currentLanguageCode: String): ArticleHandle? {
+    return getSiteListing(currentLanguageCode).findArticle(path)
 }
 
 @CssLayer("component-styles") // Allow variants to override these styles
@@ -113,8 +117,10 @@ val ArticleStyle = CssStyle {
 @Composable
 fun DocsLayout(content: @Composable () -> Unit) {
     val ctx = rememberPageContext()
-
-    val articleHandle = ctx.markdown?.let { ctx.route.toArticleHandle() }
+    val currentLanguageCode = remember {
+        localStorage.getItem(Constants.APP_LOCALE_KEY)
+    } ?: Res.defaultLanguageCode
+    val articleHandle = ctx.markdown?.let { ctx.route.toArticleHandle(currentLanguageCode) }
     val title = articleHandle?.article?.titleOrFallback ?: "Docs"
     val breadcrumbs = articleHandle?.article?.breadcrumbs
     val desc = ctx.markdown?.frontMatter?.get("description")?.singleOrNull()
@@ -159,7 +165,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
                     .toAttrs()
             ) {
                 ListingSidebar(
-                    SITE_LISTING,
+                    getSiteListing(currentLanguageCode),
                     Modifier
                         .padding(top = 2.cssRem, left = 1.5.cssRem)
                         .width(16.cssRem)
@@ -189,7 +195,7 @@ fun DocsLayout(content: @Composable () -> Unit) {
 
                     if (articleHandle == null) return@Article
 
-                    val (prev, next) = SITE_LISTING.findArticleNeighbors(articleHandle)
+                    val (prev, next) = getSiteListing(currentLanguageCode).findArticleNeighbors(articleHandle)
                     PaginationNav(prev, next, Modifier.margin(top = 3.cssRem))
                 }
             }

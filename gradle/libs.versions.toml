@@ -2,6 +2,7 @@
 jetbrains-compose = "1.7.1"
 kobweb = "0.20.5-SNAPSHOT"
 kotlin = "2.1.10"
+libres = "1.2.3"
 
 [libraries]
 compose-html-core = { module = "org.jetbrains.compose.html:html-core", version.ref = "jetbrains-compose" }
@@ -10,9 +11,11 @@ kobweb-core = { module = "com.varabyte.kobweb:kobweb-core ", version.ref = "kobw
 kobweb-silk-core = { module = "com.varabyte.kobweb:kobweb-silk", version.ref = "kobweb" }
 kobweb-silk-icons-fa = { module = "com.varabyte.kobwebx:silk-icons-fa", version.ref = "kobweb" }
 kobwebx-markdown = { module = "com.varabyte.kobwebx:kobwebx-markdown", version.ref = "kobweb" }
+libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
 
 [plugins]
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kobweb-application = { id = "com.varabyte.kobweb.application", version.ref = "kobweb" }
 kobwebx-markdown = { id = "com.varabyte.kobwebx.markdown", version.ref = "kobweb" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+libres = { id = "io.github.skeptick.libres", version.ref = "libres" }

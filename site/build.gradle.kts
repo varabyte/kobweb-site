@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kobweb.application)
     alias(libs.plugins.kobwebx.markdown)
+    alias(libs.plugins.libres)
 }
 
 group = "com.varabyte.kobweb.site"
@@ -91,6 +92,9 @@ kotlin {
     }
 
     sourceSets {
+        commonMain.dependencies {
+            implementation(libs.libres)
+        }
         jsMain.dependencies {
             implementation(libs.compose.runtime)
             implementation(libs.compose.html.core)
@@ -103,14 +107,44 @@ kotlin {
     }
 }
 
+libres {
+    generatedClassName = "Res"
+    generateNamedArguments = true
+    baseLocaleLanguageCode = "en"
+}
+
 object SiteListingGenerator {
     private const val DOCS_PREFIX = "docs/"
+    private const val ZH_DOCS_PREFIX = "zh/docs/"
+
+    private data class LanguageDocuments(
+        val entries: List<MarkdownEntry>,
+        val prefix: String,
+        val lang: String
+    )
 
     fun generate(scope: MarkdownBlock.ProcessScope, entries: List<MarkdownEntry>) {
-        scope._generate(entries.filter { it.filePath.startsWith(DOCS_PREFIX) })
+        val enDocs = entries.filter { it.filePath.startsWith(DOCS_PREFIX) }
+        val zhDocs = entries.filter { it.filePath.startsWith(ZH_DOCS_PREFIX) }
+
+        scope._generate(
+            LanguageDocuments(
+                entries = enDocs,
+                prefix = DOCS_PREFIX,
+                lang = "en"
+            )
+        )
+
+        scope._generate(
+            LanguageDocuments(
+                entries = zhDocs,
+                prefix = ZH_DOCS_PREFIX,
+                lang = "zh"
+            )
+        )
     }
 
-    private fun MarkdownEntry.toPath() = "/" + filePath.removePrefix(DOCS_PREFIX).removeSuffix(".md")
+    private fun MarkdownEntry.toPath(prefix: String) = "/" + filePath.removePrefix(prefix).removeSuffix(".md")
 
     private data class RouteParts(
         val category: String,
@@ -118,7 +152,7 @@ object SiteListingGenerator {
         val slug: String,
     )
 
-    private fun MarkdownEntry.toRouteParts() = with(this.toPath().split('/').dropWhile { it.isEmpty() }) {
+    private fun MarkdownEntry.toRouteParts(prefix: String) = with(this.toPath(prefix).split('/').dropWhile { it.isEmpty() }) {
         require(this.size == 2 || this.size == 3) {
             "Expected category, subcategory (optional), and slug; got \"${this.joinToString("/")}\""
         }
@@ -151,7 +185,7 @@ object SiteListingGenerator {
         .takeIf { it != "Index" } ?: ""
 
     @Suppress("FunctionName") // Underscore avoids ambiguity error
-    private fun MarkdownBlock.ProcessScope._generate(entries: List<MarkdownEntry>) {
+    private fun MarkdownBlock.ProcessScope._generate(langDocs: LanguageDocuments) {
         val optionalFields = listOf("follows")
 
         // e.g. "/guides/first-steps/GettingStarted.md"
@@ -161,17 +195,17 @@ object SiteListingGenerator {
         // e.g. "/guides/first-steps/" -> "/widgets/forms/Button.md"
         val followingMap = mutableMapOf<String, MutableList<MarkdownEntry>>()
 
-        entries.forEach { entry ->
+        langDocs.entries.forEach { entry ->
             val (follows) = optionalFields.map { key -> entry.frontMatter[key]?.singleOrNull() }
 
             if (follows != null) {
                 // "/a/b/c.md" -> pass through
                 // "z.md" -> "/a/b/z.md" (assume sibling of current entry)
                 followingMap.getOrPut(
-                    if (follows.contains('/')) {
+                    if (follows.contains("/")) {
                         follows
                     } else {
-                        "${entry.toPath().substringBeforeLast('/')}/$follows"
+                        "${entry.toPath(langDocs.prefix).substringBeforeLast('/')}/$follows"
                     }
                 ) { mutableListOf() }.add(entry)
             } else {
@@ -180,7 +214,7 @@ object SiteListingGenerator {
         }
 
         if (initialArticles.size != 1) {
-            println("e: There should only be one starting article, but one of these articles are missing a `follows` frontmatter value: ${initialArticles.map { it.toPath() }}")
+            println("e: There should only be one starting article, but one of these articles are missing a `follows` frontmatter value: ${initialArticles.map { it.toPath(langDocs.prefix) }}")
         }
 
         val orderedArticleList = mutableListOf<MarkdownEntry>()
@@ -189,22 +223,22 @@ object SiteListingGenerator {
             while (nextEntries.isNotEmpty()) {
                 val nextEntry = nextEntries.removeAt(0)
                 orderedArticleList.add(nextEntry)
-                val nextPath = nextEntry.toPath()
+                val nextPath = nextEntry.toPath(langDocs.prefix)
                 val followedBy = followingMap[nextPath] ?: followingMap[nextPath.substringBeforeLast('/') + "/"]
                 if (followedBy == null) continue
                 if (followedBy.size != 1) {
-                    println("e: Only one article should ever follow another. For \"$nextPath\", found multiple (so please fix one): ${followedBy.map { it.toPath() }}")
+                    println("e: Only one article should ever follow another. For \"$nextPath\", found multiple (so please fix one): ${followedBy.map { it.toPath(langDocs.prefix) }}")
                 }
 
                 nextEntries.addAll(followedBy)
             }
         }
 
-        (entries.toSet() - orderedArticleList).forEach { orphanedEntry ->
-            println("e: Orphaned markdown file (probably a bad `Follows` value): ${orphanedEntry.toPath()}.md")
+        (langDocs.entries.toSet() - orderedArticleList).forEach { orphanedEntry ->
+            println("e: Orphaned markdown file (probably a bad `Follows` value): ${orphanedEntry.toPath(langDocs.prefix)}.md")
         }
 
-        generateKotlin("com/varabyte/kobweb/site/model/listing/SiteListing.kt", buildString {
+        generateKotlin("com/varabyte/kobweb/site/model/listing/SiteListing${langDocs.lang.capitalize()}.kt", buildString {
             val indent = "\t"
             appendLine(
                 """
@@ -213,12 +247,12 @@ object SiteListingGenerator {
                     // DO NOT EDIT THIS FILE BY HAND! IT IS GETTING AUTO-GENERATED BY GRADLE
                     // Instead, edit the SITE_LISTING constant in `build.gradle.kts` and re-run the task.
 
-                    val SITE_LISTING = buildList {
+                    val SITE_LISTING_${langDocs.lang.uppercase()} = buildList {
                     """.trimIndent()
             )
 
             val articleTree = orderedArticleList
-                .map { it to it.toRouteParts() }
+                .map { it to it.toRouteParts(langDocs.prefix) }
                 .groupBy { it.second.category }
 
             println("Article tree:\n")

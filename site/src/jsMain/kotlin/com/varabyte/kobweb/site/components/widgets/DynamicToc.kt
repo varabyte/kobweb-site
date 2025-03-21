@@ -19,6 +19,7 @@ import com.varabyte.kobweb.silk.style.vars.size.FontSizeVars
 import com.varabyte.kobweb.site.components.sections.listing.ListingElementStyle
 import com.varabyte.kobweb.site.components.sections.listing.ListingIndentVar
 import com.varabyte.kobweb.site.components.sections.listing.ListingLinkVariant
+import kotlinx.browser.document
 import kotlinx.browser.window
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.px
@@ -124,6 +125,15 @@ fun TocContent(
                     text = heading.textContent!!,
                     modifier = Modifier
                         .transition(Transition.of("color", 0.2.s, TransitionTimingFunction.Ease))
+                        .onClick { evt ->
+                            evt.preventDefault()
+                            val targetElement = document.getElementById(heading.id)
+                            targetElement?.scrollIntoView(object : ScrollIntoViewOptions {
+                                override var behavior: ScrollBehavior? = ScrollBehavior.SMOOTH
+                                override var block: ScrollLogicalPosition? = ScrollLogicalPosition.START
+                            })
+                            window.history.pushState(null, "", "#${heading.id}")
+                        }
                         .thenIf(heading.id == currentId) {
                             Modifier
                                 .color(Colors.DodgerBlue)
