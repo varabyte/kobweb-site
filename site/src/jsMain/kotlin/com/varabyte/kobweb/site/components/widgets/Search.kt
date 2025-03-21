@@ -3,7 +3,6 @@ package com.varabyte.kobweb.site.components.widgets
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import com.varabyte.kobweb.browser.util.invokeLater
 import com.varabyte.kobweb.compose.css.StyleVariable
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.css.setVariable
@@ -21,7 +20,6 @@ import com.varabyte.kobweb.silk.style.toAttrs
 import com.varabyte.kobweb.silk.style.vars.animation.TransitionDurationVars
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import kotlinx.browser.document
-import kotlinx.browser.window
 import org.jetbrains.compose.web.css.CSSColorValue
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Div
@@ -117,10 +115,6 @@ private external object Preact {
 // See https://docsearch.algolia.com/docs/api (and thank you Algolia!)
 @OptIn(ExperimentalJsCollectionsApi::class, ExperimentalJsExport::class)
 private fun initAlgoliaSearch(element: HTMLElement, router: Router) {
-    fun kobwebNavigate(url: String) {
-        // The invokeLater prevents wrong scroll position - maybe a kobweb bug?
-        window.invokeLater { router.navigateTo(url) }
-    }
     docsearch(
         json(
             "container" to element,
@@ -145,7 +139,7 @@ private fun initAlgoliaSearch(element: HTMLElement, router: Router) {
                         "href" to url,
                         "onClick" to { event: Event ->
                             event.preventDefault()
-                            kobwebNavigate(url)
+                            router.navigateTo(url)
                         }),
                     data.children
                 )
@@ -153,7 +147,7 @@ private fun initAlgoliaSearch(element: HTMLElement, router: Router) {
             "navigator" to json(
                 //https://www.algolia.com/doc/ui-libraries/autocomplete/core-concepts/keyboard-navigation/#usage
                 "navigate" to { data: dynamic ->
-                    kobwebNavigate(data.itemUrl)
+                    router.navigateTo(data.itemUrl)
                 }
             )
         )
