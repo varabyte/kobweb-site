@@ -7,14 +7,14 @@
     https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+bash+diff+docker+kotlin+toml+typescript+yaml&plugins=line-highlight+toolbar+copy-to-clipboard+diff-highlight
 
     Changes include:
-    - Combining the light and dark themes using CSS variables, with values set on the `silk-colors_light/dark` classes
+    - Combining the light and dark themes using CSS variables, with values set on the `silk-light/dark` classes
     - Incorporating the default prism theme for styles not in the One Dark/Light theme
     - Removing legacy CSS
     - Removing styles for unused plugins
     - Changing the `--mono-3` color in both color modes to improve readability/contrast
  */
 
-.silk-colors_light {
+.silk-light {
     --mono-1: hsl(230, 8%, 24%);
     --mono-2: hsl(230, 6%, 44%);
     /* Custom change: this increases contrast with the background, making comments more readable */
@@ -39,7 +39,7 @@
     --syntax-extra-1: hsl(230, 1%, 78%);
 }
 
-.silk-colors_dark {
+.silk-dark {
     --mono-1: hsl(220, 14%, 71%);
     --mono-2: hsl(220, 9%, 55%);
     /* Custom change: this increases contrast with the background, making comments more readable */

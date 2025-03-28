@@ -33,7 +33,7 @@ import org.jetbrains.compose.web.dom.H2
 fun Modifier.background(colorMode: ColorMode) =
     this.then(when (colorMode) {
         ColorMode.DARK -> Modifier.backgroundImage(
-            radialGradient(RadialGradient.Shape.Circle, Color.rgb(41, 41, 46), Color.rgb(25, 25, 28), CSSPosition.Top)
+            radialGradient(Color.rgb(41, 41, 46), Color.rgb(25, 25, 28), RadialGradient.Shape.Circle, CSSPosition.Top)
         )
         ColorMode.LIGHT -> Modifier.backgroundColor(Colors.White)
     })
