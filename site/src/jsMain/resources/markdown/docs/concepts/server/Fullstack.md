@@ -316,15 +316,15 @@ For example, here's a simple stream, declared on the backend, that echoes back a
 
 val echo = object : ApiStream {
   override suspend fun onClientConnected(ctx: ClientConnectedContext) {
-    // Optional: ctx.stream.broadcast a message to all other clients that ctx.clientId connected
-    // Optional: Update ctx.data here, initializing data associated with ctx.clientId
+    // Optional: ctx.stream.broadcast a message to all other clients that a new stream connected
+    // Optional: Update ctx.data here, initializing data associated with ctx.stream.id
   }
   override suspend fun onTextReceived(ctx: TextReceivedContext) {
     ctx.stream.send(ctx.text)
   }
   override suspend fun onClientDisconnected(ctx: ClientDisconnectedContext) {
-    // Optional: ctx.stream.broadcast a message to all other clients that ctx.clientId disconnected
-    // Optional: Update ctx.data here, removing data associated with ctx.clientId
+    // Optional: ctx.stream.broadcast a message to all other clients that a stream disconnected
+    // Optional: Update ctx.data here, removing data associated with ctx.stream.id
   }
 }
 ```
