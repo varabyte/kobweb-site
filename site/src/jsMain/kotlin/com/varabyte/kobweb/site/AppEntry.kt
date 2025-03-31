@@ -2,11 +2,16 @@ package com.varabyte.kobweb.site
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import com.varabyte.kobweb.browser.storage.createStorageKey
+import com.varabyte.kobweb.browser.storage.getItem
+import com.varabyte.kobweb.browser.storage.setItem
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.core.App
+import com.varabyte.kobweb.core.AppGlobals
+import com.varabyte.kobweb.core.isExporting
 import com.varabyte.kobweb.silk.SilkApp
 import com.varabyte.kobweb.silk.components.layout.Surface
 import com.varabyte.kobweb.silk.init.InitSilk
@@ -21,14 +26,35 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import com.varabyte.kobweb.site.components.sections.NavHeaderHeight
 import com.varabyte.kobweb.site.components.sections.listing.MobileNavHeight
 import com.varabyte.kobweb.site.components.style.DividerColor
+import kotlinx.browser.document
 import kotlinx.browser.localStorage
 import org.jetbrains.compose.web.css.*
 
-private const val COLOR_MODE_KEY = "app:colorMode"
+private val COLOR_MODE_KEY =  ColorMode.entries.createStorageKey("app:colorMode")
 
 @InitSilk
 fun initSilk(ctx: InitSilkContext) {
-    ctx.config.initialColorMode = localStorage.getItem(COLOR_MODE_KEY)?.let { ColorMode.valueOf(it) } ?: ColorMode.DARK
+    ctx.config.apply {
+        initialColorMode = localStorage.getItem(COLOR_MODE_KEY) ?: ColorMode.DARK
+
+        // Script which runs at load time that needs to be kept in sync with `initialColorMode` above. This code checks
+        // if the user's local color mode preference is different from what was exported by Kobweb, replacing it if
+        // different to prevent a flash of color after the page loads.
+        if (AppGlobals.isExporting) {
+            document.head!!.appendChild(
+                document.createElement("script").apply {
+                    textContent = """
+                        {
+                            const storedColor = localStorage.getItem('${COLOR_MODE_KEY.name}'); // 'LIGHT', 'DARK', or null
+                            const desiredColor = storedColor ? `silk-${'$'}{storedColor.toLowerCase()}` : 'silk-dark';
+                            const oppositeColor = desiredColor === 'silk-dark' ? 'silk-light' : 'silk-dark';
+                            document.documentElement.classList.replace(oppositeColor, desiredColor);
+                        }
+                        """.trimIndent()
+                })
+        }
+
+    }
 
     ctx.stylesheet.apply {
         registerStyleBase("body") {
@@ -109,7 +135,7 @@ fun AppEntry(content: @Composable () -> Unit) {
     SilkApp {
         val colorMode = ColorMode.current
         LaunchedEffect(colorMode) {
-            localStorage.setItem(COLOR_MODE_KEY, colorMode.name)
+            localStorage.setItem(COLOR_MODE_KEY, colorMode)
         }
 
         Surface(
