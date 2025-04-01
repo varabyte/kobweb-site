@@ -215,8 +215,9 @@ fun PostPage() {
 }
 ```
 
-An empty `"{}"` tells Kobweb to use the name of the slug normally generated from the file name (i.e. `post` in this
-specific case).
+> [!TIP]
+> An empty `"{}"` tells Kobweb to use the name of the slug normally generated from the file name, so in this specific
+> case this would be identical tl `"{post]"`.
 
 Remember that the `Page` annotation allows you to rewrite the entire route. That value also accepts dynamic segments, so
 you could even do something like:
@@ -255,6 +256,34 @@ fun PostPage() {
 > conflict, then the dynamic route parameters will take precedence. (You can still access the query parameter value via
 > `ctx.route.queryParams` in this case if necessary.)
 
+### Optional dynamic routes
+
+If you've specified a dynamic route, a value must be set for the dynamic segment. For example:
+
+```kotlin
+// pages/posts/Post.kt
+@Page("{post}") // Or @Page("{}")
+fun PostPage() {
+    /* ... */
+}
+```
+
+if you visit `mysite.com/posts/`, Kobweb will show a 404 error. You would need to visit a route like
+`mysite.com/posts/123` for the navigation to work.
+
+However, let's say you want to support `posts/` as well! In that case, you can add a question mark to the end of the
+dynamic segment name:
+
+```kotlin
+@Page("{post?}") // Or @Page("{?}")
+fun PostPage() {
+    /* ... */
+}
+```
+
+Now, visiting `mysite.com/posts/` will work as expected. When you query the `"post"` value, it will be an empty string,
+which you can use to detect that case.
+
 ### Catch-all dynamic routes
 
 As seen above, dynamic routes so far capture a single part of the entire route, e.g. `"/users/{user}/profile"` capturing
@@ -283,7 +312,11 @@ fun ProductDetailsPage() {
 }
 ```
 
-It's not expected that many sites will ever use a catch-all route, but in the above case, you could use the captured
+> [!TIP]
+> An unspecified name, `"{...}"` in this case, tells Kobweb to use the name of the slug normally generated from the
+> file name (i.e. `product-details` in this specific case).
+
+It is not expected that many sites will ever use a catch-all route, but in the above case, you could use the captured
 value as a way to encode fluid details of a product, perhaps with sub-routes contextually depending on the product type.
 
 For example, the above page could handle `/store/products/home-and-garden/hoses/19528`,
