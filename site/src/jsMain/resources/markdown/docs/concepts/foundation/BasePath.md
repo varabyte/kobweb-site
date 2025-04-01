@@ -39,7 +39,7 @@ mentioning it, as Kobweb provides base-path aware widgets that handle it for you
 
 Of course, you may find yourself working with code external to Kobweb that is not base-path aware. If you find you need
 to access the base path value explicitly in your own code, you can do so by using the `BasePath.value` property or by
-calling the `BasePath.prepend` companion method.
+calling the `BasePath.prependTo` companion method.
 
 ```kotlin
 // The Video element comes from Compose HTML and is NOT base-path aware.
@@ -50,7 +50,31 @@ Video(attrs = {
 }) {
     Source(attrs = {
         attr("type", "video/mp4")
-        attr("src", BasePath.prepend("/videos/demo.mp4"))
+        attr("src", BasePath.prependTo("/videos/demo.mp4"))
     })
  }
 ```
+
+Finally, you may find yourself declaring ${DocsLink("head elements", "page-metadata")} in your build script with paths
+in them. Such declarations are not base-path aware, so you need to manually intercept them yourself.
+
+The `kobweb.index` block exposes a `basePath` property that you can use for this purpose.
+
+For example, let's say you've downloaded a script file called `analytics.js` that you've put into your
+`src/jsMain/resources/public` directory, and you've also set the `basePath` for your site.
+
+```kotlin
+kobweb {
+    app {
+        index {
+            head.add {
+                script { src = basePath.prependTo("/analytics.js")}
+            }
+        }
+    }
+}
+```
+
+> [!NOTE]
+> It is safe to use the `prependTo` methods even if you don't have a `basePath` set for your project. Those methods
+> handle that case gracefully, returning the original path unmodified.
