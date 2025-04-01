@@ -8,8 +8,8 @@ imports:
   - com.varabyte.kobweb.silk.components.display.OutlinedCalloutVariant
 ---
 
-If you create a Markdown file under the `jsMain/resources/markdown` folder, a corresponding page will be created for you
-at build time, using the filename as its path.
+If you create a Markdown file under the `src/jsMain/resources/markdown` folder, a corresponding page will be created for
+you at build time, using the filename as its path.
 
 For example, if I create the following file:
 
@@ -440,3 +440,84 @@ kobweb {
 
 Refer to the build script of [this site](https://github.com/varabyte/kobweb-site/blob/main/site/build.gradle.kts)
 and search for "process.set" to see this feature in action in a production environment.
+
+## Markdown sources
+
+A markdown source here means a folder or task that provides Markdown files.
+
+### Adding additional sources
+
+As mentioned earlier, Kobweb will look for Markdown files in the `src/jsMain/resources/markdown` folder, but you can add
+additional locations.
+
+For example, maybe you have some task you've run from a different plugin that dropped a bunch of markdown files under
+your project's `build/generated/markdown` folder and you want Kobweb to discover them.
+
+In your build script, you can call `markdown.addSource` to accomplish this:
+
+```kotlin
+markdown.addSource(
+    project.layout.buildDirectory.dir("generated/markdown")
+)
+```
+
+At this point, any Markdown files found in `build/generated/markdown` will also be collected and included in the list of
+Markdown entries that are passed into the `process` callback.
+
+You can also define a custom task which generates markdown files when it is run, and then call `markdown.addSource`
+passing that task in as a source:
+
+```kotlin
+val generateExampleMarkdownTask = tasks.register("generateExampleMarkdown") {
+    // We use $name here to create a unique output directory just for this task
+    val outputDir = layout.buildDirectory.dir("generated/$name/markdown")
+    outputs.dir(outputDir)
+
+    doLast {
+        outputDir.get().file("Example.md").asFile.apply {
+            parentFile.mkdirs()
+            writeText("""
+                # Markdown Content
+                ...
+            """.trimIndent()
+            )
+
+            println("Generated $absolutePath")
+        }
+    }
+}
+
+kobweb.markdown.addSource(generateExampleMarkdownTask)
+```
+
+If you add this code to your build script, then Kobweb will automatically run that task, ultimately generating a
+top-level `/example` route for your site from the source markdown file.
+
+### Configuring a target package
+
+By default, Kobweb assumes most users want to use Markdown to generate pages for their site. However, there are
+occasions you may want to use Markdown to generate a section of text.
+
+You can accomplish this by associating a markdown source with a target package.
+
+For example, let's say I'm working on a card game and I want to create a bunch of card descriptions from markdown. Let's
+say we want them to live in the `com.mysite.components.sections.cards` package. Let's plan to create a new folder for
+cards, in `src/jsMain/resources/card-sections`.
+
+Now we just need to declare that directory and provide the desired package target:
+
+```kotlin
+kobweb.markdown.addSource(
+    project.layout.projectDirectory.dir("src/jsMain/resources/card-sections"),
+    ".components.sections.cards"
+)
+```
+
+> [!NOTE]
+> When the package value starts with a `.`, as above, Kobweb will automatically prefix it with your site's group for
+> convenience. If you set the package to just `"."`, then it will use your site's group as the package.
+
+That's it! Now, any markdown files found under the `card-sections` folder will be generated into
+`src/jsMain/kotlin/com/mysite/components/sections/cards` as regular, non-page composables.
+
+If you don't pass in a custom package with your source, the default value `".pages"` will be used.
