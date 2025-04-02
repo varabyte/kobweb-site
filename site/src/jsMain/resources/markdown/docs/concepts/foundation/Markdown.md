@@ -450,22 +450,8 @@ A markdown source here means a folder or task that provides Markdown files.
 As mentioned earlier, Kobweb will look for Markdown files in the `src/jsMain/resources/markdown` folder, but you can add
 additional locations.
 
-For example, maybe you have some task you've run from a different plugin that dropped a bunch of markdown files under
-your project's `build/generated/markdown` folder and you want Kobweb to discover them.
-
-In your build script, you can call `markdown.addSource` to accomplish this:
-
-```kotlin
-markdown.addSource(
-    project.layout.buildDirectory.dir("generated/markdown")
-)
-```
-
-At this point, any Markdown files found in `build/generated/markdown` will also be collected and included in the list of
-Markdown entries that are passed into the `process` callback.
-
-You can also define a custom task which generates markdown files when it is run, and then call `markdown.addSource`
-passing that task in as a source:
+Perhaps the most common pattern users will use is to define a custom task which generates markdown files when it is run,
+and then call `kobweb.markdown.addSource` passing that task in as a source:
 
 ```kotlin
 val generateExampleMarkdownTask = tasks.register("generateExampleMarkdown") {
@@ -504,7 +490,7 @@ For example, let's say I'm working on a card game and I want to create a bunch o
 say we want them to live in the `com.mysite.components.sections.cards` package. Let's plan to create a new folder for
 cards, in `src/jsMain/resources/card-sections`.
 
-Now we just need to declare that directory and provide the desired package target:
+You can declare that directory as a markdown source and provide the desired package target:
 
 ```kotlin
 kobweb.markdown.addSource(
