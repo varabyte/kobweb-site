@@ -194,8 +194,8 @@ fun DocsLayout(content: @Composable () -> Unit) {
                     content()
 
                     EditPageLink(
+                        pageRoute = ctx.route.path,
                         modifier = Modifier.margin { top(2.5.cssRem) },
-                        pageRoute = ctx.route.path
                     )
 
                     if (articleHandle == null) return@Article
@@ -248,7 +248,11 @@ val UnderlineTextDecorationStyle = CssStyle {
 }
 
 @Composable
-private fun EditPageLink(modifier: Modifier, pageRoute: String) {
+// TODO: @VisibleForTesting or equivalent?
+fun EditPageLink(
+    pageRoute: String,
+    modifier: Modifier = Modifier,
+) {
     val githubPageLink = remember {
         val githubRepoMarkdownDirLink =
             "https://github.com/varabyte/kobweb-site/edit/main/site/src/jsMain/resources/markdown"

@@ -100,6 +100,10 @@ kotlin {
             implementation(libs.kobwebx.markdown)
             implementation(npm("@docsearch/js", "3.9.0"))
         }
+        jsTest.dependencies {
+            implementation(kotlin("test-js"))
+            implementation(libs.compose.html.test.utils)
+        }
     }
 }
 
