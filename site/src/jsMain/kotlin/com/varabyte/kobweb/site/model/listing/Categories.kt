@@ -1,6 +1,6 @@
 package com.varabyte.kobweb.site.model.listing
 
-class Article(val title: String, val route: String)
+class Article(val title: String, val route: String, val filePath: String)
 
 class Subcategory(
     val title: String,

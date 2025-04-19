@@ -7,7 +7,9 @@ import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.dom.ref
 import com.varabyte.kobweb.compose.dom.registerRefScope
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
+import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
+import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
@@ -17,7 +19,14 @@ import com.varabyte.kobweb.core.data.add
 import com.varabyte.kobweb.core.init.InitRoute
 import com.varabyte.kobweb.core.init.InitRouteContext
 import com.varabyte.kobweb.core.layout.Layout
+import com.varabyte.kobweb.silk.components.icons.fa.FaGithub
+import com.varabyte.kobweb.silk.components.icons.fa.FaSquareArrowUpRight
+import com.varabyte.kobweb.silk.components.layout.DividerVars
+import com.varabyte.kobweb.silk.components.layout.HorizontalDivider
+import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.navigation.LinkVars
+import com.varabyte.kobweb.silk.components.navigation.UncoloredLinkVariant
+import com.varabyte.kobweb.silk.components.navigation.UndecoratedLinkVariant
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.CssLayer
 import com.varabyte.kobweb.silk.style.CssStyle
@@ -27,10 +36,12 @@ import com.varabyte.kobweb.silk.style.common.SmoothColorTransitionDurationVar
 import com.varabyte.kobweb.silk.style.selectors.descendants
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.style.vars.color.BorderColorVar
+import com.varabyte.kobweb.silk.style.vars.size.FontSizeVars
 import com.varabyte.kobweb.silk.theme.colors.palette.background
 import com.varabyte.kobweb.silk.theme.colors.palette.toPalette
 import com.varabyte.kobweb.silk.theme.colors.shifted
 import com.varabyte.kobweb.site.components.sections.PaginationNav
+import com.varabyte.kobweb.site.components.sections.listing.ListingLinkVariant
 import com.varabyte.kobweb.site.components.sections.listing.ListingSidebar
 import com.varabyte.kobweb.site.components.sections.listing.MobileLocalNav
 import com.varabyte.kobweb.site.components.style.SiteTextSize
@@ -114,6 +125,32 @@ val ArticleStyle = CssStyle {
     descendants(*((2..6).map { level -> "h$level" }.toTypedArray())) {
         // By making the header full width, it means when the user mouses over the entire line they'll see the link
         Modifier.fillMaxWidth()
+    }
+}
+
+@Composable
+private fun EditPageLink(pageRoute: String, modifier: Modifier = Modifier) {
+    val activeArticle = SITE_LISTING.findArticle(pageRoute)?.article ?: return
+
+    val githubPageLink = remember {
+        val githubLinkBase =
+            "https://github.com/varabyte/kobweb-site/edit/main/site/src/jsMain/resources/markdown"
+
+        "${githubLinkBase}/${activeArticle.filePath}"
+    }
+    Link(
+        githubPageLink,
+        variant = UndecoratedLinkVariant.then(UncoloredLinkVariant).then(ListingLinkVariant),
+        modifier = Modifier.fontSize(95.percent).then(modifier)
+    ) {
+        Row(
+            Modifier.gap(0.4.cssRem),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            FaGithub()
+            SpanText("Edit this page")
+            FaSquareArrowUpRight()
+        }
     }
 }
 
@@ -224,20 +261,27 @@ fun DocsLayout(ctx: PageContext, content: @Composable () -> Unit) {
                 val height = document.documentElement!!.clientHeight
                 IntersectionObserver.Options(rootMargin = "-${top}px 0% ${bottom - height}px")
             }
-            if (headings.isNotEmpty()) {
-                SpanText("On this page", Modifier.fontWeight(FontWeight.Bold))
+            Column(Modifier.fontSize(FontSizeVars.SM.value()).gap(0.25.cssRem)) {
+                if (headings.isNotEmpty()) {
+                    SpanText("On this page", Modifier.fontWeight(FontWeight.Bold))
+                }
+                DynamicToc(
+                    headings = headings,
+                    intersectionObserverOptions = options,
+                    modifier = Modifier
+                        .width(16.cssRem)
+                        .maxHeight(70.vh)
+                        .overflow { y(Overflow.Auto) }
+                        .overscrollBehavior(OverscrollBehavior.Contain)
+                        .scrollbarWidth(ScrollbarWidth.Thin)
+                )
+
+                if (headings.isNotEmpty()) {
+                    HorizontalDivider(Modifier.setVariable(DividerVars.Length, 100.percent))
+                }
+
+                EditPageLink(pageRoute = ctx.route.path, Modifier.margin(top = 0.4.cssRem))
             }
-            DynamicToc(
-                headings = headings,
-                intersectionObserverOptions = options,
-                modifier = Modifier
-                    .width(16.cssRem)
-                    .margin(top = 0.25.cssRem)
-                    .maxHeight(70.vh)
-                    .overflow { y(Overflow.Auto) }
-                    .overscrollBehavior(OverscrollBehavior.Contain)
-                    .scrollbarWidth(ScrollbarWidth.Thin)
-            )
         }
     }
 }

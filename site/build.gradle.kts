@@ -150,6 +150,7 @@ object SiteListingGenerator {
     private fun MarkdownEntry.toPath() = "/" + filePath.removePrefix(DOCS_PREFIX).removeSuffix(".md")
 
     private data class RouteParts(
+        val filePath: String,
         val category: String,
         val subcategory: String,
         val slug: String,
@@ -160,6 +161,7 @@ object SiteListingGenerator {
             "Expected category, subcategory (optional), and slug; got \"${this.joinToString("/")}\""
         }
         RouteParts(
+            filePath = this@toRouteParts.filePath,
             category = get(0),
             subcategory = if (this.size == 3) get(1) else "",
             slug = last().camelCaseToKebabCase()
@@ -274,7 +276,7 @@ object SiteListingGenerator {
 
                     articles.forEach { (article, routeParts) ->
                         val title = article.frontMatter["title"]?.singleOrNull() ?: routeParts.slug.convertSlugToTitle()
-                        appendLine("${indent}${indent}${indent}${indent}Article(\"$title\", \"${article.route}\"),")
+                        appendLine("${indent}${indent}${indent}${indent}Article(\"$title\", \"${article.route}\", \"${routeParts.filePath}\"),")
                         if (title.isNotEmpty()) {
                             if (subcategory.isNotEmpty()) print(indent)
                             println("${indent}- $title")
