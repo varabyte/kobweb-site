@@ -15,7 +15,6 @@ import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.base
 import com.varabyte.kobweb.silk.style.toModifier
-import com.varabyte.kobweb.silk.style.vars.size.FontSizeVars
 import com.varabyte.kobweb.site.components.sections.listing.ListingElementStyle
 import com.varabyte.kobweb.site.components.sections.listing.ListingIndentVar
 import com.varabyte.kobweb.site.components.sections.listing.ListingLinkVariant
@@ -45,7 +44,6 @@ val DynamicTocStyle = CssStyle.base {
     Modifier
         .listStyle(ListStyleType.None)
         .padding(0.px)
-        .fontSize(FontSizeVars.SM.value())
 }
 
 
