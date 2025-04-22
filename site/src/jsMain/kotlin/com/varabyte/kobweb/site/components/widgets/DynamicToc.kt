@@ -57,7 +57,9 @@ fun DynamicToc(
 ) {
     var currentId by remember { mutableStateOf<String?>(null) }
     TocContent(headings, currentId, modifier)
-    DisposableEffect(headings, intersectionObserverOptions) {
+    // NOTE: the `headings` list passed in itself is stable, but its contents change. So we convert it here into a copy
+    // of the list, to ensure that Compose will do equality checks on it to decide if things have changed or not.
+    DisposableEffect(headings.toList(), intersectionObserverOptions) {
         val headingsInRange = mutableListOf<String>()
 
         val observer = IntersectionObserver(intersectionObserverOptions) { entries ->

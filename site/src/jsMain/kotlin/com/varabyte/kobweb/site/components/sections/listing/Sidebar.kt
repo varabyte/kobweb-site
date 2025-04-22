@@ -53,15 +53,12 @@ val ListingLinkVariant = UndecoratedLinkVariant.extendedBy {
     }
 }
 
-// This needs to be global so that it can be saved between different pages, which each recreate the sidebar
-private var SidebarScroll: Double? = null
 @Composable
-private fun LinkFor(ctx: PageContext, article: Article, title: String, modifier: Modifier = Modifier, onLinkClick: () -> Unit) {
+private fun LinkFor(ctx: PageContext, article: Article, title: String, modifier: Modifier = Modifier) {
     Link(
         path = article.route,
         text = title,
         modifier = modifier
-            .onClick { onLinkClick() }
             .display(DisplayStyle.Block)
             .borderLeft(if (article.title.isNotEmpty()) 1.px else 0.px, LineStyle.Solid, Colors.Transparent)
             .thenIf(article.route == ctx.route.path) {
@@ -80,18 +77,7 @@ fun ListingSidebar(
     modifier: Modifier = Modifier,
 ) {
     val ctx = rememberPageContext()
-    var navElement: HTMLElement? by remember { mutableStateOf(null) }
     Nav(modifier.scrollbarWidth(ScrollbarWidth.Thin).toAttrs()) {
-        registerRefScope(ref { element ->
-            navElement = element
-            if (SidebarScroll != null) {
-                element.scrollTop = SidebarScroll!!
-                // if the user clicks a link and then presses `tab`, the focus should move to the next link
-                document
-                    .querySelector("nav a[href=\"${ctx.route.path}\"]")
-                    .unsafeCast<HTMLElement?>()?.focus()
-            }
-        })
         Ul {
             categories.forEach { category ->
                 Li {
@@ -115,7 +101,6 @@ fun ListingSidebar(
                             modifier = Modifier
                                 .fontSize(115.percent)
                                 .fontWeight(FontWeight.Bold),
-                            onLinkClick = { SidebarScroll = navElement!!.scrollTop }
                         )
                     }
                     category.subcategories.forEach { subcategory ->
@@ -123,7 +108,6 @@ fun ListingSidebar(
                             ctx,
                             subcategory,
                             Modifier.margin(leftRight = 0.125.cssRem, topBottom = 0.5.cssRem),
-                            onLinkClick = { SidebarScroll = navElement!!.scrollTop }
                         )
                     }
                 }
@@ -133,10 +117,10 @@ fun ListingSidebar(
 }
 
 @Composable
-private fun SubcategoryContent(ctx: PageContext, subcategory: Subcategory, modifier: Modifier = Modifier, onLinkClick: () -> Unit) {
+private fun SubcategoryContent(ctx: PageContext, subcategory: Subcategory, modifier: Modifier = Modifier) {
     @Composable
-    fun LinkFor(ctx: PageContext, article: Article, modifier: Modifier = Modifier, onLinkClick: () -> Unit) {
-        LinkFor(ctx, article, article.titleOrSubcategory, modifier, onLinkClick)
+    fun LinkFor(ctx: PageContext, article: Article, modifier: Modifier = Modifier) {
+        LinkFor(ctx, article, article.titleOrSubcategory, modifier)
     }
 
     Li(ListingElementStyle.toModifier().fontSize(0.875.cssRem).then(modifier).toAttrs()) {
@@ -145,7 +129,7 @@ private fun SubcategoryContent(ctx: PageContext, subcategory: Subcategory, modif
         if (firstArticle.title.isNotEmpty()) {
             SpanText(text = subcategory.title, subcategoryModifier)
         } else {
-            LinkFor(ctx, firstArticle, subcategoryModifier, onLinkClick)
+            LinkFor(ctx, firstArticle, subcategoryModifier)
         }
 
         Ul(
@@ -169,7 +153,6 @@ private fun SubcategoryContent(ctx: PageContext, subcategory: Subcategory, modif
                         Modifier
                             .padding { left(1.25.cssRem); topBottom(0.25.cssRem) }
                             .margin { left((-1).px); topBottom(0.5.cssRem) },
-                        onLinkClick,
                     )
                 }
             }

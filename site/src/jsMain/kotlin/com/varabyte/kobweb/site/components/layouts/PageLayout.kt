@@ -9,31 +9,41 @@ import com.varabyte.kobweb.compose.ui.modifiers.fillMaxSize
 import com.varabyte.kobweb.compose.ui.modifiers.gridRow
 import com.varabyte.kobweb.compose.ui.modifiers.gridTemplateRows
 import com.varabyte.kobweb.compose.ui.toAttrs
+import com.varabyte.kobweb.core.PageContext
+import com.varabyte.kobweb.core.data.getValue
+import com.varabyte.kobweb.core.layout.Layout
 import com.varabyte.kobweb.site.components.sections.Footer
 import com.varabyte.kobweb.site.components.sections.NavHeader
 import kotlinx.browser.document
 import org.jetbrains.compose.web.css.fr
 import org.jetbrains.compose.web.dom.Div
 
+class PageLayoutData(
+    val title: String,
+    val description: String? = null
+)
+
 @Composable
-fun PageLayout(title: String, description: String? = null, content: @Composable () -> Unit) {
-    LaunchedEffect(title) {
-        document.title = "$title | Kobweb"
+@Layout
+fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
+    val data = ctx.data.getValue<PageLayoutData>()
+    LaunchedEffect(data.title) {
+        document.title = "${data.title} | Kobweb"
     }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(ctx.route) {
         // See kobweb config in build.gradle.kts which sets up Prism
         js("Prism.highlightAll()")
     }
 
-    LaunchedEffect(description) {
+    LaunchedEffect(data.description) {
         val head = document.head!!
-        if (description != null) {
+        if (data.description != null) {
             val meta = head.querySelector("meta[name='description']") ?: document.createElement("meta").apply {
                 setAttribute("name", "description")
                 head.appendChild(this)
             }
-            meta.setAttribute("content", description)
+            meta.setAttribute("content", data.description)
         } else {
             head.querySelector("meta[name='description']")?.let { head.removeChild(it) }
         }

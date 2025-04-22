@@ -40,7 +40,7 @@ kobweb {
     }
 
     markdown {
-        defaultRoot.set(".components.layouts.DocsLayout")
+        defaultLayout.set(".components.layouts.DocsLayout")
         imports.addAll(
             ".components.widgets.filesystem.Folders",
             ".components.widgets.navigation.DocsLink",

@@ -4,13 +4,19 @@ import androidx.compose.runtime.*
 import com.varabyte.kobweb.browser.dom.observers.IntersectionObserver
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.Transition
+import com.varabyte.kobweb.compose.dom.disposableRef
+import com.varabyte.kobweb.compose.dom.registerRefScope
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.PageContext
-import com.varabyte.kobweb.core.rememberPageContext
+import com.varabyte.kobweb.core.RouteInfo
+import com.varabyte.kobweb.core.data.add
+import com.varabyte.kobweb.core.init.InitRoute
+import com.varabyte.kobweb.core.init.InitRouteContext
+import com.varabyte.kobweb.core.layout.Layout
 import com.varabyte.kobweb.silk.components.navigation.LinkVars
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.CssLayer
@@ -37,8 +43,9 @@ import kotlinx.browser.document
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLHeadingElement
 
-fun PageContext.RouteInfo.toArticleHandle(): ArticleHandle? {
+fun RouteInfo.toArticleHandle(): ArticleHandle? {
     return SITE_LISTING.findArticle(path)
 }
 
@@ -110,122 +117,127 @@ val ArticleStyle = CssStyle {
     }
 }
 
-@Composable
-fun DocsLayout(content: @Composable () -> Unit) {
-    val ctx = rememberPageContext()
-
+@InitRoute
+fun initDocsLayout(ctx: InitRouteContext) {
     val articleHandle = ctx.markdown?.let { ctx.route.toArticleHandle() }
-    val title = articleHandle?.article?.titleOrFallback ?: "Docs"
-    val breadcrumbs = articleHandle?.article?.breadcrumbs
-    val desc = ctx.markdown?.frontMatter?.get("description")?.singleOrNull()
+    ctx.data.add(PageLayoutData(
+        title = articleHandle?.article?.titleOrFallback ?: "Docs",
+        description = ctx.markdown?.frontMatter?.get("description")?.singleOrNull(),
+    ))
+}
 
-    PageLayout(title, desc) {
-        // We surface the parent title for the page as a meta tag so that the search engine we use can use surface it
-        // as useful metadata.
-        if (breadcrumbs != null) {
-            DisposableEffect(breadcrumbs) {
-                val head = document.head!!
-                val metaName = "algolia-docsearch-lvl0"
-                val meta = head.querySelector("meta[name='$metaName']") ?: document.createElement("meta").apply {
-                    setAttribute("name", metaName)
-                    head.appendChild(this)
+@Composable
+@Layout(".components.layouts.PageLayout")
+fun DocsLayout(ctx: PageContext, content: @Composable () -> Unit) {
+    val articleHandle = ctx.markdown?.let { ctx.route.toArticleHandle() }
+    val breadcrumbs = articleHandle?.article?.breadcrumbs
+
+    // We surface the parent title for the page as a meta tag so that the search engine we use can surface it as useful
+    // metadata.
+    if (breadcrumbs != null) {
+        DisposableEffect(breadcrumbs) {
+            val head = document.head!!
+            val metaName = "algolia-docsearch-lvl0"
+            val meta = head.querySelector("meta[name='$metaName']") ?: document.createElement("meta").apply {
+                setAttribute("name", metaName)
+                head.appendChild(this)
+            }
+            // Although we originally intended to render breadcrumbs as a full path, e.g. "Concepts > Presentation",
+            // we'll stick with a simple single breadcrumb for now, e.g. "Presentation", as it subjectively looks
+            // cleaner. We can always revisit this decision and change the code back to
+            // `breadcrumbs.joinToString(" > ")` if we change our minds.
+            meta.setAttribute("content", breadcrumbs.lastOrNull().orEmpty())
+            onDispose { head.removeChild(meta) }
+        }
+    }
+
+    MobileLocalNav()
+    Row(
+        Modifier
+            .margin(leftRight = autoLength) // Centers content
+            .padding(bottom = 1.cssRem)
+            // The following is a reasonably large width which gives our content about as much room to grow on wide
+            // monitors as you would get in a GitHub README
+            .maxWidth(85.cssRem),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        val topOffset = 5.cssRem
+        Div(
+            Modifier
+                .displayIfAtLeast(Breakpoint.MD)
+                .position(Position.Sticky)
+                .top(topOffset)
+                .height(100.vh - topOffset)
+                .toAttrs()
+        ) {
+            ListingSidebar(
+                SITE_LISTING,
+                Modifier
+                    .padding(top = 2.cssRem, left = 1.5.cssRem)
+                    .width(16.cssRem)
+                    .fillMaxHeight()
+                    .overflow { y(Overflow.Auto) }
+                    .overscrollBehavior(OverscrollBehavior.Contain)
+            )
+        }
+        var mainElement by remember { mutableStateOf<HTMLElement?>(null) }
+        Main(
+            ArticleStyle.toModifier()
+                // Ensure height is greater than sidebar because otherwise sidebar isn't properly positioned
+                .minHeight(100.vh - (topOffset / 2))
+                .minWidth(0.px)
+                .fillMaxWidth()
+                .toAttrs {
+                    ref { mainElement = it; onDispose { } }
                 }
-                // Although we originally intended to render breadcrumbs as a full path, e.g. "Concepts > Presentation",
-                // we'll stick with a simple single breadcrumb for now, e.g. "Presentation", as it subjectively looks
-                // cleaner. We can always revisit this decision and change the code back to
-                // `breadcrumbs.joinToString(" > ")` if we change our minds.
-                meta.setAttribute("content", breadcrumbs.lastOrNull().orEmpty())
-                onDispose { head.removeChild(meta) }
+        ) {
+            Article {
+                if (articleHandle != null) {
+                    H1 {
+                        Text(articleHandle.article.titleOrFallback)
+                    }
+                }
+                content()
+
+                if (articleHandle == null) return@Article
+
+                val (prev, next) = SITE_LISTING.findArticleNeighbors(articleHandle)
+                PaginationNav(prev, next, Modifier.margin(top = 3.cssRem))
             }
         }
-
-        MobileLocalNav()
-        Row(
+        Div(
             Modifier
-                .margin(leftRight = autoLength) // Centers content
-                .padding(bottom = 1.cssRem)
-                // The following is a reasonably large width which gives our content about as much room to grow on wide
-                // monitors as you would get in a GitHub README
-                .maxWidth(85.cssRem),
-            horizontalArrangement = Arrangement.Center,
+                .displayIfAtLeast(Breakpoint.LG)
+                .position(Position.Sticky)
+                .padding(top = 2.cssRem)
+                .top(topOffset)
+                .toAttrs()
         ) {
-            val topOffset = 5.cssRem
-            Div(
-                Modifier
-                    .displayIfAtLeast(Breakpoint.MD)
-                    .position(Position.Sticky)
-                    .top(topOffset)
-                    .height(100.vh - topOffset)
-                    .toAttrs()
-            ) {
-                ListingSidebar(
-                    SITE_LISTING,
-                    Modifier
-                        .padding(top = 2.cssRem, left = 1.5.cssRem)
-                        .width(16.cssRem)
-                        .fillMaxHeight()
-                        .overflow { y(Overflow.Auto) }
-                        .overscrollBehavior(OverscrollBehavior.Contain)
-                )
+            val headings = remember { mutableStateListOf<HTMLHeadingElement>() }
+            registerRefScope(disposableRef(mainElement, ctx.route) {
+                headings.addAll(mainElement?.getHeadings().orEmpty())
+                onDispose { headings.clear() }
+            })
+            val options = run {
+                val top = 64 // Height of the top nav bar
+                val bottom = top + 125
+                val height = document.documentElement!!.clientHeight
+                IntersectionObserver.Options(rootMargin = "-${top}px 0% ${bottom - height}px")
             }
-            var mainElement by remember { mutableStateOf<HTMLElement?>(null) }
-            Main(
-                ArticleStyle.toModifier()
-                    // Ensure height is greater than sidebar because otherwise sidebar isn't properly positioned
-                    .minHeight(100.vh - (topOffset / 2))
-                    .minWidth(0.px)
-                    .fillMaxWidth()
-                    .toAttrs {
-                        ref { mainElement = it; onDispose { } }
-                    }
-            ) {
-                Article {
-                    if (articleHandle != null) {
-                        H1 {
-                            Text(articleHandle.article.titleOrFallback)
-                        }
-                    }
-                    content()
-
-                    if (articleHandle == null) return@Article
-
-                    val (prev, next) = SITE_LISTING.findArticleNeighbors(articleHandle)
-                    PaginationNav(prev, next, Modifier.margin(top = 3.cssRem))
-                }
+            if (headings.isNotEmpty()) {
+                SpanText("On this page", Modifier.fontWeight(FontWeight.Bold))
             }
-            Div(
-                Modifier
-                    .displayIfAtLeast(Breakpoint.LG)
-                    .position(Position.Sticky)
-                    .padding(top = 2.cssRem)
-                    .top(topOffset)
-                    .toAttrs()
-            ) {
-                // Should `IntersectionObserver.Options` implement equals() so that it doesn't have to be remembered?
-                val options = remember {
-                    val top = 64 // Height of the top nav bar
-                    val bottom = top + 125
-                    val height = document.documentElement!!.clientHeight
-                    IntersectionObserver.Options(rootMargin = "-${top}px 0% ${bottom - height}px")
-                }
-                val headings = remember(mainElement) {
-                    mainElement?.getHeadings().orEmpty()
-                }
-                if (headings.isNotEmpty()) {
-                    SpanText("On this page", Modifier.fontWeight(FontWeight.Bold))
-                }
-                DynamicToc(
-                    headings = headings,
-                    intersectionObserverOptions = options,
-                    modifier = Modifier
-                        .width(16.cssRem)
-                        .margin(top = 0.25.cssRem)
-                        .maxHeight(70.vh)
-                        .overflow { y(Overflow.Auto) }
-                        .overscrollBehavior(OverscrollBehavior.Contain)
-                        .scrollbarWidth(ScrollbarWidth.Thin)
-                )
-            }
+            DynamicToc(
+                headings = headings,
+                intersectionObserverOptions = options,
+                modifier = Modifier
+                    .width(16.cssRem)
+                    .margin(top = 0.25.cssRem)
+                    .maxHeight(70.vh)
+                    .overflow { y(Overflow.Auto) }
+                    .overscrollBehavior(OverscrollBehavior.Contain)
+                    .scrollbarWidth(ScrollbarWidth.Thin)
+            )
         }
     }
 }
