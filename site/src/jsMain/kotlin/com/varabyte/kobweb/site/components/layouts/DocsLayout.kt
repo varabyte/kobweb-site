@@ -4,7 +4,7 @@ import androidx.compose.runtime.*
 import com.varabyte.kobweb.browser.dom.observers.IntersectionObserver
 import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.Transition
-import com.varabyte.kobweb.compose.dom.disposableRef
+import com.varabyte.kobweb.compose.dom.ref
 import com.varabyte.kobweb.compose.dom.registerRefScope
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Row
@@ -213,10 +213,10 @@ fun DocsLayout(ctx: PageContext, content: @Composable () -> Unit) {
                 .top(topOffset)
                 .toAttrs()
         ) {
-            val headings = remember { mutableStateListOf<HTMLHeadingElement>() }
-            registerRefScope(disposableRef(mainElement, ctx.route) {
-                headings.addAll(mainElement?.getHeadings().orEmpty())
-                onDispose { headings.clear() }
+            var headings by remember(ctx.route) { mutableStateOf(emptyList<HTMLHeadingElement>()) }
+            // Fetch headings only once elements are added to the DOM
+            registerRefScope(ref(mainElement, ctx.route) {
+                headings = mainElement?.getHeadings().orEmpty()
             })
             val options = run {
                 val top = 64 // Height of the top nav bar
