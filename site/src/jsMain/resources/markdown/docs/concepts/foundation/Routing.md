@@ -125,17 +125,48 @@ With the above package mapping in place, a file that lives at `site/pages/team/v
 
 ## Page context
 
-Every page method provides access to its `PageContext` via the `rememberPageContext()` method.
+Every page method has an associated `PageContext`. There are two ways to access it.
 
-Critically, a page's context provides it access to a router, allowing you to navigate to other pages.
+First, you can specify a single `PageContext` parameter in your page method, and Kobweb will pass it in:
 
-It also provides dynamic information about the current page's URL (discussed in the next section).
+```kotlin
+@Page
+@Composable
+fun ExamplePage(ctx: PageContext) {
+    /* ... */
+}
+```
+
+Alternately, Kobweb provides the `rememberPageContext()` method, which you can call at anytime inside of a page, even
+inside of a widget composable that is part of a page:
 
 ```kotlin
 @Page
 @Composable
 fun ExamplePage() {
+    /* ... */
     val ctx = rememberPageContext()
+}
+
+@Composable
+private fun ExampleWidget() {
+    // Important: this will throw an exception if not called within a page
+    val ctx = rememberPageContext()
+}
+```
+
+In general, adding a `ctx: PageContext` parameter to the `@Page` method is slightly more idiomatic, but using
+`rememberPageContext` is fine if you find it cleaner in some cases or as a way to avoid passing `ctx` values around
+everywhere.
+
+### Router
+
+A page's context provides it access to a router, which allows you to navigate to other pages.
+
+```kotlin
+@Page
+@Composable
+fun ExamplePage(ctx: PageContext) {
     Button(onClick = { ctx.router.navigateTo("/other/page") }) {
         Text("Click me")
     }
@@ -162,8 +193,7 @@ enum class Mode {
 
 @Page
 @Composable
-fun Posts() {
-    val ctx = rememberPageContext()
+fun PostsPage(ctx: PageContext) {
     // Here, I'm assuming these params are always present, but you can use
     // `get` instead of `getValue` to handle the nullable case. Care should
     // also be taken to parse invalid values without throwing an exception.
@@ -172,6 +202,11 @@ fun Posts() {
     /* ... */
 }
 ```
+
+### Page data
+
+The page context provides a data object that you can use to store and pass around user data. However, we will postpone
+talking more about it for now, as its use will be easier to see when we discuss ${DocsLink("Layouts", "layouts")} later.
 
 ## Dynamic routes
 
@@ -243,8 +278,7 @@ You query dynamic route values exactly the same as if you were requesting query 
 ```kotlin
 @Page("{}")
 @Composable
-fun PostPage() {
-    val ctx = rememberPageContext()
+fun PostPage(ctx: PageContext) {
     val postId = ctx.route.params.getValue("post")
     /* ... */
 }
@@ -303,8 +337,7 @@ In practice, using it looks like this:
 
 @Page("{...product-details}")
 @Composable
-fun ProductDetailsPage() {
-    val ctx = rememberPageContext()
+fun ProductDetailsPage(ctx: PageContext) {
     val productDetails = remember(ctx.route.path) {
         ctx.route.params.getValue("product-details").split("/")
     }
@@ -341,8 +374,7 @@ Using this feature, you could even discard Kobweb's routing logic entirely and h
 
 @Page("{...path?}")
 @Composable
-fun CatchAllPage() {
-    val ctx = rememberPageContext()
+fun CatchAllPage(ctx: PageContext) {
     val url = ctx.route.params.getValue("path")
     /* ... */
 }

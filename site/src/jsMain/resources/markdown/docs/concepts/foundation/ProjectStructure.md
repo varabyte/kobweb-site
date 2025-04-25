@@ -55,8 +55,9 @@ codebase to get around.
 
 So, as a sibling to `pages`, you should have a folder called `components`. Within it:
 
-* **layouts** - High-level composables that provide entire page layouts. Most (all?) of your `@Page` pages will start by
-  calling a page layout function first. It's possible that you will only need a single layout for your entire site.
+* **layouts** - High-level composables that provide entire ${DocsLink("page layouts", "layouts")}. Most (all?) of your
+  `@Page` pages will declare itself as using one of these layouts. It is definitely possible (and fine!) that you may
+  only need a single layout for your entire site.
 * **sections** - Medium-level composables that represent compound areas inside your pages, organizing a collection of
   many children composables. If you have multiple layouts, it's likely sections would be shared across them. For
   example, nav headers and footers are great candidates for this subfolder.
