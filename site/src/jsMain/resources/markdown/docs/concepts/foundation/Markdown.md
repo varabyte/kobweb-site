@@ -54,14 +54,13 @@ fun AuthorWidget() {
 > If you're not seeing `ctx.markdown` autocomplete, you need to make sure you depend on the
 > `com.varabyte.kobwebx:kobwebx-markdown` artifact in your project's build script.
 
-### Root
+### Layout
 
-Within your front matter, there's a special value which, if set, will be used to render a root `@Composable` that wraps
-the rest of your Markdown code as its content. This is useful for specifying a layout for example:
+Within your front matter, there's a special value which, if set, will be used to set your page's `@Layout`:
 
 ```text
 ---
-root: .components.layout.DocsLayout
+layout: .components.layout.DocsLayout
 ---
 
 # Kobweb Tutorial
@@ -72,20 +71,18 @@ The above will generate code like the following:
 ```kotlin
 @Composable
 @Page
+@Layout(".components.layouts.DocsLayout")
 fun KobwebPage() {
-  com.mysite.components.layout.DocsLayout {
-    H1 {
-      Text("Kobweb Tutorial")
-    }
+  H1 {
+    Text("Kobweb Tutorial")
   }
 }
 ```
 
 > [!NOTE]
-> You may have noticed that the code path above is prefixed with a `.` (here, `.components.layouts.DocsLayout`).
-> Whenever you do that in Kobweb Markdown, the framework will detect it and convert it to your site's full package.
+> You can read more about ${DocsLink("Layouts", "layouts")} here.
 
-If you have a default root that you'd like to use in most / all of your Markdown files, you can specify it in the
+If you have a default layout that you'd like to use in most / all of your Markdown files, you can specify it in the
 `markdown` block in your build script:
 
 ```kotlin
@@ -93,10 +90,14 @@ If you have a default root that you'd like to use in most / all of your Markdown
 
 kobweb {
   markdown {
-    defaultRoot.set(".components.layout.MarkdownLayout")
+    defaultLayout.set(".components.layout.MarkdownLayout")
   }
 }
 ```
+
+If both the default layout is set AND a `layout` value is set in the frontmatter, the frontmatter value will take
+precedence. You can also set `layout` to nothing (e.g. `layout:`), which will tag the generated page with a
+`@NoLayout` annotation, in case you need to explicitly disable layouts for this specific page.
 
 ### Route Override
 
@@ -204,13 +205,11 @@ Press ${ColorButton} to toggle the site's current color.
 
 ### Local Imports
 
-Local imports are specified in your Markdown's front matter (and can even be used by the root declaration!):
+Local imports are specified in your Markdown's front matter:
 
 ```text
 ---
-root: DocsLayout
 imports:
-  - .components.layouts.DocsLayout
   - .components.widgets.VisitorCounter
 ---
 

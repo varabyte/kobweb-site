@@ -1,6 +1,6 @@
 ---
 description: How to export your Kobweb site into a final layout that is ready to be served by a webserver.
-follows: ApplicationRoot
+follows: Layouts
 ---
 
 One of Kobweb's major additions on top of Compose HTML is the export process.
@@ -185,10 +185,10 @@ This gives you the opportunity to manipulate the exported HTML or avoid side eff
 
 ```kotlin
 @Composable
-fun AuthenticatedLayout(content: @Composable () -> Unit) {
+@Layout
+fun AuthenticatedLayout(ctx: PageContext, content: @Composable () -> Unit) {
     var loggedInUser by remember { mutableStateOf<User?>(null) }
 
-    val ctx = rememberPageContext()
     if (!ctx.isExporting) {
         LaunchedEffect(Unit) {
             loggedInUser = checkForLoggedInUser() // <- A slow, expensive method
