@@ -33,8 +33,6 @@ kobweb {
                     rel = "stylesheet"
                     href = "https://cdn.jsdelivr.net/npm/@docsearch/css@3"
                 }
-
-                link(rel = "stylesheet", href = "/fonts/faces.css")
             }
         }
     }
