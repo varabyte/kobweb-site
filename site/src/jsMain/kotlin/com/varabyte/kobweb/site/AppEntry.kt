@@ -30,7 +30,7 @@ import kotlinx.browser.document
 import kotlinx.browser.localStorage
 import org.jetbrains.compose.web.css.*
 
-private val COLOR_MODE_KEY =  ColorMode.entries.createStorageKey("app:colorMode")
+private val COLOR_MODE_KEY = ColorMode.entries.createStorageKey("app:colorMode")
 
 @InitSilk
 fun initSilk(ctx: InitSilkContext) {
@@ -65,7 +65,9 @@ fun initSilk(ctx: InitSilkContext) {
                 )
                 .overflowWrap(OverflowWrap.BreakWord)
         }
-        registerStyleBase("code, pre") { Modifier.fontFamily("Roboto Mono", "monospace") }
+        registerStyleBase("code, pre") {
+            Modifier.fontFamily("SFMono-Regular", "Menlo", "Monaco", "Consolas", "Courier New", "monospace")
+        }
 
         registerStyle("html") {
             base {
