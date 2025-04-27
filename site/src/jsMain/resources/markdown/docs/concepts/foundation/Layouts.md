@@ -3,11 +3,11 @@ description: How to declare page layouts.
 follows: ApplicationRoot
 ---
 
-At this point in the documentation, we have discussed ${DocsLink("pages", "routing")} (the final UI presented to the
+At this point in the documentation, we have discussed ${DocsLink("pages", "routing")} (the unique UI presented to the
 user for a specific route) and ${DocsLink("the application root", "application-root")} (the
 composable entry point for all pages).
 
-There is one more layer in between both of them that is useful: the page layout.
+There is one more useful layer in between: the page layout.
 
 A page's layout owns the common UI and structure that lives across multiple pages on your site. For example, if you have
 a nav header and footer in your site, they will be declared in your layout.
@@ -15,7 +15,7 @@ a nav header and footer in your site, they will be declared in your layout.
 ## `@Layout`
 
 Layouts are composable methods which (optionally) take a single `PageContext` parameter and a (required) composable
-content callback (i.e. `context: @Composable () -> Unit`). You must annotate them with the `@Layout` annotation so that
+content callback (i.e. `content: @Composable () -> Unit`). You must annotate them with the `@Layout` annotation so that
 Kobweb can discover and register them:
 
 ```kotlin
@@ -33,11 +33,11 @@ fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
 ```
 
 > [!NOTE]
-> You can declare a layout anywhere, in any file. Unlike pages, it is not a requirement to ensure they are declared
-> under some special package. However, most Kobweb users will expect to find them under the  `components.layouts`
-> package, so we officially recommend you put your own in there.
+> You can declare a layout anywhere, in any file. However, most Kobweb users will expect to find them under the
+`components.layouts`
+> package, so we recommend you put your own in there.
 
-Once declared, you can direct a page to use the layout by using the `@Layout` annotation there as well, but by
+Once declared, you can direct a page to use the layout by adding the `@Layout` annotation there as well, this time
 specifying a target path:
 
 ```kotlin
@@ -52,7 +52,7 @@ fun HomePage() {
 ```
 > [!NOTE]
 > You may have noticed that the code path above is prefixed with a `.` (here, `.components.layouts.PageLayout`).
-> The framework detects this and automatically resolves it to a qualified package (here,
+> Kobweb detects this and automatically resolves it to a qualified package (here,
 > `com.mysite.components.layouts.PageLayout`).
 
 At this point, when you visit the home page (from the above example), your site is composed as follows:
@@ -90,7 +90,7 @@ Once you've done this, then any page defined under that package will automatical
 explicitly declares its own layout).
 
 If your site defines multiple default layouts, say `PageLayout` for `com.mysite.pages` and `BlogLayout` for
-`com.mysite.pages.blog`, then the most relevant one will apply. In other words, `BlogLayout` would take precedence
+`com.mysite.pages.blog`, then the most specific one will apply. In other words, `BlogLayout` would take precedence
 over `PageLayout` for all pages under the `blog` subpackage, while everything else would use `PageLayout`.
 
 ### Extending layouts
@@ -124,7 +124,7 @@ hierarchy will look like this:
 App {
     PageLayout {
         ArticleLayout {
-            KobwebArticle()
+            ArticlePage()
         }
     }
 }
@@ -205,8 +205,8 @@ ctx.data.add(PageLayoutData("Home Page")) // Add
 // Then...
 @Layout
 @Composable
-fun PageLayout(ctx: PageContenxt, content: @Composable () -> Unit) {
-   val title = ctx.getValue<PageLayoutData>().title // Query
+fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
+   val title = ctx.data.getValue<PageLayoutData>().title // Query
    H1 { Text(title) }
    content()
 }
@@ -236,8 +236,8 @@ class PageLayoutData(val title: String)
 
 @Layout
 @Composable
-fun PageLayout(ctx: PageContenxt, content: @Composable () -> Unit) {
-   val title = ctx.getValue<PageLayoutData>().title
+fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
+   val title = ctx.data.getValue<PageLayoutData>().title
    H1 { Text(title) }
    /*...*/
    content()
@@ -247,7 +247,7 @@ fun PageLayout(ctx: PageContenxt, content: @Composable () -> Unit) {
 // jsMain/kotlin/com/mysite/pages/HomePage.kt
 
 @InitRoute
-fun initPageLayout(ctx: InitRouteContext) {
+fun initHomePage(ctx: InitRouteContext) {
     ctx.data.add(PageLayoutData("Home Page"))
 }
 
@@ -259,10 +259,10 @@ fun HomePage() {
 }
 ```
 
-At this point, every page that uses the `PageLayout` layout must also create an associated `InitRoute` method to
+At this point, every page that uses the `PageLayout` layout must also create an associated `@InitRoute` method to
 initialize the data.
 
-However, you can provide an `InitRoute` method at the `PageLayout` method to prevent a crash if a page ever forgets:
+However, you can provide an `@InitRoute` method at the `PageLayout` method to prevent a crash if a page ever forgets:
 
 ```kotlin
 // jsMain/kotlin/com/mysite/components/layouts/PageLayout.kt
@@ -276,7 +276,7 @@ fun initPageLayout(ctx: InitRouteContext) {
 
 @Layout
 @Composable
-fun PageLayout(ctx: PageContenxt, content: @Composable () -> Unit) { /*...*/ }
+fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) { /*...*/ }
 ```
 
 ### `@InitRoute` calling order
@@ -284,14 +284,15 @@ fun PageLayout(ctx: PageContenxt, content: @Composable () -> Unit) { /*...*/ }
 Finally, it's worth calling out the order that `@InitRoute` methods are called in. They are triggered child first and
 then up through all ancestor layouts. Once rendering starts happening, that executes in the opposite order.
 
-In other words, if you have `Base Layout`, `Child Layout`, and `Page`, then the calling order will be:
+In other words, if you have `BaseLayout`, `ChildLayout`, and `Page`, each with their own corresponding init methods,
+then the calling order will be:
 
-* page init route
-* child layout init route
-* base layout init route
-* base layout render
-* child layout render
-* page render
+* `initPage()`
+* `initChildLayout()`
+* `initBaseLayout()`
+* `BaseLayout()`
+* `ChildLayout()`
+* `Page()`
 
 What this allows is code where you keep appending / modifying data as you initialize up the layout chain, and then by
 the time you start rendering, all data will be present. As for rendering going the other direction, from top-to-bottom,
