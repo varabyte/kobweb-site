@@ -279,6 +279,11 @@ fun initPageLayout(ctx: InitRouteContext) {
 fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) { /*...*/ }
 ```
 
+> [!CAUTION]
+> The `ctx.data` store is cleared every time you visit a new page, even if you are using the same layout across pages.
+> If this is a limitation for your use-case, consider looking into local storage and session storage, discussed in more
+> detail in ${DocsLink("Persisting State", "persisting-state")}.
+
 ### `@InitRoute` calling order
 
 Finally, it's worth calling out the order that `@InitRoute` methods are called in. They are triggered child first and
