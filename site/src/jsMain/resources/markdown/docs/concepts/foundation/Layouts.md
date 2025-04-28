@@ -68,8 +68,8 @@ App {
 When you navigate between pages that all use the same layout, many sections and widgets in the layout might not even
 recompose, and any values you `remember` will survive across the pages.
 
-If you explicitly want layout code that changes on new pages, pass the `ctx.route` value into the relevant Compose
-method as a key (e.g. `LaunchedEffect(ctx.route)`, etc.)
+If you explicitly want layout code that changes on new pages, pass the `ctx.route.path` value into the relevant Compose
+method as a key (e.g. `LaunchedEffect(ctx.route.path)`, etc.)
 
 ### Default layouts
 

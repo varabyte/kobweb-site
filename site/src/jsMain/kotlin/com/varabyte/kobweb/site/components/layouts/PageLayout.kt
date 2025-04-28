@@ -31,7 +31,7 @@ fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
         document.title = "${data.title} | Kobweb"
     }
 
-    LaunchedEffect(ctx.route) {
+    LaunchedEffect(ctx.route.path) {
         // See kobweb config in build.gradle.kts which sets up Prism
         js("Prism.highlightAll()")
     }

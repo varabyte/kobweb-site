@@ -213,9 +213,9 @@ fun DocsLayout(ctx: PageContext, content: @Composable () -> Unit) {
                 .top(topOffset)
                 .toAttrs()
         ) {
-            var headings by remember(ctx.route) { mutableStateOf(emptyList<HTMLHeadingElement>()) }
+            var headings by remember(ctx.route.path) { mutableStateOf(emptyList<HTMLHeadingElement>()) }
             // Fetch headings only once elements are added to the DOM
-            registerRefScope(ref(mainElement, ctx.route) {
+            registerRefScope(ref(mainElement, ctx.route.path) {
                 headings = mainElement?.getHeadings().orEmpty()
             })
             val options = run {
