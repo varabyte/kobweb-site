@@ -1,9 +1,22 @@
 ---
-description: How to declare a full stack Kobweb project and define API routes.
+description: How to declare a full-stack Kobweb project and define API routes.
 follows: Index
 ---
 
-## Declare a full stack project
+Kobweb not only helps you create frontend files for a website, but it also makes it easy to add backend functionality as
+well.
+
+Similar to how you define pages on the frontend, you can declare annotated API methods on the backend, at which point
+Kobweb can discover them and handle all the boilerplate around setting up a web server for you.
+
+All backend features also support Kobweb's live reloading experience, so you can iterate on your server while it is
+running.
+
+> [!QUESTION]
+> Are you an experienced Ktor user who prefers to maintain full control over their backend? If so, consider reading the
+> ${DocsLink("Using a Custom Backend", "/docs/guides/existing-backend")} guide as well, to understand your options.
+
+## Declare a full-stack project
 
 In your site's build script, make sure you call `configAsKobwebApplication(includeServer = true)`. Just with that done,
 you are ready to write server logic for your Kobweb site.
