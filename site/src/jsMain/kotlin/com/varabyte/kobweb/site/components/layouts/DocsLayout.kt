@@ -6,12 +6,17 @@ import com.varabyte.kobweb.compose.css.*
 import com.varabyte.kobweb.compose.css.Transition
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.foundation.layout.Row
+import com.varabyte.kobweb.compose.ui.Alignment
 import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.PageContext
 import com.varabyte.kobweb.core.rememberPageContext
+import com.varabyte.kobweb.silk.components.icons.fa.FaPen
+import com.varabyte.kobweb.silk.components.navigation.Link
 import com.varabyte.kobweb.silk.components.navigation.LinkVars
+import com.varabyte.kobweb.silk.components.navigation.UndecoratedLinkVariant
 import com.varabyte.kobweb.silk.components.text.SpanText
 import com.varabyte.kobweb.silk.style.CssLayer
 import com.varabyte.kobweb.silk.style.CssStyle
@@ -19,6 +24,7 @@ import com.varabyte.kobweb.silk.style.breakpoint.Breakpoint
 import com.varabyte.kobweb.silk.style.breakpoint.displayIfAtLeast
 import com.varabyte.kobweb.silk.style.common.SmoothColorTransitionDurationVar
 import com.varabyte.kobweb.silk.style.selectors.descendants
+import com.varabyte.kobweb.silk.style.selectors.hover
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.style.vars.color.BorderColorVar
 import com.varabyte.kobweb.silk.theme.colors.palette.background
@@ -187,10 +193,15 @@ fun DocsLayout(content: @Composable () -> Unit) {
                     }
                     content()
 
+                    EditPageLink(
+                        modifier = Modifier.margin { top(2.5.cssRem) },
+                        pageRoute = ctx.route.path
+                    )
+
                     if (articleHandle == null) return@Article
 
                     val (prev, next) = SITE_LISTING.findArticleNeighbors(articleHandle)
-                    PaginationNav(prev, next, Modifier.margin(top = 3.cssRem))
+                    PaginationNav(prev, next, Modifier.margin(top = 2.cssRem))
                 }
             }
             Div(
@@ -226,6 +237,42 @@ fun DocsLayout(content: @Composable () -> Unit) {
                         .scrollbarWidth(ScrollbarWidth.Thin)
                 )
             }
+        }
+    }
+}
+
+val UnderlineTextDecorationStyle = CssStyle {
+    hover {
+        Modifier.textDecorationLine(TextDecorationLine.Underline)
+    }
+}
+
+@Composable
+private fun EditPageLink(modifier: Modifier, pageRoute: String) {
+    val githubPageLink = remember {
+        val githubRepoMarkdownDirLink =
+            "https://github.com/varabyte/kobweb-site/edit/main/site/src/jsMain/resources/markdown"
+        val pathWithoutFileName = pageRoute.substringBeforeLast("/")
+
+        // NOTE: This code assumes the Markdown file doesn't set the `routeOverride` in the front matter.
+        // Expects the default (e.g., ProjectStructure.md → project-structure) so it can be
+        // converted back (e.g., project-structure → ProjectStructure.md).
+        val fileName = pageRoute.substringAfterLast("/")
+            .split("-")
+            .joinToString("") { it.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() } }
+        "${githubRepoMarkdownDirLink}/${pathWithoutFileName.removePrefix("/")}/${fileName}.md"
+    }
+    Link(
+        githubPageLink,
+        variant = UndecoratedLinkVariant,
+        modifier = Modifier.color(Colors.DodgerBlue)
+    ) {
+        Row(
+            Modifier.gap(0.4.cssRem).then(modifier),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            FaPen()
+            SpanText("Edit this page", modifier = UnderlineTextDecorationStyle.toModifier())
         }
     }
 }
