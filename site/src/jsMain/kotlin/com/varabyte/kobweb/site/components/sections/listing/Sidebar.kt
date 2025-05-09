@@ -1,12 +1,10 @@
 package com.varabyte.kobweb.site.components.sections.listing
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.ScrollbarWidth
 import com.varabyte.kobweb.compose.css.StyleVariable
 import com.varabyte.kobweb.compose.css.functions.calc
-import com.varabyte.kobweb.compose.dom.ref
-import com.varabyte.kobweb.compose.dom.registerRefScope
 import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
@@ -26,13 +24,14 @@ import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.SilkTheme
 import com.varabyte.kobweb.silk.theme.colors.palette.color
 import com.varabyte.kobweb.silk.theme.colors.shifted
-import com.varabyte.kobweb.site.model.listing.*
-import kotlinx.browser.document
+import com.varabyte.kobweb.site.model.listing.Article
+import com.varabyte.kobweb.site.model.listing.Category
+import com.varabyte.kobweb.site.model.listing.Subcategory
+import com.varabyte.kobweb.site.model.listing.titleOrSubcategory
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Li
 import org.jetbrains.compose.web.dom.Nav
 import org.jetbrains.compose.web.dom.Ul
-import org.w3c.dom.HTMLElement
 
 val ListingIndentVar by StyleVariable<Int>()
 
@@ -54,11 +53,12 @@ val ListingLinkVariant = UndecoratedLinkVariant.extendedBy {
 }
 
 @Composable
-private fun LinkFor(ctx: PageContext, article: Article, title: String, modifier: Modifier = Modifier) {
+private fun LinkFor(ctx: PageContext, article: Article, title: String, onLinkClick: () -> Unit, modifier: Modifier = Modifier) {
     Link(
         path = article.route,
         text = title,
         modifier = modifier
+            .onClick { onLinkClick() }
             .display(DisplayStyle.Block)
             .borderLeft(if (article.title.isNotEmpty()) 1.px else 0.px, LineStyle.Solid, Colors.Transparent)
             .thenIf(article.route == ctx.route.path) {
@@ -75,6 +75,7 @@ private fun LinkFor(ctx: PageContext, article: Article, title: String, modifier:
 fun ListingSidebar(
     categories: List<Category>,
     modifier: Modifier = Modifier,
+    onLinkClick: () -> Unit = {},
 ) {
     val ctx = rememberPageContext()
     Nav(modifier.scrollbarWidth(ScrollbarWidth.Thin).toAttrs()) {
@@ -101,12 +102,14 @@ fun ListingSidebar(
                             modifier = Modifier
                                 .fontSize(115.percent)
                                 .fontWeight(FontWeight.Bold),
+                            onLinkClick = onLinkClick,
                         )
                     }
                     category.subcategories.forEach { subcategory ->
                         SubcategoryContent(
                             ctx,
                             subcategory,
+                            onLinkClick,
                             Modifier.margin(leftRight = 0.125.cssRem, topBottom = 0.5.cssRem),
                         )
                     }
@@ -117,10 +120,10 @@ fun ListingSidebar(
 }
 
 @Composable
-private fun SubcategoryContent(ctx: PageContext, subcategory: Subcategory, modifier: Modifier = Modifier) {
+private fun SubcategoryContent(ctx: PageContext, subcategory: Subcategory, onLinkClick: () -> Unit, modifier: Modifier = Modifier) {
     @Composable
     fun LinkFor(ctx: PageContext, article: Article, modifier: Modifier = Modifier) {
-        LinkFor(ctx, article, article.titleOrSubcategory, modifier)
+        LinkFor(ctx, article, article.titleOrSubcategory, onLinkClick, modifier)
     }
 
     Li(ListingElementStyle.toModifier().fontSize(0.875.cssRem).then(modifier).toAttrs()) {

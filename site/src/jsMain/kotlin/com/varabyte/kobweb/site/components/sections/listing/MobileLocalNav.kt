@@ -2,7 +2,7 @@ package com.varabyte.kobweb.site.components.sections.listing
 
 import androidx.compose.runtime.*
 import com.varabyte.kobweb.compose.css.*
-import com.varabyte.kobweb.compose.css.MinWidth
+import com.varabyte.kobweb.compose.css.AlignItems
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Modifier
@@ -30,11 +30,7 @@ import com.varabyte.kobweb.site.model.listing.SITE_LISTING
 import kotlinx.browser.document
 import kotlinx.dom.addClass
 import kotlinx.dom.removeClass
-import org.jetbrains.compose.web.css.Position
-import org.jetbrains.compose.web.css.cssRem
-import org.jetbrains.compose.web.css.percent
-import org.jetbrains.compose.web.css.plus
-import org.jetbrains.compose.web.css.px
+import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 
 val MobileNavHeight by StyleVariable<CSSLengthNumericValue>()
@@ -124,7 +120,7 @@ fun MobileLocalNav() {
                 .navHeaderZIndex()
                 .toAttrs()
         ) {
-            ListingSidebar(SITE_LISTING)
+            ListingSidebar(SITE_LISTING, onLinkClick = { open = false })
         }
     }
 }
