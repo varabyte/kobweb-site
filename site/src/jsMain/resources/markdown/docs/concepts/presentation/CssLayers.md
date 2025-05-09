@@ -136,12 +136,13 @@ First, inside your build script, import the stylesheet using Kobweb's `importCss
 CSS [`@import` at-rule](https://developer.mozilla.org/en-US/docs/Web/CSS/@import):
 
 ```kotlin
-// BEFORE
+// Before
 kobweb.app.index.head.add {
   link(href = "/highlight.js/styles/dracula.css", rel = "stylesheet")
 }
-
-// AFTER
+```
+```kotlin
+// After
 kobweb.app.index.head.add {
   style {
     importCss("/highlight.js/styles/dracula.css", layerName = "highlightjs")

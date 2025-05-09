@@ -52,7 +52,8 @@ styles, those will get embedded into the site's stylesheet:
 ```kotlin
 // Uses inline styles
 Box(Modifier.color(Colors.Red)) { /* ... */ }
-
+```
+```kotlin
 // Uses a stylesheet
 val BoxStyle = CssStyle {
     base { Modifier.color(Colors.Red) }

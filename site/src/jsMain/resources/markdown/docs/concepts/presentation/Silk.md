@@ -27,7 +27,8 @@ adjusting Silk defaults, which will be demonstrated in more detail in sections b
 ```kotlin
 @InitSilk
 fun initSilk(ctx: InitSilkContext) {
-  // `ctx` has a handful of properties which allow you to adjust Silk's default behavior.
+  // `ctx` has a handful of properties which allow you to
+  // adjust Silk's default behavior.
 }
 ```
 
@@ -65,7 +66,8 @@ You can convert any such `CssStyle` into a `Modifier` by using its `toModifier()
 ```kotlin
 // CssStyle.toModifier (becomes a stylesheet entry)
 Box(CustomStyle.toModifier()) { /* ... */ }
-
+```
+```kotlin
 // Creating modifiers directly (becomes an inline style)
 Box(Modifier.backgroundColor(Colors.Red)) { /* ... */ }
 ```
@@ -371,7 +373,7 @@ Once extended, you only need to call `toModifier` on the extended style to inclu
 
 ```kotlin
 SpanText("WARNING", EmphasizedTextStyle.toModifier())
-// You do NOT need to mention `GeneralTextStyle` here.
+// You do NOT need to use `GeneralTextStyle` here.
 // It is automatically referenced by `EmphasizedTextStyle`.
 ```
 
@@ -490,7 +492,8 @@ val HighlightedCustomVariant = CustomStyle.addVariant {
         Modifier.backgroundColor(Colors.Green)
     }
 }
-
+```
+```kotlin
 // After
 val HighlightedCustomVariant = CustomStyle.addVariantBase {
     Modifier.backgroundColor(Colors.Green)
@@ -649,7 +652,6 @@ Finally, here is a pattern you can use to extract a raw backing element which ha
 
 ```kotlin
 var backingElement by remember { mutableStateOf<HTMLElement?>(null) }
-
 SomeSilkWidget(ref = ref { backingElement = it }) {
     if (backingElement != null) {
         /* ... */
