@@ -29,17 +29,6 @@ fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
 }
 ```
 
-Again, no page context is also OK:
-```kotlin
-
-@Layout
-@Composable
-fun PageLayout(content: @Composable () -> Unit) {
-    /* ... */
-    content()
-}
-```
-
 > [!NOTE]
 > You can declare a layout anywhere, in any file. However, most Kobweb users will expect to find them under the
 `components.layouts`
@@ -82,7 +71,7 @@ method that accepts a key:
 ```kotlin 4-6,8-10
 @Layout
 @Composable
-fun PageLayout(content: @Composable () -> Unit) {
+fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
     LaunchedEffect(ctx.route.path) {
         // Rerun this logic per page
     }
@@ -167,8 +156,11 @@ A page can indicate it explicitly does not want to use any layout at all, by usi
 fun LayoutlessPage() { /* ... */ }
 ```
 
-This can occasionally be useful for pages where you don't want to adorn them with any of your site's normal scaffolding,
-such as some special page where you want to have full control of its appearance.
+Normally you don't need to do this, unless you've set up a default layout applied to all pages under some package, at
+which point you can use this annotation to opt-out.
+
+Having no layout can occasionally be useful for pages where you don't want to adorn them with any of your site's normal
+scaffolding, such as some special page where you want to have full control of its appearance.
 
 Without a layout, the composition hierarchy essentially skips the layout layer entirely:
 
