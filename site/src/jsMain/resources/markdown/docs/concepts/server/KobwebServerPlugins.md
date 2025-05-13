@@ -102,9 +102,9 @@ kotlin { /* ... */ }
 Once this is set up, upon the next Kobweb server run (e.g. via `kobweb run`), if you check the
 logs ${DocsAside("Server logs", "fullstack#server-logs")}, you should see something like this:
 
-```diff
+```text 2
 [main] INFO  ktor.application - Autoreload is disabled because the development mode is off.
-+[main] INFO  ktor.application - REPLACE ME WITH REAL CONFIGURATION
+[main] INFO  ktor.application - REPLACE ME WITH REAL CONFIGURATION
 [main] INFO  ktor.application - Application started in 0.112 seconds.
 [main] INFO  ktor.application - Responding at http://0.0.0.0:8080
 ```

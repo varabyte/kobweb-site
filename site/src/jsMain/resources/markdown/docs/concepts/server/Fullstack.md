@@ -25,7 +25,7 @@ A Kobweb project will always at least have a JavaScript target, representing the
 intention to implement a server, that will create a JVM target for you as well. You can add dependencies to this
 target if you want to make them available to your server code:
 
-```kotlin
+```kotlin 2,13,16-18
 // site/build.gradle.kts
 import com.varabyte.kobweb.gradle.application.util.configAsKobwebApplication
 
@@ -278,7 +278,7 @@ subclass `MutableDatabase` that implements it and provides additional APIs for m
 
 The skeleton for registering and later querying such a database instance might look like this:
 
-```kotlin
+```kotlin 1,2,10,16
 @InitApi
 fun initDatabase(ctx: InitApiContext) {
   val db = MutableDatabase()
@@ -294,7 +294,7 @@ fun initDatabase(ctx: InitApiContext) {
 @Api
 fun getUsers(ctx: ApiContext) {
   if (ctx.req.method != HttpMethod.GET) return
-  val db = ctx.data.get<Database>()
+  val db = ctx.data.getValue<Database>()
   ctx.res.setBodyText(db.query("SELECT * FROM users").toString())
 }
 ```

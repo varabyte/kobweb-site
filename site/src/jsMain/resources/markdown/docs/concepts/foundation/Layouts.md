@@ -18,7 +18,7 @@ Layouts are composable methods which (optionally) take a single `PageContext` pa
 content callback (i.e. `content: @Composable () -> Unit`). You must annotate them with the `@Layout` annotation so that
 Kobweb can discover and register them:
 
-```kotlin 3,5
+```kotlin
 // jsMain/kotlin/com/mysite/components/layouts/PageLayout.kt
 
 @Layout
@@ -27,9 +27,17 @@ fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
     /* ... */
     content()
 }
+```
 
-// No page context is also OK:
-// fun PageLayout(content: @Composable () -> Unit)
+Again, no page context is also OK:
+```kotlin
+
+@Layout
+@Composable
+fun PageLayout(content: @Composable () -> Unit) {
+    /* ... */
+    content()
+}
 ```
 
 > [!NOTE]

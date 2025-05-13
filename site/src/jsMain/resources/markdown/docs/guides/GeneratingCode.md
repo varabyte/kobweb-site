@@ -23,7 +23,7 @@ output directory is what enables it to be used in place of a source directory.
 
 The structure for this approach generally looks like this:
 
-```kotlin
+```kotlin 3-31,37
 // e.g. site/build.gradle.kts
 
 val generateCodeTask = tasks.register("generateCode") {
@@ -60,7 +60,6 @@ kotlin {
   configAsKobwebApplication()
   commonMain.dependencies { /* ... */ }
   jsMain { 
-    // ↓↓↓↓ Reference your task here ↓↓↓↓ 
     kotlin.srcDir(generateCodeTask) 
     dependencies { /* ... */ }
   }
@@ -72,7 +71,7 @@ kotlin {
 In case you want to generate *resources* that end up in your final site as files (e.g. `mysite.com/rss.xml`) and not
 code, the main change you need to make is migrating the line `kotlin.srcDir` to `resources.srcDir`:
 
-```kotlin
+```kotlin 3-18,24
 // e.g. site/build.gradle.kts
 
 val generateResourceTask = tasks.register("generateResource") {
@@ -96,7 +95,6 @@ kotlin {
   configAsKobwebApplication()
   commonMain.dependencies { /* ... */ }
   jsMain {
-    // ↓↓↓↓ Reference your task here ↓↓↓↓ 
     resources.srcDir(generateResourceTask)
     dependencies { /* ... */ }
   }

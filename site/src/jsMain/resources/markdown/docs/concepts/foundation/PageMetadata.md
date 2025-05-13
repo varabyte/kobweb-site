@@ -206,6 +206,8 @@ To accomplish this, we'll use the JavaScript standard library, which provides fu
 and modifying it. Using Kotlin/JS, you can write:
 
 ```kotlin
+import kotlinx.browser.document
+
 private fun Document.setPageMetadata(title: String, description: String) {
     title = title
     head!!
@@ -213,9 +215,7 @@ private fun Document.setPageMetadata(title: String, description: String) {
         .setAttribute("content", description)
 }
 
-// Later
-// import kotlinx.browser.document
-
+// Later in the file...
 document.setPageMetadata(
     "Understanding Metadata",
     "This is a blog post about understanding HTML metadata."
@@ -231,29 +231,31 @@ above code a bit more defensively, you can use a "query or create" pattern:
 ```kotlin
 private fun Document.setDescription(description: String) {
     val head = document.head!!
-    (head.querySelector("meta[name='description']") ?: document.createElement("meta").apply {
-        setAttribute("name", "description")
-        head.appendChild(this)
-    }).setAttribute("content", description)
+    (head.querySelector("meta[name='description']") ?:
+        document.createElement("meta").apply {
+            setAttribute("name", "description")
+            head.appendChild(this)
+        }
+    ).setAttribute("content", description)
 }
 ```
 
 A very natural place to put code like this is inside a layout composable, often inside a `LaunchedEffect`:
 
 ```kotlin
+@Layout
 @Composable
-fun PageLayout(title: String, description: String, content: @Composable () -> Unit) {
+fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
+    // Get title and description out of ctx.data
     LaunchedEffect(title, description) {
         document.setPageMetadata(title, description)
     }
-
-    // ...
 }
 ```
 
 > [!NOTE]
 > You can find us using this
-> pattern [in the Kobweb site itself](https://github.com/varabyte/kobweb-site/blob/fd6cf247d97ab6ab39582e9e577104b7f96ad1f8/site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/layouts/PageLayout.kt#L29).
+> pattern [in the Kobweb site itself](https://github.com/varabyte/kobweb-site/blob/f628baef2041379746b5b1347fe422ad1d1ec37f/site/src/jsMain/kotlin/com/varabyte/kobweb/site/components/layouts/PageLayout.kt#L39).
 
 And that's really all there is to it. You may wish to familiarize yourself with
 the [ `querySelector` method](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) and

@@ -183,7 +183,7 @@ exporting.
 You can determine if your page is being rendered as part of an export by checking the `PageContext.isExporting` property.
 This gives you the opportunity to manipulate the exported HTML or avoid side effects associated with page loading.
 
-```kotlin
+```kotlin 6
 @Composable
 @Layout
 fun AuthenticatedLayout(ctx: PageContext, content: @Composable () -> Unit) {

@@ -103,12 +103,13 @@ Kobweb ensures its APIs all reference its `CSSNumericValue` type-aliases:
 ```kotlin
 // Legacy Kobweb
 fun Modifier.lineHeight(value: CSSLengthOrPercentageValue): Modifier = styleModifier {
-  lineHeight(value)
+  /*...*/
 }
-
+```
+```kotlin
 // Modern Kobweb
 fun Modifier.lineHeight(value: CSSLengthOrPercentageNumericValue): Modifier = styleModifier {
-  lineHeight(value)
+    /*...*/
 }
 ```
 
@@ -120,7 +121,8 @@ to Kobweb's newer set, in order to make your code more flexible about what it ca
 // Not recommended
 val MyFontSize by StyleVariable<CSSLengthValue>
 fun drawArc(arc: CSSAngleValue)
-
+```
+```kotlin
 // Recommended
 val MyFontSize by StyleVariable<CSSLengthNumericValue>
 fun drawArc(arc: CSSAngleNumericValue)

@@ -452,7 +452,7 @@ additional locations.
 Perhaps the most common pattern users will use is to define a custom task which generates markdown files when it is run,
 and then call `kobweb.markdown.addSource` passing that task in as a source:
 
-```kotlin
+```kotlin 20
 val generateExampleMarkdownTask = tasks.register("generateExampleMarkdown") {
     // We use $name here to create a unique output directory just for this task
     val outputDir = layout.buildDirectory.dir("generated/$name/markdown")

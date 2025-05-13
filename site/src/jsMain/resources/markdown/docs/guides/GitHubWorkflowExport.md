@@ -10,7 +10,7 @@ solution for this is a [GitHub workflow](https://docs.github.com/en/actions/usin
 For your convenience, we include a sample workflow below that exports your site and then uploads the results (which can
 be downloaded from a link shown in the workflow summary page):
 
-```yaml
+```yaml 6,29-31,33-36,38-44,63-70
 # .github/workflows/export-site.yml
 
 name: Export Kobweb site

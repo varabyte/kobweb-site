@@ -45,7 +45,7 @@ under that URL. For example, a page defined in `.../pages/admin/Index.kt` will b
 
 If you ever need to change the route generated for a page, you can set the `Page` annotation's `routeOverride` field:
 
-```kotlin
+```kotlin 3
 // jsMain/kotlin/com/mysite/pages/admin/Settings.kt
 
 @Page(routeOverride = "config")
@@ -111,7 +111,7 @@ You can use package mappings for this.
 
 You apply the package mapping annotation to the current file. Using it looks like this:
 
-```kotlin
+```kotlin 2,4
 // site/pages/team/values/PackageMapping.kt
 @file:PackageMapping("our-values")
 
@@ -179,7 +179,7 @@ You can use the page context to check the values of any query parameters passed 
 
 So if you visit `site.com/posts?id=12345&mode=edit`, you can query those values like so:
 
-```kotlin
+```kotlin 18-19
 enum class Mode {
     EDIT, VIEW;
 
@@ -224,7 +224,7 @@ annotations, respectively.
 
 Pay attention to the use of the curly braces in the mapping name! That lets Kobweb know that this is a dynamic package.
 
-```kotlin
+```kotlin 2
 // pages/users/user/PackageMapping.kt
 @file:PackageMapping("{user}") // or @file:PackageMapping("{}")
 
@@ -240,7 +240,7 @@ normally generated from the package (i.e. `user` in this specific case).
 
 Like `PackageMapping`, the `Page` annotation can also take curly braces to indicate a dynamic value.
 
-```kotlin
+```kotlin 3
 // pages/users/user/posts/Post.kt
 
 @Page("{post}") // Or @Page("{}")
@@ -257,7 +257,7 @@ fun PostPage() {
 Remember that the `Page` annotation allows you to rewrite the entire route. That value also accepts dynamic segments, so
 you could even do something like:
 
-```kotlin
+```kotlin 3
 // pages/users/user/posts/Post.kt
 
 @Page("/users/{user}/posts/{post}") // Or @Page("/users/{user}/posts/{}")
@@ -292,7 +292,7 @@ fun PostPage(ctx: PageContext) {
 
 ### Optional dynamic routes
 
-If you've specified a dynamic route, a value must be set for the dynamic segment. For example:
+If you've specified a dynamic route, a value must be set for the dynamic segment. For example, with:
 
 ```kotlin
 // pages/posts/Post.kt
@@ -330,9 +330,13 @@ To create a catch-all route, prepend your dynamic route name with an ellipsis.
 
 For example, the catch-all route `"/a/b/c/{...rest}"` would capture `"x/y/z"` in the URL `"/a/b/c/x/y/z"`.
 
+> [!IMPORTANT]
+> Catch-all route segments MUST terminate the route. The following is not valid and will result in an exception being
+> thrown: `"/a/b/c/{...middle}/x/y/z"`.
+
 In practice, using it looks like this:
 
-```kotlin
+```kotlin 3,7
 // pages/com/mysite/store/products/ProductDetails.kt
 
 @Page("{...product-details}")
@@ -346,8 +350,8 @@ fun ProductDetailsPage(ctx: PageContext) {
 ```
 
 > [!TIP]
-> An unspecified name, `"{...}"` in this case, tells Kobweb to use the name of the slug normally generated from the
-> file name (i.e. `product-details` in this specific case).
+> Not specifying a name, `"{...}"` in other words, tells Kobweb to use the name of the slug normally generated from the
+> file name (which would be `product-details` in this specific case).
 
 It is not expected that many sites will ever use a catch-all route, but in the above case, you could use the captured
 value as a way to encode fluid details of a product, perhaps with sub-routes contextually depending on the product type.
@@ -357,10 +361,6 @@ For example, the above page could handle `/store/products/home-and-garden/hoses/
 
 Of course, it is better to provide a more structured solution if you can (e.g. declaring a page route like
 `/store/products/{category}/{subcategory}/{product}`), but reality can be messy sometimes.
-
-> [!IMPORTANT]
-> Catch-all route segments MUST terminate the route. The following is not valid and will result in an exception being
-> thrown: `"/a/b/c/{...middle}/x/y/z"`.
 
 #### Optional catch-all routes
 

@@ -36,7 +36,7 @@ Here's everything you have to do (we'll show concrete examples of these steps be
 
 ### Build script
 
-```kotlin
+```kotlin 1,5,12,15
 import com.varabyte.kobweb.gradle.worker.util.configAsKobwebWorker
 
 plugins {
@@ -165,9 +165,8 @@ through the serializer unmodified).
 ```kotlin
 // Worker module
 internal class EchoWorkerFactory : WorkerFactory<String, String> {
-  override fun createStrategy(postOutput: OutputDispatcher<String>) = WorkerStrategy<String> { input ->
-    postOutput(input)
-  }
+  override fun createStrategy(postOutput: OutputDispatcher<String>) =
+    WorkerStrategy<String> { input -> postOutput(input) }
   override fun createIOSerializer() = createPassThroughSerializer()
 }
 ```
@@ -214,7 +213,7 @@ in your site script -- but we'll show this anyway to demonstrate two additional 
 * How to define a custom message serializer.
 * The fact that you can call `postOutput` as often as you want.
 
-```kotlin
+```kotlin 6,7,16-22
 // Worker module
 internal class CountDownWorkerFactory : WorkerFactory<Int, Int> {
   override fun createStrategy(postOutput: OutputDispatcher<Int>) = WorkerStrategy<Int> { input ->
@@ -286,7 +285,7 @@ message types.
 
 First, add `kotlinx-serialization` and `kobwebx-serialization-kotlinx` to your dependencies:
 
-```kotlin
+```kotlin 5-6
 // build.gradle.kts
 kotlin {
   configAsKobwebWorker()
@@ -299,7 +298,7 @@ kotlin {
 
 Then, define the worker factory:
 
-```kotlin
+```kotlin 1-2,4-5,28-38
 @Serializable
 data class FindPrimesInput(val max: Int)
 
@@ -412,7 +411,8 @@ val largeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
 worker.postInput(WorkerInput(), Transferables {
   add("largeArray", largeArray)
 })
-
+```
+```kotlin
 // In the worker:
 val largeArray = transferables.getUint8Array("largeArray")!!
 ```
@@ -425,7 +425,8 @@ val largeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
 postOutput(WorkerOutput(), Transferables {
   add("largeArray", largeArray)
 })
-
+```
+```kotlin
 // In your site:
 val worker = rememberWorker {
   ExampleWorker {

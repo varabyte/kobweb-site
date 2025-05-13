@@ -49,8 +49,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ```
 
 `site/build.gradle.kts`
-```kotlin
-
+```kotlin 2,11,12
 plugins {
     alias(libs.plugins.kotlin.serialization)
 }

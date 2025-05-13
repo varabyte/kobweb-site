@@ -18,7 +18,7 @@ Let's demonstrate this with the UTC timestamp version example.
 
 In your application's `build.gradle.kts`, add the following code:
 
-```kotlin
+```kotlin 1-3,12-17
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -56,16 +56,13 @@ We suggest two approaches here, one using extension methods and the other using 
 are encouraged to choose whatever you prefer:
 
 ```kotlin
-// SiteGlobals.kt
-
-import com.varabyte.kobweb.core.AppGlobals
-
-// Extension method approach ---------------------
+// Extension method approach
 
 val AppGlobals.version: String
   get() = getValue("version")
-
-// Wrapper object approach -----------------------
+```
+```kotlin
+// Wrapper object approach
 
 object SiteGlobals {
   val version: String = AppGlobals.getValue("version")

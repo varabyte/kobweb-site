@@ -58,7 +58,7 @@ For example, a CSS file that could easily look like this:
 can migrate to this in Kobweb:
 
 ```kotlin
-//------------------ CriticalInformation.kt
+// CriticalInformation.kt
 
 val ImportantStyle = CssStyle {
   base {
@@ -69,8 +69,9 @@ val ImportantStyle = CssStyle {
     Modifier.backgroundColor(Colors.Pink)
   }
 }
-
-//------------------ Post.kt
+```
+```kotlin
+// Post.kt
 
 val PostTitleStyle = CssStyle.base { Modifier.fontSize(24.px) }
 ```

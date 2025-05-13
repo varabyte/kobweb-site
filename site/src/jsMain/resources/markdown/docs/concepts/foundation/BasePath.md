@@ -41,7 +41,7 @@ Of course, you may find yourself working with code external to Kobweb that is no
 to access the base path value explicitly in your own code, you can do so by using the `BasePath.value` property or by
 calling the `BasePath.prependTo` companion method.
 
-```kotlin
+```kotlin 9
 // The Video element comes from Compose HTML and is NOT base-path aware.
 // Therefore, we need to manually prepend the base path to the video source.
 Video(attrs = {

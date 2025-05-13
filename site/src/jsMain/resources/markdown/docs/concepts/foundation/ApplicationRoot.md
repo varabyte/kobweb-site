@@ -47,7 +47,7 @@ Here's an example application composable override that I use in many of my own p
 ```kotlin
 @App
 @Composable
-fun MyApp(content: @Composable () -> Unit) {
+fun AppEntry(content: @Composable () -> Unit) {
   SilkApp {
     val colorMode = ColorMode.current
     LaunchedEffect(colorMode) { // Relaunched every time the color mode changes

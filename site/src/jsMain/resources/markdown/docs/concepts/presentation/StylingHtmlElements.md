@@ -174,7 +174,7 @@ Div(SOME_STYLE_MODIFIER.toAttrs {
 
 For example, you could use this when working with the Compose HTML `Input` composable to add input-specific attributes:
 
-```kotlin
+```kotlin 9-14
 private val LARGE_INPUT_MODIFIER = /* ... */
 
 @Composable
@@ -209,7 +209,8 @@ Using them looks like this:
 Modifier.attrsModifier {
     id("example")
 }
-
+```
+```kotlin
 // Modify styles of an element tag
 // e.g. the "x", "y", and "z" in `<tag style="x:...;y:...;z:..." />
 Modifier.styleModifier {
@@ -243,7 +244,8 @@ The above cases can be rewritten as:
 Modifier.attrsModifier {
     attr("id", "example")
 }
-
+```
+```kotlin
 Modifier.styleModifier {
     property("width", 100.percent)
     // Or even raw CSS:

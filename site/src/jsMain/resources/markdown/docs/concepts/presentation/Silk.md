@@ -89,7 +89,7 @@ Box(Modifier.backgroundColor(Colors.Red)) { /* ... */ }
 >
 > @InitSilk
 > fun registerPrivateStyle(ctx: InitSilkContext) {
->   // Kobweb will not be able to detect the property name, so a name must be provided manually
+>   // When registering directly, names must be provided manually
 >   ctx.theme.registerStyle("example-custom", ExampleCustomStyle)
 >   ctx.theme.registerStyle("example-other-custom", _ExampleOtherCustomStyle)
 > }
@@ -331,7 +331,7 @@ storage and then restore it if the user revisits your site later.
 The restoration will happen in your `@InitSilk` block, while the code to save the color mode should happen in your root
 `@App` composable ${DocsAside("Application Root", "/docs/concepts/foundation/application-root")}:
 
-```kotlin
+```kotlin 3-4,11-14
 @InitSilk
 fun setInitialColorMode(ctx: InitSilkContext) {
     ctx.theme.initialColorMode =
@@ -360,7 +360,7 @@ style.
 
 The easiest way to accomplish this is by extending the base CSS style block, using the `extendedBy` method:
 
-```kotlin
+```kotlin 4
 val GeneralTextStyle = CssStyle {
     base { Modifier.fontSize(16.px).fontFamily("...") }
 }
@@ -427,15 +427,14 @@ val OutlinedButtonVariant: CssStyleVariant<ButtonKind> =
 >
 > ```kotlin
 > @Suppress("PRIVATE_COMPONENT_VARIANT")
-> private val ExampleCustomVariant = ButtonStyle.addVariant {
->   /* ... */
-> }
-> // Or, `private val _ExampleCustomVariant`
+> private val ExampleCustomVariant = ButtonStyle.addVariant { /*...*/ }
+> // Or use a leading underscore to automatically suppress the warning
+> private val _ExampleCustomVariant = ButtonStyle.addVariant { /*...*/ }
 >
 > @InitSilk
 > fun registerPrivateVariant(ctx: InitSilkContext) {
->   // When registering variants, using a leading dash will automatically prepend the bast style name.
->   // This example here will generate the final name "button-example".
+>   // When registering variants, using a leading dash will automatically prepend
+>   // the base style name. Here, "button-example".
 >   ctx.theme.registerVariant("-example", ExampleCustomVariant)
 > }
 > ```
@@ -505,7 +504,7 @@ val HighlightedCustomVariant = CustomStyle.addVariantBase {
 Silk always uses component styles when defining its widgets. The full pattern looks like this (which you can imitate in
 your own project if you define your own widgets):
 
-```kotlin
+```kotlin 1,3,8,11
 sealed interface CustomWidgetKind : ComponentKind
 
 val CustomWidgetStyle = CssStyle<CustomWidgetKind> { /* ... */ }
@@ -533,13 +532,16 @@ A caller can call a widget one of several ways:
 ```kotlin
 // Approach #1: Use default styling
 CustomWidget { /* ... */ }
-
+```
+```kotlin
 // Approach #2: Tweak default styling with a variant
 CustomWidget(variant = TransparentWidgetVariant) { /* ... */ }
-
+```
+```kotlin
 // Approach #3: Tweak default styling with inline overrides
 CustomWidget(Modifier.backgroundColor(Colors.Blue)) { /* ... */ }
-
+```
+```kotlin
 // Approach #4: Tweak default styling with both a variant and inline
 // overrides. Inline overrides take precedence.
 CustomWidget(
@@ -574,7 +576,7 @@ div {
 
 Kobweb lets you define your keyframes in code by using a `Keyframes` block:
 
-```kotlin
+```kotlin 1,12
 val ShiftRightKeyframes = Keyframes {
     from { Modifier.left(0.px) }
     to { Modifier.left(200.px) }
@@ -697,7 +699,10 @@ var isFeature2Enabled: Boolean = /* ... */
 Box(
     ref = refScope {
         ref(isFeature1Enabled) { element -> /* ... */ }
-        disposableRef(isFeature2Enabled) { element -> /* ... */; onDispose { /* ... */ } }
+        disposableRef(isFeature2Enabled) { element -> 
+            /* ... */
+            onDispose { /* ... */ } 
+        }
     }
 )
 ```
