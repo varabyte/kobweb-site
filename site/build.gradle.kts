@@ -1,4 +1,5 @@
 import com.varabyte.kobweb.common.text.camelCaseToKebabCase
+import com.varabyte.kobweb.common.text.isSurrounded
 import com.varabyte.kobweb.gradle.application.util.configAsKobwebApplication
 import com.varabyte.kobwebx.gradle.markdown.MarkdownBlock
 import com.varabyte.kobwebx.gradle.markdown.MarkdownEntry
@@ -49,9 +50,20 @@ kobweb {
             val WIDGET_PATH = "com.varabyte.kobweb.site.components.widgets"
 
             code.set { code ->
-                val (lang, lines) = code.info.split(" ", limit = 2).let {
-                    it.first().takeUnless { it.isBlank() } to it.getOrNull(1)
+                var lang: String? = null
+                var lines: String? = null
+                var label: String? = null
+
+                code.info.split(" ").filter { it.isNotBlank() }.forEach { info ->
+                    if (info.isSurrounded("\"")) {
+                        label = info.removeSurrounding("\"")
+                    } else if (info.first().isDigit()) {
+                        lines = info
+                    } else {
+                        lang = info
+                    }
                 }
+
                 buildString {
                     append("$WIDGET_PATH.code.CodeBlock(\"\"\"${code.literal.escapeTripleQuotedText()}\"\"\"")
                     if (lang != null) {
@@ -59,6 +71,9 @@ kobweb {
                     }
                     if (lines != null) {
                         append(", highlightLines = \"$lines\"")
+                    }
+                    if (label != null) {
+                        append(", label = \"$label\"")
                     }
                     append(")")
                 }

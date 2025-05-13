@@ -53,9 +53,16 @@ fun clearPrismHighlightLinesPadding(ctx: InitSilkContext) {
 // Note: To enable this widget to work, we needed to add PrismJs support to this project. See the kobweb
 // block in our build.gradle.kts file to see how this was done.
 @Composable
-fun CodeBlock(code: String, modifier: Modifier = Modifier, lang: String? = null, highlightLines: String? = null) {
+fun CodeBlock(
+    code: String,
+    modifier: Modifier = Modifier,
+    lang: String? = null,
+    highlightLines: String? = null,
+    label: String? = null
+) {
     Pre(CodeBlockStyle.toModifier()
         .thenIfNotNull(highlightLines) { Modifier.attr("data-line", it)}
+        .thenIfNotNull(label) { Modifier.attr("data-label", it) }
         .toAttrs()) {
         Code(
             attrs = SmoothColorStyle.toModifier()
