@@ -9,9 +9,14 @@ import com.varabyte.kobweb.compose.ui.styleModifier
 import com.varabyte.kobweb.compose.ui.thenIf
 import com.varabyte.kobweb.compose.ui.thenIfNotNull
 import com.varabyte.kobweb.compose.ui.toAttrs
+import com.varabyte.kobweb.silk.init.InitSilk
+import com.varabyte.kobweb.silk.init.InitSilkContext
+import com.varabyte.kobweb.silk.init.layer
+import com.varabyte.kobweb.silk.init.registerStyleBase
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.base
 import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
+import com.varabyte.kobweb.silk.style.layer.SilkLayer
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.site.components.style.DividerColor
 import com.varabyte.kobweb.site.components.style.SiteTextSize
@@ -21,13 +26,25 @@ import org.jetbrains.compose.web.dom.Code
 import org.jetbrains.compose.web.dom.Pre
 import org.jetbrains.compose.web.dom.Text
 
+fun Modifier.defaultPadding() = padding(1.em)
+
 val CodeBlockStyle = CssStyle.base(extraModifier = { SmoothColorStyle.toModifier() }) {
     Modifier
         .borderRadius(10.px)
         .overflow { x(Overflow.Auto) }
         .siteText(SiteTextSize.CODE)
         .border(1.px, LineStyle.Solid, DividerColor.value())
-        .padding(1.em)
+        .defaultPadding()
+}
+
+@InitSilk
+fun clearPrismHighlightLinesPadding(ctx: InitSilkContext) {
+    ctx.stylesheet.apply {
+        registerStyleBase("pre[data-line]") {
+            // Prism.js adds a bunch of left padding for line numbers that we never show. Override it.
+            Modifier.defaultPadding()
+        }
+    }
 }
 
 /**
