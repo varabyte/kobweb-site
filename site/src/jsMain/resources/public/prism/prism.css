@@ -34,7 +34,9 @@
     /*--syntax-accent: hsl(230, 100%, 66%);*/
     --syntax-selection-color: hsl(230, 1%, 90%);
     --syntax-gutter-background-color-selected: hsl(230, 1%, 90%);
-    --syntax-cursor-line: hsla(230, 8%, 24%, 0.05);
+    /* Custom change: increase alpha (used to be 0.05), highlights were too hard to see */
+    --syntax-cursor-line: hsla(230, 8%, 24%, 0.1);
+
     /* An extra color used but not defined in the original variable list */
     --syntax-extra-1: hsl(230, 1%, 78%);
 }
@@ -59,7 +61,8 @@
     /*--syntax-accent: hsl(220, 100%, 66%);*/
     --syntax-selection-color: hsl(220, 13%, 28%);
     --syntax-gutter-background-color-selected: hsl(220, 13%, 26%);
-    --syntax-cursor-line: hsla(220, 100%, 80%, 0.04);
+    /* Custom change: increase alpha (used to be 0.04), highlights were too hard to see */
+    --syntax-cursor-line: hsla(220, 100%, 80%, 0.15);
     /* An extra color used but not defined in the original variable list */
     --syntax-extra-1: var(--syntax-selection-color);
 }

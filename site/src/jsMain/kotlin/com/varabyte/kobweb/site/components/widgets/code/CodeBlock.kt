@@ -7,6 +7,7 @@ import com.varabyte.kobweb.compose.ui.Modifier
 import com.varabyte.kobweb.compose.ui.modifiers.*
 import com.varabyte.kobweb.compose.ui.styleModifier
 import com.varabyte.kobweb.compose.ui.thenIf
+import com.varabyte.kobweb.compose.ui.thenIfNotNull
 import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.base
@@ -20,7 +21,7 @@ import org.jetbrains.compose.web.dom.Code
 import org.jetbrains.compose.web.dom.Pre
 import org.jetbrains.compose.web.dom.Text
 
-val CodeBlockStyle = CssStyle.base {
+val CodeBlockStyle = CssStyle.base(extraModifier = { SmoothColorStyle.toModifier() }) {
     Modifier
         .borderRadius(10.px)
         .overflow { x(Overflow.Auto) }
@@ -35,8 +36,10 @@ val CodeBlockStyle = CssStyle.base {
 // Note: To enable this widget to work, we needed to add PrismJs support to this project. See the kobweb
 // block in our build.gradle.kts file to see how this was done.
 @Composable
-fun CodeBlock(code: String, modifier: Modifier = Modifier, lang: String? = null) {
-    Pre(CodeBlockStyle.toModifier().then(SmoothColorStyle.toModifier()).toAttrs()) {
+fun CodeBlock(code: String, modifier: Modifier = Modifier, lang: String? = null, highlightLines: String? = null) {
+    Pre(CodeBlockStyle.toModifier()
+        .thenIfNotNull(highlightLines) { Modifier.attr("data-line", it)}
+        .toAttrs()) {
         Code(
             attrs = SmoothColorStyle.toModifier()
                 // Set min width so that `diff-highlight` coverts the entire width even when the code is scrollable

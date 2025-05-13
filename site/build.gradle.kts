@@ -49,9 +49,19 @@ kobweb {
             val WIDGET_PATH = "com.varabyte.kobweb.site.components.widgets"
 
             code.set { code ->
-                "$WIDGET_PATH.code.CodeBlock(\"\"\"${code.literal.escapeTripleQuotedText()}\"\"\", lang = ${
-                    code.info.takeIf { it.isNotBlank() }?.let { "\"$it\"" }
-                })"
+                val (lang, lines) = code.info.split(" ", limit = 2).let {
+                    it.first().takeUnless { it.isBlank() } to it.getOrNull(1)
+                }
+                buildString {
+                    append("$WIDGET_PATH.code.CodeBlock(\"\"\"${code.literal.escapeTripleQuotedText()}\"\"\"")
+                    if (lang != null) {
+                        append(", lang = \"$lang\"")
+                    }
+                    if (lines != null) {
+                        append(", highlightLines = \"$lines\"")
+                    }
+                    append(")")
+                }
             }
 
             inlineCode.set { code ->
