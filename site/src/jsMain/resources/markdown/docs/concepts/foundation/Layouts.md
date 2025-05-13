@@ -256,7 +256,7 @@ property.
 
 > [!IMPORTANT]
 > When `data` is queried from inside a layout, it will have a read-only view of it. It will not be able to add or remove
-> additional values.
+> additional values, in other words.
 
 Bringing it all together, your final code should look something like this:
 
@@ -293,7 +293,7 @@ fun HomePage() {
 Note in the example above that due to the way we wrote our code, `PageLayoutData` *must* be initialized or else the site
 will crash.
 
-For people who believe in the fail fast case, this may be what you want! However, you can use the
+For people who believe in the failing fast, this may be what you want! However, you can use the
 `ctx.data.get<PageLayoutData>()` call instead which will return null instead of crashing.
 
 However, our recommended approach is to provide an `@InitRoute` method at the `PageLayout` level, using the
@@ -329,7 +329,7 @@ fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
 #### `@InitRoute` calling order
 
 It's worth understanding the order that `@InitRoute` methods are called in. **They are triggered child-first and
-then up through all ancestor layouts.** Once rendering starts happening, that executes in the opposite order.
+then up through all ancestor layouts.** Once the render pass starts, that happens in the opposite order.
 
 In other words, if you have `BaseLayout`, `ChildLayout`, and `Page`, each with their own corresponding init methods,
 then the calling order will be:
@@ -342,8 +342,9 @@ then the calling order will be:
 * `Page()`
 
 What this allows is code where you keep appending / modifying data as you initialize up the layout chain, and then by
-the time you start rendering, all data will be present. As for rendering going the other direction, from top-to-bottom,
-well, that's just how rendering works!
+the time you start rendering, all data will be present.
+
+As for rendering going the other direction, from top-to-bottom, well, that's just how rendering works!
 
 #### Layout callbacks
 
@@ -414,7 +415,7 @@ A little more verbose, sure, but it's the best way we've identified that gets th
 ### Layout scopes
 
 The previous sections make it clear how to communicate from the page to the layout, but what about the other direction?
-How can we define values in the parent layout that we want to pass down to pages?
+How can we define values in the parent layout that we would like to make available to pages?
 
 Kobweb supports this by allowing you to define a receiver scope on the `content` callback in your layout:
 
@@ -432,7 +433,7 @@ fun PageLayout(
 ```
 
 At this point, if you additionally scope your page with the same receiver, Kobweb will hook things up behind the scenes
-seamlessly so that your page will receive the data as expected:
+for you so the scope instance gets passed down seamlessly:
 
 ```kotlin 3
 @Page
@@ -442,12 +443,14 @@ fun PageLayoutScope.ExamplePage() {
 }
 ```
 
+That's it!
+
 A page without any receiver can still declare itself as a child of a layout that provides one.
 
-However, once a page declares a receiver, it can *only* use layouts that provide that use that exact receiver in its
-`content` callback. If not, the Kobweb KSP processor will issue an error at compile time.
+However, once a page declares a receiver, it can *only* use layouts that use that exact receiver in its `content`
+callback. If not, the Kobweb KSP processor will issue an error at compile time.
 
-Using layout scopes can be an effective way to pass down utility methods that any child page can call:
+Using layout scopes can be an effective way for a layout to pass down utility methods which any child page can call:
 
 ```kotlin
 interface ShoppingPageScope {
@@ -533,8 +536,8 @@ App {
 ```
 
 If you ever find yourself with some state getting dropped as you navigate across pages (e.g. sidebar content with
-expanded / collapsed states that get reset), this is a sign it is probably time to migrate. In addition to more
-consistent state behavior across pages, you can also reduce one level of indentation, which is nice.
+expanded / collapsed states that get reset), this is a sign that it may be a good time to migrate. In addition to more
+consistent state behavior across pages, you also reduce one level of indentation, which is always nice.
 
 ### A quick note about `movableContentOf`
 
