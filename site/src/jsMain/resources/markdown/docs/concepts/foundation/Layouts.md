@@ -213,8 +213,8 @@ Instead, we decided to support communicating to layouts via *page data*.
 Specifically, the `PageContext` instance provides a `data` property which is a simple data store that lets you add any
 data values into it that you want and can then later query by type.
 
-So for the `title` example above, let's sidestep momentarily exactly where from the page we'll add the data. Using it
-looks like this:
+So for the `title` example above, let's wrap it in a class (for type uniqueness). We'll sidestep momentarily exactly
+where from the page we'll create and add the data. The pattern looks like this:
 
 ```kotlin 1,4,9
 class PageLayoutData(val title: String)
@@ -247,7 +247,7 @@ Any file that defines a `@Layout` or `@Page` method can additionally define an
 property.
 
 > [!IMPORTANT]
-> When `data` is queried from inside a layout or page, it will have a read-only view of it. In other words, it will not
+> When `data` is queried from inside a layout or page, it will have a read-only view of it. In other words, you will not
 > be able to add or remove values at that point.
 
 Bringing it all together, your final code should look something like this:
@@ -282,8 +282,8 @@ fun HomePage() {
 }
 ```
 
-Note in the example above that due to the way we wrote our code, `PageLayoutData` *must* be initialized or else the site
-will crash.
+Note in the example above that due to the way we wrote our code, `PageLayoutData` *must* be initialized or else the
+`getValue` call will throw an exception.
 
 For people who believe in failing fast, this may be what you want! However, you can use the
 `ctx.data.get<PageLayoutData>()` call instead which will return null instead of crashing.
@@ -380,8 +380,7 @@ ButtonLayout(onClick = { clickCount++ }) {
 ```
 
 However, in our world of separated pages and layouts, you need to register the callback handler in the `@InitRoute`
-method, meaning that the method which modifies the state (in the callback handler) is different from the one that uses
-it.
+method, meaning that the method which mutates the state is different from the one that uses it.
 
 To work around this, we recommend you declare mutable state as a private top-level property in your file, at which point
 you can set it in the `@InitRoute` call and reference it in your `@Composable` page or layout:
@@ -442,7 +441,8 @@ A page or layout without any receiver can still declare itself as a child of a l
 However, once a page or layout declares a receiver, it can *only* use layouts that also declare that same receiver in
 their `content` callback. If not, Kobweb will issue an error at compile time.
 
-Using layout scopes can be an effective way for a layout to pass down utility methods which any child page can call:
+Using layout scopes can be an effective way for a layout to pass down utility methods which any child page or layout can
+call:
 
 ```kotlin
 interface ShoppingPageScope {
