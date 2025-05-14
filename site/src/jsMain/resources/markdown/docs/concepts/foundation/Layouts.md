@@ -174,7 +174,7 @@ This does mean when you navigate back to a page *with* a layout that Compose wil
 
 ## Communicating between layouts and pages
 
-### `@InitRoute` and page data
+### Passing data into layouts
 
 When using layouts, users will quickly find themselves asking a question: "How can I configure part of the layout based
 on the page that I'm on?"
@@ -206,7 +206,7 @@ But remember, you don't call the layout method directly. Kobweb does it for you!
 
 So if you added several parameters to your layout function, you would also need an indirect way for each page to
 indicate how it wants to set those parameters. In practice, many approaches would require a ton of noisy, fragile
-boilerplate to accomplish this.
+boilerplate to achieve this.
 
 Instead, we decided to support communicating to layouts via *page data*.
 
@@ -247,8 +247,8 @@ Any file that defines a `@Layout` or `@Page` method can additionally define an
 property.
 
 > [!IMPORTANT]
-> When `data` is queried from inside a layout, it will have a read-only view of it. It will not be able to add or remove
-> additional values, in other words.
+> When `data` is queried from inside a layout or page, it will have a read-only view of it. In other words, it will not
+> be able to add or remove values at that point.
 
 Bringing it all together, your final code should look something like this:
 
@@ -285,7 +285,7 @@ fun HomePage() {
 Note in the example above that due to the way we wrote our code, `PageLayoutData` *must* be initialized or else the site
 will crash.
 
-For people who believe in the failing fast, this may be what you want! However, you can use the
+For people who believe in failing fast, this may be what you want! However, you can use the
 `ctx.data.get<PageLayoutData>()` call instead which will return null instead of crashing.
 
 However, our recommended approach is to provide an `@InitRoute` method at the `PageLayout` level, using the
@@ -380,34 +380,34 @@ ButtonLayout(onClick = { clickCount++ }) {
 ```
 
 However, in our world of separated pages and layouts, you need to register the callback handler in the `@InitRoute`
-method, which is *not* `@Composable` code, meaning we don't have access to `remember`.
+method, meaning that the method which modifies the state (in the callback handler) is different from the one that uses
+it.
 
-Instead, we recommend you declare mutable state as a private top-level property in your page file, at which point you
-can set it in the `@InitRoute` call and reference it in your `@Composable` page:
+To work around this, we recommend you declare mutable state as a private top-level property in your file, at which point
+you can set it in the `@InitRoute` call and reference it in your `@Composable` page or layout:
 
-```kotlin 1,5,12-13
-private val clickCountState = mutableStateOf(0)
+```kotlin 1,5,12
+private var clickCount by mutableStateOf(0)
 
 @InitRoute
 fun initButtonCountPage(ctx: InitRouteContext) {
-    ctx.data.add(ButtonLayoutData(onClick = { clickCountState.value++ }))
+    ctx.data.add(ButtonLayoutData(onClick = { clickCount++ }))
 }
 
 @Page
 @Layout(".components.layouts.ButtonLayout")
 @Composable
 fun ButtonCountPage() {
-    val clickCount by clickCountState
     Text("You clicked $clickCount time(s)!")
 }
 ```
 
 A little more verbose, sure, but it's the best way we've identified that gets the job done!
 
-### Layout scopes
+### Passing data out of layouts
 
-The previous sections make it clear how to communicate from the page to the layout, but what about the other direction?
-How can we define values in the parent layout that we would like to make available to pages?
+The previous sections make it clear how to communicate from a page or child layout to their parent layout, but what
+about the other direction? How can we define values in the parent layout that we would like to make available downward?
 
 Kobweb supports this by allowing you to define a receiver scope on the `content` callback in your layout:
 
@@ -424,8 +424,8 @@ fun PageLayout(
 }
 ```
 
-At this point, if you additionally scope your page with the same receiver, Kobweb will hook things up behind the scenes
-for you so the scope instance gets passed down seamlessly:
+At this point, if you additionally scope your page or child layout with the same receiver, you will be able to access
+the values provided by the parent layout.
 
 ```kotlin 3
 @Page
@@ -437,10 +437,10 @@ fun PageLayoutScope.ExamplePage() {
 
 That's it!
 
-A page without any receiver can still declare itself as a child of a layout that provides one.
+A page or layout without any receiver can still declare itself as a child of a layout that provides one.
 
-However, once a page declares a receiver, it can *only* use layouts that use that exact receiver in its `content`
-callback. If not, the Kobweb KSP processor will issue an error at compile time.
+However, once a page or layout declares a receiver, it can *only* use layouts that also declare that same receiver in
+their `content` callback. If not, Kobweb will issue an error at compile time.
 
 Using layout scopes can be an effective way for a layout to pass down utility methods which any child page can call:
 
@@ -470,6 +470,7 @@ fun ShoppingPageLayout(
 ```kotlin
 @Page
 @Layout(".components.layouts.ShoppingPageLayout")
+@Composable
 fun ShoppingPageScope.BrowseItemPage(ctx: PageContext) {
     val itemId = ctx.route.params.getValue("item-id")
     /*...*/
