@@ -1,32 +1,28 @@
 package com.varabyte.kobweb.site.components.widgets.code
 
 import androidx.compose.runtime.Composable
+import com.varabyte.kobweb.browser.util.invokeLater
 import com.varabyte.kobweb.compose.css.MinWidth
 import com.varabyte.kobweb.compose.css.Overflow
-import com.varabyte.kobweb.compose.ui.Modifier
+import com.varabyte.kobweb.compose.css.PointerEvents
+import com.varabyte.kobweb.compose.ui.*
 import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.compose.ui.styleModifier
-import com.varabyte.kobweb.compose.ui.thenIf
-import com.varabyte.kobweb.compose.ui.thenIfNotNull
-import com.varabyte.kobweb.compose.ui.toAttrs
-import com.varabyte.kobweb.silk.init.InitSilk
-import com.varabyte.kobweb.silk.init.InitSilkContext
-import com.varabyte.kobweb.silk.init.layer
-import com.varabyte.kobweb.silk.init.registerStyleBase
+import com.varabyte.kobweb.compose.ui.modifiers.padding
 import com.varabyte.kobweb.silk.style.CssStyle
 import com.varabyte.kobweb.silk.style.base
 import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
-import com.varabyte.kobweb.silk.style.layer.SilkLayer
 import com.varabyte.kobweb.silk.style.toModifier
+import com.varabyte.kobweb.silk.theme.name
 import com.varabyte.kobweb.site.components.style.DividerColor
 import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.siteText
+import kotlinx.browser.document
+import kotlinx.browser.window
 import org.jetbrains.compose.web.css.*
+import org.jetbrains.compose.web.css.em
 import org.jetbrains.compose.web.dom.Code
 import org.jetbrains.compose.web.dom.Pre
 import org.jetbrains.compose.web.dom.Text
-
-fun Modifier.defaultPadding() = padding(1.em)
 
 val CodeBlockStyle = CssStyle.base(extraModifier = { SmoothColorStyle.toModifier() }) {
     Modifier
@@ -34,17 +30,21 @@ val CodeBlockStyle = CssStyle.base(extraModifier = { SmoothColorStyle.toModifier
         .overflow { x(Overflow.Auto) }
         .siteText(SiteTextSize.CODE)
         .border(1.px, LineStyle.Solid, DividerColor.value())
-        .defaultPadding()
+        .padding(1.em)
 }
 
-@InitSilk
-fun clearPrismHighlightLinesPadding(ctx: InitSilkContext) {
-    ctx.stylesheet.apply {
-        registerStyleBase("pre[data-line]") {
-            // Prism.js adds a bunch of left padding for line numbers that we never show. Override it.
-            Modifier.defaultPadding()
-        }
-    }
+val CodeLabelStyle = CssStyle.base {
+    Modifier
+        .position(Position.Absolute)
+        .backgroundColor("var(--syntax-gutter-background-color-selected)".unsafeCast<CSSColorValue>())
+        .color("var(--mono-1)".unsafeCast<CSSColorValue>())
+        .border(1.px, LineStyle.Solid, DividerColor.value())
+        .fontSize(0.75.em)
+        .top((-1).em)
+        .left(1.em)
+        .padding(topBottom = 0.em, leftRight = 0.5.em)
+        .borderRadius(5.px)
+        .pointerEvents(PointerEvents.None)
 }
 
 /**
@@ -60,9 +60,28 @@ fun CodeBlock(
     highlightLines: String? = null,
     label: String? = null
 ) {
-    Pre(CodeBlockStyle.toModifier()
-        .thenIfNotNull(highlightLines) { Modifier.attr("data-line", it)}
-        .thenIfNotNull(label) { Modifier.attr("data-label", it) }
+    Pre(
+        CodeBlockStyle.toModifier()
+        .thenIfNotNull(highlightLines) { Modifier.attr("data-line", it) }
+        .thenIfNotNull(label) {
+            Modifier
+                .margin { top(2.em) }
+                .attrsModifier {
+                    ref { preElement ->
+                        window.invokeLater { // Give prismjs plugin a frame to create the parent toolbar
+                            preElement.parentElement?.takeIf { it.classList.contains("code-toolbar") }?.let { toolbar ->
+                                preElement.insertAdjacentElement(
+                                    "afterend",
+                                    document.createElement("div").apply {
+                                        textContent = label
+                                        className = CodeLabelStyle.name
+                                    })
+                            }
+                        }
+                        onDispose { }
+                    }
+                }
+        }
         .toAttrs()) {
         Code(
             attrs = SmoothColorStyle.toModifier()

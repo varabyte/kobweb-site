@@ -211,11 +211,10 @@ could be passed into a dynamic route.
 However, if you have a specific instance of a dynamic route that you'd like to export, you can configure your site's
 build script as follows:
 
-```kotlin
+```kotlin 4 "site/build.gradle.kts"
 kobweb {
   app {
     export {
-      // "/users/{user}/posts/{post}" has special handling for the "default" / "0" case
       addExtraRoute("/users/default/posts/0", exportPath = "users/index.html")
     }
   }
@@ -250,8 +249,7 @@ in your Kobweb application's build script.
 
 Enabling traces is easy:
 
-```kotlin
-// build.gradle.kts
+```kotlin "site/build.gradle.kts"
 plugins {
   // ... other plugins ...
   alias(libs.plugins.kobweb.application)

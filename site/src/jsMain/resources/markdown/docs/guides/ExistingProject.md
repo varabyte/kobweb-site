@@ -33,7 +33,7 @@ which the following steps help you work around:
    ${DocsLink("Kobweb artifact repositories", "/docs/getting-started/gradle-and-maven-artifacts#kobweb-artifact-repositories")}.
 5. Kobweb uses ${DocsLink("Gradle version catalogs", "/docs/getting-started/gradle-and-maven-artifacts#gradle-version-catalogs")} 
    for its dependencies. Add or update your version catalog under `gradle/libs.versions.toml` to include these:
-   ```toml
+   ```toml "gradle/libs.versions.toml"
    [versions]
    jetbrains-compose = "..." # replace with actual version, see COMPATIBILITY.md!
    kobweb = "..." # replace with actual version

@@ -11,9 +11,7 @@ These perform some minimal common work (e.g. applying CSS styles) that should be
 
 This means if you register a page:
 
-```kotlin
-// jsMain/kotlin/com/mysite/pages/Index.kt
-
+```kotlin "jsMain/kotlin/com/mysite/pages/Index.kt"
 @Page
 @Composable
 fun HomePage() {
@@ -23,9 +21,7 @@ fun HomePage() {
 
 then the final result that actually runs on your site will be:
 
-```kotlin
-// In a generated main.kt somewhere...
-
+```kotlin "build/generated/kobweb/app/src/jsMain/main.kt"
 KobwebApp {
   HomePage()
 }
@@ -44,7 +40,7 @@ initialization logic from those methods should still be run.
 
 Here's an example application composable override that I use in many of my own projects:
 
-```kotlin
+```kotlin "jsMain/kotlin/com/mysite/AppEntry.kt"
 @App
 @Composable
 fun AppEntry(content: @Composable () -> Unit) {
@@ -54,7 +50,8 @@ fun AppEntry(content: @Composable () -> Unit) {
       localStorage.setItem("color-mode", colorMode.name)
     }
 
-    // A full screen Silk surface. Sets the background based on Silk's palette and animates color changes.
+    // A full screen Silk surface. Sets the background based on Silk's palette
+    // and animates color changes.
     Surface(SmoothColorStyle.toModifier().minHeight(100.vh)) {
       content()
     }

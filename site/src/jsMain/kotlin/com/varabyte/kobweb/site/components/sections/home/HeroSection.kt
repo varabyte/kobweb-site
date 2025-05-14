@@ -56,7 +56,8 @@ fun HeroCode() {
         @Composable
         fun HomePage() {
           Column(
-            Modifier.fillMaxWidth().whiteSpace(WhiteSpace.PreWrap).textAlign(TextAlign.Center),
+            Modifier
+              .fillMaxWidth().whiteSpace(WhiteSpace.PreWrap).textAlign(TextAlign.Center),
             horizontalAlignment = Alignment.CenterHorizontally
           ) {
             var colorMode by ColorMode.currentState
@@ -74,7 +75,10 @@ fun HeroCode() {
               Text("Create rich, dynamic web apps with ease, leveraging ")
               Link("https://kotlinlang.org/", "Kotlin")
               Text(" and ")
-              Link("https://github.com/JetBrains/compose-multiplatform/#compose-html", "Compose HTML")
+              Link(
+                "https://github.com/JetBrains/compose-multiplatform/#compose-html",
+                "Compose HTML"
+              )
             }
           }
         }

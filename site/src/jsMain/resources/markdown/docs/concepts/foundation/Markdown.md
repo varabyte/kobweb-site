@@ -13,9 +13,7 @@ you at build time, using the filename as its path.
 
 For example, if I create the following file:
 
-```markdown
-// jsMain/resources/markdown/docs/tutorial/Kobweb.md
-
+```markdown "jsMain/resources/markdown/docs/tutorial/Kobweb.md"
 # Kobweb Tutorial
 
 ...
@@ -85,9 +83,7 @@ fun KobwebPage() {
 If you have a default layout that you'd like to use in most / all of your Markdown files, you can specify it in the
 `markdown` block in your build script:
 
-```kotlin
-// site/build.gradle.kts
-
+```kotlin "site/build.gradle.kts"
 kobweb {
   markdown {
     defaultLayout.set(".components.layout.MarkdownLayout")
@@ -175,9 +171,7 @@ to a single target file).
 
 To register a global import, configure the `markdown` block in your build script:
 
-```kotlin
-// site/build.gradle.kts
-
+```kotlin "site/build.gradle.kts"
 kobweb {
   markdown {
     imports.add(".components.widgets.*")
@@ -288,10 +282,12 @@ which looks clean:
 If you want to specify a label that should apply globally, you can do so by overriding the blockquote handler in your
 project's build script, using the convenience method `SilkCalloutBlockquoteHandler` for it:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
   markdown {
-    handlers.blockquote.set(SilkCalloutBlockquoteHandler(labels = mapOf("QUOTE" to "")))
+    handlers.blockquote.set(
+      SilkCalloutBlockquoteHandler(labels = mapOf("QUOTE" to ""))
+    )
   }
 }
 ```
@@ -330,7 +326,7 @@ will match the color of the callout itself:
 If you prefer any of these styles over the default, you can set the `variant` parameter in the
 `SilkCalloutBlockquoteHandler`. For example, here we set it to the outlined variant:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
   markdown {
     handlers.blockquote.set(SilkCalloutBlockquoteHandler(
@@ -366,7 +362,7 @@ val CustomCallout = CalloutType(
 and then register it in your build script, extending the default list of handlers (i.e. `SilkCalloutTypes`) with your
 custom one:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
   markdown {
     handlers.blockquote.set(
@@ -396,7 +392,7 @@ You can actually do this using pure Gradle code, but it is common enough that Ko
 
 You can register a callback that will be triggered at build time with a list of all Markdown files in your project.
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
   markdown {
     process.set { markdownEntries ->
@@ -419,7 +415,7 @@ will be included in your final site.
 Here is a very rough example of creating a listing page for all blog posts in a site (found under the
 `resources/markdown/blog` folder):
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
   markdown {
     process.set { markdownEntries ->
@@ -452,7 +448,7 @@ additional locations.
 Perhaps the most common pattern users will use is to define a custom task which generates markdown files when it is run,
 and then call `kobweb.markdown.addSource` passing that task in as a source:
 
-```kotlin 20
+```kotlin 20 "site/build.gradle.kts"
 val generateExampleMarkdownTask = tasks.register("generateExampleMarkdown") {
     // We use $name here to create a unique output directory just for this task
     val outputDir = layout.buildDirectory.dir("generated/$name/markdown")
@@ -491,7 +487,7 @@ cards, in `src/jsMain/resources/card-sections`.
 
 You can declare that directory as a markdown source and provide the desired package target:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb.markdown.addSource(
     project.layout.projectDirectory.dir("src/jsMain/resources/card-sections"),
     ".components.sections.cards"

@@ -35,7 +35,7 @@ The following steps will walk you through creating your first Kobweb Server Plug
     * For example, name it "demo-server-plugin".
     * Be sure to update your `settings.gradle.kts` file to include the new project.
 * Add new entries for the `kobweb-server-project` library and kotlin JVM plugin in `.gradle/libs.versions.toml`:
-  ```toml
+  ```toml "gradle/libs.versions.toml"
   [libraries]
   kobweb-server-plugin = { module = "com.varabyte.kobweb:kobweb-server-plugin", version.ref = "kobweb" }
 
@@ -44,7 +44,7 @@ The following steps will walk you through creating your first Kobweb Server Plug
   ```
 * **For all remaining steps, create all files / directories under your new module's directory (e.g. `demo-server-plugin/`).**
 * Create `build.gradle.kts`:
-  ```kotlin
+  ```kotlin "demo-server-plugin/build.gradle.kts"
   plugins {
     alias(libs.plugins.kotlin.jvm)
   }
@@ -56,7 +56,7 @@ The following steps will walk you through creating your first Kobweb Server Plug
   }
   ```
 * Create `src/main/kotlin/DemoKobwebServerPlugin.kt`:
-  ```kotlin
+  ```kotlin "demo-server-plugin/src/main/kotlin/DemoKobwebServerPlugin.kt"
   import com.varabyte.kobweb.server.plugin.KobwebServerPlugin
   import io.ktor.server.application.Application
   import io.ktor.server.application.log
@@ -87,9 +87,7 @@ will build and copy your plugin jar over for you automatically.
 In your Kobweb project's build script, include the following `kobwebServerPlugin` line in a top-level dependencies
 block:
 
-```kotlin
-// site/build.gradle.kts
-
+```kotlin "site/build.gradle.kts"
 // IMPORTANT! Top-level dependencies block,
 // not one nested under the kotlin block.
 dependencies {
@@ -123,7 +121,7 @@ for receiving Application lifecycle events.
 
 Doing so looks like this:
 
-```kotlin
+```kotlin "demo-server-plugin/src/main/kotlin/DemoKobwebServerPlugin.kt"
 import com.varabyte.kobweb.server.plugin.KobwebServerPlugin
 import io.ktor.server.application.Application
 import io.ktor.server.application.createApplicationPlugin

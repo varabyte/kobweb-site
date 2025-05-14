@@ -18,7 +18,7 @@ Let's demonstrate this with the UTC timestamp version example.
 
 In your application's `build.gradle.kts`, add the following code:
 
-```kotlin 1-3,12-17
+```kotlin 1-3,12-17 "site/build.gradle.kts"
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -55,15 +55,11 @@ global values, instead of using `get` methods with string values all over the pl
 We suggest two approaches here, one using extension methods and the other using a wrapper object. Either is fine! You
 are encouraged to choose whatever you prefer:
 
-```kotlin
-// Extension method approach
-
+```kotlin "Extension method approach"
 val AppGlobals.version: String
   get() = getValue("version")
 ```
-```kotlin
-// Wrapper object approach
-
+```kotlin "Wrapper object approach"
 object SiteGlobals {
   val version: String = AppGlobals.getValue("version")
 }
@@ -71,11 +67,9 @@ object SiteGlobals {
 
 At this point, you can access this value in your site's code, say for a label that would look good in a footer perhaps:
 
-```kotlin
-// components/widgets/SiteVersion.kt
-
+```kotlin "components/widgets/SiteVersionLabel.kt"
 @Composable
-fun SiteVersion() {
+fun SiteVersionLabel() {
   // Extension method approach
   val versionLabel = "v" + AppGlobals.version
   // Wrapper object approach

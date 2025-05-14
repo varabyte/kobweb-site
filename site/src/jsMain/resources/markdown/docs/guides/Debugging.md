@@ -30,7 +30,7 @@ Debugging the backend first requires configuring the Kobweb server to
 support [remote debugging](https://en.wikipedia.org/wiki/Debugging#Remote_debugging). This is easy to do by modifying
 the `kobweb` block in your build script to enable it:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
   app {
     server {

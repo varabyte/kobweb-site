@@ -331,7 +331,7 @@ storage and then restore it if the user revisits your site later.
 The restoration will happen in your `@InitSilk` block, while the code to save the color mode should happen in your root
 `@App` composable ${DocsAside("Application Root", "/docs/concepts/foundation/application-root")}:
 
-```kotlin 3-4,11-14
+```kotlin 3-4,11-14 "AppEntry.kt"
 @InitSilk
 fun setInitialColorMode(ctx: InitSilkContext) {
     ctx.theme.initialColorMode =
