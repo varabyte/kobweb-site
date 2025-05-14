@@ -313,7 +313,8 @@ div.code-toolbar > .toolbar > .toolbar-item > span:focus {
 /* Line Highlight plugin */
 pre[data-line] {
     position: relative;
-    padding: 1em 0 1em 3em;
+     /* Commented out because we don't use line numbers so don't need left padding */
+     /*padding: 1em 0 1em 3em;*/
 }
 
 /* The highlighted line itself */

@@ -32,8 +32,7 @@ on the string before sending it back.
 
 ## Build script
 
-`gradle/libs.versions.toml`
-```toml
+```toml "gradle/libs.versions.toml"
 [versions]
 # Please specify desired versions in your project
 kobweb = "..."
@@ -48,8 +47,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ```
 
-`site/build.gradle.kts`
-```kotlin 2,11,12
+```kotlin 2,11,12 "site/build.gradle.kts"
 plugins {
     alias(libs.plugins.kotlin.serialization)
 }
@@ -69,8 +67,7 @@ kotlin {
 
 ## Common code
 
-`site/src/commonMain/kotlin/com/example/models/Echo.kt`
-```kotlin
+```kotlin "site/src/commonMain/kotlin/com/example/models/Echo.kt"
 package com.exmaple.models
 
 import kotlinx.serialization.Serializable
@@ -103,12 +100,11 @@ want to add, update, or delete some state on the server.
 But more importantly, HTTP post requests support including a body, which is the natural place to embed rich data
 objects; GET requests do not. (We'll show how to handle GET requests as well shortly.)
 
-`site/src/jvmMain/kotlin/com/example/api/Echo.kt`
-```kotlin
+```kotlin "site/src/jvmMain/kotlin/com/example/api/Echo.kt"
 package com.example.api
 
 @Api
-fun Echo(ctx: ApiContext) {
+fun echo(ctx: ApiContext) {
     if (ctx.req.method != HttpMethod.POST) return
 
     val echoRequest = ctx.req.readBody<EchoRequest>()!!
@@ -136,9 +132,9 @@ response body.
 > dependency.
 
 If you really want to pass a data object with a GET request, you can use query parameters for that:
-```kotlin
+```kotlin "site/src/jvmMain/kotlin/com/example/api/Echo.kt"
 @Api
-fun Echo(ctx: ApiContext) {
+fun echo(ctx: ApiContext) {
     if (ctx.req.method != HttpMethod.GET) return
 
     val echoRequest = Json.decodeFromString<EchoRequst>(

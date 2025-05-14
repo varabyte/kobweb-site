@@ -36,7 +36,7 @@ that looks like the following:
 
 In your build script:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 plugins {
     alias(libs.plugins.kobweb.application)
 }
@@ -72,7 +72,7 @@ kobweb {
 Our `<head>` block is most of the way there, but we're still missing the title! This is because the title is actually
 specified inside the site's `.kobweb/conf.yaml` file. Here, it should look like:
 
-```yaml
+```yaml ".kobweb/conf.yaml"
 site:
   title: My Portfolio
 ```
@@ -102,7 +102,7 @@ easy as possible through URL interception, which you can configure in the `index
 
 The easiest approach is to just let Kobweb handle self-hosting itself, by opting into it:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
     app {
         index {
@@ -118,7 +118,7 @@ Let's use a real-example to demonstrate how this works. Suppose you want to use 
 [glMatrix library](https://glmatrix.net/) for adding OpenGL support to your site (as `kobweb create examples/opengl`
 does). After searching, you find it is hosted on Cloudflare:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
     app {
         index {
@@ -135,7 +135,7 @@ to the expected URL.
 
 However, if you opt in for self-hosting:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
     app {
         index {
@@ -173,7 +173,7 @@ added to your final page (or you might notice this after opening your page and i
 
 While you could just use `enableSelfHosting()` here, let's show how you could do a manual interception:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
     app {
         index {

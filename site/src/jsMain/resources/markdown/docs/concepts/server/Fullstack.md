@@ -25,8 +25,7 @@ A Kobweb project will always at least have a JavaScript target, representing the
 intention to implement a server, that will create a JVM target for you as well. You can add dependencies to this
 target if you want to make them available to your server code:
 
-```kotlin 2,13,16-18
-// site/build.gradle.kts
+```kotlin 1,12,15-17 "site/build.gradle.kts"
 import com.varabyte.kobweb.gradle.application.util.configAsKobwebApplication
 
 plugins {
@@ -65,9 +64,7 @@ You can define and annotate methods which will generate server endpoints you can
 
 For example, here's a simple method that echoes back an argument passed into it:
 
-```kotlin
-// jvmMain/kotlin/com/mysite/api/Echo.kt
-
+```kotlin "jvmMain/kotlin/com/mysite/api/Echo.kt"
 @Api
 suspend fun echo(ctx: ApiContext) {
     // ctx.req is for the incoming request, ctx.res for responding back to the client
@@ -83,7 +80,7 @@ After running your project, you can test the endpoint by visiting `mysite.com/ap
 You can also trigger the endpoint in your frontend code by using the extension `api` property added to the
 `kotlinx.browser.window` class:
 
-```kotlin
+```kotlin "jsMain/kotlin/com/mysite/pages/ApiDemo.kt"
 @Page
 @Composable
 fun ApiDemoPage() {
@@ -235,9 +232,7 @@ braces in the same way to indicate a dynamic value that should be captured with 
 For example, the following endpoint will capture the value "123" into a key name called
 "article" when querying `articles/123`:
 
-```kotlin
-// jvmMain/kotlin/com/mysite/api/articles/Article.kt
-
+```kotlin "jvmMain/kotlin/com/mysite/api/articles/Article.kt"
 @Api("{}")
 suspend fun fetchArticle(ctx: ApiContext) {
     val articleId = ctx.req.params["article"] ?: return
@@ -251,7 +246,7 @@ the value. When empty, as above, Kobweb uses the filename to generate it. In oth
 
 Once this API endpoint is defined, query it as you would any normal API endpoint:
 
-```kotlin
+```kotlin "jsMain/kotlin/com/mysite/pages/articles/Article.kt"
 coroutineScope.launch {
   // Will cause the "article" variable on the server
  // to get set to "123"
@@ -324,9 +319,7 @@ them.
 
 For example, here's a simple stream, declared on the backend, that echoes back any argument it receives:
 
-```kotlin
-// jvmMain/kotlin/com/mysite/api/Echo.kt
-
+```kotlin "jvmMain/kotlin/com/mysite/api/Echo.kt"
 val echo = object : ApiStream {
   override suspend fun onClientConnected(ctx: ClientConnectedContext) {
     // Optional: ctx.stream.broadcast a message to all other clients that a new stream connected
@@ -345,7 +338,7 @@ val echo = object : ApiStream {
 To communicate with an API stream from your site, you need to create a stream connection on the client. We provide the
 `rememberApiStream` method to help with this:
 
-```kotlin
+```kotlin "jsMain/kotlin/com/mysite/pages/ApiStreamDemo.kt"
 @Page
 @Composable
 fun ApiStreamDemoPage() {
@@ -378,15 +371,14 @@ depending on your use-case, you can elide a fair bit of boilerplate.
 First of all, the connect and disconnect handlers are optional, so you can omit them if you don't need them. Let's
 simplify the echo example:
 
-```kotlin
-// Backend
+```kotlin "Backend"
 val echo = object : ApiStream {
   override suspend fun onTextReceived(ctx: TextReceivedContext) {
     ctx.stream.send(ctx.text)
   }
 }
-
-// Frontend
+```
+```kotlin "Frontend"
 val echoStream = rememberApiStream("echo", object : ApiStreamListener {
   override fun onTextReceived(ctx: TextReceivedContext) {
     console.log("Echoed: ${ctx.text}")
@@ -396,11 +388,10 @@ val echoStream = rememberApiStream("echo", object : ApiStreamListener {
 
 Additionally, if you only care about the text event, there are convenience methods for that:
 
-```kotlin
-// Backend
+```kotlin "Backend"
 val echo = ApiStream { ctx -> ctx.stream.send(ctx.text) }
-
-// Frontend
+```
+```kotlin "Frontend"
 val echoStream = rememberApiStream("echo") {
   ctx -> console.log("Echoed: ${ctx.text}")
 }
@@ -475,7 +466,7 @@ When you run `kobweb run`, the spun-up web server will, by default, log to the `
 You can configure logging behavior by editing the `.kobweb/conf.yaml` file. Below we show setting all parameters to
 their default values:
 
-```yaml
+```yaml ".kobweb/conf.yaml"
 server:
   logging:
     level: DEBUG # ALL, TRACE, DEBUG, INFO, WARN, ERROR, OFF
@@ -507,7 +498,7 @@ the same as the one that served the page *unless* it was served from a trusted d
 To configure CORS for a Kobweb backend, Kobweb's `.kobweb/conf.yaml` file allows you to declare such trusted domains
 using a `cors` block:
 
-```yaml
+```yaml ".kobweb/conf.yaml"
 server:
   cors:
     hosts:

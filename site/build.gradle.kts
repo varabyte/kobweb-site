@@ -53,14 +53,28 @@ kobweb {
                 var lang: String? = null
                 var lines: String? = null
                 var label: String? = null
+                var editingLabel = false
 
-                code.info.split(" ").filter { it.isNotBlank() }.forEach { info ->
-                    if (info.isSurrounded("\"")) {
-                        label = info.removeSurrounding("\"")
-                    } else if (info.first().isDigit()) {
-                        lines = info
+                code.info.split(" ").filter { it.isNotBlank() }.forEach { infoPart ->
+                    if (editingLabel) {
+                        label += " "
+                        if (infoPart.endsWith("\"")) {
+                            label += infoPart.removeSuffix("\"")
+                            editingLabel = false
+                        } else {
+                            label += infoPart
+                        }
                     } else {
-                        lang = info
+                        if (infoPart.isSurrounded("\"")) {
+                            label = infoPart.removeSurrounding("\"")
+                        } else if (infoPart.startsWith("\"")) {
+                            label = infoPart.removePrefix("\"")
+                            editingLabel = true
+                        } else if (infoPart.first().isDigit()) {
+                            lines = infoPart
+                        } else {
+                            lang = infoPart
+                        }
                     }
                 }
 

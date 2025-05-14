@@ -36,7 +36,7 @@ Here's everything you have to do (we'll show concrete examples of these steps be
 
 ### Build script
 
-```kotlin 1,5,12,15
+```kotlin 1,5,12,15 "worker/build.gradle.kts"
 import com.varabyte.kobweb.gradle.worker.util.configAsKobwebWorker
 
 plugins {
@@ -51,7 +51,8 @@ kotlin {
     configAsKobwebWorker("example-worker")
     sourceSets {
         jsMain.dependencies {
-            implementation(libs.kobweb.worker) // or "com.varabyte.kobweb:kobweb-worker"
+            implementation(libs.kobweb.worker)
+            // or "com.varabyte.kobweb:kobweb-worker"
         }
     }
 }
@@ -162,8 +163,7 @@ When you have a worker strategy that works with raw strings like this one does, 
 implement the `createIOSerializer` method, called `createPassThroughSerializer` (since it just passes the raw strings
 through the serializer unmodified).
 
-```kotlin
-// Worker module
+```kotlin "Worker"
 internal class EchoWorkerFactory : WorkerFactory<String, String> {
   override fun createStrategy(postOutput: OutputDispatcher<String>) =
     WorkerStrategy<String> { input -> postOutput(input) }
@@ -183,8 +183,7 @@ internal class EchoWorkerFactory : WorkerFactory<String, String> {
 Based on that implementation, a worker called `EchoWorker` will be auto-generated at compile time. Using it in your
 application looks like this:
 
-```kotlin
-// Application module
+```kotlin "Application"
 val worker = rememberWorker {
   EchoWorker { message -> println("Echoed: $message") }
 }
@@ -213,8 +212,7 @@ in your site script -- but we'll show this anyway to demonstrate two additional 
 * How to define a custom message serializer.
 * The fact that you can call `postOutput` as often as you want.
 
-```kotlin 6,7,16-22
-// Worker module
+```kotlin 5,6,15-21 "Worker"
 internal class CountDownWorkerFactory : WorkerFactory<Int, Int> {
   override fun createStrategy(postOutput: OutputDispatcher<Int>) = WorkerStrategy<Int> { input ->
     var nextCount = input
@@ -251,8 +249,7 @@ Notice the three comment tags above.
 
 Using the worker in your application looks like this:
 
-```kotlin
-// Application module
+```kotlin "Application"
 val worker = rememberWorker {
   CountDownWorker {
     if (it > 0) {
@@ -285,8 +282,7 @@ message types.
 
 First, add `kotlinx-serialization` and `kobwebx-serialization-kotlinx` to your dependencies:
 
-```kotlin 5-6
-// build.gradle.kts
+```kotlin 4-5 "worker/build.gradle.kts"
 kotlin {
   configAsKobwebWorker()
   jsMain.dependencies {
@@ -363,8 +359,7 @@ for you.
 
 Using the worker in your application looks like this:
 
-```kotlin
-// Application module
+```kotlin "Application"
 val worker = rememberWorker {
   FindPrimesWorker {
     println("Primes for ${it.max}: ${it.primes}")
@@ -404,30 +399,26 @@ it, you can register named objects in one thread and then retrieve them by that 
 
 Here's an example where we send a very large array over to a worker.
 
-```kotlin
-// In your site:
+```kotlin "Application"
 val largeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
 
 worker.postInput(WorkerInput(), Transferables {
   add("largeArray", largeArray)
 })
 ```
-```kotlin
-// In the worker:
+```kotlin "Worker"
 val largeArray = transferables.getUint8Array("largeArray")!!
 ```
 
 And, of course, workers can send transferable objects back to the main application as well.
 
-```kotlin
-// In the worker:
+```kotlin "Worker"
 val largeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
 postOutput(WorkerOutput(), Transferables {
   add("largeArray", largeArray)
 })
 ```
-```kotlin
-// In your site:
+```kotlin "Application"
 val worker = rememberWorker {
   ExampleWorker {
     val largeArray = transferables.getUint8Array("largeArray")!!
@@ -488,8 +479,7 @@ internal class MyWorkerWorkerFactory : WorkerFactory<I, O> { /* ... */ }
 If you don't like this constraint, you can override the `kobweb.worker.fqcn` property in your build script to provide
 a worker name explicitly:
 
-```kotlin
-// build.gradle.kts
+```kotlin "worker/build.gradle.kts"
 kobweb {
   worker {
     fqcn.set("com.mysite.MyWorker")
@@ -502,8 +492,7 @@ at which point, you are free to name your worker factory whatever you like.
 If you want to just change the name of your worker, using the same package as the worker factory, you can omit the
 package:
 
-```kotlin
-// build.gradle.kts
+```kotlin "worker/build.gradle.kts"
 kobweb {
   worker {
     fqcn.set(".MyWorker")

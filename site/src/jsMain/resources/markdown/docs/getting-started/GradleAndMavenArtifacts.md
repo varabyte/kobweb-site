@@ -12,7 +12,7 @@ about this for learning purposes, the information here might be useful.
 Kobweb publishes its libraries to Maven Central and its plugins to the Gradle Plugin Portal. Therefore, Kobweb
 recommends setting up your project's `settings.gradle.kts` like so:
 
-```kotlin
+```kotlin "settings.gradle.kts"
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -40,9 +40,9 @@ plugin and library artifacts in a separate official snapshot repository (at
 `https://s01.oss.sonatype.org/content/repositories/snapshots/`). As a result, you will have to declare this repository
 for both plugin *and* library blocks.
 
-An easy way to enable this is by adding the following block of code into your `settings.gradle.kts` file:
+An easy way to enable this is by adding the following block of code:
 
-```kotlin 14-26
+```kotlin 14-26 "settings.gradle.kts"
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -95,7 +95,7 @@ you'll find them.
 For example, here is the
 [libs.versions.toml](https://github.com/varabyte/kobweb-site/blob/main/gradle/libs.versions.toml) we use for this site.
 
-```toml
+```toml "gradle/libs.versions.toml"
 [versions]
 jetbrains-compose = "..."
 kobweb = "..."
@@ -123,7 +123,7 @@ paths.
 The following snippets are extracted from this
 site's [build.gradle.kts](https://github.com/varabyte/kobweb-site/blob/main/site/build.gradle.kts) build script:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 plugins {
      alias(libs.plugins.kotlin.multiplatform)
      alias(libs.plugins.compose.compiler)

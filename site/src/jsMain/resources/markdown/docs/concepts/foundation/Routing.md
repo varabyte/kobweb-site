@@ -15,9 +15,7 @@ Just from that, Kobweb will create a site entry for you automatically.
 
 For example, if I create the following file:
 
-```kotlin
-// jsMain/kotlin/com/mysite/pages/admin/Settings.kt
-
+```kotlin "jsMain/kotlin/com/mysite/pages/admin/Settings.kt"
 @Page
 @Composable
 fun SettingsPage() {
@@ -45,9 +43,7 @@ under that URL. For example, a page defined in `.../pages/admin/Index.kt` will b
 
 If you ever need to change the route generated for a page, you can set the `Page` annotation's `routeOverride` field:
 
-```kotlin 3
-// jsMain/kotlin/com/mysite/pages/admin/Settings.kt
-
+```kotlin 1 "jsMain/kotlin/com/mysite/pages/admin/Settings.kt"
 @Page(routeOverride = "config")
 @Composable
 fun SettingsPage() {
@@ -111,8 +107,7 @@ You can use package mappings for this.
 
 You apply the package mapping annotation to the current file. Using it looks like this:
 
-```kotlin 2,4
-// site/pages/team/values/PackageMapping.kt
+```kotlin 1,3 "site/pages/team/values/PackageMapping.kt"
 @file:PackageMapping("our-values")
 
 package site.pages.blog.values
@@ -137,8 +132,8 @@ fun ExamplePage(ctx: PageContext) {
 }
 ```
 
-Alternately, Kobweb provides the `rememberPageContext()` method, which you can call at anytime inside of a page, even
-inside of a widget composable that is part of a page:
+Alternately, Kobweb provides the `rememberPageContext()` method, which you can call at anytime inside a page, or even
+inside a widget composable (as long as when it is called, it is done so inside a page):
 
 ```kotlin
 @Page
@@ -179,7 +174,7 @@ You can use the page context to check the values of any query parameters passed 
 
 So if you visit `site.com/posts?id=12345&mode=edit`, you can query those values like so:
 
-```kotlin 18-19
+```kotlin 18-19 "site/pages/Posts.kt"
 enum class Mode {
     EDIT, VIEW;
 
@@ -224,8 +219,7 @@ annotations, respectively.
 
 Pay attention to the use of the curly braces in the mapping name! That lets Kobweb know that this is a dynamic package.
 
-```kotlin 2
-// pages/users/user/PackageMapping.kt
+```kotlin 1 "pages/users/user/PackageMapping.kt"
 @file:PackageMapping("{user}") // or @file:PackageMapping("{}")
 
 package site.pages.users.user
@@ -240,9 +234,7 @@ normally generated from the package (i.e. `user` in this specific case).
 
 Like `PackageMapping`, the `Page` annotation can also take curly braces to indicate a dynamic value.
 
-```kotlin 3
-// pages/users/user/posts/Post.kt
-
+```kotlin 1 "pages/users/user/posts/Post.kt"
 @Page("{post}") // Or @Page("{}")
 @Composable
 fun PostPage() {
@@ -257,9 +249,7 @@ fun PostPage() {
 Remember that the `Page` annotation allows you to rewrite the entire route. That value also accepts dynamic segments, so
 you could even do something like:
 
-```kotlin 3
-// pages/users/user/posts/Post.kt
-
+```kotlin 1 "pages/users/user/posts/Post.kt"
 @Page("/users/{user}/posts/{post}") // Or @Page("/users/{user}/posts/{}")
 @Composable
 fun PostPage() {
@@ -294,8 +284,7 @@ fun PostPage(ctx: PageContext) {
 
 If you've specified a dynamic route, a value must be set for the dynamic segment. For example, with:
 
-```kotlin
-// pages/posts/Post.kt
+```kotlin "pages/posts/Post.kt"
 @Page("{post}") // Or @Page("{}")
 fun PostPage() {
     /* ... */
@@ -336,9 +325,7 @@ For example, the catch-all route `"/a/b/c/{...rest}"` would capture `"x/y/z"` in
 
 In practice, using it looks like this:
 
-```kotlin 3,7
-// pages/com/mysite/store/products/ProductDetails.kt
-
+```kotlin 1,5 "pages/com/mysite/store/products/ProductDetails.kt"
 @Page("{...product-details}")
 @Composable
 fun ProductDetailsPage(ctx: PageContext) {
@@ -369,9 +356,7 @@ the empty case, you can add a question mark to the end of the name, e.g. `"/a/b/
 
 Using this feature, you could even discard Kobweb's routing logic entirely and handle everything yourself:
 
-```kotlin
-// com/mysite/pages/Index.kt
-
+```kotlin "pages/Index.kt"
 @Page("{...path?}")
 @Composable
 fun CatchAllPage(ctx: PageContext) {

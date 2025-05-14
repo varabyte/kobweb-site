@@ -12,7 +12,7 @@ which case your site's root `index.html` file would live at `https://example.com
 Kobweb needs to know about this subfolder structure so that it can take it into account in its routing logic. This can
 be specified in your project's `.kobweb/conf.yaml` file with the `basePath` value under the `site` section:
 
-```yaml
+```yaml ".kobweb/conf.yaml"
 site:
   title: "..."
   basePath: "..."
@@ -41,7 +41,7 @@ Of course, you may find yourself working with code external to Kobweb that is no
 to access the base path value explicitly in your own code, you can do so by using the `BasePath.value` property or by
 calling the `BasePath.prependTo` companion method.
 
-```kotlin 9
+```kotlin 9 "components/widgets/Video.kt"
 // The Video element comes from Compose HTML and is NOT base-path aware.
 // Therefore, we need to manually prepend the base path to the video source.
 Video(attrs = {
@@ -63,7 +63,7 @@ The `kobweb.index` block exposes a `basePath` property that you can use for this
 For example, let's say you've downloaded a script file called `analytics.js` that you've put into your
 `src/jsMain/resources/public` directory, and you've also set the `basePath` for your site.
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
     app {
         index {

@@ -17,7 +17,7 @@ tell your browser where they should have gone instead.
 In Kobweb, you can define redirects in your project's `.kobweb/conf.yaml` file. You simply define a series of `from`
 and `to` values in the `server.redirects` block.
 
-```yaml
+```yaml ".kobweb/conf.yaml"
 server:
   redirects:
     - from: "/old-page"
@@ -38,7 +38,7 @@ section using `$1`, `$2`, etc. variables which will be substituted with text mat
 Group matching can be really useful if you want to redirect a whole section of your site to a new location. For example,
 the following redirect rule can help if you've moved all pages from an old parent folder into a new one:
 
-```yaml
+```yaml ".kobweb/conf.yaml"
 server:
   redirects:
     - from: "/socials/facebook/([^/]+)"
@@ -49,7 +49,7 @@ The last thing to note is that if you have multiple redirects, they will be proc
 should rarely matter in most cases, but you can use it if you need to combine both changing a folder name AND a page
 name:
 
-```yaml
+```yaml ".kobweb/conf.yaml"
 server:
   redirects:
     - from: "/socials/facebook/([^/]+)"

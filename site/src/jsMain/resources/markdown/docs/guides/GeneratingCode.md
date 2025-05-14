@@ -23,9 +23,7 @@ output directory is what enables it to be used in place of a source directory.
 
 The structure for this approach generally looks like this:
 
-```kotlin 3-31,37
-// e.g. site/build.gradle.kts
-
+```kotlin 1-29,35 "site/build.gradle.kts
 val generateCodeTask = tasks.register("generateCode") {
   // You may not need an input file or dir for your task, and if so,
   // you can exclude the next line. If you do need one, I'm assuming
@@ -71,9 +69,7 @@ kotlin {
 In case you want to generate *resources* that end up in your final site as files (e.g. `mysite.com/rss.xml`) and not
 code, the main change you need to make is migrating the line `kotlin.srcDir` to `resources.srcDir`:
 
-```kotlin 3-18,24
-// e.g. site/build.gradle.kts
-
+```kotlin 1-16,22 "site/build.gradle.kts"
 val generateResourceTask = tasks.register("generateResource") {
   // $name here to create a unique output directory just for this task
   val genOutputDir = layout.buildDirectory.dir("generated/$name/src/jsMain/resources")

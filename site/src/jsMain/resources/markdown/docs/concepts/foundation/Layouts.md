@@ -18,9 +18,7 @@ Layouts are composable methods which (optionally) take a single `PageContext` pa
 content callback (i.e. `content: @Composable () -> Unit`). You must annotate them with the `@Layout` annotation so that
 Kobweb can discover and register them:
 
-```kotlin
-// jsMain/kotlin/com/mysite/components/layouts/PageLayout.kt
-
+```kotlin "jsMain/kotlin/com/mysite/components/layouts/PageLayout.kt"
 @Layout
 @Composable
 fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
@@ -37,9 +35,7 @@ fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
 Once declared, you can direct a page to use the layout by adding the `@Layout` annotation there as well, this time
 specifying a target path:
 
-```kotlin 3,4
-// jsMain/kotlin/com/mysite/pages/Index.kt
-
+```kotlin 1,2 "jsMain/kotlin/com/mysite/pages/Index.kt"
 @Page
 @Layout(".components.layouts.PageLayout")
 @Composable
@@ -87,9 +83,7 @@ fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
 Since so many pages in your site (maybe even all of them?) will use the same `@Layout`, Kobweb lets you tag a file
 (and, by extension, its associated package) with the layout annotation:
 
-```kotlin 3,5
-// jsMain/kotlin/com/mysite/pages/Layout.kt
-
+```kotlin 1,3 "jsMain/kotlin/com/mysite/pages/Layout.kt"
 @file:Layout(".components.layouts.PageLayout")
 
 package com.mysite.pages
@@ -115,14 +109,12 @@ just the article pages on your site, allowing you to navigate through article se
 To do this, tag the layout with the `@Layout` annotation (as you normally would), but include a path to the other
 layout, exactly as you do when defining a `@Page`:
 
-```kotlin
-// jsMain/kotlin/com/mysite/components/layouts/PageLayout.kt
+```kotlin "jsMain/kotlin/com/mysite/components/layouts/PageLayout.kt"
 @Layout
 @Composable
 fun PageLayout(content: @Composable () -> Unit) { /*...*/ }
 ```
-```kotlin 2
-// jsMain/kotlin/com/mysite/components/layouts/ArticleLayout.kt
+```kotlin 1 "jsMain/kotlin/com/mysite/components/layouts/ArticleLayout.kt"
 @Layout(".components.layouts.PageLayout")
 @Composable
 fun ArticleLayout(content: @Composable () -> Unit) { /*...*/ }
@@ -252,9 +244,7 @@ property.
 
 Bringing it all together, your final code should look something like this:
 
-```kotlin 3,8
-// jsMain/kotlin/com/mysite/components/layouts/PageLayout.kt
-
+```kotlin 1,6 "jsMain/kotlin/com/mysite/components/layouts/PageLayout.kt"
 class PageLayoutData(val title: String)
 
 @Layout
@@ -266,9 +256,7 @@ fun PageLayout(ctx: PageContext, content: @Composable () -> Unit) {
    content()
 }
 ```
-```kotlin 3-6,9
-// jsMain/kotlin/com/mysite/pages/HomePage.kt
-
+```kotlin 1-4,7 "jsMain/kotlin/com/mysite/pages/HomePage.kt"
 @InitRoute
 fun initHomePage(ctx: InitRouteContext) {
     ctx.data.add(PageLayoutData("Home Page"))
@@ -292,9 +280,7 @@ However, our recommended approach is to provide an `@InitRoute` method at the `P
 `addIfAbsent` helper method, as this gives you the benefit of knowing your data will always be set but in a way that you
 can still inform the developer if a page was missed:
 
-```kotlin 7,16-17
-// jsMain/kotlin/com/mysite/components/layouts/PageLayout.kt
-
+```kotlin 5,14-15 "jsMain/kotlin/com/mysite/components/layouts/PageLayout.kt"
 class PageLayoutData(val title: String)
 
 @InitRoute
@@ -490,13 +476,11 @@ inside each page.
 
 For example:
 
-```kotlin
-// PageLayout.kt
+```kotlin "PageLayout.kt"
 @Composable
 fun PageLayout(title: String, content: @Composable () -> Unit) { /*...*/ }
 ```
-```kotlin
-// Page1.kt
+```kotlin "Page1.kt"
 @Page
 @Composable
 fun Page1() {
@@ -505,8 +489,7 @@ fun Page1() {
     }
 }
 ```
-```kotlin
-// Page2.kt
+```kotlin "Page2.kt"
 @Page
 @Composable
 fun Page2() {

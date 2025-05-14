@@ -29,7 +29,7 @@ following when I select Roboto Regular 400:
 
 This code should be converted into Kotlin and added to the `kobweb` block of your site's `build.gradle.kts` script:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
   app {
     index {
@@ -85,7 +85,7 @@ I recommend the following file organization:
 
 where `faces.css` contains all your `@font-face` rule definitions (we just have a single one for now):
 
-```css
+```css "jsMain/resources/public/fonts/faces.css"
 @font-face {
   font-family: 'Lobster';
   src: url('/fonts/lobster/Lobster-Regular.ttf');
@@ -99,7 +99,7 @@ where `faces.css` contains all your `@font-face` rule definitions (we just have 
 
 Now, you need to reference this CSS file from your `build.gradle.kts` script:
 
-```kotlin
+```kotlin "site/build.gradle.kts"
 kobweb {
   app {
     index {
