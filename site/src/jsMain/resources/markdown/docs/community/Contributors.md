@@ -37,6 +37,7 @@ individual contributors for the features they helped us out with.
 * [Jan Wiesbauer](https://github.com/Geanik) - `AlwaysUnderlined` link variant
 * [Jose Salgado](https://github.com/jassycliq) - MDI icons
 * [Kalle Strålman](https://github.com/kjeller) - `generate` code methods in Markdown `process`
+* [Karanam Sandeep](https://github.com/sandeepjak2007) - CSS APIs
 * [MartinTheDragon](https://github.com/MartinTheDragon) - Markdown cross-page linking
 * [Rafael Tonholo](https://github.com/rafaeltonholo) - Box shadows and `Arrangement.spacedBy`
 * [Vaibhav Raj](https://github.com/dead8309) - Kotlinx serialization extensions for HTTP APIs 
