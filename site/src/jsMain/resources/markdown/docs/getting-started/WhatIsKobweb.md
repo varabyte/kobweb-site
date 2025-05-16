@@ -22,24 +22,20 @@ developers can confidently choose Kotlin as a way to create modern websites.
 > [!NOTE]
 > To learn more about Compose HTML, please visit [the official tutorials](https://github.com/JetBrains/compose-jb/tree/master/tutorials/HTML/Getting_Started).
 
-Compose HTML is a very powerful library, but it leaves a lot of basic decisions up to the developer to navigate. While
-this can seem on its face like a fine approach, these choices can often be the sort that most of us don't actually care
-that much about and just amount to being chores.
+Compose HTML is a powerful library, providing you with access to Compose-ified versions of all the HTML elements.
 
-For example, when we were first evaluating if our vision of Kobweb was even possible, we wanted to trivialize setting up
-routing across pages, eliminate the need to write a dummy `index.html` file, support styling HTML elements with CSS
-without having to create a global stylesheet object, and support live reloading as a first-class feature.
+However, it also leaves many common pain points unaddressed -- this is where Kobweb comes in.
 
-You get these features (and much more) out of the box when you create your Kobweb project. Are those really the sort of
-problems you'd want to solve yourself?
+Kobweb handles routing, generates the necessary `index.html`, ensures SEO-friendly pages, embraces live-reloading,
+supports dark and light modes, simplifies CSS style management, and much more.
 
-In short, we want to get all the tedious work out of the way, so you can enjoy focusing on the more interesting parts
-of designing and developing your website!
+In short, Kobweb's goal is to allow you to enjoy focusing on what matters -- *and* what's more fun: building and
+designing your website!
 
 ## High-level structure
 
 Kobweb, in addition to being a collection of libraries, also provides Gradle plugins and KSP processors which
-automatically analyze your codebase at compile time in order to generate all necessary boilerplate for your project.
+automatically analyze your codebase at compile time to generate all necessary boilerplate for your project.
 
 Kobweb is also a CLI binary of the same name which lets you issue commands to handle the tedious parts of building
 and/or running a Compose HTML app (e.g. `kobweb run`).
