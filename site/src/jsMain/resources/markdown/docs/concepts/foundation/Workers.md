@@ -95,7 +95,7 @@ abstract class WorkerStrategy<I> {
 
 ```kotlin
 class OutputDispatcher<O> {
-  operator fun invoke(output: O, transferables: Transferables = Transferables.Empty)
+  operator fun invoke(output: O, attachments: Attachments = Attachments.Empty)
 }
 
 // Note the invoke operator here, so you can treat this like a function
@@ -103,9 +103,10 @@ class OutputDispatcher<O> {
 ```
 
 > [!NOTE]
-> Do not worry about the `Transferables` parameter for now. Transferable objects are a somewhat niche,
-> performance-related feature, and they will be discussed later. It is not expected that a majority of workers will
-> require them.
+> Do not worry about the `Attachments` parameter for now. This allow you to include additional values that the browser
+> supports transferring into and out of workers directly, which can in some cases be a huge performance improvement over
+> including these values in your input/output objects, which would require serializing intermediate values into a
+> string.
 
 ### I/O serialization
 
@@ -131,7 +132,7 @@ that wraps it.
 ```kotlin
 // Generated code!
 class Worker(val onOutput: WorkerContext.(O) -> Unit) {
-  fun postInput(input: I, transferables: Transferables = Transferables.Empty)
+  fun postInput(input: I, attachments: Attachments = Attachments.Empty)
   fun terminate()
 }
 ```
@@ -377,7 +378,7 @@ breaking existing code.
 We don't show it here, but you could also create sealed classes for your input and output messages, allowing you to
 define multiple types of messages that your worker can receive and respond to.
 
-## Transferables
+## Attachments
 
 Occasionally, you may find yourself with a very large blob of data in your main application that you want to pass to a
 worker (or vice versa!). For example, maybe your worker will be responsible for processing a potentially large,
@@ -391,10 +392,10 @@ This isn't just an issue with Kobweb. This was originally a problem with standar
 web workers introduced the concept
 of [transferable objects](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Transferable_objects).
 
-Instead of an object being copied over, its ownership is transferred over from one thread to another. Attempts to use
-the object in the original thread after that point will throw an exception.
+Instead of an object being serialized and copied over, its ownership is transferred over from one thread to another.
+Attempts to use the object in the original thread after that point will throw an exception.
 
-Kobweb workers support transferable objects in a type-safe, Kotlin-idiomatic way, via the `Transferables` class. Using
+Kobweb workers support transferable objects in a type-safe, Kotlin-idiomatic way, via the `Attachments` class. Using
 it, you can register named objects in one thread and then retrieve them by that name in another.
 
 Here's an example where we send a very large array over to a worker.
@@ -402,55 +403,46 @@ Here's an example where we send a very large array over to a worker.
 ```kotlin "Application"
 val largeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
 
-worker.postInput(WorkerInput(), Transferables {
+worker.postInput(WorkerInput(), Attachments {
   add("largeArray", largeArray)
 })
 ```
 ```kotlin "Worker"
-val largeArray = transferables.getUint8Array("largeArray")!!
+val largeArray = attachments.getUint8Array("largeArray")!!
 ```
 
 And, of course, workers can send transferable objects back to the main application as well.
 
 ```kotlin "Worker"
 val largeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
-postOutput(WorkerOutput(), Transferables {
+postOutput(WorkerOutput(), Attachments {
   add("largeArray", largeArray)
 })
 ```
 ```kotlin "Application"
 val worker = rememberWorker {
   ExampleWorker {
-    val largeArray = transferables.getUint8Array("largeArray")!!
+    val largeArray = attachments.getUint8Array("largeArray")!!
     // ...
   }
 }
 ```
 
-Finally, it's worth noting that not every object can be transferred. In fact, very few can! You can
+Finally, it's worth noting that not every object can be sent directly. In fact, very few can! You can
 refer to the official docs for
-a [full list of supported transferable objects](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Transferable_objects#supported_objects).
-When building a `Transferables` object, the `add` method is type-safe, meaning you cannot add an object that cannot then
+a full list of [structured clonable types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types)
+and [transferable objects](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Transferable_objects#supported_objects).
+When building a `Attachments` object, the `add` method is type-safe, meaning you cannot add an object that cannot then
 be transferred over.
 
 > [!CAUTION]
 > Kotlin/JS does not support a majority of the classes listed at the link above, so neither does Kobweb as a result. If
 > you find yourself needing one of these missing classes, consider
 > [filing an issue](https://github.com/varabyte/kobweb/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.md&title=).
-> We might wrap the JavaScript class into Kobweb directly and update the Transferables API.
-
-Despite official limitations, Kobweb actually offers support for a few additional types, as a convenience.
-
-Typed arrays, such as `Int8Array`, are a great example. They are actually not transferable! Only their internal
-`ArrayBuffer` is.
-
-If it is possible to extract transferable content from an object, transfer *that*, and then build the original object
-back up on the other end, we are happy to do that for you. When you ask Kobweb to transfer a typed array, it will
-instead transfer its contents for you and regenerate the outer array seamlessly on the other end. This is just
-boilerplate code that you would have had to write yourself anyway.
+> We might wrap the JavaScript class into Kobweb directly and update the Attachments API.
 
 > [!TIP]
-> Run `kobweb create examples/imageprocessor` to see a project which demonstrates workers leveraging `Transferables` to
+> Run `kobweb create examples/imageprocessor` to see a project which demonstrates workers leveraging `Attachments` to
 > pass image data from the main thread to a worker and back.
 
 ## Final notes about worker factories
