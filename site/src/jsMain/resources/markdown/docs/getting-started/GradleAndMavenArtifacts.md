@@ -37,7 +37,7 @@ to try using a snapshot build (a dev build, essentially).
 
 Snapshots are, by design, not supported in either Maven Central nor the Gradle Plugin Portal. Therefore, we host all
 plugin and library artifacts in a separate official snapshot repository (at
-`https://s01.oss.sonatype.org/content/repositories/snapshots/`). As a result, you will have to declare this repository
+`https://central.sonatype.com/repository/maven-snapshots/`). As a result, you will have to declare this repository
 for both plugin *and* library blocks.
 
 An easy way to enable this is by adding the following block of code:
@@ -60,9 +60,11 @@ dependencyResolutionManagement {
 // safe to delete or comment out this block if you never plan to use them.
 gradle.settingsEvaluated {
     fun RepositoryHandler.kobwebSnapshots() {
-        maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") {
-            content { includeGroupByRegex("com\\.varabyte\\.kobweb.*") }
-            mavenContent { snapshotsOnly() }
+        maven("https://central.sonatype.com/repository/maven-snapshots/") {
+            mavenContent {
+                includeGroupByRegex("com\\.varabyte\\.kobweb.*")
+                snapshotsOnly()
+            }
         }
     }
 
