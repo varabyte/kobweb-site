@@ -40,6 +40,7 @@ individual contributors for the features they helped us out with.
 * [MartinTheDragon](https://github.com/MartinTheDragon) - Markdown cross-page linking
 * [Rafael Tonholo](https://github.com/rafaeltonholo) - Box shadows and `Arrangement.spacedBy`
 * [Sandeep Karanam](https://github.com/sandeepjak2007) - CSS APIs
+* [Shaksternano](https://github.com/shaksternano) - Helped improve Kobweb Workers
 * [Vaibhav Raj](https://github.com/dead8309) - Kotlinx serialization extensions for HTTP APIs 
 * [Yongshun Shreck Ye](https://github.com/ShreckYe) - Added modifiers
 
