@@ -107,7 +107,7 @@ Box(Modifier.padding(topBottom = 5.px, leftRight = 30.px)) {
 
 {{{ CssExample1 }}}
 
-**Create a border**
+### Create a border
 
 Next, search the internet for "CSS border". One of the top links should be: https://developer.mozilla.org/en-US/docs/Web/CSS/border
 
@@ -126,7 +126,7 @@ Box(
 
 {{{ CssExample2 }}}
 
-**Round out the corners**
+### Round out the corners
 
 Search for "CSS rounded corners". It turns out the CSS property in this case is called a "border
 radius": https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius
@@ -144,7 +144,7 @@ Box(
 
 {{{ CssExample3 }}}
 
-**Add a drop shadow**
+### Add a drop shadow
 
 Search for "CSS shadow". There are a few types of CSS shadow features, but after some quick reading, we
 realize we want to use box shadows: https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow
@@ -165,7 +165,7 @@ Box(
 
 {{{ CssExample4 }}}
 
-**Add a gradient background**
+### Add a gradient background
 
 Search for "CSS gradient background". This isn't a straightforward CSS property like the previous cases, so we instead
 get a more general documentation page explaining the feature: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_images/Using_CSS_gradients
@@ -192,7 +192,7 @@ Box(
 
 {{{ CssExample5 }}}
 
-**Add a wobble animation**
+### Add a wobble animation
 
 And finally, search for "CSS
 animations": https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations
@@ -222,7 +222,7 @@ Box(
 +       timingFunction = AnimationTimingFunction.EaseInOut,
 +       direction = AnimationDirection.Alternate,
 +     )
-    )
++   )
 ) {
   Text("WELCOME!!")
 }
@@ -230,11 +230,48 @@ Box(
 
 {{{ CssExample6 }}}
 
-**And we're done!**
+### (Optional) Refactor into a `CssStyle`
 
-The above element isn't going to win any style awards, but I hope this demonstrates how much power CSS can give you in
-just a few declarative lines of code. And thanks to the nature of CSS, combined with Kobweb's live reloading experience,
-we were able to experiment with our idea incrementally.
+While not strictly necessary, we often encourage sites to refactor their modifier chains into
+${DocsLink("CssStyle", "silk#cssstyle")} blocks. (You may wish to review the
+${DocsLink("Inline vs. Stylesheet", "styling-html-elements#inline-vs-stylesheet")} section for more information
+behind this recommendation.)
+
+```diff-kotlin
+val WobbleKeyframes = Keyframes {
+  from { Modifier.rotate((-5).deg) }
+  to { Modifier.rotate(5.deg) }
+}
+
++val AttentionGrabbingTextBoxStyle = CssStyle.base {
++  Modifier
++   .padding(topBottom = 5.px, leftRight = 30.px)
++   .border(1.px, LineStyle.Solid, Colors.Black)
++   .borderRadius(5.px)
++   .boxShadow(blurRadius = 5.px, spreadRadius = 3.px, color = Colors.DarkGray)
++   .backgroundImage(linearGradient(LinearGradient.Direction.ToRight, Colors.LightBlue, Colors.LightGreen))
++   .animation(
++     WobbleKeyframes.toAnimation(
++       duration = 1.s,
++       iterationCount = AnimationIterationCount.Infinite,
++       timingFunction = AnimationTimingFunction.EaseInOut,
++       direction = AnimationDirection.Alternate,
++     )
++   )
++}
+
+Box(
++ AttentionGrabbingTextBoxStyle.toModifier()
+) {
+  Text("WELCOME!!")
+}
+```
+
+### And we're done!
+
+The element we have designed here isn't going to win any style awards, but I hope this demonstrates how much power CSS
+can give you in just a few declarative lines of code. And thanks to the nature of CSS, combined with Kobweb's live
+reloading experience, we were able to experiment with our idea incrementally.
 
 ## CSS 2 Kobweb
 
