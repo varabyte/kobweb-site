@@ -188,6 +188,7 @@ gives you five buckets you can work with when designing your site:
 * md - desktops (and larger)
 * lg - widescreen (and larger)
 * xl - ultra widescreen (and larger)
+* xxl - super ultra widescreen (and larger)
 
 You can change the default values of breakpoints for your site by adding
 an `@InitSilk` method to your code and setting `ctx.theme.breakpoints`:
@@ -196,10 +197,12 @@ an `@InitSilk` method to your code and setting `ctx.theme.breakpoints`:
 @InitSilk
 fun initializeBreakpoints(ctx: InitSilkContext) {
     ctx.theme.breakpoints = BreakpointSizes(
-        sm = 30.cssRem,
-        md = 48.cssRem,
-        lg = 62.cssRem,
-        xl = 80.cssRem,
+        // Assuming <body> font-size is set to its default 16px...
+        sm = 30.cssRem, // 480px+
+        md = 48.cssRem, // 768px+
+        lg = 62.cssRem, // 992px+ 
+        xl = 80.cssRem, // 1280px+
+        xxl = 96.cssRem, // 1536px+
     )
 }
 ```
