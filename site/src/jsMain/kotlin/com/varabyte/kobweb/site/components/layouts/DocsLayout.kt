@@ -131,13 +131,13 @@ val ArticleStyle = CssStyle {
 
 @Composable
 private fun EditPageLink(pageRoute: String, modifier: Modifier = Modifier) {
-    val activeArticle = SITE_LISTING.findArticle(pageRoute)?.article ?: return
+    val activeArticle = remember(pageRoute) { SITE_LISTING.findArticle(pageRoute)?.article } ?: return
 
-    val githubPageLink = remember {
-        val githubLinkBase =
+    val githubPageLink = remember(activeArticle.filePath) {
+        val githubEditMarkdownBase =
             "$GITHUB_REPO_BASE/edit/main/site/src/jsMain/resources/markdown"
 
-        "${githubLinkBase}/${activeArticle.filePath}"
+        "${githubEditMarkdownBase}/${activeArticle.filePath}"
     }
     Link(
         githubPageLink,
