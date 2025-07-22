@@ -17,6 +17,7 @@ import com.varabyte.kobweb.site.components.style.MutedSpanTextVariant
 import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.dividerBoxShadow
 import com.varabyte.kobweb.site.components.style.siteText
+import com.varabyte.kobweb.site.model.GITHUB_REPO_BASE
 import org.jetbrains.compose.web.css.cssRem
 import org.jetbrains.compose.web.css.em
 import org.jetbrains.compose.web.css.percent
@@ -30,7 +31,7 @@ private fun OssLabel() {
     Span(Modifier.margin(bottom = 2.cssRem).whiteSpace(WhiteSpace.PreWrap).textAlign(TextAlign.Center).toAttrs()) {
         FaGithub(Modifier.margin(right = 8.px))
         Text("This site is ")
-        Link("https://github.com/varabyte/kobweb-site", "open source")
+        Link(GITHUB_REPO_BASE, "open source")
         Text(".")
     }
 }
