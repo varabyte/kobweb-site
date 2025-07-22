@@ -48,6 +48,7 @@ import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.siteText
 import com.varabyte.kobweb.site.components.widgets.DynamicToc
 import com.varabyte.kobweb.site.components.widgets.getHeadings
+import com.varabyte.kobweb.site.model.GITHUB_REPO_BASE
 import com.varabyte.kobweb.site.model.listing.*
 import com.varabyte.kobwebx.markdown.markdown
 import kotlinx.browser.document
@@ -134,7 +135,7 @@ private fun EditPageLink(pageRoute: String, modifier: Modifier = Modifier) {
 
     val githubPageLink = remember {
         val githubLinkBase =
-            "https://github.com/varabyte/kobweb-site/edit/main/site/src/jsMain/resources/markdown"
+            "$GITHUB_REPO_BASE/edit/main/site/src/jsMain/resources/markdown"
 
         "${githubLinkBase}/${activeArticle.filePath}"
     }
