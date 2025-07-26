@@ -87,15 +87,17 @@ Gradle run configurations for each of the Kobweb commands.
 > When you run a Kobweb CLI command that delegates to Gradle, it will log the Gradle command to the console. This is
 > how you can discover the Gradle commands discussed in this section.
 
-* To start a Kobweb server, use the `kobwebStart -t` command.
-    * The `-t` argument (or, `--continuous`) tells Gradle to watch for file changes, which gives you live loading behavior.
-* To stop a running Kobweb server, use the `kobwebStop` command.
+* To start a Kobweb server, use the `kobweb run` command.
+    * The `-t` argument (or, `--tty`) tells Gradle to watch for file changes, which gives you live loading behavior.
+* To stop a running Kobweb server, use the `kobweb stop` command.
 * To export a site, use<br>
-  `kobwebExport -PkobwebReuseServer=false -PkobwebEnv=DEV -PkobwebRunLayout=FULLSTACK -PkobwebBuildTarget=RELEASE -PkobwebExportLayout=FULLSTACK`
-    * If you want to export a static layout instead, change the last argument to<br>`-PkobwebExportLayout=STATIC`.
+  `kobweb export --layout=FULLSTACK`
+    * Note that `FULLSTACK` layout is the default.<br>
+    * If you want to export a static layout instead, change the last argument to<br>`--layout=STATIC`.
 * To run an exported site, use<br>
-  `kobwebStart -PkobwebEnv=PROD -PkobwebRunLayout=FULLSTACK`
-    * If your site was exported using a static layout, change the last argument to<br>`-PkobwebRunLayout=STATIC`.
+  `kobweb run --env=PROD --layout=FULLSTACK`
+    * Note that the `DEV` environment is the default.<br>
+    * If your site was exported using a static layout, change the last argument to<br>`--layout=STATIC`.
 
 You can read all about [IntelliJ's Gradle integration here](https://www.jetbrains.com/help/idea/gradle.html). Or to just jump straight into how to create run
 configurations for any of the commands discussed above, read [these instructions](https://www.jetbrains.com/help/idea/run-debug-gradle.html).
