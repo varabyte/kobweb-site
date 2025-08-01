@@ -68,7 +68,7 @@ Please visit https://github.com/varabyte/kobweb-cli/issues/11 and consider leavi
 ## Download the Kobweb binary
 
 Our binary artifact is hosted on GitHub. To download latest, you can either
-[grab the zip or tar file from the GitHub](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.18) or you can fetch
+[grab the zip or tar file from the GitHub](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.20) or you can fetch
 it from your terminal:
 
 ```bash
@@ -76,19 +76,19 @@ $ cd /path/to/applications
 
 # You can either pull down the zip file
 
-$ wget https://github.com/varabyte/kobweb-cli/releases/download/v0.9.18/kobweb-0.9.18.zip
-$ unzip kobweb-0.9.18.zip
+$ wget https://github.com/varabyte/kobweb-cli/releases/download/v0.9.20/kobweb-0.9.20.zip
+$ unzip kobweb-0.9.20.zip
 
 # ... or the tar file
 
-$ wget https://github.com/varabyte/kobweb-cli/releases/download/v0.9.18/kobweb-0.9.18.tar
-$ tar -xvf kobweb-0.9.18.tar
+$ wget https://github.com/varabyte/kobweb-cli/releases/download/v0.9.20/kobweb-0.9.20.tar
+$ tar -xvf kobweb-0.9.20.tar
 ```
 
 and I recommend adding it to your path, either directly:
 
 ```bash
-$ PATH=$PATH:/path/to/applications/kobweb-0.9.18/bin
+$ PATH=$PATH:/path/to/applications/kobweb-0.9.20/bin
 $ kobweb version # to check it's working
 ```
 
@@ -96,7 +96,7 @@ or via symbolic link:
 
 ```bash
 $ cd /path/to/bin # some folder you've created that's in your PATH
-$ ln -s /path/to/applications/kobweb-0.9.18/bin/kobweb kobweb
+$ ln -s /path/to/applications/kobweb-0.9.20/bin/kobweb kobweb
 ```
 
 ## Build the Kobweb binary
@@ -155,4 +155,4 @@ you installed it.
 | Scoop                  | `scoop update kobweb`                                                                                                                |
 | SDKMAN!                | `sdk upgrade kobweb`                                                                                                                 |
 | Arch Linux             | Rerunning [install steps](#arch-linux) should work. If using an AUR helper, you may need to review its manual.                       |
-| Downloaded from Github | Visit the [latest release](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.18). You can find both a zip and tar file there. |
+| Downloaded from Github | Visit the [latest release](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.20). You can find both a zip and tar file there. |
