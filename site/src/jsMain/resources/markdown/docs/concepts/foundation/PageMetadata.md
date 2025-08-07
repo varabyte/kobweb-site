@@ -45,7 +45,7 @@ kobweb {
     app {
         index {
             description.set("A portfolio site listing my resume, skills, and experiences.")
-            head.addAll {
+            head.add {
                 link(rel = "preconnect", href = "https://fonts.googleapis.com")
                 link(rel = "preconnect", href = "https://fonts.gstatic.com") {
                     attributes["crossorigin"] = ""
@@ -122,8 +122,10 @@ does). After searching, you find it is hosted on Cloudflare:
 kobweb {
     app {
         index {
-            script {
-                src = "https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/3.4.2/gl-matrix-min.js"
+            head.add {
+                script {
+                    src = "https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/3.4.2/gl-matrix-min.js"
+                }
             }
         }
     }
@@ -139,8 +141,10 @@ However, if you opt in for self-hosting:
 kobweb {
     app {
         index {
-            script {
-                src = "https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/3.4.2/gl-matrix-min.js"
+            head.add {
+                script {
+                    src = "https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/3.4.2/gl-matrix-min.js"
+                }
             }
             interceptUrls { enableSelfHosting() }
         }
