@@ -244,7 +244,7 @@ fun PostPage() {
 
 > [!TIP]
 > An empty `"{}"` tells Kobweb to use the name of the slug normally generated from the file name, so in this specific
-> case this would be identical tl `"{post]"`.
+> case this would be identical to `"{post}"`.
 
 Remember that the `Page` annotation allows you to rewrite the entire route. That value also accepts dynamic segments, so
 you could even do something like:
