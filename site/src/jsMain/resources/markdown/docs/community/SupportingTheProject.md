@@ -1,6 +1,5 @@
 ---
 description: Ways you can support the Kobweb project.
-follows: SubmittingIssuesAndFeedback
 ---
 
 You should feel no obligation to pay anything to use Kobweb -- it is licensed liberally quite intentionally and

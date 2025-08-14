@@ -1,6 +1,5 @@
 ---
 description: How to declare page layouts.
-follows: ApplicationRoot
 ---
 
 At this point in the documentation, we have discussed ${DocsLink("pages", "routing")} (the unique UI presented to the

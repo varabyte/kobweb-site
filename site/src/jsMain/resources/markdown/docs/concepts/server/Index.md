@@ -1,7 +1,3 @@
----
-follows: /concepts/presentation/
----
-
 Let's say you've decided on creating a full stack website using Kobweb. Thanks to the Kotlin Multiplatform effort,
 writing a full stack web application with Kotlin on both the client and server is a joy. 
 

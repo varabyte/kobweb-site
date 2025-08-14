@@ -1,6 +1,5 @@
 ---
 description: How to use web storage to persist state that lives across pages and even a user's browsing sessions.
-follows: ApplicationGlobals
 ---
 
 It is very common to want to set a value on one page that should be made available on other pages, such as shopping cart

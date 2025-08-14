@@ -1,6 +1,5 @@
 ---
 description: How to specify metadata for your page.
-follows: PersistingState
 ---
 
 Have you ever pasted a link to a page into some program which, after a brief fetch, ended up surfacing information about

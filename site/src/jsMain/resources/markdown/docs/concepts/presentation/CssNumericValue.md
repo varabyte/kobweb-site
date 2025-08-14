@@ -1,7 +1,6 @@
 ---
 description: Information about the CSSNumericValue type-aliases added by Kobweb.
 title: CSSNumericValue Type-aliases
-follows: CssLayers
 ---
 
 Kobweb introduces a handful of type-aliases for CSS unit values, basing them off of the `CSSNumericValue` class and

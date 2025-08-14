@@ -1,6 +1,5 @@
 ---
 description: People who have contributed their time to Kobweb.
-follows: SupportingTheProject
 ---
 
 Kobweb has received a lot of support from the community over the years. We'd like to take this page to call out

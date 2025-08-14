@@ -1,6 +1,5 @@
 ---
 description: How to declare an entry point that will be called for every page on your site.
-follows: Routing
 ---
 
 ## `KobwebApp` and `SilkApp`

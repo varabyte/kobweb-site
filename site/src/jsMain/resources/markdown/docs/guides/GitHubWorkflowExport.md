@@ -1,7 +1,6 @@
 ---
 description: A guide showcasing an example GitHub workflow for exporting your site on the GitHub CI.
 title: Exporting using GitHub Workflows
-follows: GeneratingCode
 ---
 
 While you can always export your site manually on your machine, you may want to automate this process. A common

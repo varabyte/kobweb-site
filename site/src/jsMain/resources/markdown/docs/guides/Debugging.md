@@ -1,6 +1,5 @@
 ---
 description: A guide for how to debug your site's frontend and backend code.
-follows: Index
 ---
 
 A Kobweb project always has a frontend and, if configured as a full stack site, a backend as well. Both require

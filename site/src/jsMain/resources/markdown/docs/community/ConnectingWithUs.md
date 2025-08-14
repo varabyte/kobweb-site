@@ -1,6 +1,5 @@
 ---
 description: Various ways to reach out to the Kobweb team.
-follows: Index
 ---
 
 * [Join our Discord!](https://discord.gg/5NZ2GKV5Cs)

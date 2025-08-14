@@ -1,6 +1,5 @@
 ---
 description: How to download the Kobweb CLI, the first step you should take to get started with Kobweb.
-follows: Videos
 ---
 
 The first step for starting with Kobweb is to get the Kobweb binary. You can install it, download it, and/or build it,

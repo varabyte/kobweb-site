@@ -1,7 +1,6 @@
 ---
 description: A guide for how to generate code and resources for your site from your build script.
 title: Generating Code at Build Time
-follows: ExistingBackend
 ---
 
 Occasionally, you might find yourself wanting code for your site that is better generated programmatically than written

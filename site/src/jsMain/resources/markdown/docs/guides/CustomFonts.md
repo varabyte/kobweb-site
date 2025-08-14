@@ -1,7 +1,6 @@
 ---
 description: A guide for how to provide custom fonts for your website.
 title: Providing Custom Fonts
-follows: Debugging
 ---
 
 It is common to want to use a custom font on your site. Setting this up is fairly easy, and we provide two suggested

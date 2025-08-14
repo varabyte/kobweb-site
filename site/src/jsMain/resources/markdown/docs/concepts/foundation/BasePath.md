@@ -1,6 +1,5 @@
 ---
 description: How to set a base path for your project (and what that means).
-follows: PageMetadata
 ---
 
 Typically, sites live at the top level. This means if you have a root file `index.html` and your site is hosted at

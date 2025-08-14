@@ -1,7 +1,6 @@
 ---
 description: A simple example of creating and running a Kobweb project.
 title: Creating and Running a Kobweb Project
-follows: GettingKobweb
 ---
 
 A great way to check that Kobweb is installed correctly is by creating and running the default app project.

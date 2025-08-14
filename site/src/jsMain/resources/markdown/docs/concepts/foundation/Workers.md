@@ -1,6 +1,5 @@
 ---
 description: How to define a web worker enhanced by Kobweb.
-follows: Markdown
 ---
 
 [Web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) are a standard web technology that allow

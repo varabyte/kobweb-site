@@ -1,7 +1,6 @@
 ---
 description: A guide for how to use Kobweb if you already have your own existing backend.
 title: Using a Custom Backend
-follows: ExistingProject
 ---
 
 You may already have an existing and complex backend, perhaps written with Ktor or Spring Boot, and, if so, are

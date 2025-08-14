@@ -1,7 +1,6 @@
 ---
 description: Understanding and declaring CSS layers in Silk.
 title: CSS Layers
-follows: LearningCss
 ---
 
 [CSS Layers](https://developer.mozilla.org/en-US/docs/Web/CSS/@layer) are a very powerful but also relatively new CSS

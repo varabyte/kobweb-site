@@ -1,6 +1,5 @@
 ---
 description: How to declare a full-stack Kobweb project and define API routes.
-follows: Index
 ---
 
 Kobweb not only helps you create frontend files for a website, but it also makes it easy to add backend functionality as

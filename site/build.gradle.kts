@@ -191,57 +191,58 @@ object SiteListingGenerator {
 
     @Suppress("FunctionName") // Underscore avoids ambiguity error
     private fun MarkdownBlock.ProcessScope._generate(entries: List<MarkdownEntry>) {
-        val optionalFields = listOf("follows")
+        val pathsOrdered = listOf(
+            "getting-started/WhatIsKobweb.md",
+            "getting-started/Ide.md",
+            "getting-started/Videos.md",
+            "getting-started/GettingKobweb.md",
+            "getting-started/KobwebProject.md",
+            "getting-started/GradleAndMavenArtifacts.md",
 
-        // e.g. "/guides/first-steps/GettingStarted.md"
-        // Should end up being exactly one match; if more, someone is missing metadata in their markdown file
-        val initialArticles = mutableListOf<MarkdownEntry>()
-        // e.g. "/guides/first-steps/GettingStarted.md" -> "/guides/first-steps/InstallingKobweb.md"
-        // e.g. "/guides/first-steps/" -> "/widgets/forms/Button.md"
-        val followingMap = mutableMapOf<String, MutableList<MarkdownEntry>>()
+            "concepts/foundation/Index.md",
+            "concepts/foundation/ProjectStructure.md",
+            "concepts/foundation/Routing.md",
+            "concepts/foundation/ApplicationRoot.md",
+            "concepts/foundation/Layouts.md",
+            "concepts/foundation/Exporting.md",
+            "concepts/foundation/ApplicationGlobals.md",
+            "concepts/foundation/PersistingState.md",
+            "concepts/foundation/PageMetadata.md",
+            "concepts/foundation/BasePath.md",
+            "concepts/foundation/Markdown.md",
+            "concepts/foundation/Workers.md",
+            "concepts/foundation/Redirects.md",
 
-        entries.forEach { entry ->
-            val (follows) = optionalFields.map { key -> entry.frontMatter[key]?.singleOrNull() }
+            "concepts/presentation/Index.md",
+            "concepts/presentation/StylingHtmlElements.md",
+            "concepts/presentation/Silk.md",
+            "concepts/presentation/LearningCss.md",
+            "concepts/presentation/CssLayers.md",
+            "concepts/presentation/CssNumericValue.md",
 
-            if (follows != null) {
-                // "/a/b/c.md" -> pass through
-                // "z.md" -> "/a/b/z.md" (assume sibling of current entry)
-                followingMap.getOrPut(
-                    if (follows.contains('/')) {
-                        follows
-                    } else {
-                        "${entry.toPath().substringBeforeLast('/')}/$follows"
-                    }
-                ) { mutableListOf() }.add(entry)
-            } else {
-                initialArticles.add(entry)
-            }
-        }
+            "concepts/server/Index.md",
+            "concepts/server/Fullstack.md",
+            "concepts/server/KobwebServerPlugins.md",
 
-        if (initialArticles.size != 1) {
-            println("e: There should only be one starting article, but one of these articles are missing a `follows` frontmatter value: ${initialArticles.map { it.toPath() }}")
-        }
+            "guides/Index.md",
+            "guides/Debugging.md",
+            "guides/CustomFonts.md",
+            "guides/SharingDataObjects.md",
+            "guides/ExistingProject.md",
+            "guides/ExistingBackend.md",
+            "guides/GeneratingCode.md",
+            "guides/GitHubWorkflowExport.md",
 
-        val orderedArticleList = mutableListOf<MarkdownEntry>()
-        initialArticles.lastOrNull()?.let { initialArticle ->
-            val nextEntries = mutableListOf(initialArticle)
-            while (nextEntries.isNotEmpty()) {
-                val nextEntry = nextEntries.removeAt(0)
-                orderedArticleList.add(nextEntry)
-                val nextPath = nextEntry.toPath()
-                val followedBy = followingMap[nextPath] ?: followingMap[nextPath.substringBeforeLast('/') + "/"]
-                if (followedBy == null) continue
-                if (followedBy.size != 1) {
-                    println("e: Only one article should ever follow another. For \"$nextPath\", found multiple (so please fix one): ${followedBy.map { it.toPath() }}")
-                }
+            "community/Index.md",
+            "community/ConnectingWithUs.md",
+            "community/SubmittingIssuesAndFeedback.md",
+            "community/SupportingTheProject.md",
+            "community/Contributors.md",
+            "community/Articles.md",
+            "community/Testimonials.md",
+        ).map { "docs/$it" }
 
-                nextEntries.addAll(followedBy)
-            }
-        }
-
-        (entries.toSet() - orderedArticleList).forEach { orphanedEntry ->
-            println("e: Orphaned markdown file (probably a bad `Follows` value): ${orphanedEntry.toPath()}.md")
-        }
+        val sourcePathToEntry = entries.associateBy { it.filePath }.toMutableMap()
 
         generateKotlin("com/varabyte/kobweb/site/model/listing/SiteListing.kt", buildString {
             val indent = "\t"
@@ -250,50 +251,87 @@ object SiteListingGenerator {
                     package com.varabyte.kobweb.site.model.listing
 
                     // DO NOT EDIT THIS FILE BY HAND! IT IS GETTING AUTO-GENERATED BY GRADLE
-                    // Instead, edit the SITE_LISTING constant in `build.gradle.kts` and re-run the task.
+                    // Instead, edit the logic in `site/build.gradle.kts` and re-run the task.
 
                     val SITE_LISTING = buildList {
                     """.trimIndent()
             )
 
-            val articleTree = orderedArticleList
-                .map { it to it.toRouteParts() }
-                .groupBy { it.second.category }
-
             println("Article tree:\n")
-            articleTree.forEach { (category, rest) ->
-                appendLine("${indent}add(")
-                appendLine("${indent}${indent}Category(")
-                appendLine("${indent}${indent}${indent}\"${category.convertSlugToTitle()}\",")
-                println("- ${category.convertSlugToTitle()}")
 
-                rest.groupBy { it.second.subcategory }.forEach { (subcategory, articles) ->
-                    appendLine("${indent}${indent}${indent}Subcategory(")
-                    appendLine("${indent}${indent}${indent}${indent}\"${subcategory.convertSlugToTitle()}\",")
-                    if (subcategory.isNotEmpty()) {
-                        println("${indent}- ${subcategory.convertSlugToTitle()}")
-                    }
+            fun closeSubcategory() {
+                appendLine("${indent}${indent}${indent}),")
+            }
 
-                    articles.forEach { (article, routeParts) ->
-                        val title = article.frontMatter["title"]?.singleOrNull() ?: routeParts.slug.convertSlugToTitle()
-                        appendLine("${indent}${indent}${indent}${indent}Article(\"$title\", \"${article.route}\", \"${routeParts.filePath}\"),")
-                        if (title.isNotEmpty()) {
-                            if (subcategory.isNotEmpty()) print(indent)
-                            println("${indent}- $title")
-                        }
-                    }
-                    appendLine("${indent}${indent}${indent}),")
-                }
-
+            fun closeCategory() {
                 appendLine("${indent}${indent})")
                 appendLine("${indent})")
             }
+
+            pathsOrdered
+                .mapNotNull { filePath ->
+                    sourcePathToEntry.remove(filePath).also {
+                        if (it == null) {
+                            throw GradleException("e: $filePath specified in `build.gradle.kts` but not found in the markdown files")
+                        }
+                    }
+                }
+                .let { orderedEntries ->
+                    var currCategory: String? = null
+                    var currSubcategory: String? = null
+
+                    println("Article tree:\n")
+                    orderedEntries.forEach { entry ->
+                        val routeParts = entry.toRouteParts()
+
+                        val newCategory = routeParts.category != currCategory
+                        val newSubcategory = newCategory || routeParts.subcategory != currSubcategory
+
+                        if (currSubcategory != null && newSubcategory) {
+                            closeSubcategory()
+                        }
+                        if (currCategory != null && newCategory) {
+                            closeCategory()
+                        }
+
+                        if (newCategory) {
+                            currCategory = routeParts.category
+                            appendLine("${indent}add(")
+                            appendLine("${indent}${indent}Category(")
+                            appendLine("${indent}${indent}${indent}\"${routeParts.category.convertSlugToTitle()}\",")
+                            println("- ${routeParts.category.convertSlugToTitle()}")
+                        }
+
+                        if (newSubcategory) {
+                            currSubcategory = routeParts.subcategory
+                            appendLine("${indent}${indent}${indent}Subcategory(")
+                            appendLine("${indent}${indent}${indent}${indent}\"${routeParts.subcategory.convertSlugToTitle()}\",")
+                            if (routeParts.subcategory.isNotEmpty()) {
+                                println("${indent}- ${routeParts.subcategory.convertSlugToTitle()}")
+                            }
+                        }
+
+                        val title = entry.frontMatter["title"]?.singleOrNull() ?: routeParts.slug.convertSlugToTitle()
+                        appendLine("${indent}${indent}${indent}${indent}Article(\"$title\", \"${entry.route}\", \"${routeParts.filePath}\"),")
+                        if (title.isNotEmpty()) {
+                            if (routeParts.subcategory.isNotEmpty()) print(indent)
+                            println("${indent}- $title")
+                        }
+                    }
+                }
+
+            closeSubcategory()
+            closeCategory()
 
             appendLine(
                 """
                     }
                 """.trimIndent()
             )
+
+            sourcePathToEntry.keys.forEach { filePath ->
+                throw GradleException("e: $filePath exists but not specified in `build.gradle.kts`. Either add it or delete the file.")
+            }
         })
     }
 }

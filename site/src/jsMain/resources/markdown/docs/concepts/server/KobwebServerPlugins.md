@@ -1,6 +1,5 @@
 ---
 description: How to declare a Kobweb Server Plugin (which exposes underlying Ktor functionality).
-follows: Fullstack
 ---
 
 Many users who create a full stack application generally expect to completely own both the client- and server-side code.

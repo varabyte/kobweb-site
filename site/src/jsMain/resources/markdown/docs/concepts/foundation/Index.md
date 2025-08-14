@@ -1,7 +1,3 @@
----
-follows: /getting-started/
----
-
 In this section, we'll cover foundational concepts that apply to the frontend part of your site.
 
 In other words, these articles introduce concepts that, put together, enable you to organize code and resources in a way

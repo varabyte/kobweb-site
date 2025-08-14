@@ -1,6 +1,5 @@
 ---
 description: How to define redirects in your Kobweb site.
-follows: Workers
 ---
 
 Over the lifetime of a site, you may find yourself needing to change its structure. Perhaps you need to move a handful

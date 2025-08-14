@@ -1,7 +1,6 @@
 ---
 description: New to CSS? How to start learning it via Kobweb's approach.
 title: Learning CSS
-follows: Silk
 imports:
   - com.varabyte.kobweb.site.components.widgets.docs.css.*
 ---

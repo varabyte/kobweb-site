@@ -1,6 +1,5 @@
 ---
 description: How to define global values in your build script that can be accessed by your site at runtime.
-follows: Exporting
 ---
 
 Occasionally you might find yourself with a value at build time that you want your site to know at runtime.
