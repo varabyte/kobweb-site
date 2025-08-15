@@ -254,7 +254,7 @@ fun DocsLayout(ctx: PageContext, content: @Composable () -> Unit) {
             var headings by remember(ctx.route.path) { mutableStateOf(emptyList<HTMLHeadingElement>()) }
             // Fetch headings only once elements are added to the DOM
             registerRefScope(ref(mainElement, ctx.route.path) {
-                headings = mainElement?.getHeadings().orEmpty()
+                headings = mainElement?.getHeadings().orEmpty().filter { !it.classList.contains("no-toc") }
             })
             val options = run {
                 val top = 64 // Height of the top nav bar
