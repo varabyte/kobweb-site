@@ -45,5 +45,7 @@ individual contributors for the features they helped us out with.
 
 ### Kobweb Site
 
+* [Ellet](https://github.com/EchoEllet) - Improved "Existing Backend" article
 * [Mrldjx](https://github.com/mrljdx) - Inline YouTube video player
 * [Ondra Karmazín](https://github.com/okarmazin) - Docs additions
+* [Patrick Goldinger](https://github.com/patrickgold) - Typo fix
