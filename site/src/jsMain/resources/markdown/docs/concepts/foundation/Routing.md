@@ -371,3 +371,20 @@ take precedence.
 
 For example, if you register routes `/a` and `/{else}`, then visiting `/a` will trigger the `/a` handler, while visiting
 anything else, such as `/b`, will trigger the `/{else}` handler.
+
+## Custom error page
+
+If you try to route to a page that does not exist (for example, say a link inside one of your pages navigates to
+`/bad`), Kobweb will intercept this and render a simple error page.
+
+If you'd like to customize this page, you can override it via `Router.setErrorPage`. An ideal place to do this is
+inside an `@InitKobweb` block, which provides access to the ${DocsLink("router", "#router")}:
+
+```kotlin "AppEntry.kt"
+@InitKobweb
+fun setCustomErrorPage(ctx: InitKobwebContext) {
+    ctx.router.setErrorPage {
+        Text("Error: Page not found")
+    }
+}
+```

@@ -468,6 +468,41 @@ fun ShoppingPageScope.BrowseItemPage(ctx: PageContext) {
 }
 ```
 
+## Error page layouts
+
+${DocsLink("Error pages", "routing#custom-error-page")} are registered manually with a lambda, which means we cannot
+annotate it with the `@Layout` annotation. However, the method takes in an optional fully qualified path to the layout.
+Just be aware that, unlike when using layout annotations, you cannot omit the leading part of the path name here.
+
+```kotlin "jsMain/kotlin/com/mysite/AppEntry.kt"
+@InitKobweb
+fun setCustomErrorPage(ctx: InitKobwebContext) {
+    ctx.router.setErrorPage(
+        // ".components.layouts.ErrorLayout" won't work here!
+        layoutId = "com.mysite.components.layouts.ErrorLayout",
+    ) {
+        Text("Error: Page not found")
+    }
+}
+```
+
+You can also pass in a lambda for the code you would normally annotate with `@InitRoute`, which can be useful if you
+want your error page to re-use a common page layout used by normal pages on your site:
+
+```kotlin "jsMain/kotlin/com/mysite/AppEntry.kt"
+@InitKobweb
+fun setCustomErrorPage(ctx: InitKobwebContext) {
+    ctx.router.setErrorPage(
+        layoutId = "com.mysite.components.layouts.PageLayout",
+        initRouteMethod = { initRouteCtx ->
+            initRouteCtx.data.add(PageLayoutData("Page Not Found"))
+        }
+    ) {
+        Text("Error: Page not found")
+    }
+}
+```
+
 ## Are layouts necessary?
 
 Before layouts existed, Kobweb simply recommended users create a composable method and just call it as the first method
