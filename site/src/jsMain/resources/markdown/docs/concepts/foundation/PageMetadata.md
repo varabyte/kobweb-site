@@ -66,7 +66,19 @@ kobweb {
 > not expect that.
 >
 > In a similar fashion, Kobweb application build scripts also will add an `icon` link into the `<head>` block by default
-> as well, which you can control using the `faviconPath` property (which defaults to `"/favicon.ico"`).
+> as well, which you can control using the `faviconPath` property (if not set, defaults to `"/favicon.ico"`).
+>
+> ```kotlin "site/build.gradle.kts"
+> kobweb {
+>    app {
+>       index {
+>          // Convenience properties, no need to add head elements yourself
+>          description.set("My website")
+>          faviconPath.set("/assets/favicon.svg")
+>       }
+>    }
+> }
+> ```
 
 Our `<head>` block is most of the way there, but we're still missing the title! This is because the title is actually
 specified inside the site's `.kobweb/conf.yaml` file. Here, it should look like:

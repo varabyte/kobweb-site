@@ -98,6 +98,28 @@ your Kobweb project at `jsMain/resources/public/assets/images/logo.png`.
 In other words, anything under your project resources' `public/` directory will be automatically copied over to your
 final site (but not including the `public/` part).
 
+### Favicon
+
+Most sites will want to set a custom [favicon](https://developer.mozilla.org/en-US/docs/Glossary/Favicon).
+
+By default, Kobweb looks for an icon at `src/jsMain/resources/public/favicon.ico`.
+
+If you'd like to change this, e.g. to a different path and/or file type, you can configure your project's build script
+as follows:
+
+```kotlin 4 "site/build.gradle.kts"
+kobweb {
+  app {
+    index {
+      faviconPath.set("/assets/favicon.svg")
+      // Favicon should be located at
+      // `src/jsMain/resources/public/assets/favicon.svg`
+    }
+  }
+}
+```
+
+
 ## API endpoints
 
 If your project also provides a backend ${DocsAside("Fullstack", "../server/fullstack")}, then you should have a
