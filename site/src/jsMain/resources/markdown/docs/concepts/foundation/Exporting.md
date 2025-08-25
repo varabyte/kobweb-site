@@ -58,7 +58,7 @@ fun ExampleKobwebPage() {
 }
 ```
 
-Exporting generates the following HTML under your `kobweb/.site` folder, which I've reproduced here with a bunch of
+Exporting generates the following HTML under your `.kobweb/site` folder, which I've reproduced here with a bunch of
 styles elided:
 
 ```html
