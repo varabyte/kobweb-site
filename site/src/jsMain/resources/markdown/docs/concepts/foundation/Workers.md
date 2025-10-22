@@ -102,7 +102,7 @@ class OutputDispatcher<O> {
 ```
 
 > [!NOTE]
-> Do not worry about the `Attachments` parameter for now. This allow you to include additional values that the browser
+> Do not worry about the `Attachments` parameter for now. This allows you to include additional values that the browser
 > supports transferring into and out of workers directly, which can in some cases be a huge performance improvement over
 > including these values in your input/output objects, which would require serializing intermediate values into a
 > string.
@@ -268,7 +268,7 @@ worker.postInput(10) // 10... 9... 8... etc.
 > If you need really accurate, consistent interval timers, creating a worker like this may actually be beneficial.
 > According to [this article](https://hackwild.com/article/web-worker-timers/), web worker timers are slightly more
 > accurate than timers run in the main thread, as they don't have to compete with the rest of the site's
-> responsibilities. Also, it seems that web workers timers stay consistent even if the site tab loses focus.
+> responsibilities. Also, it seems that web worker timers stay consistent even if the site tab loses focus.
 
 ### FindPrimesWorkerFactory
 

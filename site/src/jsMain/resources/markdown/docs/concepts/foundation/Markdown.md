@@ -408,7 +408,7 @@ kobweb {
 }
 ```
 
-Inside the callback, you can also call `generateKotlin` and `generateMarkdown` methods, to easily create files that
+Inside the callback, you can also call the `generateKotlin` and `generateMarkdown` methods, to easily create files that
 will be included in your final site.
 
 Here is a very rough example of creating a listing page for all blog posts in a site (found under the
