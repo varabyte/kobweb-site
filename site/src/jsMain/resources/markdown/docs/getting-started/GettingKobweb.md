@@ -66,7 +66,7 @@ Please visit https://github.com/varabyte/kobweb-cli/issues/11 and consider leavi
 
 ## Download the Kobweb binary
 
-Our binary artifact is hosted on GitHub. To download latest, you can either
+Our binary artifact is hosted on GitHub. To download the latest, you can either
 [grab the zip or tar file from the GitHub](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.21) or you can fetch
 it from your terminal:
 
