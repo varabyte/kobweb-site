@@ -41,7 +41,7 @@ for both plugin *and* library blocks.
 
 An easy way to enable this is by adding the following block of code:
 
-```kotlin 14-26 "settings.gradle.kts"
+```kotlin 14-28 "settings.gradle.kts"
 pluginManagement {
     repositories {
         gradlePluginPortal()
