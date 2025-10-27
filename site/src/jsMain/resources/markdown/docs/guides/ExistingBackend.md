@@ -37,7 +37,7 @@ routing {
 > In the above example, we specify `"index.html"` as a fallback file if no match is found. What this will do is serve
 > your root Kobweb page. This may seem incorrect at first glance, but, after getting fetched, page logic will run and
 > recognize that the route in the URL bar doesn't match any known Kobweb route. Kobweb will then clear the page contents
-> and replace them with an ${DocsLink("error page", "/docs/concepts/routing#custom-error-page")}.
+> and replace them with an ${DocsLink("error page", "/docs/concepts/foundation/routing#custom-error-page")}.
 
 > [!TIP]
 > You can optionally create an empty, top-page composable annotated inside `_404.kt` and use `default("404.html")`
