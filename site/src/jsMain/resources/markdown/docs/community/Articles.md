@@ -16,5 +16,6 @@ If you write one and would like us to share it here, please reach out to us with
 
 ## Localization
 
-* [Localization with Kobweb and Libres](https://blog.fluen.se/tech/kobweb-localization)
-* [SEO-friendly Localization with Kobweb](https://blog.fluen.se/tech/kobweb-localization-seo-friendly)
+* [Localization with Kobweb and Libres (archived)](https://web.archive.org/web/20250821013414/https://blog.fluen.se/tech/kobweb-localization)
+* [SEO-friendly Localization with Kobweb (archived)](https://web.archive.org/web/20250818185810/https://blog.fluen.se/tech/kobweb-localization-seo-friendly)
+
