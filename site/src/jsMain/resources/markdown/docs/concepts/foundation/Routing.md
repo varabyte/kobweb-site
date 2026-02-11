@@ -324,7 +324,7 @@ For example, the catch-all route `"/a/b/c/{...rest}"` would capture `"x/y/z"` in
 
 In practice, using it looks like this:
 
-```kotlin 1,5 "pages/com/mysite/store/products/ProductDetails.kt"
+```kotlin 1,5 "com/mysite/pages/store/products/ProductDetails.kt"
 @Page("{...product-details}")
 @Composable
 fun ProductDetailsPage(ctx: PageContext) {
