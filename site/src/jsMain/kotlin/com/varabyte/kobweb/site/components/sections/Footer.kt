@@ -63,7 +63,7 @@ fun Footer(modifier: Modifier = Modifier) {
             OssLabel()
             Logo()
             SpanText(
-                "Copyright © 2025 Varabyte. All rights reserved.",
+                "Copyright © 2026 Varabyte. All rights reserved.",
                 Modifier.siteText(SiteTextSize.TINY).textAlign(TextAlign.Center),
                 MutedSpanTextVariant
             )
