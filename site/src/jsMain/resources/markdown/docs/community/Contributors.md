@@ -36,6 +36,7 @@ individual contributors for the features they helped us out with.
 * [Jan Wiesbauer](https://github.com/Geanik) - `AlwaysUnderlined` link variant
 * [Jean Christophe]([https://github.com/christomah0]) - Contributed many SVG icons
 * [Jose Salgado](https://github.com/jassycliq) - MDI icons
+* [K4i](https://github.com/k4i6) - Backend HTTP header code now supports multiple values
 * [Kalle Strålman](https://github.com/kjeller) - `generate` code methods in Markdown `process`
 * [MartinTheDragon](https://github.com/MartinTheDragon) - Markdown cross-page linking
 * [Rafael Tonholo](https://github.com/rafaeltonholo) - Box shadows and `Arrangement.spacedBy`
