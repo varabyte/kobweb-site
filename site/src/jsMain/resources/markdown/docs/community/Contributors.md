@@ -27,6 +27,7 @@ individual contributors for the features they helped us out with.
 ### Kobweb
 
 * [Aakarshit Uppal](https://github.com/aksh1618) - Arch Linux support
+* [Ayfri](https://github.com/ayfri) - Lucide icons
 * [Binay Shaw](https://github.com/binayshaw7777) - SVG APIs and icons
 * Conrad Boehnke - Template design, owner of [UI Rocket](https://ui-rocket.com)
 * [DVDAndroid](https://github.com/DVDAndroid) - Gradle support for custom source set names
@@ -35,7 +36,7 @@ individual contributors for the features they helped us out with.
 * [Jakub Meysner](https://github.com/jakubmeysner) - Dokka documentation help
 * [Jan Wiesbauer](https://github.com/Geanik) - `AlwaysUnderlined` link variant
 * [Jean Christophe]([https://github.com/christomah0]) - Contributed many SVG icons
-* [Jose Salgado](https://github.com/jassycliq) - MDI icons
+* [Jose Salgado](https://github.com/jassycliq) - Material Design icons
 * [K4i](https://github.com/k4i6) - Backend HTTP header code now supports multiple values
 * [Kalle Strålman](https://github.com/kjeller) - `generate` code methods in Markdown `process`
 * [MartinTheDragon](https://github.com/MartinTheDragon) - Markdown cross-page linking
@@ -44,6 +45,7 @@ individual contributors for the features they helped us out with.
 * [Shaksternano](https://github.com/shaksternano) - Helped improve Kobweb Workers
 * [Vaibhav Raj](https://github.com/dead8309) - Kotlinx serialization extensions for HTTP APIs 
 * [Yongshun Shreck Ye](https://github.com/ShreckYe) - Added modifiers
+* [Yury Vashchylau](https://github.com/digitalby) - Material Symbol icons
 
 ### Kobweb Site
 
