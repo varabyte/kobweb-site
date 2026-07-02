@@ -34,6 +34,7 @@ individual contributors for the features they helped us out with.
 * [Fabian](https://github.com/zypus) - API events
 * [Jakub Meysner](https://github.com/jakubmeysner) - Dokka documentation help
 * [Jan Wiesbauer](https://github.com/Geanik) - `AlwaysUnderlined` link variant
+* [Jean Christophe]([https://github.com/christomah0]) - Contributed many SVG icons
 * [Jose Salgado](https://github.com/jassycliq) - MDI icons
 * [Kalle Strålman](https://github.com/kjeller) - `generate` code methods in Markdown `process`
 * [MartinTheDragon](https://github.com/MartinTheDragon) - Markdown cross-page linking
