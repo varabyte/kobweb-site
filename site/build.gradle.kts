@@ -130,7 +130,7 @@ kotlin {
     sourceSets {
         jsMain.dependencies {
             implementation(libs.compose.runtime)
-            implementation(libs.compose.html.core)
+            implementation(libs.compose.html)
             implementation(libs.kobweb.core)
             implementation(libs.kobweb.silk.core)
             implementation(libs.kobweb.silk.icons.fa)
