@@ -28,34 +28,34 @@ jobs:
         shell: bash
 
     env:
-      KOBWEB_CLI_VERSION: 0.9.18
+      KOBWEB_CLI_VERSION: 0.9.21
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Query Browser Cache ID
         id: browser-cache-id
         run: echo "value=$(./gradlew -q :site:kobwebBrowserCacheId)" >> $GITHUB_OUTPUT
 
       - name: Cache Browser Dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ steps.browser-cache-id.outputs.value }}
 
       - name: Fetch kobweb
-        uses: robinraju/release-downloader@v1.10
+        uses: robinraju/release-downloader@v1.13
         with:
           repository: "varabyte/kobweb-cli"
           tag: "v${{ env.KOBWEB_CLI_VERSION }}"
@@ -77,7 +77,7 @@ jobs:
           cp index.html 404.html
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./site/.kobweb/site
 
@@ -90,7 +90,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
   reindex-search:
     runs-on: ubuntu-latest
