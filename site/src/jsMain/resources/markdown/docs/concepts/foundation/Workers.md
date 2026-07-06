@@ -12,13 +12,14 @@ between them is via message passing.
 
 > [!NOTE]
 > Astute readers may recognize the [actor model](https://en.wikipedia.org/wiki/Actor_model) here, which is an effective
-> way to allow concurrency without worrying about common synchronization issues that plague common lock-based
+> way to allow concurrency without worrying about common synchronization issues that plague lock-based
 > approaches.
 
 A somewhat forced but easy-to-understand example of a web worker is one that computes the first N prime numbers.
 
 While the worker is crunching away on intensive calculations, your site still works as normal, fully responsive. When
-the worker is finished, it posts a message to the application, which handles it by updating relevant UI elements.
+the worker is finished, it posts a message to the application, which handles it by receiving the message and updating
+relevant UI elements.
 
 ## Web workers wrapped in Kobweb
 
@@ -280,21 +281,27 @@ performs a potentially expensive, UI-agnostic calculation.
 We'll also use this example to demonstrate how to use Kotlinx Serialization to easily declare rich input and output
 message types.
 
-First, add `kotlinx-serialization` and `kobwebx-serialization-kotlinx` to your dependencies:
+First, apply the `kotlinx-serialization` plugin and add `kotlinx-serialization-json` and `kobwebx-serialization-kotlinx`
+dependencies:
 
-```kotlin 4-5 "worker/build.gradle.kts"
+```kotlin 3,9-10 "worker/build.gradle.kts"
+plugins {
+  /*...*/
+  alias(libs.plugins.kotlinx.serialization) // or "org.jetbrains.kotlin.plugin.serialization"
+}
+
 kotlin {
   configAsKobwebWorker()
   jsMain.dependencies {
     implementation(libs.kotlinx.serialization.json) // or "org.jetbrains.kotlinx:kotlinx-serialization-json"
-    implementation(libs.kobwebx.worker.kotlinx.serialization) // or "com.varabyte.kobwebx:kobwebx-serialization-kotlinx"
+    implementation(libs.kobwebx.serialization.kotlinx) // or "com.varabyte.kobwebx:kobwebx-serialization-kotlinx"
   }
 }
 ```
 
-Then, define the worker factory:
+Then, define the worker factory (and relevant support code):
 
-```kotlin 1-2,4-5,28-38
+```kotlin 1-2,4-5,28-35
 @Serializable
 data class FindPrimesInput(val max: Int)
 
@@ -324,11 +331,8 @@ private fun findPrimes(max: Int): List<Int> {
 
 internal class FindPrimesWorkerFactory: WorkerFactory<FindPrimesInput, FindPrimesOutput> {
   override fun createStrategy(postOutput: OutputDispatcher<FindPrimesOutput>) =
-    object : WorkerStrategy<FindPrimesInput>() {
-      override fun onInput(inputMessage: InputMessage<FindPrimesInput>) {
-        val input = inputMessage.input
-        postOutput(FindPrimesOutput(input.max, findPrimes(input.max)))
-      }
+    WorkerStrategy<FindPrimesInput>() { input ->
+      postOutput(FindPrimesOutput(input.max, findPrimes(input.max)))
     }
 
   override fun createIOSerializer() = Json.createIOSerializer<FindPrimesInput, FindPrimesOutput>()
@@ -337,8 +341,12 @@ internal class FindPrimesWorkerFactory: WorkerFactory<FindPrimesInput, FindPrime
 
 Most of the complexity above is the `findPrimes` algorithm itself!
 
-The `onInput` handler is about as easy as it gets. Notice that we pass the input `max` value back into the output, so
-that the receiving application can easily correlate the output with the input.
+The `onInput` handler is about as easy as it gets -- we call `findPrimes` on the requested value and pass the result
+back out.
+
+Notice that we pass a copy of the input `max` value back into the output, so that the receiving application can easily
+correlate the output with the input. Otherwise, this relationship can be lost, as messages are sent and received
+asynchronously.
 
 And finally, note the use of the `Json.createIOSerializer` method call. This utility method comes from the
 `kobwebx-serialization-kotlinx` dependency, allowing you to use a one-liner to implement all the serialization methods
@@ -362,12 +370,12 @@ Using the worker in your application looks like this:
 ```kotlin "Application"
 val worker = rememberWorker {
   FindPrimesWorker {
-    println("Primes for ${it.max}: ${it.primes}")
+    println("Primes ≤ ${it.max}: ${it.primes}")
   }
 }
 
 // Later
-worker.postInput(FindPrimesInput(1000)) // Primes for 1000: [1, 2, 3, 5, 7, 11, ..., 977, 983, 991, 997]
+worker.postInput(FindPrimesInput(1000)) // Primes ≤ 1000: [1, 2, 3, 5, 7, 11, ..., 977, 983, 991, 997]
 ```
 
 The richly-typed input and output messages allow for a very explicit API here, and in the future, more parameters could
@@ -400,28 +408,28 @@ it, you can register named objects in one thread and then retrieve them by that 
 Here's an example where we send a very large array over to a worker.
 
 ```kotlin "Application"
-val largeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
+val siteLargeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
 
 worker.postInput(WorkerInput(), Attachments {
-  add("largeArray", largeArray)
+  add("siteLargeArray", siteLargeArray)
 })
 ```
 ```kotlin "Worker"
-val largeArray = attachments.getUint8Array("largeArray")!!
+val largeArrayFromSite = attachments.getUint8Array("siteLargeArray")!!
 ```
 
 And, of course, workers can send transferable objects back to the main application as well.
 
 ```kotlin "Worker"
-val largeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
+val workerLargeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
 postOutput(WorkerOutput(), Attachments {
-  add("largeArray", largeArray)
+  add("workerLargeArray", workerLargeArray)
 })
 ```
 ```kotlin "Application"
 val worker = rememberWorker {
   ExampleWorker {
-    val largeArray = attachments.getUint8Array("largeArray")!!
+    val largeArray = attachments.getUint8Array("workerLargeArray")!!
     // ...
   }
 }
@@ -431,7 +439,7 @@ Finally, it's worth noting that not every object can be sent directly. In fact, 
 refer to the official docs for
 a full list of [structured clonable types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types)
 and [transferable objects](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Transferable_objects#supported_objects).
-When building a `Attachments` object, the `add` method is type-safe, meaning you cannot add an object that cannot then
+When building an `Attachments` object, the `add` method is type-safe, meaning you cannot add an object that cannot then
 be transferred over.
 
 > [!CAUTION]
@@ -519,4 +527,4 @@ never interact directly with your site's UI.
 >
 > For most practical use-cases, a 60K download is not a deal-breaker, especially as most images are many multiples
 > larger than that. But developers should be aware of this, and if this is indeed a concern, you may decide to avoid
-> using Kobweb workers on your site.
+> using Kobweb workers in your site.
