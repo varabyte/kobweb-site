@@ -312,7 +312,7 @@ However, you can control this by setting the `initialColorMode` property in an `
 ```kotlin
 @InitSilk
 fun setInitialColorMode(ctx: InitSilkContext) {
-    ctx.theme.initialColorMode = ColorMode.DARK
+    ctx.config.initialColorMode = ColorMode.DARK
 }
 ```
 
@@ -321,7 +321,7 @@ If you'd like to respect the user's system preferences, you can set `initialColo
 ```kotlin
 @InitSilk
 fun setInitialColorMode(ctx: InitSilkContext) {
-    ctx.theme.initialColorMode = ColorMode.systemPreference
+    ctx.config.initialColorMode = ColorMode.systemPreference
 }
 ```
 
@@ -336,7 +336,7 @@ The restoration will happen in your `@InitSilk` block, while the code to save th
 ```kotlin 3-4,11-14 "AppEntry.kt"
 @InitSilk
 fun setInitialColorMode(ctx: InitSilkContext) {
-    ctx.theme.initialColorMode =
+    ctx.config.initialColorMode =
       ColorMode.loadFromLocalStorage() ?: ColorMode.systemPreference
 }
 
