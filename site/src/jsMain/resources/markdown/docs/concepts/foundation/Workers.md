@@ -144,9 +144,28 @@ You should think of the `WorkerStrategy` as representing implementation details 
 public API. In other words, the `WorkerStrategy` receives inputs, processes data, and posts outputs, while the `Worker`
 allows users to post inputs and get notified when outputs are sent back.
 
+### Depending on a worker module
+
 An application module (i.e. one that applies the Kobweb Application Gradle plugin) will automatically discover any
 Kobweb worker dependencies, extracting their worker scripts and putting them under the `public/` folder of your final
 site. This way, you don't have to do anything except depend on a worker module to use it.
+
+```kotlin 10 "site/build.gradle.kts"
+plugins {
+  alias(libs.plugins.kobweb.application)
+}
+
+kotlin {
+  configAsKobwebApplication()
+
+  sourceSets {
+    jsMain.dependencies {
+      implementation(project(":worker"))
+    }
+  }
+}
+```
+
 
 ## WorkerFactory examples
 
@@ -157,6 +176,22 @@ above.
 
 The simplest worker strategy possible is one that blindly repeats back whatever text input it receives.
 
+```kotlin "Application module"
+val worker = rememberWorker {
+  EchoWorker { message -> println("Echoed: $message") }
+}
+
+// Later
+worker.postInput("hello!") // After a round trip: "Echoed: hello!"
+```
+
+> [!IMPORTANT]
+> Note the use of the `rememberWorker` method. This internally calls a `remember` but also sets up disposal logic that
+> terminates the worker when the composable is exited. If you just use a normal `remember` block, the worker may keep
+> running longer than you expect, even if you navigate to another part of your site.
+>
+> You can also stop a worker yourself by calling `worker.terminate()` directly.
+
 This is never a worker strategy that you'd actually create -- there wouldn't be a need for it -- but it's a good
 starting point for seeing a worker factory in action.
 
@@ -164,7 +199,7 @@ When you have a worker strategy that works with raw strings like this one does, 
 implement the `createIOSerializer` method, called `createPassThroughSerializer` (since it just passes the raw strings
 through the serializer unmodified).
 
-```kotlin "Worker"
+```kotlin "Worker module"
 internal class EchoWorkerFactory : WorkerFactory<String, String> {
   override fun createStrategy(postOutput: OutputDispatcher<String>) =
     WorkerStrategy<String> { input -> postOutput(input) }
@@ -181,31 +216,25 @@ internal class EchoWorkerFactory : WorkerFactory<String, String> {
 > }
 > ```
 
-Based on that implementation, a worker called `EchoWorker` will be auto-generated at compile time. Using it in your
-application looks like this:
-
-```kotlin "Application"
-val worker = rememberWorker {
-  EchoWorker { message -> println("Echoed: $message") }
-}
-
-// Later
-worker.postInput("hello!") // After a round trip: "Echoed: hello!"
-```
-
-That's it!
-
-> [!IMPORTANT]
-> Note the use of the `rememberWorker` method. This internally calls a `remember` but also sets up disposal logic that
-> terminates the worker when the composable is exited. If you just use a normal `remember` block, the worker may keep
-> running longer than you expect, even if you navigate to another part of your site.
->
-> You can also stop a worker yourself by calling `worker.terminate()` directly.
-
 ### CountDownWorkerFactory
 
 This next worker strategy will take in an `Int` value from the user. This number represents how many seconds to count
 down, firing a message for each second that passes.
+
+```kotlin "Application module"
+val worker = rememberWorker {
+  CountDownWorker { count ->
+    if (count > 0) {
+      console.log(count + "...")
+    } else {
+      console.log("HAPPY NEW YEAR!!!")
+    }
+  }
+}
+
+// Later
+worker.postInput(10) // 10... 9... 8... etc.
+```
 
 This is another strategy that you'd never need in practice -- you'd just use the `window.setInterval` method yourself
 in your site script -- but we'll show this anyway to demonstrate two additional concepts on top of the echo worker:
@@ -213,7 +242,7 @@ in your site script -- but we'll show this anyway to demonstrate two additional 
 * How to define a custom message serializer.
 * The fact that you can call `postOutput` as often as you want.
 
-```kotlin 5,6,15-21 "Worker"
+```kotlin 5,6,15-21 "Worker module"
 internal class CountDownWorkerFactory : WorkerFactory<Int, Int> {
   override fun createStrategy(postOutput: OutputDispatcher<Int>) = WorkerStrategy<Int> { input ->
     var nextCount = input
@@ -248,23 +277,6 @@ Notice the three comment tags above.
   if you generated it yourself in either of the `serialize` methods. If a message serializer ever does throw an
   exception, then the Kobweb worker will simply ignore it as a bad message.
 
-Using the worker in your application looks like this:
-
-```kotlin "Application"
-val worker = rememberWorker {
-  CountDownWorker {
-    if (it > 0) {
-      console.log(it + "...")
-    } else {
-      console.log("HAPPY NEW YEAR!!!")
-    }
-  }
-}
-
-// Later
-worker.postInput(10) // 10... 9... 8... etc.
-```
-
 > [!TIP]
 > If you need really accurate, consistent interval timers, creating a worker like this may actually be beneficial.
 > According to [this article](https://hackwild.com/article/web-worker-timers/), web worker timers are slightly more
@@ -274,6 +286,18 @@ worker.postInput(10) // 10... 9... 8... etc.
 ### FindPrimesWorkerFactory
 
 Finally, we get to the worker idea we introduced in the very first section -- finding the first *N* primes.
+
+```kotlin "Application module"
+val worker = rememberWorker {
+  FindPrimesWorker { output ->
+    println("Primes ≤ ${output.max}: ${output.primes}")
+  }
+}
+
+// Later
+worker.postInput(FindPrimesInput(1000))
+// Primes ≤ 1000: [1, 2, 3, 5, 7, 11, ..., 977, 983, 991, 997]
+```
 
 This kind of worker looks like one that would actually get used in a real codebase -- that being a worker which
 performs a potentially expensive, UI-agnostic calculation.
@@ -365,19 +389,6 @@ for you.
 > }
 > ```
 
-Using the worker in your application looks like this:
-
-```kotlin "Application"
-val worker = rememberWorker {
-  FindPrimesWorker {
-    println("Primes ≤ ${it.max}: ${it.primes}")
-  }
-}
-
-// Later
-worker.postInput(FindPrimesInput(1000)) // Primes ≤ 1000: [1, 2, 3, 5, 7, 11, ..., 977, 983, 991, 997]
-```
-
 The richly-typed input and output messages allow for a very explicit API here, and in the future, more parameters could
 be added (with default values) to either input or output classes, extending the functionality of your workers without
 breaking existing code.
@@ -407,26 +418,26 @@ it, you can register named objects in one thread and then retrieve them by that 
 
 Here's an example where we send a very large array over to a worker.
 
-```kotlin "Application"
+```kotlin "Application module"
 val siteLargeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
 
 worker.postInput(WorkerInput(), Attachments {
   add("siteLargeArray", siteLargeArray)
 })
 ```
-```kotlin "Worker"
+```kotlin "Worker module"
 val largeArrayFromSite = attachments.getUint8Array("siteLargeArray")!!
 ```
 
 And, of course, workers can send transferable objects back to the main application as well.
 
-```kotlin "Worker"
+```kotlin "Worker module"
 val workerLargeArray = Uint8Array(1024 * 1024 * 8).apply { /* initialize it */ }
 postOutput(WorkerOutput(), Attachments {
   add("workerLargeArray", workerLargeArray)
 })
 ```
-```kotlin "Application"
+```kotlin "Application module"
 val worker = rememberWorker {
   ExampleWorker {
     val largeArray = attachments.getUint8Array("workerLargeArray")!!
