@@ -9,7 +9,7 @@ solution for this is a [GitHub workflow](https://docs.github.com/en/actions/usin
 For your convenience, we include a sample workflow below that exports your site and then uploads the results (which can
 be downloaded from a link shown in the workflow summary page):
 
-```yaml 4,27-29,31-34,36-42,61-68 ".github/workflows/export-site.yml"
+```yaml 4,23-24,30-32,34-37,39-45,66-73 ".github/workflows/export-site.yml"
 name: Export Kobweb site
 
 on:
@@ -22,30 +22,33 @@ jobs:
       run:
         shell: bash
 
-    env:
-      KOBWEB_CLI_VERSION: 0.9.21
-
     steps:
+      # Will fetch latest CLI version, e.g. "0.9.21", and store it in KOBWEB_CLI_VERSION env var
+      - name: Fetch latest Kobweb CLI version
+        run: |
+          VERSION=$(curl -sSL https://raw.githubusercontent.com/varabyte/data/refs/heads/main/kobweb/cli-version.txt | xargs)
+          echo "KOBWEB_CLI_VERSION=$VERSION" >> $GITHUB_ENV
+
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 17 # B
 
       # When projects are created on Windows, the executable bit is sometimes lost. So set it back just in case.
       - name: Ensure Gradle is executable
         run: chmod +x gradlew
 
-      # B  
+      # C
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      # C
+      # D
       - name: Query Browser Cache ID
         id: browser-cache-id
         run: echo "value=$(./gradlew -q :site:kobwebBrowserCacheId)" >> $GITHUB_OUTPUT
 
-      # Also C
+      # Also D
       - name: Cache Browser Dependencies
         uses: actions/cache@v4
         id: playwright-cache
@@ -66,11 +69,13 @@ jobs:
         run: unzip kobweb-${{ env.KOBWEB_CLI_VERSION }}.zip
 
       - name: Run export
+        env:
+          KOBWEB_EXPORT_NUM_THREADS: max
         run: |
           cd site
           ../kobweb-${{ env.KOBWEB_CLI_VERSION }}/bin/kobweb export --notty --layout static
 
-      # D
+      # E
       - name: Upload site
         uses: actions/upload-artifact@v4
         with:
@@ -90,12 +95,14 @@ those sections:
   you can also configure your workflow to run on a schedule, or on push to a branch, etc. Please refer to
   the [relevant GitHub docs](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows)
   for a full list of events you can use.
-* ***(B) Setup Gradle:*** This action is optional but I recommend it because it configures a bunch of caching for you.
-* ***(C) Caching the browser:*** `kobweb export` needs to download a browser the first time it is run. This workflow sets up
+* ***(B) Java Version:*** Feel free to change the [Java distribution](https://github.com/marketplace/actions/setup-java-jdk#supported-distributions)
+  and bump up the Java version to something more recent.
+* ***(C) Setup Gradle:*** This action is optional but I recommend it because it configures a bunch of caching for you.
+* ***(D) Caching the browser:*** `kobweb export` needs to download a browser the first time it is run. This workflow sets up
   a cache that saves it across runs. The cache is tagged with a unique ID tied to the current browser version used by
   Kobweb. If this ever changes in a future release, GitHub will be instructed to use a new cache bucket (allowing
   GitHub to eventually clean up the old one).
-* ***(D) Upload site:*** This action uploads the exported site as an artifact. You can then download the artifact from the
+* ***(E) Upload site:*** This action uploads the exported site as an artifact. You can then download the artifact from the
   workflow summary page. Your own workflow will likely delete this action and do something else here, like upload to a
   web server (or some location accessible by your web server) or copy files over into a `gh_pages` repository. I've
   included this here (and set the retention days very low) just so you can verify that the workflow is working for your
