@@ -27,10 +27,12 @@ jobs:
       run:
         shell: bash
 
-    env:
-      KOBWEB_CLI_VERSION: 0.9.21
-
     steps:
+      - name: Fetch latest Kobweb CLI version
+        run: |
+          VERSION=$(curl -sSL https://raw.githubusercontent.com/varabyte/data/refs/heads/main/kobweb/cli-version.txt | xargs)
+          echo "KOBWEB_CLI_VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Checkout
         uses: actions/checkout@v6
 
@@ -67,6 +69,8 @@ jobs:
         run: unzip kobweb-${{ env.KOBWEB_CLI_VERSION }}.zip
 
       - name: Run export
+        env:
+          KOBWEB_EXPORT_NUM_THREADS: max
         run: |
           cd site
           ../kobweb-${{ env.KOBWEB_CLI_VERSION }}/bin/kobweb export --notty --layout static
