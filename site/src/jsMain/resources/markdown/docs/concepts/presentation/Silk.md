@@ -179,8 +179,8 @@ There's a feature in the world of responsive HTML / CSS design called breakpoint
 with debugging breakpoints. Rather, they specify size boundaries for your site when styles change. This is how sites
 present content differently on mobile vs. tablet vs. desktop.
 
-Kobweb provides four breakpoint sizes you can use for your project, which, including using no breakpoint size at all,
-gives you five buckets you can work with when designing your site:
+Kobweb provides five breakpoint sizes you can use for your project, which, including using no breakpoint size at all,
+gives you six buckets you can work with when designing your site:
 
 * no breakpoint - mobile (and larger)
 * sm - tablets (and larger)
