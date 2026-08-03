@@ -96,7 +96,8 @@ those sections:
   the [relevant GitHub docs](https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows)
   for a full list of events you can use.
 * ***(B) Java Version:*** Feel free to change the [Java distribution](https://github.com/marketplace/actions/setup-java-jdk#supported-distributions)
-  and bump up the Java version to something more recent than what we used here.
+  and bump up the Java version to something more recent than what we used here. We are using Java 17 simply because it
+  is the minimum version that the latest version of Gradle requires (at the time of writing this article, at least!)
 * ***(C) Setup Gradle:*** This action is optional, but I recommend it as it configures a bunch of caching for you.
 * ***(D) Caching the browser:*** `kobweb export` needs to download a browser the first time it is run. This workflow
   sets up a cache that saves it across runs. The cache is tagged with a unique ID tied to the current browser version
