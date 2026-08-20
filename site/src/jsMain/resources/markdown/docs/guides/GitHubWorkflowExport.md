@@ -23,7 +23,7 @@ jobs:
         shell: bash
 
     steps:
-      # Will fetch latest CLI version, e.g. "0.9.22", and store it in KOBWEB_CLI_VERSION env var
+      # Will fetch latest CLI version and store it in KOBWEB_CLI_VERSION env var
       - name: Fetch latest Kobweb CLI version
         run: |
           VERSION=$(curl -sSL https://raw.githubusercontent.com/varabyte/data/refs/heads/main/kobweb/cli-version.txt | xargs)
