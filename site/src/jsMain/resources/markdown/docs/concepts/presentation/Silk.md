@@ -1064,10 +1064,18 @@ calc { MyFontSizeScaleFactorVar.value() * 16.px }
 // Output: calc(var(--my-font-size-scale-factor) * 16px)
 ```
 
-## Font Awesome
+## Icons
 
-Kobweb provides the `silk-icons-fa` artifact which you can use in your project if you want access to all the free
-Font Awesome (v6) icons.
+Icons are useful! And Kobweb offers a variety of officially supported choices out of the box. This gives you a wide
+range of options that you can choose to find the exact icon and/or look and feel that best fits your site's
+presentation.
+
+Adding icons to your site is as easy as adding a dependency on one of several Kobweb artifacts, at which point you can
+start referencing them in your code.
+
+### Font Awesome
+
+The `silk-icons-fa` artifact gives you access to all the free Font Awesome (v6) icons.
 
 Using it is easy! Search the [Font Awesome gallery](https://fontawesome.com/search?o=r&m=free), choose an
 icon, and then call it using the associated Font Awesome icon composable.
@@ -1099,36 +1107,80 @@ FaSpider(Modifier.color(Colors.Red))
 > [!NOTE]
 > When you create a project using our `app` template, Font Awesome icons are included.
 
-## Material Design Icons
+### Material Symbols
 
-Kobweb provides the `silk-icons-mdi` artifact which you can use in your project if you want access to all the
-free Material Design icons.
+The `silk-icons-ms` artifact gives you access to Google's Material Symbols set of icons.
 
-Using it is easy! Search the [Material Icons gallery](https://fonts.google.com/icons?icon.set=Material+Icons), choose an
-icon, and then call it using the associated Material Design Icon composable.
+You can search the [Material Symbols gallery](https://fonts.google.com/icons), find an icon, and then render it using
+the associated Material Symbol composable.
 
-For example, let's say after a search I found and wanted to use their
-[bug report icon](https://fonts.google.com/icons?icon.set=Material+Icons&icon.query=bug+report), I could call this in my
-Kobweb code by converting the name to camel case:
+For example, let's say I wanted to use the
+[bug report icon](https://fonts.google.com/icons?icon.query=bug+report). Its associated composable shares the same name
+but converted into camel case:
+
+```kotlin
+MsBugReport()
+```
+
+Material Symbols support three styles: outlined, rounded, and sharp. When viewing an icon in the gallery search
+above, you can preview the effect by changing the relevant style pull-down. If no style is specified, "outlined" is
+chosen by default.
+
+```kotlin
+MsLightMode(style = MsIconStyle.SHARP)
+```
+
+All Material Symbol composables accept a modifier parameter, so you can tweak it further:
+
+```kotlin
+MsError(Modifier.color(Colors.Red))
+```
+
+### Lucide Icons
+
+The `silk-icons-lucide` artifact gives you access to [Lucide icons](https://lucide.dev/icons/).
+
+Once you've found a Lucide icon you are interested in, you can use the corresponding composable which will be using the
+`Lucide` prefix:
+
+```kotlin
+LucideCircleCheck()
+```
+
+All Lucide icons allow you to control their stroke width (defaults to 2):
+
+```kotlin
+LucideStar(strokeWidth = 3.5)
+```
+
+If you'd like to control the icon's size and color, use a modifier for that:
+
+```kotlin
+// Error indicator!
+LucideCircleX(Modifier.color(Colors.Red).size(1.3.em)) 
+```
+
+### Material Design Icons (Legacy)
+
+The `silk-icons-mdi` artifact is a legacy set of icons that have been left in maintenance mode by Google. Work has since
+migrated over to [Material Symbols](#material-symbols).
+
+That said, there may be some icons / styles available in material design icons that are not available in Material
+Symbols, so some users may still choose to use them. 
+
+When you want to search for what's available, you should look through the 
+[Material Design Icons](https://fonts.google.com/icons?icon.set=Material+Icons) set.
+
+Materia Design Icon composables begin with an `Mdi` prefix.
 
 ```kotlin
 MdiBugReport()
 ```
 
-That's it!
-
-Most material design icons support multiple styles: outlined, filled, rounded, sharp, and two-tone. Check the gallery
-search link above to verify what styles are supported by your icon. You can identify the one you want to use by passing
-it into the method's `style` parameter:
+and, for those that accept styles, you can choose between outlined, filled rounded, sharp, and two-tone.
 
 ```kotlin
 MdiLightMode(style = IconStyle.TWO_TONED)
-```
-
-All Material Design Icon composables accept a modifier parameter, so you can tweak it further:
-
-```kotlin
-MdiError(Modifier.color(Colors.Red))
 ```
 
 ## The Silk stylesheet
