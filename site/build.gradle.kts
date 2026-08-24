@@ -136,6 +136,9 @@ kotlin {
             implementation(libs.kobweb.silk.icons.fa)
             implementation(libs.kobwebx.markdown)
             implementation(npm("@docsearch/js", "3.9.0"))
+            // SWC has a minifier that is much faster than the webpack default
+            // See: webpack.config.d/optimization.js
+            implementation(devNpm("@swc/core", "1.16.1"))
         }
     }
 }
