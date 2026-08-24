@@ -208,10 +208,11 @@ could be passed into a dynamic route.
 However, if you have a specific instance of a dynamic route that you'd like to export, you can configure your site's
 build script as follows:
 
-```kotlin 4 "site/build.gradle.kts"
+```kotlin 5 "site/build.gradle.kts"
 kobweb {
   app {
     export {
+      // Special instance of dynamic route "/users/{user}/posts/{post}"
       addExtraRoute("/users/default/posts/0", exportPath = "users/index.html")
     }
   }
