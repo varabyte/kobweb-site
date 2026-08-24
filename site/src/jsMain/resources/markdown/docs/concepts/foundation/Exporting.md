@@ -236,7 +236,7 @@ information and some clear, concrete examples:
 * [Static site generation and deployment with Kobweb](https://bitspittle.dev/blog/2022/static-deploy)
 * [Deploying Kobweb into the cloud](https://bitspittle.dev/blog/2023/cloud-deploy)
 
-## Exporting traces
+## Generating export traces
 
 The Kobweb export feature is built on top of [Microsoft Playwright](https://playwright.dev/), a solution for making it
 easy to download and run browsers programmatically.
