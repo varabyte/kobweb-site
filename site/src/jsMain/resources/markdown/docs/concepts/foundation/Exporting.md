@@ -290,3 +290,132 @@ the [Playwright Trace Viewer](https://trace.playwright.dev/).
 It's not expected many users will need to debug their site exports, but it's a great tool to have (especially combined
 with ${DocsLink("server logging", "/docs/concepts/server/fullstack#server-logs")}) to diagnose if one of your pages is
 taking longer to export than expected.
+
+## Performance optimizations
+
+At a high level, a huge chunk of the export step is Webpack processing your project, and then most of the time following
+that is Kobweb snapshotting your pages.
+
+> [!NOTE]
+> [Webpack](https://webpack.js.org/) is a module bundler, which means it is responsible for collecting all JS and CSS
+> files in your project and combining them. It provides a bunch of configurable functionality, such as dead-code
+> elimination, minification, etc. Kotlin/JS uses it as the solution for generating your web output. (In the future,
+> Kotlin/JS plans to allow projects to switch their bundler, but that isn't available at the time of writing this note.)
+
+For smaller sites, the export process takes less than a few minutes, and there's not too much you can do to speed it up
+significantly at that point. But for larger sites, the following sections can help dramatically.
+
+### Configuring webpack to be faster
+
+If your site grows over time, you may see your export times increase significantly. A majority of this time is spent in
+Webpack, so we'll tackle that first.
+
+> [!NOTE]
+> The solution provided in this section comes from user [Ayfri](https://github.com/Ayfri), author of
+> [Kore](https://github.com/Ayfri/Kore). He ran into the issue, profiled his export, experimented with different
+> configurations, and reported his experiences to me. For his project, he dropped the time he was spending in Webpack
+> from 10 minutes down to less than 1 minute.
+
+Changing two settings -- concatenation behavior and the minifier -- can drastically reduce the time it takes to
+process your site.
+
+#### Module concatenation
+
+Kotlin/JS generates a number of large files containing micro-modules: basically, code that is wrapped and treated as
+separated and isolated from everything else. For production builds, Webpack by default tries to combine all these
+modules safely, as that allows for more thorough dead-code elimination later.
+
+However, this can be a massive hit to your export times! In the end, _not_ concatenating your modules may only increase
+your final site by a modest few kilobytes. Users are not likely to notice the difference, either, as JavaScript engines
+are highly optimized to work with module closures.
+
+#### Minification
+
+By default, Webpack uses [Terser](https://github.com/terser/terser) to handle minification. However, it is very slow
+with large input files, due to a lack of parallelism. And Kotlin/JS generates a bunch of large, monolothic files.
+
+In contrast, [SWC](https://swc.rs/), a suite of developer tools, has the
+[SWC Minimizer](https://swc.rs/docs/configuration/minification), which uses a multithreaded algorithm even within a
+single file.
+
+#### Optimizing your project
+
+If you want to use the SWC minimizer, the first thing you need to do is add a dependency on it in your build script
+dependencies block. That looks like this:
+
+```kotlin 6-8 "site/build.gradle.kts"
+kotlin {
+    sourceSets {
+        jsMain.dependencies {
+            implementation(libs.kobweb.core)
+            /*...*/
+            // SWC has a minifier that is much faster than the webpack default
+            // See: webpack.config.d/optimization.js
+            implementation(devNpm("@swc/core", "1.16.1"))
+        }
+    }
+}
+```
+
+Second, if you create a `webpack.config.d` directory in your site's root and add some JavaScript in there, then Webpack
+will pick it up and run it.
+
+> [!TIP]
+> Using `webpack.config.d` is probably the easiest way to configure Webpack for values that the KGP plugin doesn't
+> expose.
+
+Here, we recommend creating a file that will get run, abort if not in production mode, and otherwise configure the
+changes we discussed above.
+
+```javascript "site/webpack.config.d/optimization.js"
+// noinspection JSUnresolvedReference,NpmUsedModulesInstalled
+
+// Kotlin/JS emits the whole app as one module, which doesn't play well with webpack's production defaults.
+
+;(function () {
+    if (config.mode !== 'production') return;
+    const TerserPlugin = require('terser-webpack-plugin');
+    config.optimization = config.optimization || {};
+    config.optimization.concatenateModules = false;
+    config.optimization.minimizer = [
+        new TerserPlugin({
+            // SWC is natively multithreaded, even per-file, providing a speed boost.
+            // It is added in build.gradle.kts as a devNpm dependency.
+            minify: TerserPlugin.swcMinify,
+        }),
+    ];
+})();
+```
+
+You can, of course, play with these settings yourself. If you don't care about how long your CI/CD takes to run, you can
+leave this out entirely, keep `concatenateModules` set to `true`, tweak settings further, etc. 
+
+### Snapshotting concurrency
+
+Kobweb aims to snapshot its pages in parallel. By default, it looks at your system's available CPU core count and uses
+half of that number to spawn a bunch of workers.
+
+You can configure this value by setting the `kobweb.app.export.numThreads` property in your build script. Since you may
+want to configure this value differently based on the environment you are exporting in (e.g., such as a CI/CD
+pipeline), you can also set the `KOBWEB_EXPORT_NUM_THREADS` environment variable.
+
+If you set the value to `1` it disables parallelism and runs your snapshots sequentially.
+
+If you are changing this value via the environment variable, you can also use a handful of special-case string values:
+`"max"` meaning use all available cores, `"high"` meaning use 75% of them, and `"half"` is, I hope, self-explanatory at
+this point! For example, you can set `KOBWEB_EXPORT_NUM_THREADS=high`.
+
+> [!CAUTION]
+> Just because you can crank up the number of threads doesn't mean you should. If a system has limited CPU processing
+> power (such as many free CI/CD runner tiers), the extra threads may significantly increase the time it takes each page
+> to snapshot itself. The more workers you have, the more browser instances get started up at the same time. "Half"
+> seems to be a good balance for many environments.
+
+> [!TIP]
+> Consider reviewing the ${DocsLink("Exporting using GitHub Workflows", "/docs/guides/git-hub-workflow-export")}
+> article which includes an example of configuring this value.
+
+
+
+
+

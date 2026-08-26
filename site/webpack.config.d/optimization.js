@@ -9,11 +9,12 @@
     if (config.mode !== 'production') return;
     const TerserPlugin = require('terser-webpack-plugin');
     config.optimization = config.optimization || {};
-    config.optimization.concatenateModules = false;
+    // Disable concatenateModules if export times start to get out of hand as the site grows larger
+    // config.optimization.concatenateModules = false;
     config.optimization.minimizer = [
         new TerserPlugin({
             extractComments: false,
-            // SWC it natively multithreaded, even per-file, providing a speed boost.
+            // SWC is natively multithreaded, even per-file, providing a speed boost.
             // It is added in build.gradle.kts as a devNpm dependency.
             minify: TerserPlugin.swcMinify,
             terserOptions: {
