@@ -107,6 +107,20 @@ running under the hood.
 For custom CI/CD setups, you will at the very least need to be aware that the Kobweb export process requires a browser.
 For users who would like more information about this, ${DocsLink("we share a concrete example in a guide much later", "/docs/guides/git-hub-workflow-export")}.
 
+### Using a local installation
+
+If you have a local installation of Chrome, Edge, Firefox, or Safari that you would prefer to use, thereby avoiding a
+download step when you export for the first time, you can do this one of two ways:
+
+1. In your build script, set the `kobweb.app.export.browserPath` property and ensure that the
+   `kobweb.app.export.browser` type property matches. It defaults to `Browser.Chromium`.
+2. Set the environment variable `KOBWEB_EXPORT_BROWSER_PATH` to the path. If it is not a Chrome installation, you must
+   also set `KOBWEB_EXPORT_BROWSER_TYPE` (allowed values: `Chromium`, `Edge`, `Firefox`, and `WebKit`).
+
+We seldom expose environment variables as a way to configure Kobweb build properties, but here, it feels natural since
+baking a specific, local path into a project's build script doesn't really make sense. This can also play nice with CIs,
+where it is trivial to set an environment variable.
+
 ## Static layout vs. Full stack sites
 
 There are two flavors of Kobweb sites: *static* and *full stack*.
