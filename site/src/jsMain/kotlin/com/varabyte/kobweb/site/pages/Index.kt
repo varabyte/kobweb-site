@@ -10,7 +10,6 @@ import com.varabyte.kobweb.core.data.add
 import com.varabyte.kobweb.core.init.InitRoute
 import com.varabyte.kobweb.core.init.InitRouteContext
 import com.varabyte.kobweb.core.layout.Layout
-import com.varabyte.kobweb.site.components.layouts.PageLayout
 import com.varabyte.kobweb.site.components.layouts.PageLayoutData
 import com.varabyte.kobweb.site.components.sections.home.CliSection
 import com.varabyte.kobweb.site.components.sections.home.CtaSection
