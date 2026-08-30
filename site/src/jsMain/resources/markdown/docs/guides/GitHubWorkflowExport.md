@@ -9,7 +9,7 @@ solution for this is a [GitHub workflow](https://docs.github.com/en/actions/usin
 Below, we include a sample workflow that exports a site and then uploads the results which you can then download from
 that workflow's summary page:
 
-```yaml 4,23-24,30-32,34-37,39-45,66-73 ".github/workflows/export-site.yml"
+```yaml 4,23-24,30-32,34-37,39-45,60-61,66-73 ".github/workflows/export-site.yml"
 name: Export Kobweb site
 
 on:
@@ -29,8 +29,8 @@ jobs:
           VERSION=$(curl -sSL https://raw.githubusercontent.com/varabyte/data/refs/heads/main/kobweb/cli-version.txt | xargs)
           echo "KOBWEB_CLI_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 17 # B
@@ -41,7 +41,7 @@ jobs:
 
       # C
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v6
 
       # D
       - name: Query Browser Cache ID
@@ -50,7 +50,7 @@ jobs:
 
       # Also D
       - name: Cache Browser Dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         id: playwright-cache
         with:
           path: ~/.cache/ms-playwright
@@ -70,14 +70,14 @@ jobs:
 
       - name: Run export
         env:
-          KOBWEB_EXPORT_NUM_THREADS: max
+          KOBWEB_EXPORT_NUM_THREADS: half # E
         run: |
           cd site
           ../kobweb-${{ env.KOBWEB_CLI_VERSION }}/bin/kobweb export --notty --layout static
 
-      # E
+      # F
       - name: Upload site
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: site
           path: site/.kobweb/site/
@@ -103,13 +103,45 @@ those sections:
   sets up a cache that saves it across runs. The cache is tagged with a unique ID tied to the current browser version
   used by Kobweb. If this ever changes in a future release, GitHub will be instructed to use a new cache bucket
   (allowing GitHub to eventually clean up the old one).
-* ***(E) Upload site:*** This action uploads the exported site as an artifact. You can then download the artifact from
+* ***(E) Configure export parallelism:*** This line actually has no effect because "half of available CPU cores" is the
+  default value for `KOBWEB_EXPORT_NUM_THREADS`. However, you may want to experiment setting this value to "max" (100%),
+  "high" (75%), "1" (disable parallelism), or other values, based on the power of your CI environment, so we included it
+  here. You can delete these lines as well if you are happy with the default behavior.
+* ***(F) Upload site:*** This action uploads the exported site as an artifact. You can then download the artifact from
   the workflow summary page. Your own workflow will likely delete this action and do something else here, like upload to
   a web server (or some location accessible by your web server) or copy files over into a `gh_pages` repository. Still,
   I've included this here (and set the retention days very low) just so you can verify that the workflow is working for your
   project.
 
-For a simple site, the above workflow should take about 2 minutes to run.
+For a simple site, the above workflow should take no more than 2 to 3 minutes to run.
 
 To see a real example, you can [review the workflow](https://github.com/varabyte/kobweb-site/blob/main/.github/workflows/export-and-deploy-site.yml)
 used by this very site!
+
+### Exporting a fullstack site
+
+The above example assumes you want to export a site with a static layout. If you are hoping to export a fullstack site
+instead, you have to change two lines -- the export itself, and the upload artifacts step:
+
+```yaml 4,9-11
+      - name: Run export
+        run: |
+          cd site
+          ../kobweb-${{ env.KOBWEB_CLI_VERSION }}/bin/kobweb export --notty --layout fullstack
+
+      - name: Upload site
+        uses: actions/upload-artifact@v7
+        with:
+          name: kobweb-folder
+          path: site/.kobweb
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+```
+
+> [!CAUTION]
+> Note how we set the `include-hidden-files` key to true. If you don't do this, the `upload-artifact` action filters out
+> the `.kobweb` path we pass in, ultimately uploading nothing!
+
+I discuss more about exporting fullstack sites in this [blog post](https://bitspittle.dev/blog/2023/cloud-deploy)
+(since, once you've uploaded the site, you probably want to download it again somewhere.)
