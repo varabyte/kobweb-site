@@ -63,23 +63,33 @@ You can define and annotate methods which will generate server endpoints you can
 
 For example, here's a simple method that echoes back an argument passed into it:
 
-```kotlin "jvmMain/kotlin/com/mysite/api/Echo.kt"
+```kotlin 1,3,4 "jvmMain/kotlin/com/mysite/api/Echo.kt"
+package com.mysite.api
+
 @Api
 suspend fun echo(ctx: ApiContext) {
     // ctx.req is for the incoming request, ctx.res for responding back to the client
 
     // Params are parsed from the URL, e.g. here "/api/echo?message=..."
     val msg = ctx.req.params["message"] ?: ""
-    ctx.res.setBodyText(msg)
+    ctx.res.body = bodyOf(msg)
 }
 ```
+
+> [!NOTE]
+> Above, we use `bodyOf` to set the body of the response we sent back to the user. There are several flavors of `bodyOf`
+> methods for wrapping different kinds of content, but by far the most common is the one that wraps a string value,
+> which we have used here and throughout this article.
+> 
+> You can reference [the relevant API documentation](https://varabyte.github.io/kobweb/backend/kobweb-api/com.varabyte.kobweb.api.http/body-of.html?query=fun%20bodyOf(text:%20String,%20contentType:%20String%20=%20%22text/plain%22):%20Body)
+> to see the full list.
 
 After running your project, you can test the endpoint by visiting `mysite.com/api/echo?message=hello`
 
 You can also trigger the endpoint in your frontend code by using the extension `api` property added to the
 `kotlinx.browser.window` class:
 
-```kotlin "jsMain/kotlin/com/mysite/pages/ApiDemo.kt"
+```kotlin 8-10 "jsMain/kotlin/com/mysite/pages/ApiDemo.kt"
 @Page
 @Composable
 fun ApiDemoPage() {
@@ -87,7 +97,10 @@ fun ApiDemoPage() {
 
   Button(onClick = {
     coroutineScope.launch {
-      println("Echoed: " + window.api.get("echo?message=hello").decodeToString())
+      val echoed = window.api.get("echo?message=hello")
+          .bodyAsBytes()
+          .decodeToString()
+      println("Echoed: $echoed")
     }
   }) { Text("Click me") }
 }
@@ -124,11 +137,11 @@ suspend fun noActionButOk(ctx: ApiContext) {
 ```
 
 > [!IMPORTANT]
-> The `ctx.res.setBodyText` method sets the status code to 200 automatically for you, which is why code in an earlier
-> section worked without setting the status directly. Of course, if you wanted to return a different status code value
-> after setting the body text, you could explicitly set it right after making the `setBodyText` call. For example:
+> Setting the `ctx.res.body` property also sets the status code to 200 automatically for you, which is why code in an
+> earlier section worked without setting the status directly. Of course, if you wanted to return a different status code
+> value after setting the body text, you could explicitly set it right after modifying `body`. For example:
 > ```kotlin
-> ctx.res.setBodyText("...")
+> ctx.res.body = bodyOf("...")
 > ctx.res.status = 201
 > ```
 
@@ -178,7 +191,7 @@ particular path, you can call `ctx.dispatcher.dispatch()` to pass it on as norma
 @ApiInterceptor
 suspend fun interceptRequest(ctx: ApiInterceptorContext): Response {
     return when {
-        ctx.path == "/example" -> Response().apply { setBodyText("Intercepted!") }
+        ctx.path == "/example" -> Response().apply { body = bodyOf("Intercepted!") }
         // Default: pass request to the route it is normally handled by
         else -> ctx.dispatcher.dispatch()
     }
@@ -191,7 +204,7 @@ to modify it first (e.g. adding cookies, updating headers) before it gets handle
 The `ctx.dispatcher.dispatch` method takes an optional path you can specify so that you can delegate a request to a
 different API route:
 
-```kotlin
+```kotlin 4-6
 @ApiInterceptor
 suspend fun interceptRequest(ctx: ApiInterceptorContext): Response {
     return when {
@@ -249,7 +262,9 @@ Once this API endpoint is defined, query it as you would any normal API endpoint
 coroutineScope.launch {
   // Will cause the "article" variable on the server
  // to get set to "123"
-  val articleText = window.api.get("articles/123").decodeToString()
+  val articleText = window.api.get("articles/123")
+      .bodyAsBytes()
+      .decodeToString()
   // ...
 }
 ```
@@ -289,15 +304,16 @@ fun initDatabase(ctx: InitApiContext) {
 fun getUsers(ctx: ApiContext) {
   if (ctx.req.method != HttpMethod.GET) return
   val db = ctx.data.getValue<Database>()
-  ctx.res.setBodyText(db.query("SELECT * FROM users").toString())
+  ctx.res.body = bodyOf(db.query("SELECT * FROM users").toString())
 }
 ```
 
 ## <span id="api-streams">Define API streams</span>
 
 Kobweb servers support persistent connections via streams. Streams are essentially named channels that maintain
-continuous contact between the client and the server, allowing either to send messages to the other at any time. This is
-especially useful if you want your server to be able to communicate updates to your client without needing to poll.
+continuous contact between the client and the server, allowing either side to send messages to the other at any time.
+This is especially useful if you want your server to be able to communicate updates to your client without needing to
+poll.
 
 Additionally, multiple clients can connect to the same stream. In this case, the server can choose to not only send a
 message back to your client, but also to broadcast messages to all users (or a filtered subset of users) on the same
