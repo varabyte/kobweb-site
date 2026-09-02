@@ -528,3 +528,68 @@ Once configured, your Kobweb server will be able to respond to data requests fro
 > If you find that your full-stack site, which was working locally during development, rejects requests in the
 > production version, check your browser's console logs. If you see errors in there about a violated CORS policy, that
 > means you didn't configure CORS correctly.
+
+## Passing in system properties
+
+You may find yourself wanting to pass a value from your build script into your server code. To do this, you can add
+values into the `kobweb.app.server.systemProperties` property.
+
+```kotlin "site/build.gradle.kts"
+kobweb {
+    app {
+        server {
+            systemProperties.put("db.type", "MongoDb")
+        }
+    }
+}
+```
+
+and then, just call `System.getProperty` in your backend code:
+
+```kotlin 13 "site/src/jvmMain/kotlin/model/Database.kt"
+enum class DbType {
+    InMemory,
+    MongoDb
+}
+
+interface Database {
+   fun get(key: String): String?
+   /*...*/
+}
+
+@InitApi
+fun initDatabase(ctx: InitApiContext) {
+   val dbType = SystemProperty.get("db.type").let { DbType.valueOf(it) }
+   val db = when (dbType) {
+       DbType.InMemory -> InMemoryDatabase()
+       DbType.MongoDb -> MongoDatabase()
+   }
+   ctx.data.add<Database>(db)
+}
+```
+
+A useful pattern could be to allow users to override the value via an environment variable, at which point you could
+control it from, for example, your CI/CD runner:
+
+```kotlin 6-8 "site/build.gradle.kts"
+kobweb {
+    app {
+        server {
+            systemProperties.put(
+               "db.type",
+               providers.environmentVariable("DB_TYPE")
+                  .orElse("InMemory")
+                  .get()
+            )
+        }
+    }
+}
+```
+```yaml ".github/workflows/export-prod.yaml"
+# ...
+
+env:
+  DB_TYPE: MongoDb
+
+# ...
+```
