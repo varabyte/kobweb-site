@@ -471,6 +471,7 @@ server:
     level: DEBUG # ALL, TRACE, DEBUG, INFO, WARN, ERROR, OFF
     enableConsoleLogging: true # If false, logs will not be written to stdout/stderr
     enableFileLogging: true # If false, a log file will not be created
+    interceptSystemOutput: true # If true, println and System.err will generate logs
     logRoot: ".kobweb/server/logs"
     clearLogsOnStart: true # Warning - if true, wipes ALL files in logRoot, so don't put other files in there!
     logFileBaseName: "kobweb-server" # e.g. "kobweb-server.log", "kobweb-server.2023-04-13.log"
