@@ -553,8 +553,8 @@ enum class DbType {
 }
 
 interface Database {
-   fun get(key: String): String?
-   /*...*/
+   interface Result { /* ... */ }
+   fun query(input: String): Result
 }
 
 @InitApi
