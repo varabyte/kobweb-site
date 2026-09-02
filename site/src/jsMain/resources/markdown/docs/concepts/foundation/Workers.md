@@ -34,6 +34,9 @@ Here's everything you have to do (we'll show concrete examples of these steps be
 * Declare a dependency on `"com.varabyte.kobweb:kobweb-worker"`.
 * Implement the `WorkerFactory` interface, providing a `WorkerStrategy` that represents the core logic of your worker.
 
+Once done, build your code, as this will generate a `Worker` class that you can then use from your client to interact
+with the strategy.
+
 ### Build script
 
 ```kotlin 1,5,12,15 "worker/build.gradle.kts"
