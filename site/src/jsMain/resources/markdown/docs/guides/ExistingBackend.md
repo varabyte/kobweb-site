@@ -39,28 +39,13 @@ routing {
 > recognize that the route in the URL bar doesn't match any known Kobweb route. Kobweb will then clear the page contents
 > and replace them with an ${DocsLink("error page", "/docs/concepts/foundation/routing#custom-error-page")}.
 
-> [!TIP]
-> You can optionally create an empty, top-page composable annotated inside `_404.kt` and use `default("404.html")`
-> instead. This will work the same way as `index.html` does above, triggering Kobweb's error page logic, but
-> `404.html`'s exported size will be smaller since you're not snapshotting page content you don't need. As a bonus, this
-> approach is also compatible with GitHub pages.
-> 
-> ```kotlin "jsMain/kotlin/com/mysite/pages/_404.kt
-> @Composable
-> @Page
-> fun ErrorPage() {
->    // Intentionally left empty for minimal export size. This will get
->    // served when Kobweb detects a missing route, and then the page
->    // logic will run, automatically replacing the current screen with
->    // the site's actual error page.
-> }
-> ```
-
 ## Querying API endpoints
 
-Although Kobweb provides its own opinionated way to define and access API endpoints, of course you can query raw HTTP
-endpoints exposed by your backend. You can
-use [`window.fetch(...)`](https://developer.mozilla.org/en-US/docs/Web/API/fetch) directly, or you can use the
+Although Kobweb provides its own opinionated way to define and access API endpoints, you can also query raw HTTP
+endpoints exposed by your backend. For example, let's say you have a custom Ktor server where you exposed
+`"/my/endpoint"` for querying data.
+
+You can use [`window.fetch(...)`](https://developer.mozilla.org/en-US/docs/Web/API/fetch) directly, or you can use the
 convenience `http` property that Kobweb adds to the `window` object which exposes all the HTTP methods (`get`, `post`,
 `put`, etc.):
 
@@ -69,13 +54,64 @@ convenience `http` property that Kobweb adds to the `window` object which expose
 @Composable
 fun CustomBackendDemoPage() {
   LaunchedEffect(Unit) {
-    val endpointResponse = window.http.get("/my/endpoint?id=123").decodeToString()
+    val endpointResponse = window.http.get("/my/endpoint?id=123")
+        .bodyAsBytes()
+        .decodeToString()
     /* ... */
   }
 }
 ```
 
+> [!NOTE]
+> `window.http` and `window.api` are both nearly identical in functionality, but `window.api` adds a bit of extra logic
+> to prefix your route with `"api/"`, essentially, respecting Kobweb's convention. But if you are using your own custom
+> backend, we expect you will likely come up with your own approach.
+
+## Limitations
+
 Unfortunately, using your own backend does mean you're opting out of using Kobweb's full stack solution, which means you
 won't have access to Kobweb's API routes, API streams, or live reloading support. This is a situation we'd like to
 improve someday ([link to tracking issue](https://github.com/varabyte/kobweb/issues/22)), but we don't have enough
 resources to be able to prioritize resolving this for a 1.0 release.
+
+## Example configs
+
+Some of our users have shared their custom hosting configurations with us. If you have your own that you would like to
+see added here, consider ${DocsLink("reaching out to us", "../community/connecting-with-us")} to let us know more about
+it (or [edit the page and file a PR](https://github.com/varabyte/kobweb-site/edit/main/site/src/jsMain/resources/markdown/docs/guides/ExistingBackend.md)).
+
+### Apache
+
+``` ".htaccess"
+RewriteEngine on
+
+RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+RewriteRule ^ /%1 [NC,L,R]
+
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^ %{REQUEST_URI}.html [NC,L]
+```
+
+### Caddy
+
+``` "Caddyfile"
+example.com {
+  root * /var/www/htdocs/
+  file_server
+  encode gzip
+  try_files {path}.html {path}
+}
+```
+
+### Nginx
+
+``` "nginx.conf"
+location / {
+    if ($request_uri ~ ^/(.*).html) {
+        return 301 /$1$is_args$args;
+    }
+    try_files $uri $uri.html $uri/ =404;
+}
+```
+
+
