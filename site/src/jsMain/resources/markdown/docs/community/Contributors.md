@@ -53,3 +53,4 @@ individual contributors for the features they helped us out with.
 * [Mrldjx](https://github.com/mrljdx) - Inline YouTube video player
 * [Ondra Karmazín](https://github.com/okarmazin) - Docs additions
 * [Patrick Goldinger](https://github.com/patrickgold) - Typo fix
+* [TheDome](https://github.com/TheDome0) - Custom web server configuration examples
