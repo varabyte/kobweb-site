@@ -25,13 +25,8 @@ output files.
 
 ### conf.yaml
 
-The file `conf.yaml`, also called the "Kobweb conf" file, is very important. It contains configuration needed by the
-Kobweb server, and if the file doesn't exist, the Kobweb server won't run.
-
-There are also some values that are used by the client as well. However, such values will also be referenced by the 
-server. If a value is only needed by the client and not the server, it will live in the Gradle build script instead.
-
-Specific `conf.yaml` values will be discussed through these docs in relevant sections.
+The file `conf.yaml`, also called the ${DocsLink("Kobweb Conf", "kobweb-conf")} file, is very important. It contains
+configuration needed by the Kobweb server, and if the file doesn't exist, the Kobweb server won't run.
 
 ### server
 

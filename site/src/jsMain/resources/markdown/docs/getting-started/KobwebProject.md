@@ -60,8 +60,7 @@ $ kobweb run
 This command spins up a web server at `http://localhost:8080`.
 
 > [!TIP]
-> If you want to configure the port, you can do so by editing your project's `.kobweb/conf.yaml` file. Most projects
-> shouldn't care about this, but it could be useful if you are working on two related Kobweb sites at the same time.
+> If you want to configure the port, you can do so by editing your project's ${DocsLink("Kobweb configuration file", "../concepts/foundation/kobweb-conf")}.
 
 At this point, you can open your project in IntelliJ and start editing it. While Kobweb is running, it will detect
 changes in your source code, recompile, and deploy updates to your site automatically.

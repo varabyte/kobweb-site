@@ -204,6 +204,7 @@ object SiteListingGenerator {
 
             "concepts/foundation/Index.md",
             "concepts/foundation/ProjectStructure.md",
+            "concepts/foundation/KobwebConf.md",
             "concepts/foundation/Routing.md",
             "concepts/foundation/ApplicationRoot.md",
             "concepts/foundation/Layouts.md",
