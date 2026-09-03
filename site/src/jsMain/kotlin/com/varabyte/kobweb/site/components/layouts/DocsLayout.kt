@@ -52,6 +52,7 @@ import com.varabyte.kobweb.site.model.GITHUB_REPO_BASE
 import com.varabyte.kobweb.site.model.listing.*
 import com.varabyte.kobwebx.markdown.markdown
 import kotlinx.browser.document
+import kotlinx.browser.window
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.*
 import org.w3c.dom.HTMLElement
@@ -264,7 +265,9 @@ fun DocsLayout(ctx: PageContext, content: @Composable () -> Unit) {
             }
             Column(Modifier.fontSize(FontSizeVars.SM.value()).gap(0.25.cssRem)) {
                 if (headings.isNotEmpty()) {
-                    SpanText("On this page", Modifier.fontWeight(FontWeight.Bold))
+                    Link(window.location.pathname, variant = UndecoratedLinkVariant.then(UncoloredLinkVariant)) {
+                        SpanText("On this page", Modifier.fontWeight(FontWeight.Bold))
+                    }
                 }
                 DynamicToc(
                     headings = headings,

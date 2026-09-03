@@ -1,7 +1,7 @@
 [versions]
 compose-html = "1.11.1"
 compose-runtime = "1.12.0"
-kobweb = "0.25.1"
+kobweb = "0.25.2-SNAPSHOT"
 kotlin = "2.4.10"
 
 [libraries]
