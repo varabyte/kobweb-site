@@ -1,5 +1,5 @@
 ---
-description: Understanding the high levels structre of a Kobweb project.
+description: Understanding the high levels structure of a Kobweb project.
 ---
 
 Trying to find your way around a Kobweb project for the first time? This page will help you understand the high level
