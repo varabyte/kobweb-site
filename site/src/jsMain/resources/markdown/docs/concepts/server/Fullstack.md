@@ -76,14 +76,6 @@ suspend fun echo(ctx: ApiContext) {
 }
 ```
 
-> [!NOTE]
-> Above, we use `bodyOf` to set the body of the response we sent back to the user. There are several flavors of `bodyOf`
-> methods for wrapping different kinds of content, but by far the most common is the one that wraps a string value,
-> which we have used here and throughout this article.
-> 
-> You can reference [the relevant API documentation](https://varabyte.github.io/kobweb/backend/kobweb-api/com.varabyte.kobweb.api.http/body-of.html?query=fun%20bodyOf(text:%20String,%20contentType:%20String%20=%20%22text/plain%22):%20Body)
-> to see the full list.
-
 After running your project, you can test the endpoint by visiting `mysite.com/api/echo?message=hello`
 
 You can also trigger the endpoint in your frontend code by using the extension `api` property added to the
@@ -113,6 +105,10 @@ corresponding "try" version that will return null instead (`tryPost`, `tryPut`, 
 
 If you know what you're doing, you can, of course, always use [`window.fetch(...)`](https://developer.mozilla.org/en-US/docs/Web/API/fetch)
 directly.
+
+> [!CAUTION]
+> Kobweb API endpoints are prefixed with "api/", so if you want to do a raw `window.fetch`, be sure to add it in
+> explicitly yourself. In other words, you would `window.fetch` `"/api/echo"`, not just `"echo"`, above.
 
 ## Respond to an API request
 
@@ -152,7 +148,7 @@ A very common case is creating an API route that only handles POST requests:
 
 ```kotlin
 @Api
-suspend fun updateUser(ctx: ApiContext) {
+suspend fun login(ctx: ApiContext) {
     if (ctx.req.method != HttpMethod.POST) return
     // ...
     ctx.res.status = 200
@@ -175,6 +171,204 @@ suspend fun redirect(ctx: ApiContext) {
 ```
 
 Simple!
+
+## Type-safe communication with serialization
+
+With Kobweb, both your frontend and backend are Kotlin code and, moreover, structured using Kotlin Multipaltform.
+
+What this means is it is easy to send type-safe data back and forth between your client and your server. We'll use the
+following project organization to do this:
+
+{{{ Folders
+
+* src
+   * commonMain
+      * model
+   * jsMain
+      * pages
+   * jvmMain
+      * api
+
+}}}
+
+Our plan is simple -- put request / response classes in common code, at which point we can reference them in both the
+frontend and backend in a type-safe matter.
+
+First, add Kotlinx JSON serialization to your project:
+
+```toml 4,7,10 "gradle/libs.versions.toml"
+[versions]
+kobweb = "..."
+kotlin = "..."
+kotlinx-serialization = "..."
+
+[libraries]
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+[plugins]
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+```
+```kotlin 3,10 "site/build.gradle.kts" 
+plugins {
+    /*...*/
+    alias(libs.plugins.kotlinx.serialization)
+}
+
+kotlin {
+    /*...*/
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlinx.serialization.json)
+        }
+    }
+}
+```
+
+Now, let's use a concrete example to demonstrate this concept. Imagine we owned a real-estate lookup service, with an
+endpoint called `properties`. Through it, you can ask for a list of properties in some zipcode matching various search
+criteria.
+
+Let's quickly design the (definitely oversimplified!) domain models:
+
+```kotlin "commonMain/model/Property.kt
+@Serializable
+data class PropertySummary(
+    val id: String,
+    val address: String,
+    val price: Double,
+    val bedrooms: Int,
+    val bathrooms: Double,
+)
+
+@Serializable
+data class PropertySearchRequest(
+    val zipCode: String,
+    val minPrice: Double? = null,
+    val maxPrice: Double? = null,
+    val minBedrooms: Int? = null,
+)
+
+@Serializable
+data class PropertySearchResponse(
+    val properties: List<PropertySummary>,
+)
+```
+
+> [!TIP]
+> There is no naming requirement here, but a pretty standard convention is to suffix your request object with `Request`
+> and your response object with `Response`, as we did above. When there is a direct 1 to 1 relationship between the
+> request and response, you can see it by noticing `XyzRequest` and `XyzResponse` classes living next to each other. 
+
+For the next part, we will use the QUERY HTTP verb, which is like GET but supports passing the data in as a body instead
+of query parameters.
+
+We'll start with the frontend. You'll need to imagine something like `collectUserSearchValues` exists that pulls values
+out of a bunch of UI text fields and instantiates a `PropertySearchRequest` with them:
+
+```kotlin 4,6,7 "jsMain/pages/Search.kt
+/*...*/
+coroutineScope.launch {
+    val searchRequest = collectUserSearchValues()
+    val searchResponse = window.api.query(
+        "properties",
+        bodyOf(Json.encodeToString(searchRequest).encodeAsByteArray()),
+    ).bodyAsBytes().decodeToString().let { Json.decodeFromString(it) }
+}
+```
+
+As you can see, we serialize a request object going in and deserialize a response object coming out.
+
+Next, let's write the backend endpoint. Implementing something like the class `PropertiesSearcher` is far outside the
+scope of this article, but it is just a stand-in here for any complex logic you might have on your own backend.
+
+```kotlin 5,8 "jvmMain/api/Properties.kt"
+@Api
+suspend fun properties(ctx: ApiContext) {
+    if (ctx.req.method != HttpMethod.QUERY) return
+
+    val searchRequest = Json.decodeFromString(ctx.req.body!!.text())
+    val propertiesSearcher = ctx.data.get<PropertiesSearcher>()
+    val foundProperties = propertiesSearcher.find(searchRequest)
+    ctx.res.body = bodyOf(Json.encodeToString(PropertySearchResponse(foundProperties)))
+}
+```
+
+> [!NOTE]
+> In the above cases, we use `bodyOf` both to create bodies for the request object (on the client) and the response
+> object (on the server). There are several flavors of `bodyOf` methods for wrapping different kinds of content, but by
+> far the most common is the one that wraps a string value, which we have used here.
+>
+> You can reference the relevant API docs to see the full list of [frontend `bodyOf`](https://varabyte.github.io/kobweb/frontend/browser-ext/com.varabyte.kobweb.browser.http/body-of.html?query=fun%20bodyOf(blob:%20Blob):%20RequestBody) and [backend `bodyOf`](https://varabyte.github.io/kobweb/backend/kobweb-api/com.varabyte.kobweb.api.http/body-of.html?query=fun%20bodyOf(text:%20String,%20contentType:%20String%20=%20%22text/plain%22):%20Body) methods.
+
+And that's it! Many projects, being multi-language, use something like protocol buffers to support sending and receiving
+type-safe request and response objects over the wire. It is nice that Kotlin Multiplatform gives us a much simpler
+approach.
+
+But wait... we can do even better!
+
+### Kobwebx serialization
+
+Kobweb officially provides a dependency which extends the `window.api` and `window.http` objects with JSON-serialization
+aware methods.
+
+First, add it to your project:
+
+```toml 7 "gradle/libs.versions.toml"
+[versions]
+kobweb = "..."
+kotlin = "..."
+kotlinx-serialization = "..."
+
+[libraries]
+kobwebx-serialization-kotlinx = { module = "com.varabyte.kobwebx:kobwebx-serialization-kotlinx", version.ref = "kobweb" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+[plugins]
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+```
+```kotlin 11 "site/build.gradle.kts" 
+plugins {
+    /*...*/
+    alias(libs.plugins.kotlinx.serialization)
+}
+
+kotlin {
+    /*...*/
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kobwebx.serialization.kotlinx)
+        }
+    }
+}
+```
+
+And then, let's revisit our code from before, simplifying it:
+
+```kotlin 4,7 "jsMain/pages/Search.kt
+/*...*/
+coroutineScope.launch {
+    val searchRequest = collectUserSearchValues()
+    val searchResponse = window.api.query<PropertiesSearchRequest>(
+        "properties",
+        searchRequest
+    ).bodyAs<PropertySearchResponse>()
+}
+```
+```kotlin 5,8 "jvmMain/api/Properties.kt"
+@Api
+suspend fun properties(ctx: ApiContext) {
+    if (ctx.req.method != HttpMethod.QUERY) return
+
+    val searchRequest = ctx.req.body!!.decode<PropertiesSearchRequest>()
+    val propertiesSearcher = ctx.data.get<PropertiesSearcher>()
+    val foundProperties = propertiesSearcher.find(searchRequest)
+    ctx.res.body = bodyOf(PropertySearchResponse(foundProperties))
+}
+```
+
+We now have the same code flow, but with all awkward boilerplate around juggling bytes and strings and JSON encoding /
+decoding removed.
 
 ## Intercept API routes
 
@@ -238,8 +432,8 @@ suspend fun interceptResponse(ctx: ApiInterceptorContext): Response {
 
 ## Dynamic API routes
 
-Similar to ${DocsLink("Dynamic routes", "../foundation/routing#dynamic-routes")}, you can define API routes using curly
-braces in the same way to indicate a dynamic value that should be captured with some binding name.
+Similar to ${DocsLink("Dynamic routes", "../foundation/routing#dynamic-routes")} on the frontend, you can define API
+routes using curly braces in the same way to indicate a dynamic value that should be captured with some binding name.
 
 For example, the following endpoint will capture the value "123" into a key name called
 "article" when querying `articles/123`:
