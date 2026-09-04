@@ -76,14 +76,6 @@ suspend fun echo(ctx: ApiContext) {
 }
 ```
 
-> [!NOTE]
-> Above, we use `bodyOf` to set the body of the response we sent back to the user. There are several flavors of `bodyOf`
-> methods for wrapping different kinds of content, but by far the most common is the one that wraps a string value,
-> which we have used here and throughout this article.
-> 
-> You can reference [the relevant API documentation](https://varabyte.github.io/kobweb/backend/kobweb-api/com.varabyte.kobweb.api.http/body-of.html?query=fun%20bodyOf(text:%20String,%20contentType:%20String%20=%20%22text/plain%22):%20Body)
-> to see the full list.
-
 After running your project, you can test the endpoint by visiting `mysite.com/api/echo?message=hello`
 
 You can also trigger the endpoint in your frontend code by using the extension `api` property added to the
@@ -152,7 +144,7 @@ A very common case is creating an API route that only handles POST requests:
 
 ```kotlin
 @Api
-suspend fun updateUser(ctx: ApiContext) {
+suspend fun login(ctx: ApiContext) {
     if (ctx.req.method != HttpMethod.POST) return
     // ...
     ctx.res.status = 200
@@ -175,6 +167,199 @@ suspend fun redirect(ctx: ApiContext) {
 ```
 
 Simple!
+
+## Type-safe communication with serialization
+
+With Kobweb, both your frontend and backend are Kotlin code and, moreover, structured using Kotlin Multipaltform.
+
+What this means is it is easy to send type-safe data back and forth between your client and your server. We'll use the
+following project organization to do this:
+
+{{{ Folders
+
+* src
+   * commonMain
+      * model
+   * jsMain
+      * pages
+   * jvmMain
+      * api
+
+}}}
+
+Our plan is simple -- put request / response classes in common code, at which point we can reference them in both the
+frontend and backend in a type-safe matter.
+
+First, add Kotlinx JSON serialization to your project:
+
+```toml 4,7,10 "gradle/libs.versions.toml"
+[versions]
+kobweb = "..."
+kotlin = "..."
+kotlinx-serialization = "..."
+
+[libraries]
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+[plugins]
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+```
+```kotlin 3,10 "site/build.gradle.kts" 
+plugins {
+    /*...*/
+    alias(libs.plugins.kotlinx.serialization)
+}
+
+kotlin {
+    /*...*/
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlinx.serialization.json)
+        }
+    }
+}
+```
+
+Now, let's use a concrete example to demonstrate this concept. Imagine we owned a real-estate lookup service, with an
+endpoint called `properties`. Through it, you can ask for a list of properties in some zipcode matching various search
+criteria.
+
+Let's quickly design the domain models:
+
+```kotlin "commonMain/model/Property.kt
+@Serializable
+class PropertySummary(
+    val id: String,
+    val address: String,
+    val price: Double,
+    val bedrooms: Int,
+    val bathrooms: Double,
+)
+
+@Serializable
+class PropertySearchRequest(
+    val zipCode: String,
+    val minPrice: Double? = null,
+    val maxPrice: Double? = null,
+    val minBedrooms: Int? = null,
+    val page: Int = 1,
+    val pageSize: Int = 10
+)
+
+@Serializable
+class PropertySearchResponse(
+    val properties: List<PropertySummary>,
+)
+```
+
+For the next part, we will use the QUERY HTTP verb, which is like GET but supports setting data in a body instead of
+just as query parameters.
+
+We'll start with the frontend. You'll need to imagine something like `collectUserSearchValues` exists that pulls values
+out of a bunch of UI text fields and instantiates a `PropertySearchRequest` with them:
+
+```kotlin 4,6,7 "jsMain/pages/Search.kt
+/*...*/
+coroutineScope.launch {
+    val searchRequest = collectUserSearchValues()
+    val searchResponse = window.api.query(
+        "properties",
+        body = bodyOf(Json.encodeToString(searchRequest).encodeAsByteArray()),
+    ).bodyAsBytes().decodeToString().let { Json.decodeFromString(it) }
+}
+```
+
+Next, the backend:
+
+```kotlin 5,8 "jvmMain/api/Properties.kt"
+@Api
+suspend fun properties(ctx: ApiContext) {
+    if (ctx.req.method != HttpMethod.QUERY) return
+
+    val searchRequest = Json.decodeFromString(ctx.req.body!!.text())
+    val propertiesSearcher = ctx.data.get<PropertiesSearcher>()
+    val foundProperties = propertiesSearcher.find(searchRequest)
+    ctx.res.body = bodyOf(Json.encodeToString(PropertySearchResponse(foundProperties)))
+}
+```
+
+> [!NOTE]
+> In the above cases, we use `bodyOf` both to create bodies for the request object (one the client) and the response
+> object (on the server). There are several flavors of `bodyOf` methods for wrapping different kinds of content, but by
+> far the most common is the one that wraps a string value, which we have used here.
+>
+> You can reference the relevant API docs to see the full list of [frontend `bodyOf`](https://varabyte.github.io/kobweb/frontend/browser-ext/com.varabyte.kobweb.browser.http/body-of.html?query=fun%20bodyOf(blob:%20Blob):%20RequestBody) and [backend `bodyOf`](https://varabyte.github.io/kobweb/backend/kobweb-api/com.varabyte.kobweb.api.http/body-of.html?query=fun%20bodyOf(text:%20String,%20contentType:%20String%20=%20%22text/plain%22):%20Body) methods.
+
+Implementing something like the class `PropertiesSearcher` is far outside the scope of this article, but it is just a
+stand-in here for any complex logic you might implement on your own backend.
+
+And that's it! Many projects use something like protocol buffers to support sending and receiving type-safe request and
+response objects, and yet using Kotlin Multiplatform can be a much simpler approach.
+
+But wait... we can do even better!
+
+### Kobwebx serialization
+
+Kobweb officially provides a dependency for your project which, if present, extends the `window.api` and `window.http`
+objects with JSON-serialization aware methods.
+
+First, add it to your project:
+
+```toml 7 "gradle/libs.versions.toml"
+[versions]
+kobweb = "..."
+kotlin = "..."
+kotlinx-serialization = "..."
+
+[libraries]
+kobwebx-serialization-kotlinx = { module = "com.varabyte.kobwebx:kobwebx-serialization-kotlinx", version.ref = "kobweb" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+
+[plugins]
+kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+```
+```kotlin 11 "site/build.gradle.kts" 
+plugins {
+    /*...*/
+    alias(libs.plugins.kotlinx.serialization)
+}
+
+kotlin {
+    /*...*/
+    sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kobwebx.serialization.kotlinx)
+        }
+    }
+}
+```
+
+And then, the simplified code:
+
+```kotlin 4,7 "jsMain/pages/Search.kt
+/*...*/
+coroutineScope.launch {
+    val searchRequest = collectUserSearchValues()
+    val searchResponse = window.api.query<PropertiesSearchRequest>(
+        "properties",
+        body = searchRequest
+    ).bodyAs<PropertySearchResponse>()
+}
+```
+```kotlin 5,8 "jvmMain/api/Properties.kt"
+@Api
+suspend fun properties(ctx: ApiContext) {
+    if (ctx.req.method != HttpMethod.QUERY) return
+
+    val searchRequest = ctx.req.body!!.decode<PropertiesSearchRequest>()
+    val propertiesSearcher = ctx.data.get<PropertiesSearcher>()
+    val foundProperties = propertiesSearcher.find(searchRequest)
+    ctx.res.body = bodyOf(PropertySearchResponse(foundProperties))
+}
+```
+
+Essentially the same thing without the awkward bytes and text encoding / decoding noise. 
 
 ## Intercept API routes
 
@@ -238,8 +423,8 @@ suspend fun interceptResponse(ctx: ApiInterceptorContext): Response {
 
 ## Dynamic API routes
 
-Similar to ${DocsLink("Dynamic routes", "../foundation/routing#dynamic-routes")}, you can define API routes using curly
-braces in the same way to indicate a dynamic value that should be captured with some binding name.
+Similar to ${DocsLink("Dynamic routes", "../foundation/routing#dynamic-routes")} on the frontend, you can define API
+routes using curly braces in the same way to indicate a dynamic value that should be captured with some binding name.
 
 For example, the following endpoint will capture the value "123" into a key name called
 "article" when querying `articles/123`:
