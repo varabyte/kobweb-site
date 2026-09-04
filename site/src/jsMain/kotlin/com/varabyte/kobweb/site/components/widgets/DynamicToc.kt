@@ -26,9 +26,14 @@ import org.jetbrains.compose.web.dom.Li
 import org.jetbrains.compose.web.dom.Ul
 import org.w3c.dom.*
 
+object DynamicTocDefaults {
+    const val MIN_HEADER = 2
+    const val MAX_HEADER = 4
+}
+
 fun HTMLElement.getHeadings(
-    minHeaderLevel: Int = 2,
-    maxHeaderLevel: Int = 4,
+    minHeaderLevel: Int = DynamicTocDefaults.MIN_HEADER,
+    maxHeaderLevel: Int = DynamicTocDefaults.MAX_HEADER,
 ): List<HTMLHeadingElement> {
     require(minHeaderLevel in 1..6) { "minHeaderLevel must be in range 1..6, got $minHeaderLevel" }
     require(maxHeaderLevel in 1..6) { "maxHeaderLevel must be in range 1..6, got $maxHeaderLevel" }

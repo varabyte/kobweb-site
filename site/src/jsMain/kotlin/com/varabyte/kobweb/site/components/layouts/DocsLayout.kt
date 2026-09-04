@@ -47,6 +47,7 @@ import com.varabyte.kobweb.site.components.sections.listing.MobileLocalNav
 import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.siteText
 import com.varabyte.kobweb.site.components.widgets.DynamicToc
+import com.varabyte.kobweb.site.components.widgets.DynamicTocDefaults
 import com.varabyte.kobweb.site.components.widgets.getHeadings
 import com.varabyte.kobweb.site.model.GITHUB_REPO_BASE
 import com.varabyte.kobweb.site.model.listing.*
@@ -169,6 +170,13 @@ fun initDocsLayout(ctx: InitRouteContext) {
 @Layout(".components.layouts.PageLayout")
 fun DocsLayout(ctx: PageContext, content: @Composable () -> Unit) {
     val articleHandle = ctx.markdown?.let { ctx.route.toArticleHandle() }
+    var minTocDepth: Int = DynamicTocDefaults.MIN_HEADER
+    var maxTocDepth: Int = DynamicTocDefaults.MAX_HEADER
+    ctx.markdown?.frontMatter?.let { fm ->
+        fm["toc-min"]?.first()?.toIntOrNull()?.let { minTocDepth = it }
+        fm["toc-max"]?.first()?.toIntOrNull()?.let { maxTocDepth = it }
+    }
+
     val breadcrumbs = articleHandle?.article?.breadcrumbs
 
     // We surface the parent title for the page as a meta tag so that the search engine we use can surface it as useful
@@ -255,7 +263,7 @@ fun DocsLayout(ctx: PageContext, content: @Composable () -> Unit) {
             var headings by remember(ctx.route.path) { mutableStateOf(emptyList<HTMLHeadingElement>()) }
             // Fetch headings only once elements are added to the DOM
             registerRefScope(ref(mainElement, ctx.route.path) {
-                headings = mainElement?.getHeadings().orEmpty().filter { !it.classList.contains("no-toc") }
+                headings = mainElement?.getHeadings(minTocDepth, maxTocDepth).orEmpty().filter { !it.classList.contains("no-toc") }
             })
             val options = run {
                 val top = 64 // Height of the top nav bar

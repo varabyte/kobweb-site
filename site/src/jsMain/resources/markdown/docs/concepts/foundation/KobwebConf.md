@@ -1,6 +1,7 @@
 ---
 title: "Kobweb Configuration"
 description: A quick introduction to the Kobweb configuration file.
+toc-max: 6
 ---
 
 Every Kobweb application is identified by a configuration file that lives under the `.kobweb` folder called `conf.yaml`
