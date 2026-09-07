@@ -29,6 +29,7 @@ individual contributors for the features they helped us out with.
 * [Aakarshit Uppal](https://github.com/aksh1618) - Arch Linux support
 * [Ayfri](https://github.com/ayfri) - Lucide icons
 * [Binay Shaw](https://github.com/binayshaw7777) - SVG APIs and icons
+* [Christiano Bolla](https://github.com/ShaHar91) - Better Mac behavior when clicking links
 * Conrad Boehnke - Template design, owner of [UI Rocket](https://ui-rocket.com)
 * [DVDAndroid](https://github.com/DVDAndroid) - Gradle support for custom source set names
 * [Ellet](https://github.com/EchoEllet) - Added modifiers, CI test support
