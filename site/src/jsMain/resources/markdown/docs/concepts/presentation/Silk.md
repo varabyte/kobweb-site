@@ -81,7 +81,7 @@ Box(Modifier.backgroundColor(Colors.Red)) { /* ... */ }
 > You can technically make a style private if you add a bit of boilerplate to handle the registration yourself:
 >
 > ```kotlin
-> @Suppress("PRIVATE_COMPONENT_STYLE")
+> @Suppress("PRIVATE_CSS_STYLE")
 > private val ExampleCustomStyle = CssStyle { /* ... */ }
 > // Or use a leading underscore to automatically suppress the warning
 > private val _ExampleOtherCustomStyle = CssStyle { /* ... */ }
@@ -428,7 +428,7 @@ val OutlinedButtonVariant: CssStyleVariant<ButtonKind> =
 > You can technically make a variant private if you add a bit of boilerplate to handle the registration yourself:
 >
 > ```kotlin
-> @Suppress("PRIVATE_COMPONENT_VARIANT")
+> @Suppress("PRIVATE_CSS_STYLE_VARIANT")
 > private val ExampleCustomVariant = ButtonStyle.addVariant { /*...*/ }
 > // Or use a leading underscore to automatically suppress the warning
 > private val _ExampleCustomVariant = ButtonStyle.addVariant { /*...*/ }
