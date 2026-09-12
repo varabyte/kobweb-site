@@ -40,6 +40,7 @@ individual contributors for the features they helped us out with.
 * [Jose Salgado](https://github.com/jassycliq) - Material Design icons
 * [K4i](https://github.com/k4i6) - Backend HTTP header code now supports multiple values
 * [Kalle Strålman](https://github.com/kjeller) - `generate` code methods in Markdown `process`
+* [Lilian Maulny (e_ψ_lon)](https://github.com/e-psi-lon) - Nix support for the Kobweb CLI
 * [MartinTheDragon](https://github.com/MartinTheDragon) - Markdown cross-page linking
 * [Rafael Tonholo](https://github.com/rafaeltonholo) - Box shadows and `Arrangement.spacedBy`
 * [Sandeep Karanam](https://github.com/sandeepjak2007) - CSS APIs
@@ -55,3 +56,7 @@ individual contributors for the features they helped us out with.
 * [Ondra Karmazín](https://github.com/okarmazin) - Docs additions
 * [Patrick Goldinger](https://github.com/patrickgold) - Typo fix
 * [TheDome](https://github.com/TheDome0) - Custom web server configuration examples
+
+### Kobweb Community
+
+* [FlyingPig525](https://github.com/FlyingPig525) - Community supporter (Discord)
