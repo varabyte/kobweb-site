@@ -62,12 +62,10 @@ We'll discuss what this `base` block is in the next section, so don't worry abou
 You can convert any such `CssStyle` into a `Modifier` by using its `toModifier()` method (e.g.
 `CustomStyle.toModifier()`). At this point, you can pass it into any composable which takes a `Modifier` parameter:
 
-```kotlin
-// CssStyle.toModifier (becomes a stylesheet entry)
+```kotlin "CssStyle.toModifier (becomes a stylesheet entry)"
 Box(CustomStyle.toModifier()) { /* ... */ }
 ```
-```kotlin
-// Creating modifiers directly (becomes an inline style)
+```kotlin "Passing in modifiers directly (becomes an inline style)"
 Box(Modifier.backgroundColor(Colors.Red)) { /* ... */ }
 ```
 
@@ -144,7 +142,7 @@ The Kobweb Gradle plugin automatically detects your `CssStyle` properties and ge
 from the property name itself but
 using [Kebab Case](https://www.freecodecamp.org/news/snake-case-vs-camel-case-vs-pascal-case-vs-kebab-case-whats-the-difference/#kebab-case).
 
-For example, if you write `val TitleTextStyle = CssStyle { ... }`, its name will be "title-text".
+For example, if you write `val TitleTextStyle = CssStyle { ... }`, its name will be `title-text`.
 
 You usually won't need to care about this name, but if you inspect the DOM using browser devtools, you'll see it there.
 
@@ -486,16 +484,14 @@ val InvertedButtonVariant = ButtonStyle.addVariant { /* ... */ }
 Like `CssStyle.base`, variants that don't need to support additional selectors can use `addVariantBase` instead to
 slightly simplify their declaration:
 
-```kotlin
-// Before
+```kotlin "Before"
 val HighlightedCustomVariant = CustomStyle.addVariant {
     base {
         Modifier.backgroundColor(Colors.Green)
     }
 }
 ```
-```kotlin
-// After
+```kotlin "After"
 val HighlightedCustomVariant = CustomStyle.addVariantBase {
     Modifier.backgroundColor(Colors.Green)
 }
@@ -531,26 +527,24 @@ In other words:
 
 A caller can call a widget one of several ways:
 
-```kotlin
-// Approach #1: Use default styling
+```kotlin "Approach #1: Use default styling"
 CustomWidget { /* ... */ }
 ```
-```kotlin
-// Approach #2: Tweak default styling with a variant
+```kotlin "Approach #2: Tweak default styling with a variant"
 CustomWidget(variant = TransparentWidgetVariant) { /* ... */ }
 ```
-```kotlin
-// Approach #3: Tweak default styling with inline overrides
+```kotlin "Approach #3: Tweak default styling with inline overrides"
 CustomWidget(Modifier.backgroundColor(Colors.Blue)) { /* ... */ }
 ```
-```kotlin
-// Approach #4: Tweak default styling with both a variant and inline
-// overrides. Inline overrides take precedence.
+```kotlin "Approach #4: Tweak default styling with both a variant and inline overrides"
+// Inline overrides take precedence over variants
 CustomWidget(
   Modifier.backgroundColor(Colors.Blue),
   variant = TransparentWidgetVariant
 ) { /* ... */ }
 ```
+
+As you can see, this approach is very flexible and gives users lots of power.
 
 ## Animations
 
@@ -562,17 +556,17 @@ For example, here's the CSS for an animation of a sliding rectangle
 ([from this tutorial](https://www.w3schools.com/cssref/tryit.php?filename=trycss3_animation)):
 
 ```css
+@keyframes shift-right {
+  from {left: 0px;}
+  to {left: 200px;}
+}
+
 div {
   width: 100px;
   height: 100px;
   background: red;
   position: relative;
   animation: shift-right 5s infinite;
-}
-
-@keyframes shift-right {
-  from {left: 0px;}
-  to {left: 200px;}
 }
 ```
 
