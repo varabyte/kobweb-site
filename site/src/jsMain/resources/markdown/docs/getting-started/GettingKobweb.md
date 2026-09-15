@@ -150,7 +150,7 @@ you installed it.
 
 | Method                 | Instructions                                                                                                                         |
 |------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| Homebrew               | `brew upgrade kobweb`                                                                                                                |
+| Homebrew               | `brew update`<br/>`brew upgrade kobweb`                                                                                                                |
 | Scoop                  | `scoop update kobweb`                                                                                                                |
 | SDKMAN!                | `sdk upgrade kobweb`                                                                                                                 |
 | Arch Linux             | Rerunning [install steps](#arch-linux) should work. If using an AUR helper, you may need to review its manual.                       |
