@@ -17,6 +17,22 @@ When in doubt, we recommend installation via one of the package managers we supp
 $ brew install varabyte/tap/kobweb
 ```
 
+#### [Nix](https://nix.dev/)
+
+*OS: Mac and Linux*
+
+First, enable flakes. Create `~/.config/nix/nix.conf`:
+```properties
+experimental-features = nix-command flakes
+```
+Then:
+```bash
+$ nix profile add github:varabyte/kobweb-cli-nix
+```
+
+> [!TIP]
+> For more options, as well as NixOS instructions, see the README at https://github.com/varabyte/kobweb-cli-nix.
+
 ### [Scoop](https://scoop.sh/)
 
 *OS: Windows*
@@ -148,10 +164,11 @@ $ kobweb version # to check it's working
 If you previously installed Kobweb and are aware that a new version is available, the way you update it depends on how
 you installed it.
 
-| Method                 | Instructions                                                                                                                         |
-|------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| Homebrew               | `brew update`<br/>`brew upgrade kobweb`                                                                                                                |
-| Scoop                  | `scoop update kobweb`                                                                                                                |
-| SDKMAN!                | `sdk upgrade kobweb`                                                                                                                 |
-| Arch Linux             | Rerunning [install steps](#arch-linux) should work. If using an AUR helper, you may need to review its manual.                       |
-| Downloaded from Github | Visit the [latest release](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.23). You can find both a zip and tar file there. |
+| Method                 | Instructions                                                                                                                                                            |
+|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Homebrew               | `brew update`<br/>`brew upgrade kobweb`                                                                                                                                 |
+| Nix                    | `nix profile upgrade kobweb-cli-nix`<br/>(or review the [varabyte/kobweb-cli-nix README](https://github.com/varabyte/kobweb-cli-nix#updating-kobweb) for more options). |
+| Scoop                  | `scoop update kobweb`                                                                                                                                                   |
+| SDKMAN!                | `sdk upgrade kobweb`                                                                                                                                                    |
+| Arch Linux             | Rerunning [install steps](#arch-linux) should work. If using an AUR helper, you may need to review its manual.                                                          |
+| Downloaded from Github | Visit the [latest release](https://github.com/varabyte/kobweb-cli/releases/tag/v0.9.23). You can find both a zip and tar file there.                                    |
