@@ -23,9 +23,9 @@ import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
 import com.varabyte.kobweb.silk.style.layer.SilkLayer
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.site.components.sections.NavHeaderHeight
-import com.varabyte.kobweb.site.components.sections.listing.MobileNavHeight
-import com.varabyte.kobweb.site.components.style.DividerColor
+import com.varabyte.kobweb.site.components.sections.NavHeaderHeightVar
+import com.varabyte.kobweb.site.components.sections.listing.MobileNavHeightVar
+import com.varabyte.kobweb.site.components.style.DividerColorVar
 import kotlinx.browser.document
 import kotlinx.browser.localStorage
 import org.jetbrains.compose.web.css.*
@@ -71,7 +71,7 @@ fun initSilk(ctx: InitSilkContext) {
 
         registerStyle("html") {
             base {
-                Modifier.scrollPadding(top = 1.5.cssRem + NavHeaderHeight.value() + MobileNavHeight.value())
+                Modifier.scrollPadding(top = 1.5.cssRem + NavHeaderHeightVar.value() + MobileNavHeightVar.value())
             }
             cssRule(CSSMediaQuery.MediaFeature("prefers-reduced-motion", StylePropertyValue("no-preference"))) {
                 Modifier.scrollBehavior(ScrollBehavior.Smooth)
@@ -145,7 +145,7 @@ fun AppEntry(content: @Composable () -> Unit) {
                 .fillMaxWidth()
                 .minHeight(100.vh)
                 .setVariable(
-                    DividerColor,
+                    DividerColorVar,
                     if (colorMode.isDark) Color.rgba(238, 238, 238, 0.2f) else Color.rgba(17, 17, 17, 0.2f)
                 )
         ) {

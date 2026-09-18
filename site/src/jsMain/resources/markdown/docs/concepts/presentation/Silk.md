@@ -749,12 +749,12 @@ Using style variables is fairly simple. You first declare one without a value (b
 can initialize it within a style using `Modifier.setVariable(...)`:
 
 ```kotlin
-val dialogWidth by StyleVariable<CSSLengthNumericValue>()
+val DialogWidthVar by StyleVariable<CSSLengthNumericValue>()
 
 // This style will be applied to a div that lives at the root, so that
 // this variable value will be made available to all children.
 val RootStyle = CssStyle.base {
-  Modifier.setVariable(dialogWidth, 600.px)
+  Modifier.setVariable(DialogWidthVar, 600.px)
 }
 ```
 
@@ -794,24 +794,24 @@ The following code example shows when different fallback scopes take effect:
 
 ```kotlin
 // Note the default fallback: 100px
-val dialogWidth by StyleVariable<CSSLengthNumericValue>(100.px)
+val DialogWidthVar by StyleVariable<CSSLengthNumericValue>(100.px)
 
 val DialogStyle100 = CssStyle.base {
   // Uses default fallback.
   // width = 100px
-  Modifier.width(dialogWidth.value())
+  Modifier.width(DialogWidthVar.value())
 }
 val DialogStyle200 = CssStyle.base {
   // Uses specific fallback.
   // width = 200px
-  Modifier.width(dialogWidth.value(200.px))
+  Modifier.width(DialogWidthVar.value(200.px))
 }
 val DialogStyle300 = CssStyle.base {
   // Fallback (400px) ignored because variable is set explicitly.
   // width = 300px
   Modifier
-      .setVariable(dialogWidth, 300.px)
-      .width(dialogWidth.value(400.px))
+      .setVariable(DialogWidthVar, 300.px)
+      .width(DialogWidthVar.value(400.px))
 }
 ```
 
@@ -826,16 +826,16 @@ which sets it, a child style that uses it, and, finally, a child style variant t
 ```kotlin
 // Default to a debug color, so if we see it,
 // that indicates we forgot to set it later.
-val bgColor by StyleVariable<CSSColorValue>(Colors.Magenta)
+val BgColorVar by StyleVariable<CSSColorValue>(Colors.Magenta)
 
 val ContainerStyle = CssStyle.base {
-    Modifier.setVariable(bgColor, Colors.Blue)
+    Modifier.setVariable(BgColorVar, Colors.Blue)
 }
 val SquareStyle = CssStyle.base {
-    Modifier.size(100.px).backgroundColor(bgColor.value())
+    Modifier.size(100.px).backgroundColor(BgColorVar.value())
 }
 val RedSquareStyle = SquareStyle.extendedByBase {
-    Modifier.setVariable(bgColor, Colors.Red)
+    Modifier.setVariable(BgColorVar, Colors.Red)
 }
 ```
 
@@ -855,9 +855,9 @@ fun ColoredSquares() {
             }
             Row {
                 // 3: Color from inline style
-                Box(SquareStyle.toModifier().setVariable(bgColor, Colors.Green))
+                Box(SquareStyle.toModifier().setVariable(BgColorVar, Colors.Green))
 
-                Span(Modifier.setVariable(bgColor, Colors.Yellow).toAttrs()) {
+                Span(Modifier.setVariable(BgColorVar, Colors.Yellow).toAttrs()) {
                     // 4: Color from parent's inline style
                     Box(SquareStyle.toModifier())
                 }
@@ -881,10 +881,10 @@ a random color from the colors of the rainbow:
 ```kotlin
 // We specify the initial color of the rainbow here, since the variable
 // won't otherwise be set until the user clicks a button.
-val bgColor by StyleVariable<CSSColorValue>(Colors.Red)
+val BgColorVar by StyleVariable<CSSColorValue>(Colors.Red)
 
 val ScreenStyle = CssStyle.base {
-    Modifier.fillMaxSize().backgroundColor(bgColor.value())
+    Modifier.fillMaxSize().backgroundColor(BgColorVar.value())
 }
 
 @Page
@@ -895,7 +895,7 @@ fun RainbowBackground() {
     var screenElement: HTMLElement? by remember { mutableStateOf(null) }
     Box(ScreenStyle.toModifier(), ref = ref { screenElement = it }) {
         Button(onClick = {
-            screenElement!!.setVariable(bgColor, roygbiv.random())
+            screenElement!!.setVariable(BgColorVar, roygbiv.random())
         }) {
             Text("Click me")
         }

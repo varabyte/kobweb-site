@@ -24,7 +24,7 @@ import com.varabyte.kobweb.silk.style.selectors.hover
 import com.varabyte.kobweb.silk.theme.name
 import com.varabyte.kobweb.site.components.sections.NavHeaderBackgroundStyle
 import com.varabyte.kobweb.site.components.sections.NavHeaderDarkenedBackgroundStyle
-import com.varabyte.kobweb.site.components.sections.NavHeaderHeight
+import com.varabyte.kobweb.site.components.sections.NavHeaderHeightVar
 import com.varabyte.kobweb.site.components.sections.navHeaderZIndex
 import com.varabyte.kobweb.site.model.listing.SITE_LISTING
 import kotlinx.browser.document
@@ -33,15 +33,15 @@ import kotlinx.dom.removeClass
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
 
-val MobileNavHeight by StyleVariable<CSSLengthNumericValue>()
+val MobileNavHeightVar by StyleVariable<CSSLengthNumericValue>()
 
 private val MaxMobileBreakpoint = Breakpoint.MD
 
 @InitSilk
 fun initMobileNavHeight(ctx: InitSilkContext) = with(ctx.stylesheet) {
     registerStyle("html") {
-        base { Modifier.setVariable(MobileNavHeight, 2.75.cssRem) }
-        MaxMobileBreakpoint { Modifier.setVariable(MobileNavHeight, 0.px) }
+        base { Modifier.setVariable(MobileNavHeightVar, 2.75.cssRem) }
+        MaxMobileBreakpoint { Modifier.setVariable(MobileNavHeightVar, 0.px) }
     }
 }
 
@@ -79,14 +79,14 @@ fun MobileLocalNav() {
         NavHeaderBackgroundStyle.toModifier()
             .displayUntil(MaxMobileBreakpoint)
             .position(Position.Sticky)
-            .top(NavHeaderHeight.value())
+            .top(NavHeaderHeightVar.value())
             .fillMaxWidth()
             .padding(leftRight = 1.cssRem)
             .navHeaderZIndex()
     ) {
         Button(
             onClick = { open = !open },
-            modifier = Modifier.fillMaxWidth().height(MobileNavHeight.value()),
+            modifier = Modifier.fillMaxWidth().height(MobileNavHeightVar.value()),
             variant = UnstyledButtonVariant
         ) {
             // Even though the button content is a row, this row is needed for vertical alignment with the text & icon
@@ -112,7 +112,7 @@ fun MobileLocalNav() {
             NavHeaderDarkenedBackgroundStyle.toModifier()
                 .displayUntil(MaxMobileBreakpoint)
                 .position(Position.Fixed)
-                .top(NavHeaderHeight.value() + MobileNavHeight.value())
+                .top(NavHeaderHeightVar.value() + MobileNavHeightVar.value())
                 .bottom(0.px)
                 .fillMaxWidth()
                 .padding(1.cssRem)

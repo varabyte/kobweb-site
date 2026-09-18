@@ -6,6 +6,6 @@ import com.varabyte.kobweb.compose.ui.modifiers.boxShadow
 import org.jetbrains.compose.web.css.CSSColorValue
 import org.jetbrains.compose.web.css.px
 
-val DividerColor by StyleVariable<CSSColorValue>()
+val DividerColorVar by StyleVariable<CSSColorValue>()
 
-fun Modifier.dividerBoxShadow() = this.boxShadow(spreadRadius = 1.px, color = DividerColor.value())
+fun Modifier.dividerBoxShadow() = this.boxShadow(spreadRadius = 1.px, color = DividerColorVar.value())

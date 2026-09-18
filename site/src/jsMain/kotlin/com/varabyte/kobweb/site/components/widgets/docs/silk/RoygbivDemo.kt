@@ -20,10 +20,10 @@ import org.w3c.dom.HTMLElement
 
 // We specify the initial color of the rainbow here, since the variable
 // won't otherwise be set until the user clicks a button.
-val roygbivColor by StyleVariable<CSSColorValue>(Colors.Red)
+val RoygbivColorVar by StyleVariable<CSSColorValue>(Colors.Red)
 
 val RoygbivDemoStyle = CssStyle.base {
-    Modifier.width(12.cssRem).height(7.cssRem).backgroundColor(roygbivColor.value())
+    Modifier.width(12.cssRem).height(7.cssRem).backgroundColor(RoygbivColorVar.value())
 }
 
 @Composable
@@ -46,7 +46,7 @@ fun RoygbivDemo() {
         contentAlignment = Alignment.Center,
         ref = ref { roygbivElement = it }) {
         Button(onClick = {
-            roygbivElement!!.setVariable(roygbivColor, roygbiv.random())
+            roygbivElement!!.setVariable(RoygbivColorVar, roygbiv.random())
         }) {
             Text("Click me")
         }

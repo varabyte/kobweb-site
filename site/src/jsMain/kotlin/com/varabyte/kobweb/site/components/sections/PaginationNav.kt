@@ -28,15 +28,15 @@ import org.jetbrains.compose.web.dom.Div
 
 // Inspired mostly by https://playwright.dev/docs/intro & https://docs.astro.build/en/install-and-setup/
 
-val PaginationNavBorderColor by StyleVariable<CSSColorValue>()
+val PaginationNavBorderColorVar by StyleVariable<CSSColorValue>()
 val PaginationNavItemStyle = CssStyle {
     base {
         Modifier
-            .setVariable(PaginationNavBorderColor, if (colorMode.isDark) Colors.DimGray else Colors.LightGray)
+            .setVariable(PaginationNavBorderColorVar, if (colorMode.isDark) Colors.DimGray else Colors.LightGray)
     }
     hover {
         Modifier
-            .setVariable(PaginationNavBorderColor, Colors.DodgerBlue)
+            .setVariable(PaginationNavBorderColorVar, Colors.DodgerBlue)
     }
 }
 
@@ -55,7 +55,7 @@ fun PaginationNav(prev: Article?, next: Article?, modifier: Modifier = Modifier)
                 .padding(0.5.cssRem, 0.75.cssRem)
                 .gap(0.5.cssRem)
                 .borderRadius(0.4.cssRem)
-                .border(1.px, LineStyle.Solid, PaginationNavBorderColor.value())
+                .border(1.px, LineStyle.Solid, PaginationNavBorderColorVar.value())
                 .transition(Transition.of("border-color", 0.25.s))
                 .overflowWrap(OverflowWrap.Anywhere),
             variant = UndecoratedLinkVariant.then(UncoloredLinkVariant)

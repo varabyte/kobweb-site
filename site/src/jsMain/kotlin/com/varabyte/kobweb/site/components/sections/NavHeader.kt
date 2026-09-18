@@ -46,13 +46,13 @@ import org.jetbrains.compose.web.css.percent
 import org.jetbrains.compose.web.css.px
 import org.jetbrains.compose.web.dom.Img
 
-val NavHeaderHeight by StyleVariable<CSSLengthNumericValue>()
+val NavHeaderHeightVar by StyleVariable<CSSLengthNumericValue>()
 
 @InitSilk
 fun initNavHeaderHeight(ctx: InitSilkContext) = with(ctx.stylesheet) {
     registerStyle("html") {
-        base { Modifier.setVariable(NavHeaderHeight, 56.px) }
-        Breakpoint.MD { Modifier.setVariable(NavHeaderHeight, 64.px) }
+        base { Modifier.setVariable(NavHeaderHeightVar, 56.px) }
+        Breakpoint.MD { Modifier.setVariable(NavHeaderHeightVar, 64.px) }
     }
 }
 
@@ -73,7 +73,7 @@ val NavHeaderStyle = NavHeaderBackgroundStyle.extendedByBase {
         .fillMaxWidth()
         .position(Position.Sticky)
         .top(0.percent)
-        .height(NavHeaderHeight.value())
+        .height(NavHeaderHeightVar.value())
 }
 
 val HoverBrightenStyle = CssStyle {

@@ -118,12 +118,12 @@ to Kobweb's newer set, in order to make your code more flexible about what it ca
 
 ```kotlin
 // Not recommended
-val MyFontSize by StyleVariable<CSSLengthValue>
+val MyFontSizeVar by StyleVariable<CSSLengthValue>
 fun drawArc(arc: CSSAngleValue)
 ```
 ```kotlin
 // Recommended
-val MyFontSize by StyleVariable<CSSLengthNumericValue>
+val MyFontSizeVar by StyleVariable<CSSLengthNumericValue>
 fun drawArc(arc: CSSAngleNumericValue)
 ```
 

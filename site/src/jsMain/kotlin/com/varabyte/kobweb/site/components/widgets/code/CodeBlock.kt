@@ -13,7 +13,7 @@ import com.varabyte.kobweb.silk.style.base
 import com.varabyte.kobweb.silk.style.common.SmoothColorStyle
 import com.varabyte.kobweb.silk.style.toModifier
 import com.varabyte.kobweb.silk.theme.name
-import com.varabyte.kobweb.site.components.style.DividerColor
+import com.varabyte.kobweb.site.components.style.DividerColorVar
 import com.varabyte.kobweb.site.components.style.SiteTextSize
 import com.varabyte.kobweb.site.components.style.siteText
 import kotlinx.browser.document
@@ -29,7 +29,7 @@ val CodeBlockStyle = CssStyle.base(extraModifier = { SmoothColorStyle.toModifier
         .borderRadius(10.px)
         .overflow { x(Overflow.Auto) }
         .siteText(SiteTextSize.CODE)
-        .border(1.px, LineStyle.Solid, DividerColor.value())
+        .border(1.px, LineStyle.Solid, DividerColorVar.value())
         .padding(1.em)
 }
 
@@ -38,7 +38,7 @@ val CodeLabelStyle = CssStyle.base {
         .position(Position.Absolute)
         .backgroundColor("var(--syntax-gutter-background-color-selected)".unsafeCast<CSSColorValue>())
         .color("var(--mono-1)".unsafeCast<CSSColorValue>())
-        .border(1.px, LineStyle.Solid, DividerColor.value())
+        .border(1.px, LineStyle.Solid, DividerColorVar.value())
         .fontSize(0.75.em)
         .top((-1).em)
         .left(1.em)
