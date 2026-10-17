@@ -16,18 +16,7 @@ makes it easy to download, update, and otherwise manage your IntelliJ IDEA insta
 
 ## Kobweb IntelliJ Plugin
 
-This step is *optional*, but consider installing
-the [Kobweb IntelliJ Plugin](https://plugins.jetbrains.com/plugin/23883-kobweb). This plugin aims to provide
-inspections, actions, settings, templates, and IDE integrations for Kobweb-specific concepts.
-
-> [!IMPORTANT]
-> At the time of writing this note (in early 2025), the plugin is still relatively minimal, so please set
-> expectations accordingly. Hopefully this will be remedied by the end of 2025.
->
-> In case this note becomes stale, you
-> can [review our changelog here](https://github.com/varabyte/kobweb-intellij-plugin/blob/main/CHANGELOG.md) for the most
-> up-to-date list of current features.
->
-> If you would like to help us accelerate the development of this plugin,
-> consider [checking out the project](https://github.com/varabyte/kobweb-intellij-plugin) and let us know if you would
-> be interested in contributing.
+Strongly consider installing
+the [Kobweb IntelliJ Plugin](https://plugins.jetbrains.com/plugin/23883-kobweb). It provides inspections, actions,
+settings, quick docs, and other useful IDE integrations that support Kobweb-specific concepts. It is designed to help
+new users avoid common pitfalls and otherwise make Kobweb development more enjoyable.
