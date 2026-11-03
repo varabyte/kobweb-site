@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection") // Roygbiv is not a spelling error in this context
+
 package com.varabyte.kobweb.site.components.widgets.docs.silk
 
 import androidx.compose.runtime.*
