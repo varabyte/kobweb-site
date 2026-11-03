@@ -110,7 +110,6 @@ private fun getNavBackgroundColor(colorMode: ColorMode): Color.Rgb {
 // The nav header needs a higher z-index to be shown above elements with `position: sticky`
 fun Modifier.navHeaderZIndex() = this.zIndex(10)
 
-@OptIn(ExperimentalJsCollectionsApi::class, ExperimentalJsExport::class)
 @Composable
 fun NavHeader() {
     var colorMode by ColorMode.currentState
