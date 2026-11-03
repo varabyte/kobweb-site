@@ -69,7 +69,7 @@ fun CodeBlock(
                 .attrsModifier {
                     ref { preElement ->
                         window.invokeLater { // Give prismjs plugin a frame to create the parent toolbar
-                            preElement.parentElement?.takeIf { it.classList.contains("code-toolbar") }?.let { toolbar ->
+                            if (preElement.parentElement?.classList?.contains("code-toolbar") == true) {
                                 preElement.insertAdjacentElement(
                                     "afterend",
                                     document.createElement("div").apply {
