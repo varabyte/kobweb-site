@@ -58,6 +58,7 @@ fun initSilk(ctx: InitSilkContext) {
 
     ctx.stylesheet.apply {
         registerStyleBase("body") {
+            @Suppress("SpellCheckingInspection")
             Modifier
                 .fontFamily(
                     "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
