@@ -43,10 +43,10 @@ fun initSilk(ctx: InitSilkContext) {
         if (AppGlobals.isExporting) {
             document.head!!.appendChild(
                 document.createElement("script").apply {
-                    textContent = """
+                    textContent = $$"""
                         {
-                            const storedColor = localStorage.getItem('${COLOR_MODE_KEY.name}'); // 'LIGHT', 'DARK', or null
-                            const desiredColor = storedColor ? `silk-${'$'}{storedColor.toLowerCase()}` : 'silk-dark';
+                            const storedColor = localStorage.getItem('$${COLOR_MODE_KEY.name}'); // 'LIGHT', 'DARK', or null
+                            const desiredColor = storedColor ? `silk-${storedColor.toLowerCase()}` : 'silk-dark';
                             const oppositeColor = desiredColor === 'silk-dark' ? 'silk-light' : 'silk-dark';
                             document.documentElement.classList.replace(oppositeColor, desiredColor);
                         }
