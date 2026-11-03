@@ -6,6 +6,7 @@ import com.varabyte.kobweb.core.PageContext
 import com.varabyte.kobweb.navigation.UpdateHistoryMode
 import com.varabyte.kobweb.site.model.listing.SITE_LISTING
 
+// Shim page that immediately redirects to the first actual docs article
 @Page
 @Composable
 fun DocsPage(ctx: PageContext) {
