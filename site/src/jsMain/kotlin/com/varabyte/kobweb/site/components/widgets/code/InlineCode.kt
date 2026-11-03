@@ -15,9 +15,11 @@ import org.jetbrains.compose.web.dom.Code
 import org.jetbrains.compose.web.dom.Text
 
 val InlineCodeStyle = CssStyle {
-    Modifier
-        .color(colorMode.toPalette().color.shifted(colorMode, byPercent = -0.2f))
-        .overflowWrap(OverflowWrap.BreakWord)
+    base {
+        Modifier
+            .color(colorMode.toPalette().color.shifted(colorMode, byPercent = -0.2f))
+            .overflowWrap(OverflowWrap.BreakWord)
+    }
 }
 
 @Composable
