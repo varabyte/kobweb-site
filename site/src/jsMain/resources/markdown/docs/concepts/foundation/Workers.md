@@ -37,6 +37,12 @@ Here's everything you have to do (we'll show concrete examples of these steps be
 Once done, build your code, as this will generate a `Worker` class that you can then use from your client to interact
 with the strategy.
 
+> [!TIP]
+> If you haven't already, consider installing the
+> IDEA [Kobweb IntelliJ Plugin](https://plugins.jetbrains.com/plugin/23883-kobweb), which includes support for workers.
+> For example, if you are using the plugin, you do not have to build your code to generate a worker class -- the plugin
+> instead provides an in-memory `Worker` class for you immediately.
+
 ### Build script
 
 ```kotlin 1,5,12,15 "worker/build.gradle.kts"
