@@ -20,3 +20,6 @@ Strongly consider installing
 the [Kobweb IntelliJ Plugin](https://plugins.jetbrains.com/plugin/23883-kobweb). It provides inspections, actions,
 settings, quick docs, and other useful IDE integrations that support Kobweb-specific concepts. It is designed to help
 new users avoid common pitfalls and otherwise make Kobweb development more enjoyable.
+
+The plugin is itself [open source](https://github.com/varabyte/kobweb-intellij-plugin), if you'd like to see the code,
+file new issues, or even if you might want to contribute to the project.
